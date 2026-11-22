@@ -26,6 +26,12 @@ Snapshot date: 2026-11-22.
 | GitHub raw README | `https://raw.githubusercontent.com/{owner}/{repo}/HEAD/README.md` | text | monthly | Install commands and flags |
 | DEF CON media | `https://media.defcon.org/` | directory index | yearly | Talk archives |
 | Hacker News | `https://hn.algolia.com/api/v1/search` | JSON | on demand | Lead generator |
+| watchTowr Labs | `https://labs.watchtowr.com/rss/` | RSS | weekly | Appliance research |
+| Horizon3 | `https://horizon3.ai/feed/` | RSS | weekly | CVE analysis |
+| Trail of Bits | `https://blog.trailofbits.com/feed/` | RSS | weekly | Audits and tooling |
+| Project Zero | `https://googleprojectzero.blogspot.com/feeds/posts/default?alt=rss` | Atom | weekly | Deep research |
+| Bugtraq | `https://seclists.org/bugtraq/` | HTML | monthly | Historical advisories |
+| infosec.exchange | `https://infosec.exchange/api/v1/timelines/public` | JSON | daily | Researcher posts |
 | Lobsters | `https://lobste.rs/hottest.json` | JSON | on demand | Lead generator |
 | NVD | `https://nvd.nist.gov/` | HTML and API | on demand | CVE enrichment |
 | MITRE ATT&CK | `https://attack.mitre.org/` | HTML | quarterly | Technique IDs |
@@ -141,11 +147,11 @@ The `data/` directory in this skill contains:
 
 | File | Rows | What it holds |
 |---|---:|---|
-| `threads.jsonl` | 447 | Forums, reports, and article leads |
+| `threads.jsonl` | 556 | Forums, reports, and article leads |
 | `experts.jsonl` | 94 | Named researchers, handles, and works |
 | `canonical_tools.jsonl` | 87 | Curated tool shelf with install lines |
-| `methods.jsonl` | 85 | Method and research URLs |
-| `method_details.jsonl` | 42 | Headings, intros, code density |
+| `methods.jsonl` | 156 | Method and research URLs |
+| `method_details.jsonl` | 73 | Headings, intros, code density |
 | `thread_details.jsonl` | 38 | Thread and report extracts |
 | `re_tools.jsonl` | 570 | Reverse-engineering and exploitation tool shelf |
 | `github_atlas.jsonl` | 2064 | Security repository atlas |

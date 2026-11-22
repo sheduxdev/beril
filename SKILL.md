@@ -326,6 +326,7 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `docs/mastery.md` | Long-term specialist tracks |
 | `docs/training.md` | How to run the training loop |
 | `docs/agents.md` | Entry files for Claude, Cursor, Gemini, Copilot and others |
+| `docs/dashboard.md` | Local tracking dashboard and its limits |
 | `agents/` | Forum, expert, tool, method, RE, crash, fuzzing and firmware prompts |
 
 ## Legal and ethical bounds

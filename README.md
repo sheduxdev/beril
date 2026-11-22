@@ -47,6 +47,7 @@ beril/
 ├── docs/agents.md               # agent file matrix and installer
 ├── docs/break-my-app.md         # request-to-report runbook
 ├── docs/mastery.md              # long-term track map
+├── docs/dashboard.md            # local dashboard guide
 ├── references/
 │   ├── camoufox-playbook.md     # challenge ladder and site recipes
 │   ├── forums.md                # community catalog
@@ -105,6 +106,16 @@ Optional known-CVE pass, if nuclei is installed:
 nuclei -u https://your-app.example -severity medium,high,critical \
   -tags cve,exposure,misconfig -o scans/nuclei.txt
 ```
+
+## Dashboard
+
+```bash
+./beril dashboard
+```
+
+![dashboard](assets/dashboard.png)
+
+A local, Orbit-style dashboard at `127.0.0.1:8788`. Overview, threads, experts, tools, methods, GitHub atlas, labs, training, scans and sources. Ten labs run from the UI, scans run read-only. Loopback only. See `docs/dashboard.md`.
 
 ## Use with any agent
 
@@ -201,11 +212,11 @@ Read `SKILL.md` for the full loop and the quality gates.
 
 | Layer | Snapshot | What it answers |
 |---|---:|---|
-| Threads and reports | 447 | What is being found now? |
+| Threads and reports | 556 | What is being found now? |
 | Experts | 94 | Who knows this best? |
 | Tools | 658 | What should I run? |
 | GitHub atlas | 2,064 | What exists to build or study? |
-| Methods | 85 | How do they do it? |
+| Methods | 156 | How do they do it? |
 
 The snapshot is a sample, not a census. See `references/source-catalog.md` for endpoints, dates, and gaps.
 

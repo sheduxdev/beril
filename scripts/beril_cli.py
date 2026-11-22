@@ -24,6 +24,7 @@ COMMANDS = {
     "labs": "labs.py",
     "reflect": "reflect.py",
     "github": "github_sweep.py",
+    "dashboard": "dashboard.py",
 }
 
 

@@ -13,6 +13,7 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 - [README.md](README.md): install and project map
 - [docs/break-my-app.md](docs/break-my-app.md): request-to-report runbook
 - [docs/agents.md](docs/agents.md): agent file matrix
+- [docs/dashboard.md](docs/dashboard.md): local dashboard
 
 ## Assessment
 

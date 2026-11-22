@@ -186,6 +186,56 @@ Harvested snapshot: 16 rows from the current index.
 - Take: slides and papers with novel primitives.
 - Watch out: talk titles overpromise. Find the paper or the video before citing a technique.
 
+
+### watchTowr Labs
+
+- URL: `https://labs.watchtowr.com/`
+- Feed: `https://labs.watchtowr.com/rss/`
+- Harvested snapshot: 15 rows.
+- Take: pre-auth appliance RCE, patch bypasses, edge device memory bugs, exploit chains.
+- Watch out: vendor-heavy and CVE-specific. Check the affected version and the patch.
+
+### Horizon3 Attack Research
+
+- URL: `https://horizon3.ai/attack-research/`
+- Feed: `https://horizon3.ai/feed/`
+- Harvested snapshot: 10 rows.
+- Take: CVE deep dives, exploitability analysis, patch diff walkthroughs.
+- Watch out: some posts are product-led. Read the technical section.
+
+### Trail of Bits blog
+
+- URL: `https://blog.trailofbits.com/`
+- Feed: `https://blog.trailofbits.com/feed/`
+- Harvested snapshot: 20 rows.
+- Take: audits, fuzzing, cryptography, supply chain, tooling.
+- Watch out: high quality, low volume. Do not skim the method.
+
+### Google Project Zero
+
+- URL: `https://googleprojectzero.blogspot.com/`
+- Feed: `https://googleprojectzero.blogspot.com/feeds/posts/default?alt=rss`
+- Take: deep vulnerability research and disclosure process.
+- Watch out: long posts. Read the abstract and the root cause first.
+
+### NCC Group Research
+
+- URL: `https://research.nccgroup.com/`
+- Take: audits, protocol work, cloud and hardware.
+- Watch out: the feed path changes. Use the listing.
+
+### Bugcrowd blog
+
+- URL: `https://www.bugcrowd.com/blog/`
+- Take: program lessons, VRT updates, researcher stories.
+- Watch out: the feed redirects to HTML. Parse the listing.
+
+### Bugtraq and WebAppSec
+
+- URLs: `https://seclists.org/bugtraq/`, `https://seclists.org/webappsec/`
+- Take: raw advisories and old disclosure.
+- Watch out: both lists are largely dormant. Use them for history, not current CVEs.
+
 ### Infosec Mastodon
 
 - URL: `https://infosec.exchange/`

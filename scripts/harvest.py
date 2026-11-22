@@ -307,10 +307,71 @@ def forums_fulldisclosure(s: CamoSession, limit: int) -> list[dict]:
     return rows
 
 
+
+def forums_rss(s: CamoSession, limit: int, name: str, url: str) -> list[dict]:
+    rows = []
+    for item in s.rss(url)[:limit]:
+        if not item["title"] or not item["url"]:
+            continue
+        rows.append({"type": "thread", "source": name, "url": item["url"], "title": item["title"],
+                     "author": item["author"], "date": item["date"], "tags": ["research"],
+                     "summary": clean(item["summary"], 600), "collected_at": NOW()})
+    return rows
+
+
+def forums_projectzero(s, limit): return forums_rss(s, limit, "Project Zero", "https://googleprojectzero.blogspot.com/feeds/posts/default?alt=rss")
+def forums_watchtowr(s, limit): return forums_rss(s, limit, "watchTowr Labs", "https://labs.watchtowr.com/rss/")
+def forums_horizon3(s, limit): return forums_rss(s, limit, "Horizon3", "https://horizon3.ai/feed/")
+def forums_trailofbits(s, limit): return forums_rss(s, limit, "Trail of Bits", "https://blog.trailofbits.com/feed/")
+def forums_nccgroup(s, limit): return forums_rss(s, limit, "NCC Group", "https://research.nccgroup.com/feed/")
+def forums_bugcrowd(s, limit): return forums_rss(s, limit, "Bugcrowd", "https://www.bugcrowd.com/blog/feed/")
+def forums_portswigger_rss(s, limit): return forums_rss(s, limit, "PortSwigger Research", "https://portswigger.net/research/rss")
+
+
+def forums_mastodon(s: CamoSession, limit: int) -> list[dict]:
+    data = s.json("https://infosec.exchange/api/v1/timelines/public?limit=40&local=true") or []
+    rows = []
+    for item in data[:limit]:
+        from bs4 import BeautifulSoup
+        text = BeautifulSoup(item.get("content", ""), "html.parser").get_text(" ", strip=True)
+        rows.append({"type": "thread", "source": "infosec.exchange", "url": item.get("url", ""),
+                     "title": clean(text, 140), "author": (item.get("account") or {}).get("acct", ""),
+                     "date": item.get("created_at", ""), "tags": ["mastodon"], "summary": clean(text, 600),
+                     "metrics": {"reblogs": item.get("reblogs_count"), "favourites": item.get("favourites_count")},
+                     "collected_at": NOW()})
+    return rows
+
+
+def forums_seclists(s: CamoSession, limit: int, name: str, path: str) -> list[dict]:
+    base = f"https://seclists.org/{path}/"
+    html = s.get(base)
+    months = [(h, t) for h, t in extract_links(html or "", base) if re.search(rf"/{path}/20\d\d/[A-Z][a-z]{{2}}/$", h)]
+    if not months:
+        return []
+    month, _ = months[0]
+    page = s.get(month)
+    rows = []
+    for href, text in extract_links(page or "", month):
+        if re.search(rf"/{path}/20\d\d/[A-Z][a-z]{{2}}/\d+$", href) and len(text) > 5:
+            rows.append({"type": "thread", "source": name, "url": href, "title": text,
+                         "author": "", "date": "", "tags": [path], "summary": "", "collected_at": NOW()})
+            if len(rows) >= limit:
+                break
+    return rows
+
+
+def forums_bugtraq(s, limit): return forums_seclists(s, limit, "Bugtraq", "bugtraq")
+def forums_webappsec(s, limit): return forums_seclists(s, limit, "WebAppSec", "webappsec")
+
+
 FORUMS = {"0x00sec": forums_0x00sec, "htb": forums_htb, "reddit": forums_reddit,
           "hackerone": forums_hackerone, "intigriti": forums_intigriti,
           "hackforums": forums_hackforums, "hn": forums_hn, "lobsters": forums_lobsters,
-          "fulldisclosure": forums_fulldisclosure}
+          "fulldisclosure": forums_fulldisclosure, "projectzero": forums_projectzero,
+          "watchtowr": forums_watchtowr, "horizon3": forums_horizon3,
+          "trailofbits": forums_trailofbits, "nccgroup": forums_nccgroup,
+          "bugcrowd": forums_bugcrowd, "portswigger_rss": forums_portswigger_rss,
+          "mastodon": forums_mastodon, "bugtraq": forums_bugtraq, "webappsec": forums_webappsec}
 
 
 # ----------------------------------------------------------------- experts

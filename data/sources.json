@@ -2,11 +2,11 @@
   "snapshot": "2026-11-22",
   "collector": "Camoufox v158.0.1-beta.41, Firefox patched build",
   "counts": {
-    "threads.jsonl": 447,
+    "threads.jsonl": 556,
     "experts.jsonl": 94,
     "canonical_tools.jsonl": 89,
-    "methods.jsonl": 85,
-    "method_details.jsonl": 42,
+    "methods.jsonl": 156,
+    "method_details.jsonl": 73,
     "thread_details.jsonl": 38,
     "re_tools.jsonl": 570,
     "curriculum.json": 25,
@@ -27,7 +27,13 @@
     "HackForums": 42,
     "Hacker News": 95,
     "Lobsters": 25,
-    "Full Disclosure": 16
+    "Full Disclosure": 16,
+    "watchTowr Labs": 15,
+    "Horizon3": 10,
+    "Trail of Bits": 20,
+    "PortSwigger Research": 30,
+    "infosec.exchange": 30,
+    "Bugtraq": 4
   },
   "upstream": {
     "repos": 44,
