@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400" role="img" aria-label="Beril, a Camoufox cybersecurity intelligence skill">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#08110f"/>
+      <stop offset="1" stop-color="#0d1a17"/>
+    </linearGradient>
+    <linearGradient id="crystal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7ef0d0"/>
+      <stop offset="0.55" stop-color="#2fbf9b"/>
+      <stop offset="1" stop-color="#126a58"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d6fff2"/>
+      <stop offset="1" stop-color="#4cd7b2"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="400" fill="url(#bg)"/>
+  <g opacity="0.18" stroke="#3ad7b0" stroke-width="1">
+    <path d="M0 80h1200M0 160h1200M0 240h1200M0 320h1200"/>
+    <path d="M120 0v400M240 0v400M360 0v400M480 0v400M600 0v400M720 0v400M840 0v400M960 0v400M1080 0v400"/>
+  </g>
+  <g transform="translate(150 70)">
+    <polygon points="120,0 210,70 180,210 60,210 30,70" fill="url(#crystal)" opacity="0.95"/>
+    <polygon points="120,0 210,70 120,120 30,70" fill="#a8ffe6" opacity="0.55"/>
+    <polygon points="120,120 210,70 180,210 60,210 30,70" fill="#0b5b4b" opacity="0.55"/>
+    <polygon points="120,0 210,70 180,210 60,210 30,70" fill="none" stroke="url(#edge)" stroke-width="3"/>
+    <path d="M120 0v120M30 70l90 50 90-50M60 210l60-90 60 90" fill="none" stroke="#e2fff7" stroke-width="1.4" opacity="0.8"/>
+  </g>
+  <text x="420" y="205" fill="#eafff8" font-family="Inter, Helvetica, Arial, sans-serif" font-size="132" font-weight="700" letter-spacing="8">BERIL</text>
+  <text x="426" y="258" fill="#7fe8cc" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" letter-spacing="3">CYBER INTELLIGENCE / CAMOUFOX</text>
+  <text x="426" y="310" fill="#9fb8b1" font-family="Inter, Helvetica, Arial, sans-serif" font-size="19">forums · experts · tools · methods · evidence</text>
+</svg>

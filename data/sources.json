@@ -1,0 +1,36 @@
+{
+  "snapshot": "2026-11-22",
+  "collector": "Camoufox v158.0.1-beta.41, Firefox patched build",
+  "counts": {
+    "threads.jsonl": 269,
+    "experts.jsonl": 94,
+    "canonical_tools.jsonl": 87,
+    "methods.jsonl": 85,
+    "method_details.jsonl": 42,
+    "thread_details.jsonl": 38
+  },
+  "thread_sources": {
+    "0x00sec": 20,
+    "Hack The Box Forum": 35,
+    "r/netsec": 27,
+    "r/bugbounty": 27,
+    "r/websecurity": 12,
+    "r/AskNetsec": 10,
+    "r/ReverseEngineering": 10,
+    "r/blueteamsec": 8,
+    "HackerOne Hacktivity": 100,
+    "Intigriti": 20
+  },
+  "upstream": {
+    "repos": 43,
+    "skill_files": 22976,
+    "repos_with_skills": 21,
+    "clone_depth": 1,
+    "approx_size_gb": 3.1
+  },
+  "notes": [
+    "Star counts and disclosure totals are snapshots, not live values.",
+    "HackerOne report bodies may be private; only public metadata and summaries are stored.",
+    "Reddit post text can include comments; trim before quoting."
+  ]
+}
