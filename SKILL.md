@@ -314,6 +314,7 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `references/firmware-iot.md` | Extraction, emulation, UART, JTAG, radio |
 | `references/curriculum.md` | 25-week training plan and grading |
 | `references/exercises.md` | 68 drills by domain |
+| `references/self-training.md` | Turn labs into durable method notes |
 | `docs/training.md` | How to run the training loop |
 | `agents/` | Forum, expert, tool, method, RE, crash, fuzzing and firmware prompts |
 

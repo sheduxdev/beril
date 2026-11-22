@@ -22,6 +22,7 @@ COMMANDS = {
     "re": "re_triage.py",
     "train": "train.py",
     "labs": "labs.py",
+    "reflect": "reflect.py",
 }
 
 

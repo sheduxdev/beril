@@ -53,6 +53,17 @@ Score reproduction, evidence, root cause, and communication from 0 to 3. Twelve 
 - One writeup a month.
 - Stop at the agreed proof.
 
+## Learn from each lab
+
+```bash
+./beril reflect --lab web --finding "IDOR on profile" \
+  --root-cause "the query id is used instead of the session id" \
+  --evidence labs/web/evidence/idor.txt --fix "scope the query by session uid"
+./beril reflect --review
+```
+
+See `references/self-training.md`.
+
 ## Full plan
 
 `references/curriculum.md` has the phases and capstone. `references/exercises.md` has 68 short drills by domain.

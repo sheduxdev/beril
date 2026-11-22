@@ -1,0 +1,1 @@
+{"lab": "web", "finding": "IDOR on profile", "root_cause": "the query id is used instead of the session id", "evidence": "labs/web/evidence/idor.txt", "fix": "scope the query by session uid", "at": "2026-11-22T13:17"}

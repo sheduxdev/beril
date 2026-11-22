@@ -144,6 +144,7 @@ The `data/` directory in this skill contains:
 | `thread_details.jsonl` | 38 | Thread and report extracts |
 | `re_tools.jsonl` | 52 | Reverse-engineering and exploitation tool shelf |
 | `curriculum.json` | 25 | Training plan with drills and checkpoints |
+| `learned_methods.jsonl` | 1 | Reflection notes from labs |
 
 The snapshot is a sample, not a complete map. HackerOne alone publishes thousands of reports. The selection favors recent, public, and method-rich material.
 

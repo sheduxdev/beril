@@ -9,7 +9,8 @@
     "method_details.jsonl": 42,
     "thread_details.jsonl": 38,
     "re_tools.jsonl": 52,
-    "curriculum.json": 25
+    "curriculum.json": 25,
+    "learned_methods.jsonl": 1
   },
   "thread_sources": {
     "0x00sec": 20,
