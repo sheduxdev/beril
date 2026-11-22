@@ -1,0 +1,3 @@
+template,enroll_principals,requires_approval,san_enrollable,client_auth
+WebServer,Helpdesk,false,true,true
+UserOnly,Domain Users,false,false,false

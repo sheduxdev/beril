@@ -1,0 +1,5 @@
+source,target,edge
+Helpdesk,svc_sql,GenericAll
+alice,Helpdesk,MemberOf
+svc_sql,APP01,AdminTo
+APP01,DC01,HasSession

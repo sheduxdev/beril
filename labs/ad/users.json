@@ -1,0 +1,7 @@
+[
+  {"name": "alice", "groups": ["Domain Users", "Helpdesk"], "spn": null, "admin_to": []},
+  {"name": "helpdesk", "groups": ["Domain Users"], "spn": null, "admin_to": []},
+  {"name": "svc_backup", "groups": ["Domain Users", "Backup Operators"], "spn": ["MSSQLSvc/backup.lab:1433"], "admin_to": []},
+  {"name": "svc_sql", "groups": ["Domain Users"], "spn": ["MSSQLSvc/sql.lab:1433"], "admin_to": ["APP01"]},
+  {"name": "administrator", "groups": ["Domain Admins"], "spn": null, "admin_to": ["DC01"]}
+]

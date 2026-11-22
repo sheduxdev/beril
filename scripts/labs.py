@@ -20,6 +20,9 @@ LABS = {
     "mobile": ["bash", "labs/mobile/tests.sh"],
     "firmware": ["bash", "labs/firmware/tests.sh"],
     "cloud": ["bash", "labs/cloud/tests.sh"],
+    "ad": ["bash", "labs/ad/tests.sh"],
+    "llm": ["bash", "labs/llm/tests.sh"],
+    "detection": ["bash", "labs/detection/tests.sh"],
     "fuzz": ["bash", "-c", "cd labs/fuzz && make -s clean all && timeout 20 ./fuzz corpus -runs=20000 -max_len=256 2>&1 | tail -5"],
 }
 

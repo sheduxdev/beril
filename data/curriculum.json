@@ -691,7 +691,7 @@
         }
       ],
       "reading": "https://bloodhound.specterops.io/",
-      "lab": "labs/cloud",
+      "lab": "labs/ad",
       "checkpoint": "What is the difference between GenericAll and WriteDACL?",
       "deliverable": {
         "key": "w18x",
@@ -823,7 +823,7 @@
         }
       ],
       "reading": "https://attack.mitre.org/",
-      "lab": "labs/firmware",
+      "lab": "labs/detection",
       "checkpoint": "What makes a detection high fidelity?",
       "deliverable": {
         "key": "w22x",
@@ -856,7 +856,7 @@
         }
       ],
       "reading": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
-      "lab": "labs/web",
+      "lab": "labs/llm",
       "checkpoint": "Why is a system prompt leak not always a finding?",
       "deliverable": {
         "key": "w23x",

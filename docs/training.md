@@ -34,6 +34,9 @@ Mark tasks:
 | `mobile` | exported components and deep links |
 | `firmware` | extraction and CGI injection |
 | `cloud` | Terraform, pod, Dockerfile |
+| `ad` | ACL path and ADCS |
+| `llm` | prompt injection and RAG |
+| `detection` | Sigma and log triage |
 
 Each lab has `README.md`, `tests.sh`, and `ANSWERS.md`. Attempt first, then read the answers.
 

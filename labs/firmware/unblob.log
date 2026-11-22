@@ -1,48 +1,48 @@
-2026-11-22 10:21.17 [debug    ] Logging configured             extract_root=. pid=1401653 vebosity_level=0
-2026-11-22 10:21.17 [info     ] Creating extraction directory  extract_root=. pid=1401653
-2026-11-22 10:21.17 [info     ] Start processing file          file=/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware/firmware.bin pid=1401653
-2026-11-22 10:21.17 [info     ] Activated FS access restrictions; rules=[Read("/"), ReadWrite("/dev/shm"), ReadWrite("/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware/out"), RemoveDir("/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware/out"), RemoveFile("/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware/out"), MakeDir("/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware"), ReadWrite("unblob.log")], status=FullyEnforced pid=1401653
-2026-11-22 10:21.17 [debug    ] Detected file-magic            magic=data path=/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware/firmware.bin pid=1401658
-2026-11-22 10:21.17 [debug    ] Processing file                path=/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware/firmware.bin pid=1401658 size=0x639
-2026-11-22 10:21.17 [debug    ] Calculating chunk for pattern match handler=zip pid=1401658 real_offset=0x109 start_offset=0x109
-2026-11-22 10:21.17 [debug    ] Found valid chunk              chunk=0x109-0x5f9 handler=zip pid=1401658
-2026-11-22 10:21.17 [debug    ] Ended searching for chunks     all_chunks=[0x109-0x5f9] pid=1401658
-2026-11-22 10:21.17 [debug    ] Removed inner chunks           outer_chunk_count=1 pid=1401658 removed_inner_chunk_count=0
-2026-11-22 10:21.17 [warning  ] Found unknown Chunks           chunks=[0x0-0x109, 0x5f9-0x639] pid=1401658
-2026-11-22 10:21.17 [info     ] Extracting unknown chunk       chunk=0x0-0x109 path=firmware.bin_extract/0-265.unknown pid=1401658
-2026-11-22 10:21.17 [debug    ] Carving chunk                  path=firmware.bin_extract/0-265.unknown pid=1401658
-2026-11-22 10:21.17 [debug    ] Calculating entropy for file   path=firmware.bin_extract/0-265.unknown pid=1401658 size=0x109
-2026-11-22 10:21.17 [debug    ] Shannon entropy calculated     block_size=0x400 highest=4.02 lowest=4.02 mean=4.02 path=firmware.bin_extract/0-265.unknown pid=1401658 size=0x109
-2026-11-22 10:21.17 [debug    ] Chi square probability calculated block_size=0x400 highest=0.0 lowest=0.0 mean=0.0 path=firmware.bin_extract/0-265.unknown pid=1401658 size=0x109
-2026-11-22 10:21.17 [info     ] Extracting unknown chunk       chunk=0x5f9-0x639 path=firmware.bin_extract/1529-1593.padding pid=1401658
-2026-11-22 10:21.17 [debug    ] Carving chunk                  path=firmware.bin_extract/1529-1593.padding pid=1401658
-2026-11-22 10:21.17 [debug    ] Calculating entropy for file   path=firmware.bin_extract/1529-1593.padding pid=1401658 size=0x40
-2026-11-22 10:21.17 [debug    ] Shannon entropy calculated     block_size=0x400 highest=0.0 lowest=0.0 mean=0.0 path=firmware.bin_extract/1529-1593.padding pid=1401658 size=0x40
-2026-11-22 10:21.17 [debug    ] Chi square probability calculated block_size=0x400 highest=0.0 lowest=0.0 mean=0.0 path=firmware.bin_extract/1529-1593.padding pid=1401658 size=0x40
-2026-11-22 10:21.17 [info     ] Extracting valid chunk         chunk=0x109-0x5f9 path=firmware.bin_extract/265-1529.zip pid=1401658
-2026-11-22 10:21.17 [debug    ] Carving chunk                  path=firmware.bin_extract/265-1529.zip pid=1401658
-2026-11-22 10:21.17 [debug    ] Running extract command        command="7z x -p -y '/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware/out/firmware.bin_extract/265-1529.zip' '-o/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware/out/firmware.bin_extract/265-1529.zip_extract'" pid=1401658
-2026-11-22 10:21.17 [debug    ] Removing extracted chunk       path=firmware.bin_extract/265-1529.zip pid=1401658
-2026-11-22 10:21.17 [debug    ] Processing directory           path=firmware.bin_extract/265-1529.zip_extract pid=1401660
-2026-11-22 10:21.17 [debug    ] Processing directory           path=firmware.bin_extract/265-1529.zip_extract/etc pid=1401662
-2026-11-22 10:21.17 [debug    ] Processing directory           path=firmware.bin_extract/265-1529.zip_extract/www pid=1401664
-2026-11-22 10:21.17 [debug    ] Processing directory           path=firmware.bin_extract/265-1529.zip_extract/www/cgi-bin pid=1401666
-2026-11-22 10:21.17 [debug    ] Processing directory           path=firmware.bin_extract/265-1529.zip_extract/etc/init.d pid=1401675
-2026-11-22 10:21.17 [debug    ] Detected file-magic            magic='POSIX shell script text executable\\012- a /bin/sh script, ASCII text executable' path=firmware.bin_extract/265-1529.zip_extract/www/cgi-bin/diagnostic.cgi pid=1401677
-2026-11-22 10:21.17 [debug    ] Detected file-magic            magic='ASCII text' path=firmware.bin_extract/265-1529.zip_extract/etc/update.conf pid=1401671
-2026-11-22 10:21.17 [debug    ] Processing file                path=firmware.bin_extract/265-1529.zip_extract/www/cgi-bin/diagnostic.cgi pid=1401677 size=0xd0
-2026-11-22 10:21.17 [debug    ] Detected file-magic            magic='ASCII text' path=firmware.bin_extract/265-1529.zip_extract/etc/app.env pid=1401673
-2026-11-22 10:21.17 [debug    ] Detected file-magic            magic='ASCII text' path=firmware.bin_extract/265-1529.zip_extract/etc/passwd pid=1401668
-2026-11-22 10:21.17 [debug    ] Detected file-magic            magic='POSIX shell script text executable\\012- a /bin/sh script, ASCII text executable' path=firmware.bin_extract/265-1529.zip_extract/etc/init.d/rcS pid=1401679
-2026-11-22 10:21.17 [debug    ] Processing file                path=firmware.bin_extract/265-1529.zip_extract/etc/update.conf pid=1401671 size=0x58
-2026-11-22 10:21.17 [debug    ] Processing file                path=firmware.bin_extract/265-1529.zip_extract/etc/app.env pid=1401673 size=0x87
-2026-11-22 10:21.17 [debug    ] Processing file                path=firmware.bin_extract/265-1529.zip_extract/etc/init.d/rcS pid=1401679 size=0xa1
-2026-11-22 10:21.17 [debug    ] Processing file                path=firmware.bin_extract/265-1529.zip_extract/etc/passwd pid=1401668 size=0x4a
-2026-11-22 10:21.17 [debug    ] Detected file-magic            magic='ASCII text' path=firmware.bin_extract/265-1529.zip_extract/etc/shadow pid=1401669
-2026-11-22 10:21.17 [debug    ] Processing file                path=firmware.bin_extract/265-1529.zip_extract/etc/shadow pid=1401669 size=0x7d
-2026-11-22 10:21.17 [debug    ] Ended searching for chunks     all_chunks=[] pid=1401673
-2026-11-22 10:21.17 [debug    ] Ended searching for chunks     all_chunks=[] pid=1401671
-2026-11-22 10:21.17 [debug    ] Ended searching for chunks     all_chunks=[] pid=1401669
-2026-11-22 10:21.17 [debug    ] Ended searching for chunks     all_chunks=[] pid=1401677
-2026-11-22 10:21.17 [debug    ] Ended searching for chunks     all_chunks=[] pid=1401668
-2026-11-22 10:21.17 [debug    ] Ended searching for chunks     all_chunks=[] pid=1401679
+2026-11-22 10:25.11 [debug    ] Logging configured             extract_root=. pid=1403356 vebosity_level=0
+2026-11-22 10:25.11 [info     ] Creating extraction directory  extract_root=. pid=1403356
+2026-11-22 10:25.11 [info     ] Start processing file          file=/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware/firmware.bin pid=1403356
+2026-11-22 10:25.11 [info     ] Activated FS access restrictions; rules=[Read("/"), ReadWrite("/dev/shm"), ReadWrite("/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware/out"), RemoveDir("/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware/out"), RemoveFile("/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware/out"), MakeDir("/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware"), ReadWrite("unblob.log")], status=FullyEnforced pid=1403356
+2026-11-22 10:25.11 [debug    ] Detected file-magic            magic=data path=/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware/firmware.bin pid=1403360
+2026-11-22 10:25.11 [debug    ] Processing file                path=/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware/firmware.bin pid=1403360 size=0x639
+2026-11-22 10:25.12 [debug    ] Calculating chunk for pattern match handler=zip pid=1403360 real_offset=0x109 start_offset=0x109
+2026-11-22 10:25.12 [debug    ] Found valid chunk              chunk=0x109-0x5f9 handler=zip pid=1403360
+2026-11-22 10:25.12 [debug    ] Ended searching for chunks     all_chunks=[0x109-0x5f9] pid=1403360
+2026-11-22 10:25.12 [debug    ] Removed inner chunks           outer_chunk_count=1 pid=1403360 removed_inner_chunk_count=0
+2026-11-22 10:25.12 [warning  ] Found unknown Chunks           chunks=[0x0-0x109, 0x5f9-0x639] pid=1403360
+2026-11-22 10:25.12 [info     ] Extracting unknown chunk       chunk=0x0-0x109 path=firmware.bin_extract/0-265.unknown pid=1403360
+2026-11-22 10:25.12 [debug    ] Carving chunk                  path=firmware.bin_extract/0-265.unknown pid=1403360
+2026-11-22 10:25.12 [debug    ] Calculating entropy for file   path=firmware.bin_extract/0-265.unknown pid=1403360 size=0x109
+2026-11-22 10:25.12 [debug    ] Shannon entropy calculated     block_size=0x400 highest=4.02 lowest=4.02 mean=4.02 path=firmware.bin_extract/0-265.unknown pid=1403360 size=0x109
+2026-11-22 10:25.12 [debug    ] Chi square probability calculated block_size=0x400 highest=0.0 lowest=0.0 mean=0.0 path=firmware.bin_extract/0-265.unknown pid=1403360 size=0x109
+2026-11-22 10:25.12 [info     ] Extracting unknown chunk       chunk=0x5f9-0x639 path=firmware.bin_extract/1529-1593.padding pid=1403360
+2026-11-22 10:25.12 [debug    ] Carving chunk                  path=firmware.bin_extract/1529-1593.padding pid=1403360
+2026-11-22 10:25.12 [debug    ] Calculating entropy for file   path=firmware.bin_extract/1529-1593.padding pid=1403360 size=0x40
+2026-11-22 10:25.12 [debug    ] Shannon entropy calculated     block_size=0x400 highest=0.0 lowest=0.0 mean=0.0 path=firmware.bin_extract/1529-1593.padding pid=1403360 size=0x40
+2026-11-22 10:25.12 [debug    ] Chi square probability calculated block_size=0x400 highest=0.0 lowest=0.0 mean=0.0 path=firmware.bin_extract/1529-1593.padding pid=1403360 size=0x40
+2026-11-22 10:25.12 [info     ] Extracting valid chunk         chunk=0x109-0x5f9 path=firmware.bin_extract/265-1529.zip pid=1403360
+2026-11-22 10:25.12 [debug    ] Carving chunk                  path=firmware.bin_extract/265-1529.zip pid=1403360
+2026-11-22 10:25.12 [debug    ] Running extract command        command="7z x -p -y '/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware/out/firmware.bin_extract/265-1529.zip' '-o/home/sheduxdev/Masaüstü/bounty/beril/labs/firmware/out/firmware.bin_extract/265-1529.zip_extract'" pid=1403360
+2026-11-22 10:25.12 [debug    ] Removing extracted chunk       path=firmware.bin_extract/265-1529.zip pid=1403360
+2026-11-22 10:25.12 [debug    ] Processing directory           path=firmware.bin_extract/265-1529.zip_extract pid=1403362
+2026-11-22 10:25.12 [debug    ] Processing directory           path=firmware.bin_extract/265-1529.zip_extract/etc pid=1403364
+2026-11-22 10:25.12 [debug    ] Processing directory           path=firmware.bin_extract/265-1529.zip_extract/www pid=1403366
+2026-11-22 10:25.12 [debug    ] Processing directory           path=firmware.bin_extract/265-1529.zip_extract/www/cgi-bin pid=1403378
+2026-11-22 10:25.12 [debug    ] Processing directory           path=firmware.bin_extract/265-1529.zip_extract/etc/init.d pid=1403376
+2026-11-22 10:25.12 [debug    ] Detected file-magic            magic='POSIX shell script text executable\\012- a /bin/sh script, ASCII text executable' path=firmware.bin_extract/265-1529.zip_extract/etc/init.d/rcS pid=1403382
+2026-11-22 10:25.12 [debug    ] Detected file-magic            magic='ASCII text' path=firmware.bin_extract/265-1529.zip_extract/etc/passwd pid=1403368
+2026-11-22 10:25.12 [debug    ] Processing file                path=firmware.bin_extract/265-1529.zip_extract/etc/init.d/rcS pid=1403382 size=0xa1
+2026-11-22 10:25.12 [debug    ] Detected file-magic            magic='ASCII text' path=firmware.bin_extract/265-1529.zip_extract/etc/shadow pid=1403370
+2026-11-22 10:25.12 [debug    ] Detected file-magic            magic='ASCII text' path=firmware.bin_extract/265-1529.zip_extract/etc/update.conf pid=1403372
+2026-11-22 10:25.12 [debug    ] Processing file                path=firmware.bin_extract/265-1529.zip_extract/etc/passwd pid=1403368 size=0x4a
+2026-11-22 10:25.12 [debug    ] Processing file                path=firmware.bin_extract/265-1529.zip_extract/etc/shadow pid=1403370 size=0x7d
+2026-11-22 10:25.12 [debug    ] Processing file                path=firmware.bin_extract/265-1529.zip_extract/etc/update.conf pid=1403372 size=0x58
+2026-11-22 10:25.12 [debug    ] Detected file-magic            magic='ASCII text' path=firmware.bin_extract/265-1529.zip_extract/etc/app.env pid=1403374
+2026-11-22 10:25.12 [debug    ] Detected file-magic            magic='POSIX shell script text executable\\012- a /bin/sh script, ASCII text executable' path=firmware.bin_extract/265-1529.zip_extract/www/cgi-bin/diagnostic.cgi pid=1403380
+2026-11-22 10:25.12 [debug    ] Processing file                path=firmware.bin_extract/265-1529.zip_extract/etc/app.env pid=1403374 size=0x87
+2026-11-22 10:25.12 [debug    ] Processing file                path=firmware.bin_extract/265-1529.zip_extract/www/cgi-bin/diagnostic.cgi pid=1403380 size=0xd0
+2026-11-22 10:25.12 [debug    ] Ended searching for chunks     all_chunks=[] pid=1403382
+2026-11-22 10:25.12 [debug    ] Ended searching for chunks     all_chunks=[] pid=1403380
+2026-11-22 10:25.12 [debug    ] Ended searching for chunks     all_chunks=[] pid=1403372
+2026-11-22 10:25.12 [debug    ] Ended searching for chunks     all_chunks=[] pid=1403368
+2026-11-22 10:25.12 [debug    ] Ended searching for chunks     all_chunks=[] pid=1403370
+2026-11-22 10:25.12 [debug    ] Ended searching for chunks     all_chunks=[] pid=1403374

@@ -118,7 +118,7 @@ A 25-week curriculum with local labs, drills, checkpoints, and grading rubrics. 
 ./beril labs --run web
 ```
 
-Seven labs are local and runnable: web, binary, fuzz, RE, mobile, firmware, cloud. Each has tasks, a smoke test, and an answer key. Start at `docs/training.md` and `references/curriculum.md`.
+Ten labs are local and runnable: web, binary, fuzz, RE, mobile, firmware, cloud, AD, LLM and detection. Each has tasks, a smoke test, and an answer key. Start at `docs/training.md` and `references/curriculum.md`.
 
 ## Reverse engineering and exploit development
 

@@ -1,0 +1,22 @@
+title: CGI command injection separator
+id: 8f3a-lab-cgi
+status: experimental
+description: A semicolon or encoded semicolon in the diagnostic CGI query
+logsource:
+  category: webserver
+detection:
+  selection:
+    cs-uri-stem|endswith: diagnostic.cgi
+    cs-uri-query|contains:
+      - ";"
+      - "%3B"
+  condition: selection
+fields:
+  - c-ip
+  - cs-uri-query
+falsepositives:
+  - Legitimate parameters that contain an encoded semicolon
+level: high
+tags:
+  - attack.execution
+  - attack.t1059.004

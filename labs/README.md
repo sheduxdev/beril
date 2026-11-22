@@ -11,6 +11,9 @@ Small local targets. Each has a README, tasks, a smoke test, and an answer key.
 | `mobile` | exported components, deep link, JS bridge | `./labs/mobile/tests.sh` |
 | `firmware` | extraction, CGI injection, update signing | `./labs/firmware/tests.sh` |
 | `cloud` | Terraform, pod, Dockerfile review | `./labs/cloud/tests.sh` |
+| `ad` | ACL paths, Kerberoast, ADCS ESC1 | `./labs/ad/tests.sh` |
+| `llm` | prompt injection, RAG leak, exfil | `./labs/llm/tests.sh` |
+| `detection` | Sigma rule and log triage | `./labs/detection/tests.sh` |
 
 ## Rules
 
