@@ -156,6 +156,10 @@ The full list, counts, and roles are in `references/source-catalog.md`.
 - About 300 MB for the Camoufox browser
 - `xvfb` for the headful fallback on Linux
 
+## The name
+
+Beril is a person, not an acronym. She has green eyes and likes pistachios, so the banner does too. The rest of the repository is evidence.
+
 ## License
 
 MIT for the code and original prose. The linked sources and cloned repositories keep their own licenses. See `LICENSE`.
