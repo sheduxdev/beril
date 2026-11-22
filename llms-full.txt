@@ -3202,6 +3202,8 @@ The README is explicit: Ghidra upstream Rust support has improved past the plugi
 
 ### Build and install
 
+Needs JDK 21 or newer, Gradle, and a matching Ghidra install. The build script calls `gradle -PGHIDRA_INSTALL_DIR=...`.
+
 ```bash
 git clone https://github.com/DMaroo/GhidRust
 cd GhidRust
