@@ -23,7 +23,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch' || (github.actor == 'dependabot[bot]' && github.event.pull_request.draft == false)
     runs-on: ubuntu-latest
     steps:
-      - name: Enable squash auto-merge
+      - name: Enable auto-merge with squash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ github.event.pull_request.number || inputs.pr }}
