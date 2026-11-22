@@ -26,6 +26,12 @@ That installs the ProjectDiscovery tools, ffuf, gau, waybackurls, assetfinder, g
 ./beril scan --target https://your-app.example
 ```
 
+If you leave off the target, Beril asks for it:
+
+```bash
+./beril scan
+```
+
 Or install and scan in one command:
 
 ```bash

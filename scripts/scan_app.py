@@ -101,8 +101,9 @@ def tls_info(url: str, timeout: int = 12) -> dict:
                 days = None
                 if not_after:
                     try:
-                        expiry = dt.datetime.strptime(not_after, "%b %d %H:%M:%S %Y %Z")
-                        days = (expiry - dt.datetime.utcnow()).days
+                        expiry = dt.datetime.strptime(not_after, "%b %d %H:%M:%S %Y %Z").replace(
+                            tzinfo=dt.timezone.utc)
+                        days = (expiry - dt.datetime.now(dt.timezone.utc)).days
                     except ValueError:
                         pass
                 return {"enabled": True, "version": tls.version(),
@@ -279,14 +280,17 @@ def render(result: dict) -> str:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--target", required=True, help="URL or host you own or may test")
+    ap.add_argument("--target", default="", help="URL or host you own or may test")
     ap.add_argument("--out", default="", help="output prefix, for example scans/myapp")
     ap.add_argument("--timeout", type=int, default=15)
     ap.add_argument("--insecure", action="store_true", help="skip TLS verification")
     ap.add_argument("--json", action="store_true", help="print JSON")
     args = ap.parse_args()
 
-    result = scan(args.target, args.timeout, args.insecure)
+    target = args.target or input("Target URL (you must own it or have permission): ").strip()
+    if not target:
+        sys.exit("no target given")
+    result = scan(target, args.timeout, args.insecure)
     text = render(result)
     print(json.dumps(result, indent=2, ensure_ascii=False) if args.json else text)
     if args.out:

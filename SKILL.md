@@ -1,6 +1,6 @@
 ---
 name: beril
-description: Build and refresh a cybersecurity intelligence base with Camoufox. Harvests anti-bot forums, disclosed reports, researcher blogs and GitHub tool shelves; profiles experts; extracts their methods; and writes an evidence-linked dossier. Use for bug bounty recon, pentest planning, threat research, expert tracking, tool selection, or when a security site blocks ordinary scraping. Turkish triggers: siber güvenlik araştırması, forum toplama, uzman profili, tool kataloğu, metod çıkarma, bug bounty keşif.
+description: Build and refresh a cybersecurity intelligence base with Camoufox. Harvests anti-bot forums, disclosed reports, researcher blogs and GitHub tool shelves; profiles experts; extracts their methods; writes an evidence-linked dossier; and runs a read-only scan of an app you own. Use for bug bounty recon, pentest planning, threat research, expert tracking, tool selection, application security checks, or when a security site blocks ordinary scraping. Turkish triggers: siber güvenlik araştırması, forum toplama, uzman profili, tool kataloğu, metod çıkarma, bug bounty keşif, uygulama taraması.
 ---
 
 # Beril
