@@ -11,7 +11,7 @@ Use it when you need current field knowledge rather than a static list. Examples
 
 ## When to use
 
-- A bounty program starts and you want the current tool and method landscape for its stack.
+- A bounty program starts and you want the current tools and methods for its stack.
 - A security site returns 403, a Cloudflare challenge, or an empty JavaScript shell to curl.
 - You need to turn scattered forum posts and disclosures into a ranked reading list.
 - You want to compare experts by what they publish, not by follower count.

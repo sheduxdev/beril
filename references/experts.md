@@ -14,7 +14,7 @@ Every profile links to a primary page. If a link dies, search the name plus the 
 
 1. Match the target to a focus area, not to fame.
 2. Read one primary work before quoting the person.
-3. Check the date. A 2019 desync primitive may still work, but the parser landscape has changed.
+3. Check the date. A 2019 desync primitive may still work, but the parsers have changed.
 4. Look for the method, not the payload. Payloads age faster than the reasoning.
 5. When you cite a talk or post, link the exact URL.
 
