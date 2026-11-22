@@ -40,14 +40,17 @@ python scripts/validate.py
 
 ## One-click scan
 
-For a first pass on an application you own:
+For a first pass on an application or artifact you own:
 
 ```bash
 ./install.sh
 ./beril scan --target https://your-app.example
+./beril scan --target ./build/app.apk
+./beril scan --target ./source --tools
+./beril scan --target ./release/app.exe
 ```
 
-The scanner is read-only. It reports headers, TLS, cookies, exposed paths and fingerprints as Markdown and JSON. Add nuclei for a known-CVE pass. The full walkthrough is in `docs/one-click.md`.
+The scanner is read-only and static for local files. Web scans report headers, TLS, cookies, exposed paths and fingerprints. Artifact scans read manifests, hardening flags, secrets, dangerous sinks, and archive paths. Add nuclei for a known-CVE pass on a running app. Walkthroughs are in `docs/one-click.md` and `docs/scan-artifacts.md`.
 
 ## Ten-minute run
 
@@ -270,8 +273,11 @@ python scripts/extract.py --url https://0x00sec.org/some-post/ --out /tmp/note.j
 python scripts/build_dossier.py --data data --out examples/dossier.md
 python scripts/validate.py
 
-# Read-only application scan
+# Read-only application and artifact scan
 ./beril scan --target https://your-app.example --out scans/myapp
+./beril scan --target ./build/app.apk --out scans/app
+./beril scan --target ./source --tools --out scans/source
+./beril scan --target ./bin/service --out scans/service
 ```
 
 ## Reference map
@@ -287,6 +293,7 @@ python scripts/validate.py
 | `references/dossier-template.md` | Output structure and section prompts |
 | `references/scoring.md` | Ranking and keep/drop rules |
 | `docs/one-click.md` | Install, scan and troubleshoot without the terminal |
+| `docs/scan-artifacts.md` | APK, IPA, PE, ELF, archive and source review |
 | `agents/` | Prompts for parallel forum, expert, tool and method research |
 
 ## Legal and ethical bounds

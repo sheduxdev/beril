@@ -19,12 +19,15 @@ beril/
 │   ├── camo.py                  # Camoufox session, cache, parsing helpers
 │   ├── harvest.py               # forums, experts, tools, methods
 │   ├── extract.py               # headings, intros, code density
-│   ├── scan_app.py              # read-only scan for your own application
+│   ├── scan.py                  # URL or artifact router
+│   ├── scan_app.py              # read-only web scan
+│   ├── scan_artifact.py         # APK, IPA, PE, ELF, archive, source scan
 │   ├── build_dossier.py         # JSONL -> Markdown brief
 │   └── validate.py              # schema, links, prose checks
 ├── install.sh                   # one-click setup
 ├── beril                        # command wrapper
 ├── docs/one-click.md            # install and scan without the terminal
+├── docs/scan-artifacts.md       # APK, binary and source review
 ├── references/
 │   ├── camoufox-playbook.md     # challenge ladder and site recipes
 │   ├── forums.md                # community catalog
@@ -38,7 +41,8 @@ beril/
 ├── assets/                      # banner and social preview
 ├── data/                        # snapshot catalogs
 ├── examples/dossier.md          # generated sample brief
-├── examples/scan-example.md     # sample application scan
+├── examples/scan-example.md     # sample web scan
+├── examples/scan-artifact-example.md  # sample source scan
 └── requirements.txt
 ```
 
@@ -51,7 +55,13 @@ cd beril
 ./beril scan --target https://your-app.example
 ```
 
-The scan is read-only. It checks headers, TLS, cookies, a short list of exposed paths, and basic fingerprints. Open the Markdown report in `scans/`. See `docs/one-click.md` for the full walkthrough and the limits.
+The scan is read-only and works on a URL, APK, IPA, PE/EXE/DLL, ELF binary, archive, or source tree. For web targets it checks headers, TLS, cookies, a short list of exposed paths, and fingerprints. For artifacts it reads the manifest or binary, finds secrets and dangerous sinks, and checks hardening flags. Open the Markdown report in `scans/`. See `docs/one-click.md` and `docs/scan-artifacts.md` for the walkthrough and the limits.
+
+```bash
+./beril scan --target ./build/app.apk
+./beril scan --target ./source --tools
+./beril scan --target ./release/app.exe
+```
 
 Optional known-CVE pass, if nuclei is installed:
 

@@ -335,6 +335,73 @@ trivy fs .
 
 Then grep for the framework's dangerous sinks. For Node: `child_process`, `eval`, `vm`, `fs`. For Python: `pickle`, `yaml.load`, `subprocess`, `os.system`. For PHP: `include`, `unserialize`, `eval`.
 
+## Artifact analysis
+
+Use these when `./beril scan` flags an artifact and you need to go deeper.
+
+### APK
+
+```bash
+apktool d app.apk -o app-src
+jadx-gui app.apk
+apksigner verify --print-certs app.apk
+aapt dump badging app.apk
+```
+
+MobSF gives a full report in a browser. Frida and objection are for runtime work on a rooted device or emulator.
+
+### IPA
+
+```bash
+unzip -l app.ipa
+plutil -p Payload/App.app/Info.plist
+otool -L Payload/App.app/App
+```
+
+On Linux, MobSF and a plist parser cover most of the static pass.
+
+### PE
+
+```bash
+objdump -p app.exe | head -80
+strings -n 8 app.exe | grep -Ei "http|cmd|powershell|token"
+```
+
+Ghidra, `r2 -A`, FLOSS, capa, and PEStudio are the deeper tools. Check the signature with `osslsigncode verify`.
+
+### ELF
+
+```bash
+checksec --file=./bin/service
+readelf -hW ./bin/service
+readelf -lW ./bin/service | grep GNU_STACK
+readelf -dW ./bin/service | grep -E "RPATH|RUNPATH|BIND_NOW"
+```
+
+Ghidra and `r2 -A` for control flow. `pwntools` for offsets and exploit scripts.
+
+### Source
+
+```bash
+semgrep --config auto .
+gitleaks detect --source . --no-git -v
+trufflehog filesystem . --only-verified
+trivy fs --scanners vuln,secret,misconfig .
+grype dir:.
+```
+
+CodeQL adds data-flow queries when the language is supported. Dependency scanners need a lockfile to be useful.
+
+### Archives
+
+```bash
+unzip -l release.zip
+7z l release.7z
+binwalk release.bin
+```
+
+Extract into a clean directory, then scan the extracted tree. Never extract an untrusted archive as root.
+
 ## Output hygiene
 
 ```bash

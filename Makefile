@@ -1,11 +1,13 @@
 PY ?= python
 DATA ?= data
+TARGET ?= https://example.com
 
-.PHONY: help validate dossier forums experts tools methods all
+.PHONY: help validate dossier scan forums experts tools methods all
 
 help:
 	@echo "make validate   check schema, links and prose"
 	@echo "make dossier    rebuild examples/dossier.md"
+	@echo "make scan TARGET=url-or-path   read-only scan"
 	@echo "make forums     refresh forum and report leads"
 	@echo "make experts    refresh expert profiles"
 	@echo "make tools      refresh the canonical tool shelf"
@@ -16,6 +18,9 @@ validate:
 
 dossier:
 	$(PY) scripts/build_dossier.py --data $(DATA) --out examples/dossier.md
+
+scan:
+	./beril scan --target $(TARGET)
 
 forums:
 	$(PY) scripts/harvest.py forums --limit 20

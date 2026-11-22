@@ -14,7 +14,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 COMMANDS = {
-    "scan": "scan_app.py",
+    "scan": "scan.py",
     "harvest": "harvest.py",
     "extract": "extract.py",
     "dossier": "build_dossier.py",

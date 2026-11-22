@@ -26,6 +26,17 @@ That installs the ProjectDiscovery tools, ffuf, gau, waybackurls, assetfinder, g
 ./beril scan --target https://your-app.example
 ```
 
+The same command works on local artifacts:
+
+```bash
+./beril scan --target ./app.apk
+./beril scan --target ./app.exe
+./beril scan --target ./bin/service
+./beril scan --target ./source --tools
+```
+
+APK, IPA, PE, ELF, archive and source checks are static. Details are in `scan-artifacts.md`.
+
 If you leave off the target, Beril asks for it:
 
 ```bash
@@ -46,7 +57,7 @@ The scanner makes read-only requests:
 - a short list of paths that are often left exposed: `.git`, `.env`, backups, `phpinfo`, Spring Actuator, OpenAPI, Swagger, GraphQL, `security.txt`;
 - basic HTML fingerprints and password forms served over HTTP.
 
-It does not log in, fuzz, inject payloads, or brute force. Run it only on an app you own or are authorized to test.
+It does not log in, fuzz, inject payloads, brute force, or execute a local binary. Run it only on an app you own or are authorized to test.
 
 Output:
 
@@ -108,6 +119,8 @@ Monthly is enough for tools. Weekly is better for disclosed reports and forum th
 | Challenge page never clears | Use `--headful` under `xvfb-run -a`, and pass a fresh `--profile` directory. |
 | `./beril` says it is not installed | Run `./install.sh` from the repo root. |
 | Go tools missing | Install Go, then run `./install.sh --tools`. |
+| APK manifest unreadable | Confirm it is an unencrypted APK. Split APK bundles need all parts. |
+| Source scan is slow | Lower `--max-files`, or exclude generated folders. |
 | TLS error on an internal host | Add `--insecure` to the scan. Do not use that flag on a public target without a reason. |
 | Scan finds nothing | That is normal for a small app. Run the nuclei pass and a manual review. |
 
@@ -118,8 +131,10 @@ Monthly is enough for tools. Weekly is better for disclosed reports and forum th
 - Client-side rendering and JavaScript-only routes.
 - Authorization mistakes in API objects.
 - Server-side bugs that need payloads.
+- Runtime behavior of an app or a packed binary. Local scans are static.
+- Obfuscated strings, encrypted resources, and split APK bundles.
 
-Those need the method cards in `references/techniques.md` and a human tester.
+Those need the method cards in `references/techniques.md`, `scan-artifacts.md`, and a human tester.
 
 ## Safety
 

@@ -68,6 +68,8 @@ if [ "$TOOLS" = "1" ]; then
       github.com/tomnomnom/assetfinder@latest
       github.com/OJ/gobuster/v3@latest
       github.com/tomnomnom/hakrawler@latest
+      github.com/zricethezav/gitleaks/v8@latest
+      github.com/aquasecurity/trivy/cmd/trivy@latest
     )
     for pkg in "${packages[@]}"; do
       echo "  $pkg"
@@ -76,8 +78,17 @@ if [ "$TOOLS" = "1" ]; then
     if command -v nuclei >/dev/null 2>&1; then
       nuclei -update-templates || true
     fi
+    echo "installing semgrep into the Beril environment"
+    .venv/bin/pip install semgrep || true
     echo "Add this to your shell profile if needed:"
     echo "  export PATH=\"$GOBIN:\$PATH\""
+    echo "Optional reverse-engineering tools:"
+    if command -v pacman >/dev/null 2>&1; then
+      echo "  sudo pacman -S apktool jadx"
+    elif command -v apt-get >/dev/null 2>&1; then
+      echo "  sudo apt install apktool jadx"
+    fi
+    echo "  pip install frida-tools objection"
   fi
 fi
 
