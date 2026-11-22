@@ -3557,6 +3557,75 @@ Install a Ghidra plugin into a test install, read its build script, and check th
 | [`GregoryMorse/GhidraDec`](https://github.com/GregoryMorse/GhidraDec) | 185 | active | Ghidra Decompiler Plugin for IDA Pro |
 | [`zeroKilo/XEXLoaderWV`](https://github.com/zeroKilo/XEXLoaderWV) | 181 | active | Ghidra Loader Module for X360 XEX Files |
 | [`trailofbits/BTIGhidra`](https://github.com/trailofbits/BTIGhidra) | 179 | active | Binary Type Inference Ghidra Plugin |
+| [`zeroKilo/N64LoaderWV`](https://github.com/zeroKilo/N64LoaderWV) | 173 | active | Ghidra Loader Module for N64 ROMs |
+| [`securityjoes/AskJOE`](https://github.com/securityjoes/AskJOE) | 164 | active | AI-Powered Malware Analysis & Threat Intelligence for Ghidra Transform your static analysis workflow with cutting-edge AI capabilities, comprehensive malware detection, a |
+| [`0x6d696368/ghidra_scripts`](https://github.com/0x6d696368/ghidra_scripts) | 161 | active | Ghidra scripts such as a RC4 decrypter, Yara search, stack string decoder, etc. |
+| [`clearbluejar/ghidrecomp`](https://github.com/clearbluejar/ghidrecomp) | 161 | active | Python Command-Line Ghidra Decompiler |
+| [`lr-m/GhidrOllama`](https://github.com/lr-m/GhidrOllama) | 156 | active | A Ghidra script that enables the analysis of selected functions and instructions using Large Language Models (LLMs). It aims to make reverse-engineering more efficient by |
+| [`clienthax/Ps3GhidraScripts`](https://github.com/clienthax/Ps3GhidraScripts) | 154 | active | Various scripts for ghidra for parsing ps3 binarys |
+| [`likvidera/GhidraChatGPT`](https://github.com/likvidera/GhidraChatGPT) | 151 | archived | Brings the power of ChatGPT to Ghidra! |
+| [`nccgroup/ghostrings`](https://github.com/nccgroup/ghostrings) | 141 | active | Ghidra scripts for recovering string definitions in Go binaries |
+| [`philsajdak/decyx`](https://github.com/philsajdak/decyx) | 140 | active | Decyx: AI-powered Ghidra extension for enhanced reverse engineering and binary analysis. |
+| [`Fleynaro/SDA`](https://github.com/Fleynaro/SDA) | 139 | active | SDA is a rich cross-platform tool for reverse engineering that focused firstly on analysis of computer games. I'm trying to create a mix of the Ghidra, Cheat Engine and x |
+| [`kotcrab/ghidra-allegrex`](https://github.com/kotcrab/ghidra-allegrex) | 136 | active | Ghidra processor module adding support for the Allegrex CPU (PSP) |
+| [`JHUAPL/CodeCut`](https://github.com/JHUAPL/CodeCut) | 132 | active | A Ghidra plugin for locating object file boundaries. |
+| [`diommsantos/Gx64Sync`](https://github.com/diommsantos/Gx64Sync) | 132 | active | A set of plugins for Ghidra and x64Dbg synchronization. A faster, more flexible ret-sync. |
+| [`advanced-threat-research/GhidraScripts`](https://github.com/advanced-threat-research/GhidraScripts) | 132 | active | Scripts to run within Ghidra, maintained by the Trellix ARC team |
+| [`SiD3W4y/GhidraGBA`](https://github.com/SiD3W4y/GhidraGBA) | 132 | active | GBA ROM loader for ghidra |
+| [`XboxDev/ghidra-xbe`](https://github.com/XboxDev/ghidra-xbe) | 130 | active | Xbox Executable Format (XBE) Loader Extension for Ghidra SRE framework |
+| [`ant4g0nist/pyre`](https://github.com/ant4g0nist/pyre) | 127 | active | Ghidra decompiler in your browser |
+| [`bkerler/ghidra_installer`](https://github.com/bkerler/ghidra_installer) | 122 | active | Helper scripts to set up OpenJDK 11 and scale Ghidra for 4K on Ubuntu 18.04 / 18.10 |
+| [`zhuyansen/awesome-ai-reverse-engineering`](https://github.com/zhuyansen/awesome-ai-reverse-engineering) | 121 | active | Open-source AI reverse engineering tools for coding agents: Ghidra MCP, IDA Pro MCP, jadx, Frida, skills and REA. 122 repos, each read and security-graded. EN + 中文. |
+| [`ant4g0nist/decompiler`](https://github.com/ant4g0nist/decompiler) | 116 | active | Ghidra decompiler plugin for LLDB |
+| [`utkonos/lst2x64dbg`](https://github.com/utkonos/lst2x64dbg) | 116 | active | Extract labels from IDA, Ghidra, Binary Ninja, and Relyze files and export x64dbg database. Including radare2 main address. |
+| [`garyttierney/intellij-ghidra`](https://github.com/garyttierney/intellij-ghidra) | 107 | active | An IntelliJ IDEA plugin for working on Ghidra Extensions. |
+| [`AllsafeCyberSecurity/ghidra_scripts`](https://github.com/AllsafeCyberSecurity/ghidra_scripts) | 107 | active | Ghidra scripts for malware analysis |
+| [`federicodotta/ghidra-scripts`](https://github.com/federicodotta/ghidra-scripts) | 104 | active | A collection of my Ghidra scripts |
+| [`andr3colonel/ghidra_wasm`](https://github.com/andr3colonel/ghidra_wasm) | 104 | active | Module to load WebAssembly files into ghidra |
+| [`jogolden/GhidraPS4Loader`](https://github.com/jogolden/GhidraPS4Loader) | 102 | active | A Ghidra loader for PlayStation 4 binaries. |
+| [`lab313ru/ghidra_sega_ldr`](https://github.com/lab313ru/ghidra_sega_ldr) | 101 | active | Sega Mega Drive / Genesis ROMs loader for GHIDRA |
+| [`antoniovazquezblanco/GhidraFindcrypt`](https://github.com/antoniovazquezblanco/GhidraFindcrypt) | 98 | active | Ghidra analysis plugin to locate cryptographic constants |
+| [`black-binary/sleigh`](https://github.com/black-binary/sleigh) | 97 | active | A (SLEIGH) disassembler that supports multiple architectures |
+| [`Martyx00/ghinja`](https://github.com/Martyx00/ghinja) | 96 | active | Plugin to embed Ghidra Decompiler into Binary Ninja |
+| [`joshleaves/ghidra-snes`](https://github.com/joshleaves/ghidra-snes) | 95 | active | Ghidra scripts for SNES ROM reverse engineering |
+| [`binaryai/plugins`](https://github.com/binaryai/plugins) | 93 | active | Ghidra/IDA Pro plugins to load similarity result from binaryai.net |
+| [`kylewlacy/GhidraNes`](https://github.com/kylewlacy/GhidraNes) | 91 | active | Ghidra extension for loading iNES 1.0 NES ROMs |
+| [`yetmorecode/ghidra-lx-loader`](https://github.com/yetmorecode/ghidra-lx-loader) | 89 | active | Ultimate Ghidra loader for the LX/LE executable file format (OS/2, DOS4GW, VxD) |
+| [`pudii/gba-ghidra-loader`](https://github.com/pudii/gba-ghidra-loader) | 88 | active | Loader for GameBoy Advance ROM files |
+| [`xerpi/GhidraVitaLoader`](https://github.com/xerpi/GhidraVitaLoader) | 86 | active | VitaLoader script for Ghidra |
+| [`galoget/ghidra-headless-scripts`](https://github.com/galoget/ghidra-headless-scripts) | 85 | active | Ghidra Headless Scripts for Automated Analysis (Decompilation and Disassembly) |
+| [`AGDCservices/Ghidra-Scripts`](https://github.com/AGDCservices/Ghidra-Scripts) | 84 | active | malware analysis scripts for Ghidra |
+| [`Dump-GUY/ida-nativeaot`](https://github.com/Dump-GUY/ida-nativeaot) | 82 | active | Recover .NET Native AOT metadata in IDA Pro - MethodTable/type hierarchy, virtual methods, and string literals from symbol-stripped binaries. IDAPython port of washi1337/ |
+| [`elliottophellia/Ryuumonbuchi`](https://github.com/elliottophellia/Ryuumonbuchi) | 81 | active | Maybe the headless Ghidra MCP you are looking for. |
+| [`Dump-GUY/ghidra_scripts`](https://github.com/Dump-GUY/ghidra_scripts) | 76 | active |  |
+| [`radareorg/r4ghidra`](https://github.com/radareorg/r4ghidra) | 76 | active | Ghidra plugin to communicate with radare2 |
+| [`vichhka-git/universal-flutter-ssl-pinning`](https://github.com/vichhka-git/universal-flutter-ssl-pinning) | 71 | active | Automated SSL pinning bypass for any Flutter & Shorebird version - PyGhidra static analysis auto-discovers BoringSSL and generates ready-to-run Frida & Renef scripts |
+| [`pandaadir05/re-architect`](https://github.com/pandaadir05/re-architect) | 67 | active | Advanced reverse engineering platform combining traditional static analysis with AI-powered insights. Supports multiple decompilers (Ghidra, IDA Pro, Binary Ninja), autom |
+| [`lab313ru/ghidra_amiga_ldr`](https://github.com/lab313ru/ghidra_amiga_ldr) | 66 | active | Amiga hunks loader |
+| [`jpleasu/ghidraal`](https://github.com/jpleasu/ghidraal) | 64 | active | A Ghidra extension for scripting with GraalVM languages, including Javascript, Python3, R, and Ruby. |
+| [`pspdev/psp-ghidra-scripts`](https://github.com/pspdev/psp-ghidra-scripts) | 61 | active | Scripts for use with the Ghidra Reverse Engineering Suite |
+| [`VGKintsugi/Ghidra-SegaSaturn-Loader`](https://github.com/VGKintsugi/Ghidra-SegaSaturn-Loader) | 60 | active | A Sega Saturn loader for Ghidra |
+| [`h4sh5/ghidra-headless-decompile`](https://github.com/h4sh5/ghidra-headless-decompile) | 59 | active | bash script and modified java program to headlessly use ghidra's decompiler |
+| [`nccgroup/ghidra-nanomips`](https://github.com/nccgroup/ghidra-nanomips) | 58 | active | nanoMIPS module for Ghidra |
+| [`dod-cyber-crime-center/Dragodis`](https://github.com/dod-cyber-crime-center/Dragodis) | 57 | active | Dragodis is a Python framework which allows for the creation of universal disassembler scripts. |
+| [`partoftheworlD/GHIDRApy_FunctionStringAssociate`](https://github.com/partoftheworlD/GHIDRApy_FunctionStringAssociate) | 57 | active | It does the same thing as plugin FunctionStringAssociate for IDA, Now the script just works, in the future it is planned to increase the speed of work and bring it closer |
+| [`antoniovazquezblanco/GhidraSVD`](https://github.com/antoniovazquezblanco/GhidraSVD) | 56 | active | Import CMSIS SVD files information onto your Ghidra memory map |
+| [`Ledger-Donjon/zorya`](https://github.com/Ledger-Donjon/zorya) | 55 | active | Zorya: Automated Concolic Execution Engine optimized for Go Binaries analysis, using Ghidra's P-Code as IR, and written in Rust. |
+| [`oshogbo/ghidra-lx-loader`](https://github.com/oshogbo/ghidra-lx-loader) | 54 | active | A Ghidra loader module for the Linear eXecutable Module Format |
+| [`idl3r/GhidraVmlinuxLoader`](https://github.com/idl3r/GhidraVmlinuxLoader) | 53 | active |  |
+| [`nautilusbits/retrokit`](https://github.com/nautilusbits/retrokit) | 53 | active | Headless-Ghidra toolkit for reverse engineering 32-bit DOS and Win32 games (1993-2010): own LE/LX loader, Watcom calling conventions, library signatures, MCP server |
+| [`CreepNT/VitaLoaderRedux`](https://github.com/CreepNT/VitaLoaderRedux) | 52 | active | Ghidra loader for PlayStation®Vita ELF-PRX executables |
+| [`mjbommar/glaurung`](https://github.com/mjbommar/glaurung) | 52 | active | Permissive, modern alternative to Ghidra with Rust/Python core and first-class agentic AI integration |
+| [`enovella/re-scripts`](https://github.com/enovella/re-scripts) | 52 | active | IDA, Ghidra and Radare2 scripts. Also Android scripts to make your life easier. |
+| [`achan1989/ghidra-snes-loader`](https://github.com/achan1989/ghidra-snes-loader) | 47 | archived | Loader for SNES ROMs |
+| [`wrongbaud/ghidra-stm32`](https://github.com/wrongbaud/ghidra-stm32) | 45 | active | A Ghidra Loader for STM32 CPUs (WIP) |
+| [`CUB3D/ghidra-hexagon-sleigh`](https://github.com/CUB3D/ghidra-hexagon-sleigh) | 43 | active | A version-agnostic ghidra plugin for de-compiling Qualcomm Hexagon QDSP6 |
+| [`hippietrail/RetroGhidra`](https://github.com/hippietrail/RetroGhidra) | 43 | active | Ghidra loaders & filesystems for retro platforms (ZX Spectrum, Apple II, TRS-80, etc.) |
+| [`antoniovazquezblanco/GhidraExtendedSourceParser`](https://github.com/antoniovazquezblanco/GhidraExtendedSourceParser) | 38 | active | User friendly ways to parse small code snippets into data types in Ghidra. |
+| [`antoniovazquezblanco/GhidraDeviceTreeBlob`](https://github.com/antoniovazquezblanco/GhidraDeviceTreeBlob) | 38 | active | Import Device Tree Information onto your Ghidra memory map |
+| [`LAC-Japan/Ghidra_AntiDebugSeeker`](https://github.com/LAC-Japan/Ghidra_AntiDebugSeeker) | 29 | active | Automatically identify and extract potential anti-debugging techniques used by malware.  |
+| [`NDXDeveloper/reverse-engineering-gcc-gpp-training`](https://github.com/NDXDeveloper/reverse-engineering-gcc-gpp-training) | 14 | active | Complete Reverse Engineering training for ELF binaries (GCC/G++): 36 chapters, from x86-64 assembly to malware analysis. Bonus .NET, Rust, Go. Reverse Engineering course: |
+| [`AlexDev-TH/ghidra-r8c`](https://github.com/AlexDev-TH/ghidra-r8c) | 11 | active | Renesas R8C/Tiny processor module for Ghidra: verified SLEIGH, NC30 calling convention, loader and analyzer (Thai docs) |
 
 ## IDA Pro
 
@@ -3591,7 +3660,7 @@ Install a Ghidra plugin into a test install, read its build script, and check th
 | [`fjqisba/VmpHelper`](https://github.com/fjqisba/VmpHelper) | 423 | active | an ida plugin used to decompile vmp |
 | [`andreafioraldi/IDAngr`](https://github.com/andreafioraldi/IDAngr) | 287 | active | Use angr in the IDA Pro debugger generating a state from the current debug session |
 | [`enovella/r2frida-wiki`](https://github.com/enovella/r2frida-wiki) | 204 | active | This repo aims at providing practical examples on how to use r2frida |
-| [`ngwg/ceasta`](https://github.com/ngwg/ceasta) | 182 | active | disassembler, decompiler and debugger in one, with a built-in mcp server: point an ai at a binary and it can debug it, beyond read it. ida-style listing, pseudocode (f5 |
+| [`ngwg/ceasta`](https://github.com/ngwg/ceasta) | 182 | active | disassembler, decompiler and debugger in one, with a built-in mcp server: point an ai at a binary and it can debug it, beyond read it. ida-style listing, pseudocode (f5), |
 | [`0xdea/haruspex`](https://github.com/0xdea/haruspex) | 139 | active | Vulnerability research assistant that extracts pseudocode from the IDA Hex-Rays decompiler. |
 | [`JANlittle/IDARustHelper`](https://github.com/JANlittle/IDARustHelper) | 97 | active | Small rust binary analysis helper for IDA. |
 | [`mrfarhadi/IDA_Plugin`](https://github.com/mrfarhadi/IDA_Plugin) | 63 | active | An IDA Pro Plugin to extract Call Graphs and Control Flow Graphs from an assembly file written in Python. |
@@ -3742,6 +3811,18 @@ Install a Ghidra plugin into a test install, read its build script, and check th
 | [`monmohan/xferspdy`](https://github.com/monmohan/xferspdy) | 99 | active | Xferspdy provides binary diff and patch library in golang. [Mentioned in Awesome Go, https://github.com/avelino/awesome-go] |
 | [`klonnet23/helloy-word`](https://github.com/klonnet23/helloy-word) | 92 | active |     {   "releases": {     "2.0.4": [       "[Fixed] Refresh for Enterprise repositories did not handle API error querying branches - #7713",       "[Fixed] Missing \"Disc |
 | [`originsec/patchwatch`](https://github.com/originsec/patchwatch) | 83 | active | A local tool for ingesting Windows Patch Tuesday CVEs, diffing patched binaries with Ghidriff and surfacing LLM-generated security analysis through a browser UI |
+| [`soulteary/nginx-formatter`](https://github.com/soulteary/nginx-formatter) | 70 | active | gofmt for Nginx configs: AST-based, lossless & idempotent, CI-ready (--check/--diff), CLI + WebUI, single binary. 安全可靠的 Nginx 配置格式化工具。 |
+| [`ddabapps/bdiff`](https://github.com/ddabapps/bdiff) | 67 | active | Binary diff and patch programs for the Windows command line |
+| [`open-gsd/gsd-browser`](https://github.com/open-gsd/gsd-browser) | 64 | active | A fast, native browser automation CLI built from the ground up for AI agents, powered by Chrome DevTools Protocol. 63 commands covering navigation, interaction, screensho |
+| [`XtrComSu/xt-forge`](https://github.com/XtrComSu/xt-forge) | 63 | active | Local agent workbench in Rust, Go, and Python for call-graph context, AST correctness auditing, binary diffing, CVE intel, and sub-1KB MCP routing. |
+| [`space-wizards/bsdiff-rs`](https://github.com/space-wizards/bsdiff-rs) | 58 | active | Binary diffing algorithm implemented in Rust |
+| [`v-arapidis/openremap-core`](https://github.com/v-arapidis/openremap-core) | 55 | active | Identify any ECU. Find calibration maps without prior knowledge. Diff binaries into portable .remap recipes. Apply tunes with fail-safe patching. Offline. Open-source. Th |
+| [`ztroop/dead-ringer`](https://github.com/ztroop/dead-ringer) | 47 | active | Binary Diff Utility |
+| [`ejfkdev/jscd`](https://github.com/ejfkdev/jscd) | 40 | active | Reverse bytenode .jsc (V8 code cache) to JavaScript - static, pure Rust, no patched V8/Node. Node 8→26 / V8 5.8-14.6; 25k .jsc tested, 0 fail. |
+| [`matheus-git/binkit`](https://github.com/matheus-git/binkit) | 14 | active | A modular toolbox for analyzing, disassembling, and patching binary formats. |
+| [`google/bindiff`](https://github.com/google/bindiff) | ? | active | Binary similarity for patch analysis. |
+| [`joxeankoret/diaphora`](https://github.com/joxeankoret/diaphora) | ? | active | IDA plugin for binary diffing. |
+| [`clearbluejar/ghidriff`](https://github.com/clearbluejar/ghidriff) | ? | active | Ghidra headless patch diffing. |
 
 ## Debuggers and emulators
 

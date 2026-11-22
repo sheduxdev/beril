@@ -198,7 +198,7 @@ Read `SKILL.md` for the full loop and the quality gates.
 |---|---:|---|
 | Threads and reports | 311 | What is being found now? |
 | Experts | 94 | Who knows this best? |
-| Tools | 587 | What should I run? |
+| Tools | 658 | What should I run? |
 | Methods | 85 | How do they do it? |
 
 The snapshot is a sample, not a census. See `references/source-catalog.md` for endpoints, dates, and gaps.

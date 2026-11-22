@@ -147,7 +147,7 @@ The `data/` directory in this skill contains:
 | `methods.jsonl` | 85 | Method and research URLs |
 | `method_details.jsonl` | 42 | Headings, intros, code density |
 | `thread_details.jsonl` | 38 | Thread and report extracts |
-| `re_tools.jsonl` | 499 | Reverse-engineering and exploitation tool shelf |
+| `re_tools.jsonl` | 570 | Reverse-engineering and exploitation tool shelf |
 | `curriculum.json` | 25 | Training plan with drills and checkpoints |
 | `learned_methods.jsonl` | 1 | Reflection notes from labs |
 
