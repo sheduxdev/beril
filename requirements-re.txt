@@ -1,5 +1,5 @@
 flare-capa>=8.0
-flare-floss>=3.1
+flare-floss>=3.2.0
 capstone>=5.0
 keystone-engine>=0.9.2
 ropgadget>=7.6
