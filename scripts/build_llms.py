@@ -1,7 +1,7 @@
 import os
 
 FILES = [
-    "AGENTS.md", "CLAUDE.md", "GEMINI.md", "SKILL.md", "agents/router.md",
+    "AGENTS.md", "CLAUDE.md", "GEMINI.md", "OPENAI.md", "SKILL.md", "agents/router.md",
     "agents/reverse-engineer.md", "agents/crash-triager.md", "agents/fuzzing-engineer.md",
     "agents/firmware-analyst.md", "agents/mentor.md",
     "references/techniques.md", "references/reverse-engineering.md",

@@ -7,6 +7,7 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 ## Core
 
 - [AGENTS.md](AGENTS.md): generic agent entry point
+- [OPENAI.md](OPENAI.md): OpenAI alias
 - [SKILL.md](SKILL.md): operating loop and quality gates
 - [agents/router.md](agents/router.md): intake and routing
 - [README.md](README.md): install and project map

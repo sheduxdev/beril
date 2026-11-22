@@ -180,6 +180,24 @@ Beril is a cybersecurity intelligence and assessment skill for Gemini CLI.
 Answer in the user's language. Keep commands intact.
 
 
+<!-- ===== OPENAI.md ===== -->
+
+# OpenAI / Codex
+
+Use `AGENTS.md` as the main instruction file. Codex loads it automatically.
+
+Short loop: confirm scope, read-only scan, matching method card, minimal replay, report.
+
+```bash
+./beril scan --target <url-or-path>
+./beril scan --target <binary> --deep
+```
+
+Rules: static before dynamic, one class at a time, evidence for every claim, stop at proof.
+
+The request-to-report flow is in `docs/break-my-app.md`.
+
+
 <!-- ===== SKILL.md ===== -->
 
 ---
@@ -3871,6 +3889,9 @@ Mark tasks:
 | `mobile` | exported components and deep links |
 | `firmware` | extraction and CGI injection |
 | `cloud` | Terraform, pod, Dockerfile |
+| `ad` | ACL path and ADCS |
+| `llm` | prompt injection and RAG |
+| `detection` | Sigma and log triage |
 
 Each lab has `README.md`, `tests.sh`, and `ANSWERS.md`. Attempt first, then read the answers.
 
@@ -3915,7 +3936,8 @@ Beril ships an entry file for the common coding agents. Each one is a short rout
 | Agent | File | Loaded by |
 |---|---|---|
 | Claude Code | `CLAUDE.md` | automatic at project root |
-| Codex / generic | `AGENTS.md` | automatic for agents that follow the standard |
+| OpenAI Codex / generic | `AGENTS.md` | automatic for agents that follow the standard |
+| OpenAI explicit | `OPENAI.md` | alias for setups that look for it |
 | Gemini CLI | `GEMINI.md` | automatic at project root |
 | Cursor | `.cursor/rules/beril.mdc` | rule with `alwaysApply` |
 | Windsurf | `.windsurf/rules/beril.md` | always-on rule |

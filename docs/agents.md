@@ -6,6 +6,7 @@ Beril ships an entry file for the common coding agents. Each one is a short rout
 |---|---|---|
 | Claude Code | `CLAUDE.md` | automatic at project root |
 | OpenAI Codex / generic | `AGENTS.md` | automatic for agents that follow the standard |
+| OpenAI explicit | `OPENAI.md` | alias for setups that look for it |
 | Gemini CLI | `GEMINI.md` | automatic at project root |
 | Cursor | `.cursor/rules/beril.mdc` | rule with `alwaysApply` |
 | Windsurf | `.windsurf/rules/beril.md` | always-on rule |

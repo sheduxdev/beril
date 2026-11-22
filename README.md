@@ -18,6 +18,7 @@ beril/
 ├── AGENTS.md                    # generic agent entry
 ├── CLAUDE.md                    # Claude Code entry
 ├── GEMINI.md                    # Gemini CLI entry
+├── OPENAI.md                    # OpenAI alias
 ├── llms.txt                     # LLM index
 ├── scripts/
 │   ├── camo.py                  # Camoufox session, cache, parsing helpers

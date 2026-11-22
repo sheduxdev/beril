@@ -16,6 +16,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FILES = {
     "claude": "CLAUDE.md",
     "agents": "AGENTS.md",
+    "openai": "OPENAI.md",
     "gemini": "GEMINI.md",
     "cursor": ".cursor/rules/beril.mdc",
     "windsurf": ".windsurf/rules/beril.md",
