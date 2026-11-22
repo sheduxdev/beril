@@ -268,9 +268,49 @@ def forums_hackforums(s: CamoSession, limit: int) -> list[dict]:
     return rows[:limit * 2]
 
 
+
+def forums_hn(s: CamoSession, limit: int) -> list[dict]:
+    data = s.json("https://hn.algolia.com/api/v1/search_by_date?query=security&tags=story&hitsPerPage=100")
+    rows = []
+    for h in (data or {}).get("hits", [])[:limit]:
+        if not h.get("title"):
+            continue
+        rows.append({"type": "thread", "source": "Hacker News", "url": h.get("url") or f"https://news.ycombinator.com/item?id={h.get('objectID')}",
+                     "title": h["title"], "author": h.get("author", ""), "date": h.get("created_at", ""),
+                     "tags": ["hn", "security"], "summary": "", "metrics": {"points": h.get("points"), "comments": h.get("num_comments")},
+                     "collected_at": NOW()})
+    return rows
+
+
+def forums_lobsters(s: CamoSession, limit: int) -> list[dict]:
+    data = s.json("https://lobste.rs/t/security.json") or []
+    rows = []
+    for h in data[:limit]:
+        rows.append({"type": "thread", "source": "Lobsters", "url": h.get("url") or h.get("comments_url", ""),
+                     "title": h.get("title", ""), "author": h.get("submitter", ""), "date": h.get("created_at", ""),
+                     "tags": ["lobsters", "security"], "summary": "",
+                     "metrics": {"score": h.get("score"), "comments": h.get("comment_count")}, "collected_at": NOW()})
+    return rows
+
+
+def forums_fulldisclosure(s: CamoSession, limit: int) -> list[dict]:
+    base = "https://seclists.org/fulldisclosure/"
+    html = s.get(base)
+    rows = []
+    for href, text in extract_links(html or "", base):
+        if "fulldisclosure/20" in href and len(text) > 5:
+            rows.append({"type": "thread", "source": "Full Disclosure", "url": href, "title": text,
+                         "author": "", "date": "", "tags": ["fulldisclosure", "advisory"], "summary": "",
+                         "collected_at": NOW()})
+            if len(rows) >= limit:
+                break
+    return rows
+
+
 FORUMS = {"0x00sec": forums_0x00sec, "htb": forums_htb, "reddit": forums_reddit,
           "hackerone": forums_hackerone, "intigriti": forums_intigriti,
-          "hackforums": forums_hackforums}
+          "hackforums": forums_hackforums, "hn": forums_hn, "lobsters": forums_lobsters,
+          "fulldisclosure": forums_fulldisclosure}
 
 
 # ----------------------------------------------------------------- experts

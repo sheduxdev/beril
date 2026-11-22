@@ -53,6 +53,7 @@ beril/
 │   ├── experts.md               # researcher profiles and methods
 │   ├── tooling.md               # phase map and commands
 │   ├── techniques.md            # 25 method cards
+│   ├── bug-method-matrix.md     # 100+ tests by class
 │   ├── reverse-engineering.md   # Ghidra, Binary Ninja, IDA, debuggers
 │   ├── vulnerability-research.md # bug classes, triage, exploitability
 │   ├── fuzzing.md               # harnesses, AFL++, sanitisers, CI
@@ -64,6 +65,7 @@ beril/
 │   ├── ghidra-ecosystem.md      # GhidRust, Ghidrust, plugin safety
 │   ├── rust-reverse.md          # Rust binary analysis
 │   ├── re-plugin-index.md       # plugin index by ecosystem
+│   ├── github-atlas.md          # 2,064 security repos by topic
 │   ├── claude-bughunter.md      # bounty bundle notes
 │   ├── artex.md                 # autonomous agent platform
 │   ├── exercises.md             # 74 drills by domain
@@ -195,13 +197,14 @@ Read `SKILL.md` for the full loop and the quality gates.
 5. **Write.** The dossier links every claim. Observations and inferences sit in separate sentences.
 6. **Refresh.** Weekly for reports and threads, monthly for tools, quarterly for standards.
 
-## The four catalogs
+## The catalogs
 
 | Layer | Snapshot | What it answers |
 |---|---:|---|
-| Threads and reports | 311 | What is being found now? |
+| Threads and reports | 447 | What is being found now? |
 | Experts | 94 | Who knows this best? |
 | Tools | 658 | What should I run? |
+| GitHub atlas | 2,064 | What exists to build or study? |
 | Methods | 85 | How do they do it? |
 
 The snapshot is a sample, not a census. See `references/source-catalog.md` for endpoints, dates, and gaps.
@@ -248,6 +251,15 @@ The full list, counts, and roles are in `references/source-catalog.md`.
 - `camoufox[geoip]`, `beautifulsoup4`, `lxml`
 - About 300 MB for the Camoufox browser
 - `xvfb` for the headful fallback on Linux
+
+## GitHub atlas
+
+`data/github_atlas.jsonl` holds 2,064 security repositories across 26 topics, with stars, language, license and last push. `references/github-atlas.md` is the readable index. Refresh with:
+
+```bash
+GITHUB_TOKEN=$(gh auth token) ./scripts/github_sweep.py --out data/github_atlas.jsonl
+# or: make github
+```
 
 ## Companion projects
 

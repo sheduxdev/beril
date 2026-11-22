@@ -55,6 +55,7 @@ def main() -> None:
     tools = rows(os.path.join(args.data, "canonical_tools.jsonl")) or rows(os.path.join(args.data, "tools.jsonl"))
     tools += rows(os.path.join(args.data, "re_tools.jsonl"))
     methods = rows(os.path.join(args.data, "method_details.jsonl")) or rows(os.path.join(args.data, "methods.jsonl"))
+    atlas = rows(os.path.join(args.data, "github_atlas.jsonl"))
 
     lines: list[str] = []
     add = lines.append
@@ -117,6 +118,15 @@ def main() -> None:
                 desc = esc(t.get("description"))[:120]
                 add(f"- [{t.get('name')}]({t.get('repo')}) - {t.get('stars', '?')} stars. {desc}")
             add("")
+
+    if atlas:
+        add("## GitHub atlas")
+        add("")
+        add(f"{len(atlas)} security repositories by topic. Top by stars:")
+        add("")
+        for r in sorted(atlas, key=lambda x: stars(x.get("stars")), reverse=True)[: args.top]:
+            add(f"- [{r.get('repo')}]({r.get('url')}) - {r.get('stars')} stars. {esc(r.get('description'))[:110]}")
+        add("")
 
     if methods:
         add("## Method index")

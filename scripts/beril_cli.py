@@ -23,6 +23,7 @@ COMMANDS = {
     "train": "train.py",
     "labs": "labs.py",
     "reflect": "reflect.py",
+    "github": "github_sweep.py",
 }
 
 

@@ -6,9 +6,9 @@ Collected 2026-11-22. Every entry links to its public source. Counts describe th
 
 | Layer | Rows | Sources |
 |---|---:|---|
-| Threads and reports | 311 | 11 |
+| Threads and reports | 447 | 14 |
 | Experts | 94 | 4 |
-| Tools | 139 | 1 |
+| Tools | 658 | 2 |
 | Methods and research | 42 | 8 |
 
 ## High-signal threads
@@ -25,10 +25,6 @@ Collected 2026-11-22. Every entry links to its public source. Counts describe th
   program Vercel, weakness Access Control Check Implemented After Asset is Accessed, severity Medium, bounty $1,026 (HackerOne Hacktivity)
 - [Burp Community OpenAPI site-map action reads a local schema example through $id rebasing](https://hackerone.com/reports/4000535)
   program PortSwigger Web Security, weakness Path Traversal, severity Medium, bounty $1,000 (HackerOne Hacktivity)
-- [Public shares remain accessible via alternate endpoints after owner account is disabled](https://hackerone.com/reports/3620539)
-  program Nextcloud, weakness Improper Access Control - Generic, severity Medium, bounty $270 (HackerOne Hacktivity)
-- [SSRF on Nextcloud Whiteboard Application via Recordings to Unauthorised Access to Whiteboards](https://hackerone.com/reports/3576823)
-  program Nextcloud, weakness Server-Side Request Forgery (SSRF), severity Medium, bounty $250 (HackerOne Hacktivity)
 
 ## Experts worth reading
 
@@ -50,12 +46,6 @@ Collected 2026-11-22. Every entry links to its public source. Counts describe th
 - [0xbs0d27](https://hackerone.com/0xbs0d27?type=user) - disclosed HackerOne reports
   - [WordCamp Meta gpre: password-protected event RSVP list readable without password via /gpre/v1/.../rsvp-responses](https://hackerone.com/reports/4029867)
   - [wordpress.org Rosetta: invite stores unvalidated role — Editor can assign site Administrator despite editable_roles](https://hackerone.com/reports/3942522)
-- [stze](https://hackerone.com/stze?type=user) - disclosed HackerOne reports
-  - [wolfSSL TLS sessions retain native-CA trust after the application narrows trust](https://hackerone.com/reports/4122227)
-  - [OpenSSL `--cert-status` accepts indefinitely stale GOOD OCSP staples](https://hackerone.com/reports/4125601)
-- [matty69v](https://hackerone.com/matty69v?type=user) - disclosed HackerOne reports
-  - [Unauthenticated arbitrary local file read via ABCpdf on www.████████](https://hackerone.com/reports/4191812)
-  - [Cross-account stored XSS on app.basecamp.com leads to persistent administrator takeover](https://hackerone.com/reports/4175245)
 
 ## Tool shelf
 
@@ -64,11 +54,9 @@ Collected 2026-11-22. Every entry links to its public source. Counts describe th
 - [usestrix/strix](https://github.com/usestrix/strix) - 76933 stars. Open-source AI penetration testing tool to find and fix your app’s vulnerabilities. - usestrix/strix
 - [KeygraphHQ/shannon](https://github.com/KeygraphHQ/shannon) - 52166 stars. Shannon is an AI pentester for web applications and APIs. It analyzes your source code, identifies attack vectors, and e
 - [vxcontrol/pentagi](https://github.com/vxcontrol/pentagi) - 34751 stars. Fully autonomous AI Agents system capable of performing complex penetration testing tasks - vxcontrol/pentagi
+- [elementalsouls/Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter) - 16707 stars. 83-skill bug bounty and red-team bundle with triage gates and report patterns
 - [GreyDGL/PentestGPT](https://github.com/GreyDGL/PentestGPT) - 16543 stars. Automated Penetration Testing Agentic Framework Powered by Large Language Models - GreyDGL/PentestGPT
-- [elementalsouls/Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter) - 16076 stars. A Claude Code skill bundle for bug hunting and external red-team work - 82 skills, 15 slash commands, 681 disclosed-repo
-- [CyberStrikeus/CyberStrike](https://github.com/CyberStrikeus/CyberStrike) - 3672 stars. Open-source AI-powered offensive security harness for automated penetration testing. - CyberStrikeus/CyberStrike
-- [Armur-Ai/Pentest-Swarm-AI](https://github.com/Armur-Ai/Pentest-Swarm-AI) - 3277 stars. Autonomous penetration testing using a swarm of AI agents. Orchestrates recon, classification, exploitation, and reporti
-- [xalgorix/xalgorix](https://github.com/xalgorix/xalgorix) - 1381 stars. Open-source AI penetration testing agent that exploit-verifies every finding. Autonomous 22-phase pentests of web apps &
+- [BaaRai/ARTEX](https://github.com/BaaRai/ARTEX) - 15555 stars. Self-hosted multi-agent pentest platform with planner, evidence and scope gates
 
 ### audit defense
 
@@ -78,7 +66,6 @@ Collected 2026-11-22. Every entry links to its public source. Counts describe th
 - [returntocorp/semgrep](https://github.com/returntocorp/semgrep) - 17880 stars. Lightweight static analysis for many languages. Find bug variants with patterns that look like source code. - semgrep/se
 - [CISOfy/lynis](https://github.com/CISOfy/lynis) - 16738 stars. Lynis - Security auditing tool for Linux, macOS, and UNIX-based systems. Assists with compliance testing (HIPAA/ISO27001
 - [anchore/grype](https://github.com/anchore/grype) - 13319 stars. A vulnerability scanner for container images and filesystems - anchore/grype
-- [fuzzdb-project/fuzzdb](https://github.com/fuzzdb-project/fuzzdb) - 9010 stars. Dictionary of attack patterns and primitives for black-box application fault injection and resource discovery. - fuzzdb-
 
 ### cloud ad
 
@@ -88,8 +75,6 @@ Collected 2026-11-22. Every entry links to its public source. Counts describe th
 - [BloodHoundAD/BloodHound](https://github.com/BloodHoundAD/BloodHound) - 10631 stars. Six Degrees of Domain Admin. Contribute to SpecterOps/BloodHound-Legacy development by creating an account on GitHub.
 - [HavocFramework/Havoc](https://github.com/HavocFramework/Havoc) - 8505 stars. The Havoc Framework. Contribute to HavocFramework/Havoc development by creating an account on GitHub.
 - [lgandx/Responder](https://github.com/lgandx/Responder) - 6689 stars. Responder is a LLMNR, NBT-NS and MDNS poisoner, with built-in HTTP/SMB/MSSQL/FTP/LDAP rogue authentication server suppor
-- [GhostPack/Rubeus](https://github.com/GhostPack/Rubeus) - 5238 stars. Trying to tame the three-headed dog. Contribute to GhostPack/Rubeus development by creating an account on GitHub.
-- [nicocha30/ligolo-ng](https://github.com/nicocha30/ligolo-ng) - 5198 stars. An advanced, yet simple, tunneling/pivoting tool that uses a TUN interface. - nicocha30/ligolo-ng
 
 ### mobile binary
 
@@ -99,8 +84,6 @@ Collected 2026-11-22. Every entry links to its public source. Counts describe th
 - [radareorg/radare2](https://github.com/radareorg/radare2) - 25478 stars. UNIX-like reverse engineering framework and command-line toolset - radareorg/radare2
 - [frida/frida](https://github.com/frida/frida) - 22885 stars. Main repo for hosting release binaries. Contribute to frida/frida development by creating an account on GitHub.
 - [MobSF/Mobile-Security-Framework-MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF) - 22290 stars. Mobile Security Framework (MobSF) is an automated, all-in-one mobile application (Android/iOS/Windows) pen-testing, malw
-- [Gallopsled/pwntools](https://github.com/Gallopsled/pwntools) - 13882 stars. CTF framework and exploit development library. Contribute to Gallopsled/pwntools development by creating an account on G
-- [sensepost/objection](https://github.com/sensepost/objection) - 9530 stars. 📱 objection - runtime mobile exploration. Contribute to sensepost/objection development by creating an account on GitHub
 
 ### osint surface
 
@@ -110,8 +93,11 @@ Collected 2026-11-22. Every entry links to its public source. Counts describe th
 - [smicallef/spiderfoot](https://github.com/smicallef/spiderfoot) - 24815 stars. SpiderFoot automates OSINT for threat intelligence and mapping your attack surface. - smicallef/spiderfoot
 - [mxrch/GHunt](https://github.com/mxrch/GHunt) - 19886 stars. 🕵️‍♂️ Offensive Google framework. Contribute to mxrch/GHunt development by creating an account on GitHub.
 - [sundowndev/phoneinfoga](https://github.com/sundowndev/phoneinfoga) - 18647 stars. Information gathering framework for phone numbers. Contribute to sundowndev/phoneinfoga development by creating an accou
-- [laramies/theHarvester](https://github.com/laramies/theHarvester) - 18379 stars. E-mails, subdomains and names Harvester - OSINT . Contribute to laramies/theHarvester development by creating an account
-- [yogeshojha/rengine](https://github.com/yogeshojha/rengine) - 8956 stars. reNgine is an automated reconnaissance framework for web applications with a focus on highly configurable streamlined re
+
+### re-agentic
+
+- [Claude-BugHunter](elementalsouls/Claude-BugHunter) - 16707 stars. 83-skill bug bounty and red-team bundle with 681 disclosed-report patterns, triage gates, enterprise identity chains and
+- [ARTEX](BaaRai/ARTEX) - 15555 stars. Self-hosted multi-agent pentest platform with planner, workers, evidence-bound findings, scope gates and approval budget
 
 ### re-binary
 
@@ -120,24 +106,61 @@ Collected 2026-11-22. Every entry links to its public source. Counts describe th
 - [pyelftools](eliben/pyelftools) - ? stars. Python ELF and DWARF parser.
 - [capstone](capstone-engine/capstone) - ? stars. Disassembly framework.
 
+### re-binja
+
+- [borzacchiello/seninja](borzacchiello/seninja) - 361 stars. symbolic execution plugin for binary ninja
+- [fkie-cad/dewolf](fkie-cad/dewolf) - 237 stars. A research decompiler implemented as a Binary Ninja plugin.
+- [yrp604/bad64](yrp604/bad64) - 108 stars. Binja Arm64 Disassembler
+- [matteyeux/binja-diff](matteyeux/binja-diff) - 100 stars. Binary Ninja diffing tool
+- [withzombies/bnil-graph](withzombies/bnil-graph) - 89 stars. A BinaryNinja plugin to graph a BNIL instruction tree
+- [Vector35/tanto](Vector35/tanto) - 80 stars. Tantō slices functions into more consumable chunks
+
+### re-bytecode
+
+- [Col-E/Recaf](Col-E/Recaf) - 7481 stars. The modern Java bytecode editor
+- [Jon-Becker/heimdall-rs](Jon-Becker/heimdall-rs) - 1648 stars. Heimdall is an advanced EVM smart contract toolkit specializing in bytecode analysis and extracting information from unv
+- [mirkosertic/Bytecoder](mirkosertic/Bytecoder) - 965 stars. Framework to interpret and transpile JVM bytecode to JavaScript, OpenCL or WebAssembly.
+
 ### re-capability
 
 - [capa](mandiant/capa) - ? stars. Identify capabilities from imports and structure.
 - [floss](mandiant/flare-floss) - ? stars. Extract obfuscated and stack strings.
 
+### re-cfg
+
+- [google/binnavi](google/binnavi) - 2883 stars. BinNavi is a binary analysis IDE that allows to inspect, navigate, edit and annotate control flow graphs and call graphs
+- [DucPhamNgoc08/CodeVisualizer](DucPhamNgoc08/CodeVisualizer) - 702 stars. CodeVisualizer is a powerful VS Code extension that provides two main visualization capabilities: function-level flowcha
+- [danielplohmann/smda](danielplohmann/smda) - 264 stars. SMDA is a minimalist recursive disassembler library that is optimized for accurate Control Flow Graph (CFG) recovery fro
+- [ircmaxell/php-cfg](ircmaxell/php-cfg) - 247 stars. A Control Flow Graph implementation in PHP
+- [coetaur0/staticfg](coetaur0/staticfg) - 216 stars. Python3 control flow graph generator
+- [tech-srl/Nero](tech-srl/Nero) - 208 stars. Code and resources for the paper: "Neural Reverse Engineering of Stripped Binaries using Augmented Control Flow Graphs"
+
 ### re-debugger
 
+- [unicorn-engine/unicorn](unicorn-engine/unicorn) - 9601 stars. Unicorn CPU emulator framework (ARM, AArch64, M68K, Mips, Sparc, PowerPC, RiscV, S390x, TriCore, X86)
+- [mohitmishra786/low-level-dev-skills](mohitmishra786/low-level-dev-skills) - 298 stars. A curated suite of AI agent skills for systems and low-level programming with C/C++, Rust, and Zig toolchains, covering 
 - [x64dbg](x64dbg/x64dbg) - ? stars. Windows user-mode debugger.
 - [windbg](Microsoft WinDbg) - ? stars. Windows kernel and user-mode debugger with TTD.
 - [pwndbg](pwndbg/pwndbg) - ? stars. GDB plugin for exploit development and heap inspection.
 - [gef](hugsy/gef) - ? stars. GDB plugin with exploit-oriented views.
-- [rr](rr-debugger/rr) - ? stars. Record and replay execution for Linux.
+
+### re-decompiler
+
+- [icsharpcode/ILSpy](icsharpcode/ILSpy) - 27128 stars. .NET Decompiler with support for PDB generation, ReadyToRun, Metadata (&more) - cross-platform!
+- [Konloch/bytecode-viewer](Konloch/bytecode-viewer) - 15729 stars. A Java 8+ Jar & Android APK Reverse Engineering Suite (Decompiler, Editor, Debugger & More)
+- [jindrapetrik/jpexs-decompiler](jindrapetrik/jpexs-decompiler) - 6062 stars. JPEXS Free Flash Decompiler (FFDec) is open-source Flash SWF decompiler and editor. Extract and edit ActionScript, image
+- [charles2gan/GDA-android-reversing-Tool](charles2gan/GDA-android-reversing-Tool) - 4879 stars. the fastest and most powerful android decompiler(native tool working without Java VM) for the APK, DEX, ODEX, OAT, JAR, 
+- [zrax/pycdc](zrax/pycdc) - 4678 stars. C++ python bytecode disassembler and decompiler
+- [JetBrains/fernflower](JetBrains/fernflower) - 4448 stars. Decompiler from Java bytecode to Java, used in IntelliJ IDEA.
 
 ### re-diff
 
-- [bindiff](google/bindiff) - ? stars. Binary similarity for patch analysis.
-- [diaphora](joxeankoret/diaphora) - ? stars. IDA plugin for binary diffing.
-- [ghidriff](clearbluejar/ghidriff) - ? stars. Ghidra headless patch diffing.
+- [secretsquirrel/the-backdoor-factory](secretsquirrel/the-backdoor-factory) - 3446 stars. Patch PE, ELF, Mach-O binaries with shellcode new version in development, available only to sponsors
+- [sisong/HDiffPatch](sisong/HDiffPatch) - 2159 stars. a C\C++ library and command-line tools for Diff & Patch between binary files or directories(folder); cross-platform; run
+- [mendsley/bsdiff](mendsley/bsdiff) - 2147 stars. bsdiff and bspatch are libraries for building and applying patches to binary files.
+- [ddvk/remarkable-hacks](ddvk/remarkable-hacks) - 1772 stars. additional functionality via binary patching
+- [jmacd/xdelta](jmacd/xdelta) - 1392 stars. open-source binary diff, delta/differential compression tools, VCDIFF/RFC 3284 delta compression
+- [ovobrowsersupport/ovobrowser](ovobrowsersupport/ovobrowser) - 1288 stars. 源码级 Chromium 指纹内核，检测站按普通 Chrome 评分。Source-level Chromium fingerprint kernel that passes bot detection tests. Not JS inje
 
 ### re-disassembler
 
@@ -156,11 +179,16 @@ Collected 2026-11-22. Every entry links to its public source. Counts describe th
 
 ### re-firmware
 
-- [unblob](onekey-sec/unblob) - ? stars. Recursive extractor for 78+ container formats.
-- [binwalk](ReFirmLabs/binwalk) - ? stars. Firmware signature scanner and extractor.
-- [emba](e-m-b-a/emba) - ? stars. Firmware security analyzer.
-- [firmae](pr0v3rbs/FirmAE) - ? stars. Full-system firmware emulation.
-- [qemu](qemu/qemu) - ? stars. Emulator and virtual machine.
+- [reacher-z/Awesome-REA](reacher-z/Awesome-REA) - 3322 stars. Curated tools, case studies and papers for reverse engineering websites, games, apps, binaries, firmware and protocols. 
+- [morluto/awesome-reverse-engineering](morluto/awesome-reverse-engineering) - 2273 stars. Curated reverse-engineering tools and learning resources for binaries, apps, firmware, formats, and protocols.
+- [firmadyne/firmadyne](firmadyne/firmadyne) - 2129 stars. Platform for emulation and dynamic analysis of Linux-based firmware
+- [attify/firmware-analysis-toolkit](attify/firmware-analysis-toolkit) - 1642 stars. Firmware security research platform combining binary analysis, taint tracing, and emulation across IoT, edge AI, mobile 
+- [fkie-cad/FACT_core](fkie-cad/FACT_core) - 1476 stars. Firmware Analysis and Comparison Tool
+- [platomav/MEAnalyzer](platomav/MEAnalyzer) - 1353 stars. Intel Engine & Graphics Firmware Analysis Tool
+
+### re-fuzz
+
+- [marin-m/pbtk](marin-m/pbtk) - 1700 stars. A toolset for reverse engineering and fuzzing Protobuf-based apps
 
 ### re-fuzzing
 
@@ -170,22 +198,121 @@ Collected 2026-11-22. Every entry links to its public source. Counts describe th
 - [syzkaller](google/syzkaller) - ? stars. Kernel syscall fuzzer.
 - [casr](ispras/casr) - ? stars. Crash report collection, deduplication, and severity.
 - [nyx](nyx-fuzz/Nyx) - ? stars. Snapshot fuzzing engine for AFL++.
-- [snapchange](awslabs/snapchange) - ? stars. Snapshot fuzzing for Linux kernel targets.
+
+### re-ghidra
+
+- [bethington/ghidra-mcp](bethington/ghidra-mcp) - 6322 stars. Ghidra MCP Server — 200+ MCP tools for AI-powered reverse engineering. GUI plugin + headless server, lazy tool loading, 
+- [Dryxio/reagent](Dryxio/reagent) - 2458 stars. Reconstruct and validate C/C++ code from compiled programs with AI.
+- [bootleg/ret-sync](bootleg/ret-sync) - 2416 stars. ret-sync is a set of plugins that helps to synchronize a debugging session (WinDbg/GDB/LLDB/OllyDbg2/x64dbg) with IDA/Gh
+- [KeenSecurityLab/BinAbsInspector](KeenSecurityLab/BinAbsInspector) - 1685 stars. BinAbsInspector: Vulnerability Scanner for Binaries
+- [fr0gger/awesome-ida-x64-olly-plugin](fr0gger/awesome-ida-x64-olly-plugin) - 1609 stars. A curated list of IDA x64DBG, Ghidra and OllyDBG plugins.
+- [AllsafeCyberSecurity/awesome-ghidra](AllsafeCyberSecurity/awesome-ghidra) - 1466 stars. A curated list of awesome Ghidra materials
 
 ### re-gui
 
 - [cutter](rizinorg/cutter) - ? stars. Qt GUI for rizin.
 
+### re-hex
+
+- [WerWolv/ImHex](WerWolv/ImHex) - 56000 stars. 🔍 A Hex Editor for Reverse Engineers, Programmers and people who value their retinas when working at 3 AM.
+
+### re-ida
+
+- [mrexodia/ida-pro-mcp](mrexodia/ida-pro-mcp) - 13541 stars. AI-powered reverse engineering assistant that bridges IDA Pro with language models through MCP.
+- [mandiant/flare-ida](mandiant/flare-ida) - 2452 stars. IDA Pro utilities from FLARE team
+- [KasperskyLab/hrtng](KasperskyLab/hrtng) - 1974 stars. IDA Pro plugin with a rich set of features: decryption, deobfuscation, patching, lib code recognition and various pseudo
+- [airbus-seclab/bincat](airbus-seclab/bincat) - 1881 stars. Binary code static analyser, with IDA integration. Performs value and taint analysis, type reconstruction, use-after-fre
+- [illera88/Ponce](illera88/Ponce) - 1634 stars. IDA 2016 plugin contest winner! Symbolic Execution just one-click away!
+- [igogo-x86/HexRaysPyTools](igogo-x86/HexRaysPyTools) - 1544 stars. IDA Pro plugin which improves work with HexRays decompiler and helps in process of reconstruction structures and classes
+
+### re-il2cpp
+
+- [Perfare/Il2CppDumper](Perfare/Il2CppDumper) - 9689 stars. Unity il2cpp reverse engineer
+- [SamboyCoding/Cpp2IL](SamboyCoding/Cpp2IL) - 3131 stars. Work-in-progress tool to reverse unity's IL2CPP toolchain.
+- [dlang-community/Pegged](dlang-community/Pegged) - 547 stars. A Parsing Expression Grammar (PEG) module, using the D programming language.
+- [VBForumsCommunity/sqlite3win32](VBForumsCommunity/sqlite3win32) - 28 stars. VB-friendly sqlite3 library with __stdcall calling convention
+
+### re-lab
+
+- [mandiant/flare-vm](mandiant/flare-vm) - 9343 stars. A collection of software installations scripts for Windows systems that allows you to easily setup and maintain a revers
+
+### re-learning
+
+- [mytechnotalent/Reverse-Engineering](mytechnotalent/Reverse-Engineering) - 15232 stars. A FREE comprehensive reverse engineering tutorial covering x86, x64, 32-bit/64-bit ARM, 8-bit AVR and 32-bit RISC-V arch
+- [cirosantilli/x86-assembly-cheat](cirosantilli/x86-assembly-cheat) - 896 stars. MOVED TO: https://cirosantilli.com/linux-kernel-module-cheat/userland-assembly with code at https://github.com/cirosanti
+- [ManojKumarPatnaik/Major-project-list](ManojKumarPatnaik/Major-project-list) - 262 stars. A list of practical projects that anyone can solve in any programming language (See solutions). These projects are divid
+- [CNTRUN/Termux-command](CNTRUN/Termux-command) - 120 stars. char const* const commands[] = { "aapt", " aapt", " zipalign", "abduco", " abduco", "abook", " abook", "alpine", " alpin
+
+### re-malware
+
+- [rshipp/awesome-malware-analysis](rshipp/awesome-malware-analysis) - 14453 stars. Defund the Police.
+- [ytisf/theZoo](ytisf/theZoo) - 13596 stars. A repository of LIVE malwares for your own joy and pleasure. theZoo is a project created to make the possibility of malw
+- [qilingframework/qiling](qilingframework/qiling) - 6194 stars. A True Instrumentable Binary Emulation Framework
+- [cuckoosandbox/cuckoo](cuckoosandbox/cuckoo) - 5956 stars. Cuckoo Sandbox is an automated dynamic malware analysis system
+- [RPISEC/Malware](RPISEC/Malware) - 4587 stars. Course materials for Malware Analysis by RPISEC
+- [alexandreborges/malwoverview](alexandreborges/malwoverview) - 4146 stars. Malwoverview is a first response tool for threat hunting across VirusTotal, Hybrid Analysis, URLHaus, Polyswarm, Malshar
+
+### re-mcp
+
+- [rehan-remade/universal-modder](rehan-remade/universal-modder) - 9832 stars. Point Claude at any game. Skills, tools and the fal MCP that let Claude Code mod almost any PC game you own: recon, reve
+- [duty1g/x64dbg-mcp-server](duty1g/x64dbg-mcp-server) - 2855 stars. x64dbg-MCP Server is a native MCP (Model Context Protocol) plugin for x64dbg that exposes the debugger's full functional
+- [imjustprism/borer](imjustprism/borer) - 29 stars. Blazing fast, Rust-based reverse engineering tool built for humans and AI. Next-generation binary analysis in pure Rust:
+- [GeRiY/callgraph](GeRiY/callgraph) - 18 stars. A token-efficient code map for AI coding agents: outline, call graph, "who calls this?" and impact analysis without read
+
 ### re-mobile
 
-- [mobsf](MobSF/Mobile-Security-Framework-MobSF) - ? stars. Static and dynamic mobile app analysis.
-- [jadx](skylot/jadx) - ? stars. DEX to Java decompiler.
-- [apktool](iBotPeaches/Apktool) - ? stars. APK resource and smali unpacker.
+- [OWASP/mastg](OWASP/mastg) - 13367 stars. The OWASP Mobile Application Security Testing Guide (MASTG) is a comprehensive manual for mobile app security testing an
+- [majd/ipatool](majd/ipatool) - 12425 stars. Command-line tool that allows you to search for iOS, iPadOS, tvOS, watchOS, visionOS, and macOS apps on the App Store, a
+- [firerpa/lamda](firerpa/lamda) - 8759 stars. Android Full-Stack Device Control Platform: WebRTC/H.264 remote desktop, UI/OCR/image-matching automation, one-click MIT
+- [qybaihe/bla](qybaihe/bla) - 6396 stars. 🛡️ BLA (bla-agents / Blind LLM Agents) — Open-source Blue Defense MCP server & CLI protecting JS/TS, Electron ASAR, WASM
+- [alphaSeclab/awesome-reverse-engineering](alphaSeclab/awesome-reverse-engineering) - 5224 stars. Reverse Engineering Resources About All Platforms(Windows/Linux/macOS/Android/iOS/IoT) And Every Aspect! (More than 3500
+- [Ch0pin/medusa](Ch0pin/medusa) - 2373 stars. Mobile Edge-Dynamic Unified Security Analysis
 
 ### re-network
 
 - [wireshark](wireshark/wireshark) - ? stars. Protocol analyzer.
 - [mitmproxy](mitmproxy/mitmproxy) - ? stars. Interactive HTTPS proxy.
+
+### re-other
+
+- [BinaryAnalysisPlatform/bap](BinaryAnalysisPlatform/bap) - 2263 stars. Binary Analysis Platform
+- [redasm-dev/redasm](redasm-dev/redasm) - 1835 stars. The Open Source Disassembler
+- [komorra/NodeEditorWinforms](komorra/NodeEditorWinforms) - 612 stars. Node based user control / editor for Windows Forms
+- [babakhani/PersianDate](babakhani/PersianDate) - 607 stars. javascript date library for parsing, validating, manipulating, and formatting persian dates System.
+- [ScottDuncanAI/PID-to-Knowledge-Graph](ScottDuncanAI/PID-to-Knowledge-Graph) - 312 stars. P&ID to Knowledge Graph: a Claude skill that turns P&ID PDFs (digital or scanned) into a process knowledge graph of flow
+- [ergrelet/cpplumber](ergrelet/cpplumber) - 90 stars. Static analysis tool based on clang, which detects source-to-binary information leaks in C and C++ projects
+
+### re-parser
+
+- [orhun/binsider](orhun/binsider) - 4532 stars. Analyze ELF binaries like a boss 😼🕵️‍♂️
+- [taocpp/PEGTL](taocpp/PEGTL) - 2175 stars. Parsing Expression Grammar Template Library
+- [JusticeRage/Manalyze](JusticeRage/Manalyze) - 1156 stars. A static analyzer for PE executables.
+- [Washi1337/AsmResolver](Washi1337/AsmResolver) - 1139 stars. A library for creating, reading and editing PE files and .NET modules.
+- [trailofbits/pe-parse](trailofbits/pe-parse) - 912 stars. Principled, lightweight C/C++ PE parser
+- [hasherezade/bearparser](hasherezade/bearparser) - 657 stars. Portable Executable parsing library (from PE-bear)
+
+### re-patching
+
+- [chrisneagu/FTC-Skystone-Dark-Angels-Romania-2020](chrisneagu/FTC-Skystone-Dark-Angels-Romania-2020) - 325 stars. NOTICE This repository contains the public FTC SDK for the SKYSTONE (2019-2020) competition season. If you are looking f
+- [Adamkadaban/LearnPwn](Adamkadaban/LearnPwn) - 192 stars. Learn Binary Exploitation with sample problems and solutions
+
+### re-radare
+
+- [hteso/iaito](hteso/iaito) - 1461 stars. This project has been moved to:
+- [nowsecure/r2frida](nowsecure/r2frida) - 1457 stars. Radare2 and Frida better together.
+- [radareorg/radare2-book](radareorg/radare2-book) - 929 stars. The Official Radare2 Book
+- [radareorg/awesome-radare2](radareorg/awesome-radare2) - 738 stars. A curated list of awesome projects, articles and the other materials powered by Radare2
+- [aemmitt-ns/radius2](aemmitt-ns/radius2) - 638 stars. radius2 is a fast binary emulation and symbolic execution framework using radare2
+- [radareorg/r2ai](radareorg/r2ai) - 546 stars. LLM-based reversing for radare2
+
+### re-rust
+
+- [m4b/goblin](m4b/goblin) - 1574 stars. An impish, cross-platform binary parsing crate, written in Rust
+- [falconre/falcon](falconre/falcon) - 594 stars. Binary Analysis Framework in Rust
+- [fugue-re/fugue-core](fugue-re/fugue-core) - 186 stars. A binary analysis framework written in Rust.
+- [xmoezzz/rfvp](xmoezzz/rfvp) - 156 stars. A Non-Official Rust cross-platform implementation of the FVP engine & IDE
+- [JPCERTCC/rust-binary-analysis-research-ja](JPCERTCC/rust-binary-analysis-research-ja) - 73 stars. Rustで作成されたバイナリのリバースエンジニアリング調査レポート
+- [JPCERTCC/rust-binary-analysis-research-en](JPCERTCC/rust-binary-analysis-research-en) - 43 stars. Study of binaries created with Rust through reverse engineering
 
 ### re-signature
 
@@ -202,10 +329,12 @@ Collected 2026-11-22. Every entry links to its public source. Counts describe th
 
 ### re-symbolic
 
-- [angr](angr/angr) - ? stars. Python symbolic execution and binary analysis.
-- [triton](JonathanSalwan/Triton) - ? stars. Dynamic symbolic execution library.
-- [miasm](cea-sec/miasm) - ? stars. Reverse-engineering and symbolic execution framework.
-- [klee](klee/klee) - ? stars. Symbolic execution on LLVM bitcode.
+- [ConsenSysDiligence/mythril](ConsenSysDiligence/mythril) - 4278 stars. Mythril is a symbolic-execution-based securty analysis tool for EVM bytecode. It detects security vulnerabilities in sma
+- [trailofbits/manticore](trailofbits/manticore) - 3857 stars. Symbolic execution tool
+- [JonathanSalwan/VMProtect-devirtualization](JonathanSalwan/VMProtect-devirtualization) - 1555 stars. Playing with the VMProtect software protection. Automatic deobfuscation of pure functions using symbolic execution and L
+- [ksluckow/awesome-symbolic-execution](ksluckow/awesome-symbolic-execution) - 1505 stars. A curated list of awesome symbolic execution resources including essential research papers, lectures, videos, and tools.
+- [shellphish/driller](shellphish/driller) - 988 stars. Driller: augmenting AFL with symbolic execution!
+- [AngoraFuzzer/Angora](AngoraFuzzer/Angora) - 957 stars. Angora is a mutation-based fuzzer. The main goal of Angora is to increase branch coverage by solving path constraints wi
 
 ### recon
 
@@ -215,8 +344,6 @@ Collected 2026-11-22. Every entry links to its public source. Counts describe th
 - [owasp-amass/amass](https://github.com/owasp-amass/amass) - 15546 stars. In-depth attack surface mapping and asset discovery - owasp-amass/amass
 - [maurosoria/dirsearch](https://github.com/maurosoria/dirsearch) - 15106 stars. Web path scanner. Contribute to maurosoria/dirsearch development by creating an account on GitHub.
 - [projectdiscovery/subfinder](https://github.com/projectdiscovery/subfinder) - 14845 stars. Fast passive subdomain enumeration tool. Contribute to projectdiscovery/subfinder development by creating an account on 
-- [OJ/gobuster](https://github.com/OJ/gobuster) - 14342 stars. Directory/File, DNS and VHost busting tool written in Go - OJ/gobuster
-- [aboul3la/Sublist3r](https://github.com/aboul3la/Sublist3r) - 11099 stars. Fast subdomains enumeration tool for penetration testers - aboul3la/Sublist3r
 
 ### web
 
@@ -226,8 +353,17 @@ Collected 2026-11-22. Every entry links to its public source. Counts describe th
 - [s0md3v/XSStrike](https://github.com/s0md3v/XSStrike) - 15277 stars. Most advanced XSS scanner. Contribute to s0md3v/XSStrike development by creating an account on GitHub.
 - [projectdiscovery/nuclei-templates](https://github.com/projectdiscovery/nuclei-templates) - 13383 stars. Community curated list of templates for the nuclei engine to find security vulnerabilities. - projectdiscovery/nuclei-te
 - [chaitin/xray](https://github.com/chaitin/xray) - 11798 stars. 一款长亭自研的完善的安全评估工具，支持常见 web 安全问题扫描和自定义 poc \| 使用之前务必先阅读文档 - chaitin/xray
-- [sullo/nikto](https://github.com/sullo/nikto) - 10870 stars. Nikto web server scanner. Contribute to sullo/nikto development by creating an account on GitHub.
-- [wpscanteam/wpscan](https://github.com/wpscanteam/wpscan) - 9862 stars. WPScan WordPress security scanner. Written for security professionals and blog maintainers to test the security of their
+
+## GitHub atlas
+
+2064 security repositories by topic. Top by stars:
+
+- [trimstray/the-book-of-secret-knowledge](https://github.com/trimstray/the-book-of-secret-knowledge) - 260406 stars. A collection of inspiring lists, manuals, cheatsheets, blogs, hacks, one-liners, cli/web tools and more.
+- [Hack-with-Github/Awesome-Hacking](https://github.com/Hack-with-Github/Awesome-Hacking) - 126201 stars. A collection of various awesome lists for hackers, pentesters and security researchers
+- [sherlock-project/sherlock](https://github.com/sherlock-project/sherlock) - 115651 stars. Hunt down social media accounts by username across social networks
+- [NationalSecurityAgency/ghidra](https://github.com/NationalSecurityAgency/ghidra) - 100936 stars. Ghidra is a software reverse engineering (SRE) framework
+- [swisskyrepo/PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings) - 82852 stars. A list of useful payloads and bypass for Web Application Security and Pentest/CTF
+- [Z4nzu/hackingtool](https://github.com/Z4nzu/hackingtool) - 82102 stars. ALL IN ONE Hacking Tool For Hackers
 
 ## Method index
 

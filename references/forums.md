@@ -97,6 +97,8 @@ Example thread titles from the build snapshot:
 
 ### Hacker News
 
+Harvested snapshot: 95 rows through the Algolia API.
+
 - URL: `https://news.ycombinator.com/`
 - API: `https://hn.algolia.com/api/v1/search?query=ssrf&tags=story`
 - Take: practitioner discussion, postmortems, tool launches, skeptical comments.
@@ -104,12 +106,16 @@ Example thread titles from the build snapshot:
 
 ### Lobsters
 
+Harvested snapshot: 25 rows from the security tag.
+
 - URL: `https://lobste.rs/`
 - API: `https://lobste.rs/hottest.json`, `https://lobste.rs/t/security.json`
 - Take: smaller, more technical discussion than Hacker News.
 - Watch out: low volume. Good for depth, poor for breadth.
 
 ### Full Disclosure
+
+Harvested snapshot: 16 rows from the current index.
 
 - URL: `https://seclists.org/fulldisclosure/`
 - Take: raw advisories, exploit posts, vendor responses.

@@ -11,6 +11,7 @@ help:
 	@echo "make deep TARGET=binary          scan plus capa, FLOSS and rizin"
 	@echo "make re TARGET=binary            deep binary triage"
 	@echo "make llms                        rebuild llms-full.txt"
+	@echo "make github                      refresh the GitHub atlas"
 	@echo "make forums     refresh forum and report leads"
 	@echo "make experts    refresh expert profiles"
 	@echo "make tools      refresh the canonical tool shelf"
@@ -33,6 +34,9 @@ re:
 
 llms:
 	$(PY) scripts/build_llms.py
+
+github:
+	GITHUB_TOKEN=$$(gh auth token) $(PY) scripts/github_sweep.py --out data/github_atlas.jsonl
 
 forums:
 	$(PY) scripts/harvest.py forums --limit 20

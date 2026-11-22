@@ -17,6 +17,7 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 ## Assessment
 
 - [references/techniques.md](references/techniques.md): 25 method cards
+- [references/bug-method-matrix.md](references/bug-method-matrix.md): 100+ tests
 - [references/reverse-engineering.md](references/reverse-engineering.md): Ghidra, Binary Ninja, IDA, debuggers
 - [references/vulnerability-research.md](references/vulnerability-research.md): bug classes and triage
 - [references/fuzzing.md](references/fuzzing.md): harnesses and campaigns
@@ -26,6 +27,7 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 - [references/ghidra-ecosystem.md](references/ghidra-ecosystem.md): GhidRust and plugins
 - [references/rust-reverse.md](references/rust-reverse.md): Rust binaries
 - [references/re-plugin-index.md](references/re-plugin-index.md): plugin index
+- [references/github-atlas.md](references/github-atlas.md): 2,064 security repos
 - [references/claude-bughunter.md](references/claude-bughunter.md): bounty bundle
 - [references/artex.md](references/artex.md): autonomous runner
 

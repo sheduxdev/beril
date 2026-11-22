@@ -23,6 +23,7 @@ FILES = {
     "method_details.jsonl": ("method", ("type", "source", "url", "title", "headings")),
     "re_tools.jsonl": ("tool", ("type", "category", "repo", "name")),
     "learned_methods.jsonl": ("method", ("lab", "finding", "root_cause", "fix")),
+    "github_atlas.jsonl": ("repo", ("type", "repo", "url", "description")),
 }
 
 

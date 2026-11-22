@@ -141,13 +141,14 @@ The `data/` directory in this skill contains:
 
 | File | Rows | What it holds |
 |---|---:|---|
-| `threads.jsonl` | 311 | Forums, reports, and article leads |
+| `threads.jsonl` | 447 | Forums, reports, and article leads |
 | `experts.jsonl` | 94 | Named researchers, handles, and works |
 | `canonical_tools.jsonl` | 87 | Curated tool shelf with install lines |
 | `methods.jsonl` | 85 | Method and research URLs |
 | `method_details.jsonl` | 42 | Headings, intros, code density |
 | `thread_details.jsonl` | 38 | Thread and report extracts |
 | `re_tools.jsonl` | 570 | Reverse-engineering and exploitation tool shelf |
+| `github_atlas.jsonl` | 2064 | Security repository atlas |
 | `curriculum.json` | 25 | Training plan with drills and checkpoints |
 | `learned_methods.jsonl` | 1 | Reflection notes from labs |
 

@@ -300,6 +300,7 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `references/experts.md` | Researcher profiles and signature methods |
 | `references/tooling.md` | Phase map, install commands, tool chains |
 | `references/techniques.md` | Method cards for web, API, cloud, AD, mobile, binary, AI |
+| `references/bug-method-matrix.md` | 100+ tests by class with proof |
 | `references/source-catalog.md` | Every feed, API, archive and upstream skill repo |
 | `references/dossier-template.md` | Output structure and section prompts |
 | `references/scoring.md` | Ranking and keep/drop rules |
@@ -315,6 +316,7 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `references/ghidra-ecosystem.md` | GhidRust, Ghidrust, plugin safety and high-signal plugins |
 | `references/rust-reverse.md` | Rust layout, symbols, monomorphization and tooling |
 | `references/re-plugin-index.md` | Generated plugin and tool index by ecosystem |
+| `references/github-atlas.md` | 2,064 security repositories by topic |
 | `references/claude-bughunter.md` | 83-skill bounty bundle, 7-Question Gate, evidence hygiene |
 | `references/artex.md` | Autonomous multi-agent pentest platform |
 | `references/curriculum.md` | 25-week training plan and grading |
