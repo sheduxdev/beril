@@ -1,0 +1,3 @@
+pistachio notes
+internal build: lab-2026.11
+TODO: move the debug endpoint

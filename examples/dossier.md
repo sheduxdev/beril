@@ -6,9 +6,9 @@ Collected 2026-11-22. Every entry links to its public source. Counts describe th
 
 | Layer | Rows | Sources |
 |---|---:|---|
-| Threads and reports | 269 | 10 |
+| Threads and reports | 311 | 11 |
 | Experts | 94 | 4 |
-| Tools | 87 | 1 |
+| Tools | 139 | 1 |
 | Methods and research | 42 | 8 |
 
 ## High-signal threads
@@ -112,6 +112,100 @@ Collected 2026-11-22. Every entry links to its public source. Counts describe th
 - [sundowndev/phoneinfoga](https://github.com/sundowndev/phoneinfoga) - 18647 stars. Information gathering framework for phone numbers. Contribute to sundowndev/phoneinfoga development by creating an accou
 - [laramies/theHarvester](https://github.com/laramies/theHarvester) - 18379 stars. E-mails, subdomains and names Harvester - OSINT . Contribute to laramies/theHarvester development by creating an account
 - [yogeshojha/rengine](https://github.com/yogeshojha/rengine) - 8956 stars. reNgine is an automated reconnaissance framework for web applications with a focus on highly configurable streamlined re
+
+### re-binary
+
+- [lief](lief-project/LIEF) - ? stars. Parse and modify ELF, PE, and Mach-O.
+- [pefile](erocarrera/pefile) - ? stars. Python PE parser.
+- [pyelftools](eliben/pyelftools) - ? stars. Python ELF and DWARF parser.
+- [capstone](capstone-engine/capstone) - ? stars. Disassembly framework.
+
+### re-capability
+
+- [capa](mandiant/capa) - ? stars. Identify capabilities from imports and structure.
+- [floss](mandiant/flare-floss) - ? stars. Extract obfuscated and stack strings.
+
+### re-debugger
+
+- [x64dbg](x64dbg/x64dbg) - ? stars. Windows user-mode debugger.
+- [windbg](Microsoft WinDbg) - ? stars. Windows kernel and user-mode debugger with TTD.
+- [pwndbg](pwndbg/pwndbg) - ? stars. GDB plugin for exploit development and heap inspection.
+- [gef](hugsy/gef) - ? stars. GDB plugin with exploit-oriented views.
+- [rr](rr-debugger/rr) - ? stars. Record and replay execution for Linux.
+
+### re-diff
+
+- [bindiff](google/bindiff) - ? stars. Binary similarity for patch analysis.
+- [diaphora](joxeankoret/diaphora) - ? stars. IDA plugin for binary diffing.
+- [ghidriff](clearbluejar/ghidriff) - ? stars. Ghidra headless patch diffing.
+
+### re-disassembler
+
+- [ghidra](NationalSecurityAgency/ghidra) - ? stars. NSA reverse-engineering framework with decompiler and headless mode.
+- [binaryninja](Vector35/binaryninja-api) - ? stars. Commercial reverse-engineering platform with BNIL and Python API. Headless needs a license.
+- [ida](hex-rays/ida) - ? stars. Industry decompiler and plugin ecosystem. IDA Free is limited.
+- [rizin](rizinorg/rizin) - ? stars. Command-first binary analysis framework and radare2 fork.
+- [radare2](radareorg/radare2) - ? stars. Long-running command-line reverse-engineering framework.
+
+### re-dynamic
+
+- [frida](frida/frida) - ? stars. Dynamic instrumentation toolkit for native and managed code.
+- [objection](sensepost/objection) - ? stars. Frida-powered mobile runtime exploration.
+- [dynamorio](DynamoRIO/dynamorio) - ? stars. Dynamic binary instrumentation framework.
+- [pin](intel/pin) - ? stars. Intel dynamic instrumentation.
+
+### re-firmware
+
+- [unblob](onekey-sec/unblob) - ? stars. Recursive extractor for 78+ container formats.
+- [binwalk](ReFirmLabs/binwalk) - ? stars. Firmware signature scanner and extractor.
+- [emba](e-m-b-a/emba) - ? stars. Firmware security analyzer.
+- [firmae](pr0v3rbs/FirmAE) - ? stars. Full-system firmware emulation.
+- [qemu](qemu/qemu) - ? stars. Emulator and virtual machine.
+
+### re-fuzzing
+
+- [aflpp](AFLplusplus/AFLplusplus) - ? stars. Coverage-guided fuzzer.
+- [libfuzzer](llvm/llvm-project) - ? stars. In-process coverage-guided fuzzer.
+- [honggfuzz](google/honggfuzz) - ? stars. Coverage-guided fuzzer with hardware feedback.
+- [syzkaller](google/syzkaller) - ? stars. Kernel syscall fuzzer.
+- [casr](ispras/casr) - ? stars. Crash report collection, deduplication, and severity.
+- [nyx](nyx-fuzz/Nyx) - ? stars. Snapshot fuzzing engine for AFL++.
+- [snapchange](awslabs/snapchange) - ? stars. Snapshot fuzzing for Linux kernel targets.
+
+### re-gui
+
+- [cutter](rizinorg/cutter) - ? stars. Qt GUI for rizin.
+
+### re-mobile
+
+- [mobsf](MobSF/Mobile-Security-Framework-MobSF) - ? stars. Static and dynamic mobile app analysis.
+- [jadx](skylot/jadx) - ? stars. DEX to Java decompiler.
+- [apktool](iBotPeaches/Apktool) - ? stars. APK resource and smali unpacker.
+
+### re-network
+
+- [wireshark](wireshark/wireshark) - ? stars. Protocol analyzer.
+- [mitmproxy](mitmproxy/mitmproxy) - ? stars. Interactive HTTPS proxy.
+
+### re-signature
+
+- [yara](VirusTotal/yara) - ? stars. Pattern matching for malware families and packers.
+
+### re-source
+
+- [codeql](github/codeql) - ? stars. Semantic code query engine with data flow.
+- [joern](joernio/joern) - ? stars. Code property graph query engine.
+- [semgrep](semgrep/semgrep) - ? stars. Fast rule-based static analysis.
+- [weggli](weggli/weggli) - ? stars. Fast C/C++ syntax query tool.
+- [cppcheck](danmar/cppcheck) - ? stars. C/C++ static analyzer.
+- [infer](facebook/infer) - ? stars. Static analyzer for Java, C, C++, and Objective-C.
+
+### re-symbolic
+
+- [angr](angr/angr) - ? stars. Python symbolic execution and binary analysis.
+- [triton](JonathanSalwan/Triton) - ? stars. Dynamic symbolic execution library.
+- [miasm](cea-sec/miasm) - ? stars. Reverse-engineering and symbolic execution framework.
+- [klee](klee/klee) - ? stars. Symbolic execution on LLVM bitcode.
 
 ### recon
 

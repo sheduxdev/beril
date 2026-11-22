@@ -3,14 +3,16 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TOOLS=0
+RE=0
 SCAN=""
 
 while [ $# -gt 0 ]; do
   case "$1" in
     --tools) TOOLS=1 ;;
+    --re) RE=1 ;;
     --scan) SCAN="${2:-}"; shift ;;
     -h|--help)
-      echo "usage: ./install.sh [--tools] [--scan URL]"
+      echo "usage: ./install.sh [--tools] [--re] [--scan URL]"
       exit 0 ;;
     *) echo "unknown option: $1" >&2; exit 1 ;;
   esac
@@ -90,6 +92,27 @@ if [ "$TOOLS" = "1" ]; then
     fi
     echo "  pip install frida-tools objection"
   fi
+fi
+
+if [ "$RE" = "1" ]; then
+  echo "installing optional reverse-engineering packages"
+  .venv/bin/pip install -r requirements-re.txt || true
+  mkdir -p "$HOME/.capa/sigs"
+  if [ ! -d "$HOME/.capa/rules" ]; then
+    git clone -q --depth 1 https://github.com/mandiant/capa-rules "$HOME/.capa/rules" || true
+  fi
+  for sig in 1_flare_msvc_rtf_32_64.sig 2_flare_msvc_atlmfc_32_64.sig 3_flare_common_libs.sig; do
+    [ -f "$HOME/.capa/sigs/$sig" ] || curl -sL -o "$HOME/.capa/sigs/$sig" \
+      "https://raw.githubusercontent.com/mandiant/capa/master/sigs/$sig" || true
+  done
+  echo "Optional external tools:"
+  if command -v pacman >/dev/null 2>&1; then
+    echo "  sudo pacman -S rizin radare2 binwalk qemu-full"
+  elif command -v apt-get >/dev/null 2>&1; then
+    echo "  sudo apt install rizin radare2 binwalk qemu-system-arm"
+  fi
+  echo "  Ghidra: https://github.com/NationalSecurityAgency/ghidra/releases (set GHIDRA_HOME)"
+  echo "  Binary Ninja: https://binary.ninja/ (commercial, headless needs a license)"
 fi
 
 if [ -n "$SCAN" ]; then

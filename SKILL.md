@@ -48,6 +48,8 @@ For a first pass on an application or artifact you own:
 ./beril scan --target ./build/app.apk
 ./beril scan --target ./source --tools
 ./beril scan --target ./release/app.exe
+./beril scan --target ./sample --deep
+./beril re --target ./sample --capa --floss --rizin
 ```
 
 The scanner is read-only and static for local files. Web scans report headers, TLS, cookies, exposed paths and fingerprints. Artifact scans read manifests, hardening flags, secrets, dangerous sinks, and archive paths. Add nuclei for a known-CVE pass on a running app. Walkthroughs are in `docs/one-click.md` and `docs/scan-artifacts.md`.
@@ -278,6 +280,15 @@ python scripts/validate.py
 ./beril scan --target ./build/app.apk --out scans/app
 ./beril scan --target ./source --tools --out scans/source
 ./beril scan --target ./bin/service --out scans/service
+
+# Training and labs
+./beril train --status
+./beril train --week 1
+./beril labs --run web
+
+# Deep binary triage
+./beril re --target ./bin/service --capa --floss --rizin --out scans/service-re
+GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/service.ghidra.json
 ```
 
 ## Reference map
@@ -294,7 +305,17 @@ python scripts/validate.py
 | `references/scoring.md` | Ranking and keep/drop rules |
 | `docs/one-click.md` | Install, scan and troubleshoot without the terminal |
 | `docs/scan-artifacts.md` | APK, IPA, PE, ELF, archive and source review |
-| `agents/` | Prompts for parallel forum, expert, tool and method research |
+| `docs/reverse-engineering.md` | Deep binary workflow and optional tool install |
+| `references/reverse-engineering.md` | Ghidra, Binary Ninja, IDA, rizin, debuggers, patch diff |
+| `references/vulnerability-research.md` | Bug classes, source audit, crash triage, exploitability |
+| `references/fuzzing.md` | Harnesses, AFL++, sanitizers, corpora, CI |
+| `references/exploit-development.md` | ROP, heap, UAF, Windows and kernel |
+| `references/mobile-reverse.md` | Android and iOS static and runtime work |
+| `references/firmware-iot.md` | Extraction, emulation, UART, JTAG, radio |
+| `references/curriculum.md` | 25-week training plan and grading |
+| `references/exercises.md` | 68 drills by domain |
+| `docs/training.md` | How to run the training loop |
+| `agents/` | Forum, expert, tool, method, RE, crash, fuzzing and firmware prompts |
 
 ## Legal and ethical bounds
 

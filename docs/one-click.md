@@ -35,7 +35,15 @@ The same command works on local artifacts:
 ./beril scan --target ./source --tools
 ```
 
-APK, IPA, PE, ELF, archive and source checks are static. Details are in `scan-artifacts.md`.
+APK, IPA, PE, ELF, archive and source checks are static. Details are in `scan-artifacts.md` and `reverse-engineering.md`.
+
+For a binary that needs deeper work:
+
+```bash
+./install.sh --re
+./beril scan --target ./sample --deep
+```
+
 
 If you leave off the target, Beril asks for it:
 

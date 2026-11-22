@@ -19,6 +19,9 @@ COMMANDS = {
     "extract": "extract.py",
     "dossier": "build_dossier.py",
     "validate": "validate.py",
+    "re": "re_triage.py",
+    "train": "train.py",
+    "labs": "labs.py",
 }
 
 

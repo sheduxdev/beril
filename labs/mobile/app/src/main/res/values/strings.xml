@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Beril Lab</string>
+    <string name="api_base">http://app.lab.local/api/</string>
+    <string name="api_key">AIzaSyA1234567890abcdefghijklmnopqrstuv</string>
+</resources>

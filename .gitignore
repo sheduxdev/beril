@@ -6,3 +6,14 @@ evidence/
 profile/
 .DS_Store
 scans/
+training/
+labs/binary/stack-vuln
+labs/binary/stack-hard
+labs/binary/fmt
+labs/binary/uaf
+labs/binary/integer
+labs/binary/integer-asan
+labs/fuzz/fuzz
+labs/fuzz/artifacts/
+labs/firmware/firmware.bin
+labs/firmware/out/

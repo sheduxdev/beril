@@ -126,6 +126,8 @@ The build downloaded 43 public repositories into `sources/` with shallow clones.
 | `yogeshojha/rengine` | Recon and vulnerability management |
 | `zan8in/afrog` | Vulnerability scanner |
 
+Reverse-engineering material came from `0xSteph/pentest-ai-agents` (RE agent), `mukul975/anthropic-cybersecurity-skills` (Ghidra, jadx, Frida), `SnailSploit/Claude-Red` (exploit development, crash analysis, shellcode), `CyberStrikeus/CyberStrike` (Ghidra bridge and REA docs), `trailofbits/skills` (audit and fuzzing), and `skerkour/black-hat-rust`.
+
 The upstream repos keep their own licenses. Check the license before copying text or code into a report or a product.
 
 ## Snapshot contents
@@ -140,6 +142,8 @@ The `data/` directory in this skill contains:
 | `methods.jsonl` | 85 | Method and research URLs |
 | `method_details.jsonl` | 42 | Headings, intros, code density |
 | `thread_details.jsonl` | 38 | Thread and report extracts |
+| `re_tools.jsonl` | 52 | Reverse-engineering and exploitation tool shelf |
+| `curriculum.json` | 25 | Training plan with drills and checkpoints |
 
 The snapshot is a sample, not a complete map. HackerOne alone publishes thousands of reports. The selection favors recent, public, and method-rich material.
 

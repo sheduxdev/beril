@@ -1,0 +1,901 @@
+{
+  "version": 1,
+  "updated": "2026-11-22",
+  "rules": [
+    "Two hours a day, five days a week. A missed day is not a missed week.",
+    "Every session ends with a note: command, result, next question.",
+    "No tool without a hypothesis. No finding without a reproduction.",
+    "Read the primary source before the YouTube summary.",
+    "Redo one old lab each week from memory.",
+    "Publish one writeup a month. Feedback is part of the loop."
+  ],
+  "phases": [
+    {
+      "name": "Setup",
+      "weeks": [
+        0
+      ]
+    },
+    {
+      "name": "Foundations",
+      "weeks": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "name": "Recon and web",
+      "weeks": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "name": "Code and binary",
+      "weeks": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    {
+      "name": "Exploit and infrastructure",
+      "weeks": [
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "name": "Specialist",
+      "weeks": [
+        20,
+        21,
+        22,
+        23
+      ]
+    },
+    {
+      "name": "Mastery",
+      "weeks": [
+        24
+      ]
+    }
+  ],
+  "weeks": [
+    {
+      "key": "w0",
+      "week": 0,
+      "phase": "Setup",
+      "title": "Build the lab, the notes, and the rules",
+      "minutes": 90,
+      "goal": "Finish the week with evidence for: build the lab, the notes, and the rules.",
+      "drills": [
+        {
+          "key": "w0d1",
+          "text": "Create an isolated VM or container host and a snapshot",
+          "minutes": 20
+        },
+        {
+          "key": "w0d2",
+          "text": "Install the Beril toolchain: ./install.sh --tools --re",
+          "minutes": 20
+        },
+        {
+          "key": "w0d3",
+          "text": "Write a one-page rules-of-engagement template",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://owasp.org/www-project-web-security-testing-guide/latest/",
+      "lab": "labs/web",
+      "checkpoint": "Can you restore the snapshot after a crash?",
+      "deliverable": {
+        "key": "w0x",
+        "text": "A lab README with your IP plan and snapshot name",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w1",
+      "week": 1,
+      "phase": "Foundations",
+      "title": "Linux command line and filesystem",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: linux command line and filesystem.",
+      "drills": [
+        {
+          "key": "w1d1",
+          "text": "OverTheWire Bandit levels 0 to 10",
+          "minutes": 20
+        },
+        {
+          "key": "w1d2",
+          "text": "Find every setuid binary on the lab host and explain each",
+          "minutes": 20
+        },
+        {
+          "key": "w1d3",
+          "text": "Trace one process with strace and write down its file and network calls",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://overthewire.org/wargames/bandit/",
+      "lab": "labs/binary",
+      "checkpoint": "Which permission bit lets a user run a file as its owner?",
+      "deliverable": {
+        "key": "w1x",
+        "text": "A Bandit 0-10 log with the command for each level",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w2",
+      "week": 2,
+      "phase": "Foundations",
+      "title": "Networking, DNS, and TLS",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: networking, dns, and tls.",
+      "drills": [
+        {
+          "key": "w2d1",
+          "text": "Capture a TCP handshake and a TLS handshake in Wireshark",
+          "minutes": 20
+        },
+        {
+          "key": "w2d2",
+          "text": "Resolve a domain through each record type and explain the chain",
+          "minutes": 20
+        },
+        {
+          "key": "w2d3",
+          "text": "Read a certificate and list the fields a client validates",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://www.cloudflare.com/learning/dns/what-is-dns/",
+      "lab": "labs/web",
+      "checkpoint": "What breaks first when the MTU is too small?",
+      "deliverable": {
+        "key": "w2x",
+        "text": "A packet capture with annotations",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w3",
+      "week": 3,
+      "phase": "Foundations",
+      "title": "HTTP, browsers, and the same-origin policy",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: http, browsers, and the same-origin policy.",
+      "drills": [
+        {
+          "key": "w3d1",
+          "text": "Read RFC 9110 sections on methods and status codes",
+          "minutes": 20
+        },
+        {
+          "key": "w3d2",
+          "text": "Use DevTools to inspect a login request and its cookies",
+          "minutes": 20
+        },
+        {
+          "key": "w3d3",
+          "text": "Build a tiny HTML page that makes a cross-origin request and watch it fail",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://portswigger.net/web-security/web-basics",
+      "lab": "labs/web",
+      "checkpoint": "Why does CORS exist if the browser already sends cookies?",
+      "deliverable": {
+        "key": "w3x",
+        "text": "A notes page on origin, site, and cookie scope",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w4",
+      "week": 4,
+      "phase": "Foundations",
+      "title": "Python and shell for security work",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: python and shell for security work.",
+      "drills": [
+        {
+          "key": "w4d1",
+          "text": "Write a port checker with asyncio and a timeout",
+          "minutes": 20
+        },
+        {
+          "key": "w4d2",
+          "text": "Write a bash loop that normalizes a URL list with unfurl",
+          "minutes": 20
+        },
+        {
+          "key": "w4d3",
+          "text": "Parse a JSON API response with jq and select three fields",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://docs.python.org/3/library/asyncio.html",
+      "lab": "labs/fuzz",
+      "checkpoint": "What happens to a subprocess when the parent dies?",
+      "deliverable": {
+        "key": "w4x",
+        "text": "A small CLI tool with a README",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w5",
+      "week": 5,
+      "phase": "Recon",
+      "title": "OSINT and asset mapping",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: osint and asset mapping.",
+      "drills": [
+        {
+          "key": "w5d1",
+          "text": "Map a public company through certificates, ASN, and GitHub",
+          "minutes": 20
+        },
+        {
+          "key": "w5d2",
+          "text": "Find three acquisitions or subsidiaries and their domains",
+          "minutes": 20
+        },
+        {
+          "key": "w5d3",
+          "text": "Build an asset sheet with owner, environment, and source",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://github.com/jhaddix/tbhm",
+      "lab": "labs/web",
+      "checkpoint": "How do you prove an asset belongs to the target?",
+      "deliverable": {
+        "key": "w5x",
+        "text": "An asset graph with a source for every node",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w6",
+      "week": 6,
+      "phase": "Recon",
+      "title": "Subdomains and content discovery",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: subdomains and content discovery.",
+      "drills": [
+        {
+          "key": "w6d1",
+          "text": "Run passive subdomain enumeration on a lab domain",
+          "minutes": 20
+        },
+        {
+          "key": "w6d2",
+          "text": "Diff a 403 response against a 404 and a 200",
+          "minutes": 20
+        },
+        {
+          "key": "w6d3",
+          "text": "Build a wordlist from the app's own JavaScript",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://portswigger.net/web-security/information-disclosure",
+      "lab": "labs/web",
+      "checkpoint": "When is a wildcard DNS record a false positive?",
+      "deliverable": {
+        "key": "w6x",
+        "text": "A live-host list with screenshots and notes",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w7",
+      "week": 7,
+      "phase": "Web",
+      "title": "Authentication, sessions, and OAuth",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: authentication, sessions, and oauth.",
+      "drills": [
+        {
+          "key": "w7d1",
+          "text": "PortSwigger labs: username enumeration and session fixation",
+          "minutes": 20
+        },
+        {
+          "key": "w7d2",
+          "text": "Decode a JWT and test the algorithm and claim handling",
+          "minutes": 20
+        },
+        {
+          "key": "w7d3",
+          "text": "Map an OAuth flow and every redirect URI check",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://portswigger.net/web-security/authentication",
+      "lab": "labs/web",
+      "checkpoint": "What is the difference between login CSRF and session fixation?",
+      "deliverable": {
+        "key": "w7x",
+        "text": "A flow diagram with trust boundaries",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w8",
+      "week": 8,
+      "phase": "Web",
+      "title": "Injection: SQL, XSS, SSTI, command",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: injection: sql, xss, ssti, command.",
+      "drills": [
+        {
+          "key": "w8d1",
+          "text": "PortSwigger labs: one SQLi, one XSS, one SSTI",
+          "minutes": 20
+        },
+        {
+          "key": "w8d2",
+          "text": "Build a decision tree for the DBMS from error and timing behavior",
+          "minutes": 20
+        },
+        {
+          "key": "w8d3",
+          "text": "Write the smallest payload that proves each class",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://portswigger.net/web-security/all-labs",
+      "lab": "labs/web",
+      "checkpoint": "Why is a reflected value not automatically XSS?",
+      "deliverable": {
+        "key": "w8x",
+        "text": "Three lab reports with request and response",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w9",
+      "week": 9,
+      "phase": "Web",
+      "title": "Logic, IDOR, and APIs",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: logic, idor, and apis.",
+      "drills": [
+        {
+          "key": "w9d1",
+          "text": "Run the web lab IDOR and price-manipulation tasks",
+          "minutes": 20
+        },
+        {
+          "key": "w9d2",
+          "text": "Test an API with two accounts and record every object ID",
+          "minutes": 20
+        },
+        {
+          "key": "w9d3",
+          "text": "Compare an old API version with the current one",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://owasp.org/API-Security/editions/2023/en/0x11-t10/",
+      "lab": "labs/web",
+      "checkpoint": "What is BOLA and how does it differ from BFLA?",
+      "deliverable": {
+        "key": "w9x",
+        "text": "An API authorization matrix",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w10",
+      "week": 10,
+      "phase": "Code",
+      "title": "Source audit and secure coding",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: source audit and secure coding.",
+      "drills": [
+        {
+          "key": "w10d1",
+          "text": "Run semgrep and triage every finding in the web lab source",
+          "minutes": 20
+        },
+        {
+          "key": "w10d2",
+          "text": "Trace one source to one sink by hand",
+          "minutes": 20
+        },
+        {
+          "key": "w10d3",
+          "text": "Fix one bug and add a regression test",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://owasp.org/www-project-top-ten/",
+      "lab": "labs/web",
+      "checkpoint": "Why can a correct-looking check still be bypassable?",
+      "deliverable": {
+        "key": "w10x",
+        "text": "A diff with a test",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w11",
+      "week": 11,
+      "phase": "Binary",
+      "title": "C memory and mitigations",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: c memory and mitigations.",
+      "drills": [
+        {
+          "key": "w11d1",
+          "text": "Compile the binary lab with and without mitigations",
+          "minutes": 20
+        },
+        {
+          "key": "w11d2",
+          "text": "Run checksec and explain each result",
+          "minutes": 20
+        },
+        {
+          "key": "w11d3",
+          "text": "Trigger the stack overflow under GDB and find the offset",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://guyinatuxedo.github.io/",
+      "lab": "labs/binary",
+      "checkpoint": "What does full RELRO actually protect?",
+      "deliverable": {
+        "key": "w11x",
+        "text": "A mitigation table and a crash log",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w12",
+      "week": 12,
+      "phase": "RE",
+      "title": "Static analysis with Ghidra",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: static analysis with ghidra.",
+      "drills": [
+        {
+          "key": "w12d1",
+          "text": "Load the RE challenge and rename every function you read",
+          "minutes": 20
+        },
+        {
+          "key": "w12d2",
+          "text": "Recover the three input checks and write them in C",
+          "minutes": 20
+        },
+        {
+          "key": "w12d3",
+          "text": "Rebuild the flag logic without running the binary",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://github.com/NationalSecurityAgency/ghidra/blob/master/GhidraDocs/GettingStarted.md",
+      "lab": "labs/re",
+      "checkpoint": "Which xref led to the real check?",
+      "deliverable": {
+        "key": "w12x",
+        "text": "A decompiled reconstruction",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w13",
+      "week": 13,
+      "phase": "RE",
+      "title": "Dynamic analysis and debugging",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: dynamic analysis and debugging.",
+      "drills": [
+        {
+          "key": "w13d1",
+          "text": "Set a breakpoint on the comparison and inspect the operands",
+          "minutes": 20
+        },
+        {
+          "key": "w13d2",
+          "text": "Use Frida or GDB to dump the expected buffer",
+          "minutes": 20
+        },
+        {
+          "key": "w13d3",
+          "text": "Patch a conditional jump and confirm the new path",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://github.com/pwndbg/pwndbg",
+      "lab": "labs/re",
+      "checkpoint": "How do you tell a controlled address from a lucky crash?",
+      "deliverable": {
+        "key": "w13x",
+        "text": "A debugger transcript",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w14",
+      "week": 14,
+      "phase": "Fuzzing",
+      "title": "Harnesses and coverage",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: harnesses and coverage.",
+      "drills": [
+        {
+          "key": "w14d1",
+          "text": "Build the fuzz lab with ASAN and libFuzzer",
+          "minutes": 20
+        },
+        {
+          "key": "w14d2",
+          "text": "Run 60 seconds and triage the first crash",
+          "minutes": 20
+        },
+        {
+          "key": "w14d3",
+          "text": "Minimize the input and explain the root cause",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://github.com/AFLplusplus/AFLplusplus",
+      "lab": "labs/fuzz",
+      "checkpoint": "What makes a harness bad?",
+      "deliverable": {
+        "key": "w14x",
+        "text": "A crash report and a fixed parser",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w15",
+      "week": 15,
+      "phase": "Exploit",
+      "title": "Crash triage and exploitability",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: crash triage and exploitability.",
+      "drills": [
+        {
+          "key": "w15d1",
+          "text": "Classify five crashes by primitive",
+          "minutes": 20
+        },
+        {
+          "key": "w15d2",
+          "text": "Check the fault address and RIP control for each",
+          "minutes": 20
+        },
+        {
+          "key": "w15d3",
+          "text": "Write one CASR report and one manual report",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://github.com/ispras/casr",
+      "lab": "labs/binary",
+      "checkpoint": "When is an OOB read a high instead of a medium?",
+      "deliverable": {
+        "key": "w15x",
+        "text": "A triage table with confidence labels",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w16",
+      "week": 16,
+      "phase": "Exploit",
+      "title": "ROP and shellcode",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: rop and shellcode.",
+      "drills": [
+        {
+          "key": "w16d1",
+          "text": "Build a ROP chain for the NX binary",
+          "minutes": 20
+        },
+        {
+          "key": "w16d2",
+          "text": "Write and test a 23-byte execve shellcode",
+          "minutes": 20
+        },
+        {
+          "key": "w16d3",
+          "text": "Run the chain 20 times and record reliability",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://github.com/Gallopsled/pwntools",
+      "lab": "labs/binary",
+      "checkpoint": "Which register carries the first argument on x86_64?",
+      "deliverable": {
+        "key": "w16x",
+        "text": "A working PoC with offsets",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w17",
+      "week": 17,
+      "phase": "Exploit",
+      "title": "Heap and UAF",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: heap and uaf.",
+      "drills": [
+        {
+          "key": "w17d1",
+          "text": "Run the UAF lab under ASAN and GDB",
+          "minutes": 20
+        },
+        {
+          "key": "w17d2",
+          "text": "Reallocate the freed chunk with controlled data",
+          "minutes": 20
+        },
+        {
+          "key": "w17d3",
+          "text": "Turn the stale call into a controlled function pointer",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://github.com/shellphish/how2heap",
+      "lab": "labs/binary",
+      "checkpoint": "What is safe-linking protecting?",
+      "deliverable": {
+        "key": "w17x",
+        "text": "A heap layout diagram and PoC",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w18",
+      "week": 18,
+      "phase": "Infra",
+      "title": "Active Directory and Windows",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: active directory and windows.",
+      "drills": [
+        {
+          "key": "w18d1",
+          "text": "Build a two-host AD lab or use a hosted range",
+          "minutes": 20
+        },
+        {
+          "key": "w18d2",
+          "text": "Collect with BloodHound and find one ACL edge",
+          "minutes": 20
+        },
+        {
+          "key": "w18d3",
+          "text": "Kerberoast one account and crack the hash",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://bloodhound.specterops.io/",
+      "lab": "labs/cloud",
+      "checkpoint": "What is the difference between GenericAll and WriteDACL?",
+      "deliverable": {
+        "key": "w18x",
+        "text": "A BloodHound path screenshot",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w19",
+      "week": 19,
+      "phase": "Infra",
+      "title": "Cloud and Kubernetes",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: cloud and kubernetes.",
+      "drills": [
+        {
+          "key": "w19d1",
+          "text": "Review the cloud lab Terraform and find three misconfigs",
+          "minutes": 20
+        },
+        {
+          "key": "w19d2",
+          "text": "Query an instance metadata endpoint from a container",
+          "minutes": 20
+        },
+        {
+          "key": "w19d3",
+          "text": "Map one IAM privilege escalation path",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://owasp.org/www-project-kubernetes-top-ten/",
+      "lab": "labs/cloud",
+      "checkpoint": "Why is a role name not a permission?",
+      "deliverable": {
+        "key": "w19x",
+        "text": "A cloud finding with a read-only proof",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w20",
+      "week": 20,
+      "phase": "Specialist",
+      "title": "Mobile applications",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: mobile applications.",
+      "drills": [
+        {
+          "key": "w20d1",
+          "text": "Review the mobile lab manifest and list exported components",
+          "minutes": 20
+        },
+        {
+          "key": "w20d2",
+          "text": "Build and decompile an APK, then hook one method",
+          "minutes": 20
+        },
+        {
+          "key": "w20d3",
+          "text": "Test a deep link and a WebView bridge",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://mas.owasp.org/MASTG/",
+      "lab": "labs/mobile",
+      "checkpoint": "When is an exported activity a bug?",
+      "deliverable": {
+        "key": "w20x",
+        "text": "A component table with evidence",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w21",
+      "week": 21,
+      "phase": "Specialist",
+      "title": "Firmware and IoT",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: firmware and iot.",
+      "drills": [
+        {
+          "key": "w21d1",
+          "text": "Extract the firmware lab image with unblob or binwalk",
+          "minutes": 20
+        },
+        {
+          "key": "w21d2",
+          "text": "Find the command injection in the CGI",
+          "minutes": 20
+        },
+        {
+          "key": "w21d3",
+          "text": "Check the update signature and the shadow file",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://github.com/e-m-b-a/emba",
+      "lab": "labs/firmware",
+      "checkpoint": "Why is a signed image not enough?",
+      "deliverable": {
+        "key": "w21x",
+        "text": "A rootfs map and two findings",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w22",
+      "week": 22,
+      "phase": "Specialist",
+      "title": "Detection and threat hunting",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: detection and threat hunting.",
+      "drills": [
+        {
+          "key": "w22d1",
+          "text": "Write a Sigma rule for one lab technique",
+          "minutes": 20
+        },
+        {
+          "key": "w22d2",
+          "text": "Map three findings to ATT&CK",
+          "minutes": 20
+        },
+        {
+          "key": "w22d3",
+          "text": "Run a PCAP through Zeek or Suricata and find the beacon",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://attack.mitre.org/",
+      "lab": "labs/firmware",
+      "checkpoint": "What makes a detection high fidelity?",
+      "deliverable": {
+        "key": "w22x",
+        "text": "A rule and a false-positive analysis",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w23",
+      "week": 23,
+      "phase": "Specialist",
+      "title": "AI and LLM security",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: ai and llm security.",
+      "drills": [
+        {
+          "key": "w23d1",
+          "text": "Test a chatbot for direct and indirect prompt injection",
+          "minutes": 20
+        },
+        {
+          "key": "w23d2",
+          "text": "Map the tool boundary and test one tool-call abuse",
+          "minutes": 20
+        },
+        {
+          "key": "w23d3",
+          "text": "Test RAG cross-user leakage",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+      "lab": "labs/web",
+      "checkpoint": "Why is a system prompt leak not always a finding?",
+      "deliverable": {
+        "key": "w23x",
+        "text": "A prompt injection report with impact",
+        "minutes": 40
+      }
+    },
+    {
+      "key": "w24",
+      "week": 24,
+      "phase": "Mastery",
+      "title": "Reporting and capstone",
+      "minutes": 120,
+      "goal": "Finish the week with evidence for: reporting and capstone.",
+      "drills": [
+        {
+          "key": "w24d1",
+          "text": "Write a full report for one lab finding",
+          "minutes": 20
+        },
+        {
+          "key": "w24d2",
+          "text": "Run a peer review against the quality gates",
+          "minutes": 20
+        },
+        {
+          "key": "w24d3",
+          "text": "Present the finding in five minutes",
+          "minutes": 20
+        }
+      ],
+      "reading": "https://bugcrowd.com/vulnerability-rating-taxonomy",
+      "lab": "labs/web",
+      "checkpoint": "Can a triager reproduce it in five minutes?",
+      "deliverable": {
+        "key": "w24x",
+        "text": "A public-quality report and a capstone demo",
+        "minutes": 40
+      }
+    }
+  ]
+}

@@ -53,6 +53,7 @@ def main() -> None:
     threads = rows(os.path.join(args.data, "threads.jsonl"))
     experts = rows(os.path.join(args.data, "experts.jsonl"))
     tools = rows(os.path.join(args.data, "canonical_tools.jsonl")) or rows(os.path.join(args.data, "tools.jsonl"))
+    tools += rows(os.path.join(args.data, "re_tools.jsonl"))
     methods = rows(os.path.join(args.data, "method_details.jsonl")) or rows(os.path.join(args.data, "methods.jsonl"))
 
     lines: list[str] = []

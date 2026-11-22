@@ -22,22 +22,42 @@ beril/
 │   ├── scan.py                  # URL or artifact router
 │   ├── scan_app.py              # read-only web scan
 │   ├── scan_artifact.py         # APK, IPA, PE, ELF, archive, source scan
+│   ├── re_triage.py             # capa, FLOSS, rizin, Ghidra passes
+│   ├── ghidra_dump.py           # Ghidra postscript
+│   ├── ghidra_headless.sh       # Ghidra wrapper
+│   ├── rizin_triage.sh          # rizin JSON triage
+│   ├── patch_diff.sh            # Ghidra/BinDiff/git diff helper
+│   ├── frida_hook.js            # mobile hook template
+│   ├── afl_harness.c            # fuzzing harness template
+│   ├── train.py                 # curriculum coach and progress
+│   ├── labs.py                  # lab runner
 │   ├── build_dossier.py         # JSONL -> Markdown brief
 │   └── validate.py              # schema, links, prose checks
 ├── install.sh                   # one-click setup
 ├── beril                        # command wrapper
 ├── docs/one-click.md            # install and scan without the terminal
 ├── docs/scan-artifacts.md       # APK, binary and source review
+├── docs/reverse-engineering.md  # deep binary workflow
+├── docs/training.md             # how to train with Beril
 ├── references/
 │   ├── camoufox-playbook.md     # challenge ladder and site recipes
 │   ├── forums.md                # community catalog
 │   ├── experts.md               # researcher profiles and methods
 │   ├── tooling.md               # phase map and commands
 │   ├── techniques.md            # 25 method cards
+│   ├── reverse-engineering.md   # Ghidra, Binary Ninja, IDA, debuggers
+│   ├── vulnerability-research.md # bug classes, triage, exploitability
+│   ├── fuzzing.md               # harnesses, AFL++, sanitisers, CI
+│   ├── exploit-development.md   # ROP, heap, UAF, mitigations
+│   ├── mobile-reverse.md        # Android and iOS
+│   ├── firmware-iot.md          # extraction, emulation, hardware
+│   ├── curriculum.md            # 25-week training plan
+│   ├── exercises.md             # 68 drills by domain
 │   ├── source-catalog.md        # provenance and upstream repos
 │   ├── dossier-template.md      # output structure
 │   └── scoring.md               # ranking rules
-├── agents/                      # parallel research prompts
+├── agents/                      # research, RE, crash, fuzzing, firmware, mentor prompts
+├── labs/                        # web, binary, fuzz, RE, mobile, firmware, cloud
 ├── assets/                      # banner and social preview
 ├── data/                        # snapshot catalogs
 ├── examples/dossier.md          # generated sample brief
@@ -69,6 +89,39 @@ Optional known-CVE pass, if nuclei is installed:
 nuclei -u https://your-app.example -severity medium,high,critical \
   -tags cve,exposure,misconfig -o scans/nuclei.txt
 ```
+
+## Training
+
+A 25-week curriculum with local labs, drills, checkpoints, and grading rubrics. It runs from the shell to ROP, heap, AD, firmware, and AI security.
+
+```bash
+./beril train --status
+./beril train --week 1
+./beril labs --run web
+```
+
+Seven labs are local and runnable: web, binary, fuzz, RE, mobile, firmware, cloud. Each has tasks, a smoke test, and an answer key. Start at `docs/training.md` and `references/curriculum.md`.
+
+## Reverse engineering and exploit development
+
+```bash
+./install.sh --re
+./beril scan --target ./sample --deep
+./beril re --target ./sample --capa --floss --rizin
+./scripts/ghidra_headless.sh ./sample out.json
+./scripts/patch_diff.sh ghidriff old.bin new.bin
+```
+
+`--deep` runs every installed optional pass and keeps the static result. `re` is the same with explicit tool flags. Ghidra needs `GHIDRA_HOME`; Binary Ninja needs a license and `install_api.py`.
+
+The reference set covers Ghidra, Binary Ninja, IDA, rizin, x64dbg, WinDbg, GDB, Frida, angr, capa, FLOSS, AFL++, CASR, unblob, EMBA, MobSF, and the workflows around them:
+
+- `references/reverse-engineering.md`
+- `references/vulnerability-research.md`
+- `references/fuzzing.md`
+- `references/exploit-development.md`
+- `references/mobile-reverse.md`
+- `references/firmware-iot.md`
 
 ## Manual quick start
 
@@ -119,7 +172,7 @@ Read `SKILL.md` for the full loop and the quality gates.
 |---|---:|---|
 | Threads and reports | 311 | What is being found now? |
 | Experts | 94 | Who knows this best? |
-| Tools | 87 | What should I run? |
+| Tools | 139 | What should I run? |
 | Methods | 85 | How do they do it? |
 
 The snapshot is a sample, not a census. See `references/source-catalog.md` for endpoints, dates, and gaps.

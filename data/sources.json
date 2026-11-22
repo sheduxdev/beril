@@ -7,7 +7,9 @@
     "canonical_tools.jsonl": 87,
     "methods.jsonl": 85,
     "method_details.jsonl": 42,
-    "thread_details.jsonl": 38
+    "thread_details.jsonl": 38,
+    "re_tools.jsonl": 52,
+    "curriculum.json": 25
   },
   "thread_sources": {
     "0x00sec": 20,
@@ -34,6 +36,8 @@
     "HackerOne report bodies may be private; only public metadata and summaries are stored.",
     "Reddit post text can include comments; trim before quoting.",
     "HackForums requires headful Camoufox under Xvfb with a persistent profile; a fresh IP may be needed after repeated challenges.",
-    "HackForums rows come from the public homepage feed. Section harvesting is implemented; Cloudflare clearance is intermittent and improves with a fresh profile and a new IP."
+    "HackForums rows come from the public homepage feed. Section harvesting is implemented; Cloudflare clearance is intermittent and improves with a fresh profile and a new IP.",
+    "re_tools.jsonl is a curated reference shelf; entries are not installed by default.",
+    "curriculum.json is the training plan; progress lives in training/progress.json."
   ]
 }

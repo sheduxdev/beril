@@ -11,6 +11,7 @@ import argparse
 import json
 import os
 import re
+import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -27,6 +28,7 @@ def main() -> None:
     ap.add_argument("--insecure", action="store_true", help="skip TLS verification on web scans")
     ap.add_argument("--tools", action="store_true", help="run optional local tools (semgrep, gitleaks, trivy)")
     ap.add_argument("--max-files", type=int, default=20_000)
+    ap.add_argument("--deep", action="store_true", help="run optional capa, FLOSS, rizin and Ghidra passes")
     args = ap.parse_args()
 
     target = args.target or input("URL or artifact path: ").strip()
@@ -42,6 +44,14 @@ def main() -> None:
     else:
         if not os.path.exists(target):
             sys.exit(f"not found: {target}")
+        if args.deep:
+            cmd = [sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), "re_triage.py"),
+                   "--target", target, "--out", out, "--capa", "--floss", "--rizin"]
+            if os.environ.get("GHIDRA_HOME"):
+                cmd.append("--ghidra")
+            if args.json:
+                cmd.append("--json")
+            raise SystemExit(subprocess.call(cmd))
         result = scan_artifact.scan(target, args.max_files, args.tools)
         text = scan_artifact.render(result)
 
