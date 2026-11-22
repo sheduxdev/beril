@@ -1,6 +1,6 @@
 # Beril
 
-![Beril, green eyes and pistachio](assets/beril.svg)
+![Beril, green eyes and pistachio](assets/beril.webp)
 
 A cybersecurity intelligence skill that reads the web with Camoufox, keeps what it finds as evidence-linked catalogs, and turns the result into a dossier a human can act on. The palette is pistachio green and the eyes are green, because the project is named after someone who likes both.
 
@@ -35,6 +35,7 @@ beril/
 │   ├── dossier-template.md      # output structure
 │   └── scoring.md               # ranking rules
 ├── agents/                      # parallel research prompts
+├── assets/                      # banner and social preview
 ├── data/                        # snapshot catalogs
 ├── examples/dossier.md          # generated sample brief
 ├── examples/scan-example.md     # sample application scan
@@ -159,6 +160,8 @@ The full list, counts, and roles are in `references/source-catalog.md`.
 ## The name
 
 Beril is a person, not an acronym. She has green eyes and likes pistachios, so the banner does too. The rest of the repository is evidence.
+
+The banner is in `assets/beril.webp` (PNG fallback in `assets/beril.png`). The GitHub social preview is `assets/social-preview.jpg`.
 
 ## License
 
