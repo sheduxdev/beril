@@ -64,6 +64,14 @@ python scripts/harvest.py tools --sources canonical --limit 60
 python scripts/harvest.py methods --limit 20
 ```
 
+Or use the short targets:
+
+```bash
+make validate
+make dossier
+make forums
+```
+
 Read `SKILL.md` for the full loop and the quality gates.
 
 ## Research loop
