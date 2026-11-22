@@ -6,4 +6,4 @@ ropgadget>=7.6
 pwntools>=4.13
 frida-tools>=14.0
 objection>=1.11
-unblob>=24.5
+unblob>=26.6.4
