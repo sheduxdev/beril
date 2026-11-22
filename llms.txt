@@ -1,0 +1,45 @@
+# Beril
+
+> Cybersecurity intelligence and assessment skill. Reads public research with Camoufox, scans local artifacts, and keeps evidence-linked catalogs.
+
+Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
+
+## Core
+
+- [AGENTS.md](AGENTS.md): generic agent entry point
+- [SKILL.md](SKILL.md): operating loop and quality gates
+- [agents/router.md](agents/router.md): intake and routing
+- [README.md](README.md): install and project map
+- [docs/break-my-app.md](docs/break-my-app.md): request-to-report runbook
+- [docs/agents.md](docs/agents.md): agent file matrix
+
+## Assessment
+
+- [references/techniques.md](references/techniques.md): 25 method cards
+- [references/reverse-engineering.md](references/reverse-engineering.md): Ghidra, Binary Ninja, IDA, debuggers
+- [references/vulnerability-research.md](references/vulnerability-research.md): bug classes and triage
+- [references/fuzzing.md](references/fuzzing.md): harnesses and campaigns
+- [references/exploit-development.md](references/exploit-development.md): ROP, heap, UAF
+- [references/mobile-reverse.md](references/mobile-reverse.md): Android and iOS
+- [references/firmware-iot.md](references/firmware-iot.md): extraction and emulation
+
+## Training
+
+- [references/curriculum.md](references/curriculum.md): 25 weeks
+- [references/exercises.md](references/exercises.md): 68 drills
+- [references/self-training.md](references/self-training.md): reflection loop
+- [labs/README.md](labs/README.md): local labs
+
+## Commands
+
+```bash
+./beril scan --target <url-or-path>
+./beril scan --target <binary> --deep
+./beril labs --run
+./beril train --status
+```
+
+## Optional
+
+- [llms-full.txt](llms-full.txt): concatenated core docs
+- [references/source-catalog.md](references/source-catalog.md): provenance

@@ -1,0 +1,28 @@
+---
+description: Beril security assessment workflow
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Beril
+
+Read `AGENTS.md` and `SKILL.md` before a security task.
+
+## Commands
+
+```bash
+./beril scan --target <url-or-path>
+./beril scan --target <binary> --deep
+./beril re --target <binary>
+./beril labs --run
+```
+
+## Rules
+
+- Confirm target and authorization first.
+- Read-only scan, then one manual class at a time.
+- Static before dynamic. No execution of unknown binaries without a snapshot.
+- A scanner hit is a lead. Replay it.
+- Report with `references/dossier-template.md`.
+- Label confirmed and inferred. Keep evidence paths.
+- Stop at the agreed proof.

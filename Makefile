@@ -2,7 +2,7 @@ PY ?= python
 DATA ?= data
 TARGET ?= https://example.com
 
-.PHONY: help validate dossier scan deep re forums experts tools methods all
+.PHONY: help validate dossier scan deep re llms forums experts tools methods all
 
 help:
 	@echo "make validate   check schema, links and prose"
@@ -10,6 +10,7 @@ help:
 	@echo "make scan TARGET=url-or-path   read-only scan"
 	@echo "make deep TARGET=binary          scan plus capa, FLOSS and rizin"
 	@echo "make re TARGET=binary            deep binary triage"
+	@echo "make llms                        rebuild llms-full.txt"
 	@echo "make forums     refresh forum and report leads"
 	@echo "make experts    refresh expert profiles"
 	@echo "make tools      refresh the canonical tool shelf"
@@ -29,6 +30,9 @@ deep:
 
 re:
 	./beril re --target $(TARGET) --capa --floss --rizin
+
+llms:
+	$(PY) scripts/build_llms.py
 
 forums:
 	$(PY) scripts/harvest.py forums --limit 20

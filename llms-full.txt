@@ -1,0 +1,4095 @@
+# Beril full context
+
+Generated from the markdown sources. Prefer the split files when context is tight.
+
+
+
+<!-- ===== AGENTS.md ===== -->
+
+# AGENTS.md
+
+Beril is a cybersecurity intelligence and assessment skill. This file is the entry point for any coding agent.
+
+## Read first
+
+1. `SKILL.md` for the loop and the quality gates.
+2. `agents/router.md` for intake and routing.
+3. The matching reference for the artifact.
+
+## Commands
+
+```bash
+./install.sh                 # base install
+./install.sh --tools --re    # optional recon and RE tools
+./beril scan --target <url-or-path>
+./beril scan --target <binary> --deep
+./beril re --target <binary> --capa --floss --rizin
+./beril train --status
+./beril labs --run
+./beril validate
+```
+
+## Default workflow
+
+1. Intake. Target, authorization, read-only or active, proof needed.
+2. Detect. URL, local artifact, source tree, or firmware.
+3. Scan. Use the read-only pass first.
+4. Read. Open the top findings and the matching method cards.
+5. Verify. Replay with a minimal request or input.
+6. Report. Use `references/dossier-template.md`.
+7. Clean up. Say what was not tested.
+
+## Hard rules
+
+- Do not scan a host without confirming the user owns it or has scope.
+- Do not run untrusted binaries on the host without a snapshot or VM.
+- Do not dump a whole database or brute force without a reason.
+- Do not execute a packed sample just to "see what happens".
+- Do not claim a vulnerability from a scanner signature alone.
+- Do not paste secrets into the report. Mask them and say where they live.
+- Keep every command and output path.
+
+## Break-my-app runbook
+
+`docs/break-my-app.md` has the intake, per-artifact steps, report block, and stop conditions.
+
+## Common requests
+
+| User says | Do |
+|---|---|
+| "Web appimde açık ara" | URL scan, then one manual class at a time |
+| "APK'mı incele" | APK scan, manifest review, hook template |
+| "Bu EXE/ELF'i kır" | deep scan, Ghidra or rizin, debugger |
+| "Kaynak kodum var" | source scan with `--tools`, trace one sink |
+| "Firmware" | unblob, rootfs map, update path |
+| "Rapor yaz" | evidence first, then the report template |
+| "Öğret" | `./beril train`, one week at a time |
+
+## Evidence
+
+A finding needs a reproducible artifact: request and response, crash input, a diff, or a file path. A screenshot alone is weak. A scanner line alone is not a finding.
+
+## Language
+
+Answer in the user's language. Keep commands and paths in their original form.
+
+
+<!-- ===== CLAUDE.md ===== -->
+
+# CLAUDE.md
+
+Beril is a cybersecurity intelligence and assessment skill. Claude Code loads this file automatically.
+
+## Start here
+
+- `SKILL.md`: the operating loop, source board, and quality gates.
+- `agents/router.md`: intake questions and routing.
+- `references/`: the deep material for each artifact.
+
+## Commands
+
+```bash
+./install.sh
+./install.sh --tools --re
+./beril scan --target <url-or-path>
+./beril scan --target <binary> --deep
+./beril re --target <binary> --capa --floss --rizin
+./beril train --week 1
+./beril labs --run web
+./beril validate
+```
+
+## Workflow
+
+1. Ask for the target, authorization, read-only or active, and the proof needed.
+2. Detect the artifact type.
+3. Run the read-only scan.
+4. Read the top findings and the matching card in `references/techniques.md`.
+5. Confirm by hand with a minimal request or input.
+6. Report with `references/dossier-template.md`.
+7. State what you did not test.
+
+## Rules
+
+- Static before dynamic.
+- Read-only before payloads.
+- A scanner hit is a lead.
+- Label confirmed vs inferred.
+- Keep the evidence path.
+- Stop at the agreed proof.
+- Never test a host without scope.
+
+## Break-my-app runbook
+
+`docs/break-my-app.md` has the intake, per-artifact steps, report block, and stop conditions.
+
+## Task recipes
+
+- Web app: scan, then choose auth, injection, IDOR, or logic. One class per pass.
+- APK: scan, read the manifest, review exported components, then Frida in a lab.
+- EXE/ELF: scan `--deep`, map imports and mitigations, open Ghidra or rizin, confirm in a debugger.
+- Source: scan `--tools`, trace one source to one sink, write the fix and a test.
+- Firmware: unblob, map the rootfs, check the update path and the management daemon.
+- Report: evidence first, impact second, CVSS last.
+
+## Output
+
+Use the finding block in `agents/router.md`. Answer in the user's language.
+
+
+<!-- ===== GEMINI.md ===== -->
+
+# GEMINI.md
+
+Beril is a cybersecurity intelligence and assessment skill for Gemini CLI.
+
+## Read
+
+- `SKILL.md`
+- `agents/router.md`
+- the reference for the artifact under test
+
+## Commands
+
+```bash
+./beril scan --target <url-or-path>
+./beril scan --target <binary> --deep
+./beril re --target <binary> --capa --floss --rizin
+./beril labs --run
+./beril train --next
+```
+
+## Loop
+
+1. Confirm target and authorization.
+2. Detect the artifact.
+3. Scan read-only.
+4. Open the matching method card.
+5. Replay minimally.
+6. Report with evidence.
+7. List the gaps.
+
+## Rules
+
+- One target, one class at a time.
+- Static before dynamic.
+- Confirmed vs inferred labels.
+- No scope, no scan.
+- A clean scan is not a certification.
+
+Answer in the user's language. Keep commands intact.
+
+
+<!-- ===== SKILL.md ===== -->
+
+---
+name: beril
+description: Build and refresh a cybersecurity intelligence base with Camoufox. Harvests anti-bot forums, disclosed reports, researcher blogs and GitHub tool shelves; profiles experts; extracts their methods; writes an evidence-linked dossier; and runs a read-only scan of an app you own. Use for bug bounty recon, pentest planning, threat research, expert tracking, tool selection, application security checks, or when a security site blocks ordinary scraping. Turkish triggers: siber güvenlik araştırması, forum toplama, uzman profili, tool kataloğu, metod çıkarma, bug bounty keşif, uygulama taraması.
+---
+
+# Beril
+
+Beril is a research loop for offensive security intelligence. It uses Camoufox, a patched Firefox with Playwright, to read sites that block plain HTTP clients. It stores what it finds as four linked catalogs: forums and threads, experts, tools, and methods. The output is a dossier you can defend line by line because every entry has a public URL.
+
+Use it when you need current field knowledge rather than a static list. Examples: choosing recon tools for a target, learning how top hunters approach a vulnerability class, tracking a researcher's recent work, or building a reading queue before an engagement.
+
+## When to use
+
+- A bounty program starts and you want the current tools and methods for its stack.
+- A security site returns 403, a Cloudflare challenge, or an empty JavaScript shell to curl.
+- You need to turn scattered forum posts and disclosures into a ranked reading list.
+- You want to compare experts by what they publish, not by follower count.
+- You are preparing a pentest and need a phase-by-phase tool chain with install commands.
+- A previous dossier is older than 30 days and the stars, reports, or threads have moved.
+
+Skip Beril when a single page answers the question. Open the page, read it, and leave the catalog alone.
+
+## Install
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -U "camoufox[geoip]" beautifulsoup4 lxml
+camoufox fetch
+```
+
+`camoufox fetch` downloads the browser and GeoIP database. It needs about 300 MB. On a headless Linux box, install `xvfb` if you want the headful fallback for challenge pages.
+
+Run everything from the skill directory:
+
+```bash
+cd skills/beril
+python scripts/validate.py
+```
+
+## One-click scan
+
+For a first pass on an application or artifact you own:
+
+```bash
+./install.sh
+./beril scan --target https://your-app.example
+./beril scan --target ./build/app.apk
+./beril scan --target ./source --tools
+./beril scan --target ./release/app.exe
+./beril scan --target ./sample --deep
+./beril re --target ./sample --capa --floss --rizin
+```
+
+The scanner is read-only and static for local files. Web scans report headers, TLS, cookies, exposed paths and fingerprints. Artifact scans read manifests, hardening flags, secrets, dangerous sinks, and archive paths. Add nuclei for a known-CVE pass on a running app. Walkthroughs are in `docs/one-click.md` and `docs/scan-artifacts.md`.
+
+## Ten-minute run
+
+```bash
+# 1. Pull the current public surface
+python scripts/harvest.py forums --sources 0x00sec,htb,reddit,hackerone --limit 25
+python scripts/harvest.py experts --sources curated,hackerone,portswigger --limit 40
+python scripts/harvest.py tools --sources canonical --limit 60
+python scripts/harvest.py methods --limit 20
+
+# 2. Turn the best URLs into notes with headings and code density
+python scripts/extract.py --input data/threads.jsonl --out data/thread_details.jsonl --limit 25
+
+# 3. Build the reading dossier
+python scripts/build_dossier.py --data data --out examples/dossier.md
+
+# 4. Check schema and prose
+python scripts/validate.py
+```
+
+All commands accept `--headful`, `--delay`, `--cache`, and `--fresh`. The cache is keyed by URL hash and lives in `raw/`.
+
+## The loop
+
+### 1. Scope the question
+
+Write one sentence before touching a browser: "I need the current external recon method for GraphQL APIs on bug bounty programs." A vague goal produces a 400-row dump nobody reads.
+
+Then pick the layers that can answer it:
+
+| Question | Layers | First sources |
+|---|---|---|
+| What is being found now? | Threads, reports | HackerOne Hacktivity, r/bugbounty, 0x00sec |
+| Who knows this best? | Experts | PortSwigger authors, Intigriti spotlights, report authors |
+| What should I run? | Tools | ProjectDiscovery, GitHub topics, canonical shelf |
+| How do they do it? | Methods | Researcher blogs, conference talks, docs |
+
+Two layers are enough for a focused brief. Use all four for a new target or a quarterly refresh.
+
+### 2. Collect with Camoufox
+
+Use the harvesters first. They know the site quirks: Discourse JSON, Ghost RSS, Reddit shadow DOM, HackerOne's disclosure grid.
+
+```bash
+python scripts/harvest.py forums --sources hackerone --limit 50
+python scripts/harvest.py experts --sources hackerone --limit 60
+```
+
+The browser is shared across a run. Keep concurrency low. One request every 1 to 2 seconds per host is polite and usually enough to avoid a challenge.
+
+### 3. Extract, do not summarize yet
+
+`extract.py` records structure: title, headings, intro, code block count, table count. Structure tells you whether a page contains a reproducible method or only commentary. A page with 12 headings and 40 code blocks is worth reading. A page with one heading and no code is a news item.
+
+```bash
+python scripts/extract.py --input data/methods.jsonl --out data/method_details.jsonl --limit 30
+```
+
+Read the top 10 notes yourself. Beril cannot tell whether a technique is correct; it can only show you where the evidence is.
+
+### 4. Verify the claim
+
+For every method you keep, answer four questions in the note:
+
+1. What is the precondition? Version, configuration, role, feature flag.
+2. What is the smallest request or command that shows the behavior?
+3. What is the observable proof? Response diff, callback, log line, screenshot.
+4. What makes it fail? WAF, parser choice, cache, patched version.
+
+If the source does not answer them, mark the gap. Do not fill it with plausible detail.
+
+### 5. Write the dossier
+
+`build_dossier.py` gives you coverage counts, ranked threads, expert reading, a tool shelf, and a method index. Add a short "what changed" section by hand. State the date, the sources you actually reached, and what you could not reach.
+
+### 6. Refresh
+
+Monthly is enough for tools and experts. Weekly is better for disclosed reports and forum threads. Store each snapshot with its date. When a star count or report page changes, the old dossier still records what you saw.
+
+## Source board
+
+| Source | Access | Take | Watch out |
+|---|---|---|---|
+| 0x00sec | Ghost RSS and tag pages | Low-level exploitation, reverse engineering, red team | Editorial account posts most items; read the byline in the body |
+| Hack The Box Forum | Discourse JSON | Lab questions, certification talk, beginner paths | Many threads are single-question homework |
+| Reddit r/netsec, r/bugbounty | `sh.reddit.com`, shadow DOM | Field reports, disclosure drama, methodology threads | Comment text bleeds into post text; trim before quoting |
+| HackerOne Hacktivity | Public disclosure grid | Real report titles, weakness, severity, bounty, author | Report bodies often need login; the grid metadata is public |
+| Intigriti researchers blog | Public listing and RSS | Writeups, hacker interviews, tool reviews | Category pages mix news with technique |
+| PortSwigger Research | Author pages and RSS | Web exploitation primitives, desync, XSS, cache | Listing includes topic hubs; filter to article URLs |
+| ProjectDiscovery blog | Public listing | Recon tooling, nuclei templates, AI pentest benchmarks | Product posts outnumber method posts |
+| YesWeHack blog | Public categories | Bug bounty lessons, Dojo challenges | Some articles are program news |
+| Bugcrowd VRT | Public taxonomy | Severity language and report classification | Not a forum |
+| DEF CON media | Public directory index | Talks and slides by year | Large files; index only unless you need the talk |
+| GitHub topics | Public HTML | Tool discovery and rough popularity | Topic tags are noisy; verify the repo does security work |
+| Hacker News, Lobsters | Public | Practitioner discussion, postmortems | Signal is uneven; use as a lead generator |
+
+More detail, including endpoints and query strings, is in `references/forums.md`.
+
+## Entity rules
+
+Keep the same shape across runs. The scripts already write these fields.
+
+### Thread or report
+
+```json
+{"type":"thread","source":"HackerOne Hacktivity","url":"https://hackerone.com/reports/...",
+ "title":"...","author":"handle","date":"","tags":["disclosed"],
+ "summary":"...","metrics":{"program":"...","weakness":"...","severity":"High","bounty":"$2,000"},
+ "collected_at":"2026-11-22T00:00:00+00:00"}
+```
+
+A thread is any public discussion unit: forum post, disclosed report, blog article with comments. Do not store comment trees unless the comment adds a reproduction detail.
+
+### Expert
+
+```json
+{"type":"expert","source":"PortSwigger Research","name":"James Kettle",
+ "handle":"albinowax","profile":"https://portswigger.net/research/james-kettle",
+ "focus":"request smuggling, cache poisoning, desync",
+ "works":[{"title":"HTTP/2: The Sequel is Always Worse","url":"..."}],
+ "collected_at":"..."}
+```
+
+`focus` describes what the person publishes. Do not invent a biography, employer, or country. If the only evidence is a report handle, write that.
+
+### Tool
+
+```json
+{"type":"tool","source":"canonical","category":"recon","repo":"https://github.com/projectdiscovery/subfinder",
+ "name":"projectdiscovery/subfinder","description":"Fast passive subdomain enumeration tool.",
+ "stars":"14845","language":"Go","install":["go install ..."],"flags":[],"collected_at":"..."}
+```
+
+Star counts are a snapshot. Label them with the collection date in any prose. A repo with no README or a last release from years ago is still useful, but say so.
+
+### Method
+
+```json
+{"type":"method","source":"PortSwigger Research","url":"...","title":"...",
+ "headings":["..."],"intro":"...","code_blocks":42,"tables":3,"collected_at":"..."}
+```
+
+A method note is not a summary of the article. It is the transferable procedure plus the evidence that it worked.
+
+## Camoufox rules
+
+The full playbook is in `references/camoufox-playbook.md`. The short version:
+
+- Keep the fingerprint consistent. One locale, one timezone, one OS, one browser version per session.
+- Start headless with `humanize=True`. Move to headful only when a challenge persists.
+- Warm the origin before fetching an RSS or JSON endpoint from page context.
+- Prefer the site's JSON or RSS endpoint over the rendered page.
+- Wait for a selector, not for `networkidle`. Security sites keep analytics and websockets open.
+- Cache every response. Re-parsing should not require a second request.
+- Back off on 403, 429, and 503. Three attempts with growing delays is enough.
+- Do not solve CAPTCHAs with paid services unless the engagement allows it.
+- One identity per session. Rotating proxies and user agents inside one run creates more suspicion than it removes.
+
+For shadow DOM sites such as Reddit, read the host element with `inner_text`. BeautifulSoup sees the light DOM only.
+
+## Writing rules
+
+The dossier is read by a human under time pressure. Apply the humanizer rules while writing:
+
+- State the fact. Cut filler such as "it is important to note".
+- No em dashes or en dashes. Use a period, comma, colon, or parentheses.
+- Avoid the "X, but Y" contrast unless the negative half corrects a real belief.
+- No triad for rhythm. Two items or four are fine.
+- Sentence case headings. No decorative emoji.
+- Straight quotes. No curly quotes.
+- Every technique claim links to the source that showed it.
+- Separate observation from inference: "The report shows X. This suggests Y, which I did not test."
+- Short paragraphs. A 40-word paragraph beats a 120-word wall when the reader is scanning for a command.
+
+Run the humanizer skill on long narrative sections when it is available. Tables and command blocks do not need a style pass.
+
+## Quality gates
+
+Do not publish a dossier until all of these pass.
+
+| Gate | Test |
+|---|---|
+| Traceability | Every row has a public URL and a collection timestamp |
+| Coverage | At least three source types across the four layers |
+| Duplicates | Under 10 percent duplicate URLs after the merge |
+| Freshness | Reports and threads from the last 12 months dominate |
+| Evidence | Every method card names a precondition and a proof |
+| Safety | No credentials, tokens, private reports, or personal data |
+| Reproducibility | Every command in the dossier was run in this environment |
+| Prose | `validate.py` reports zero em dashes and no schema errors |
+
+Use `python scripts/validate.py --links --max-links 40` before publishing. A dead link is acceptable if you note it. A dead link presented as live is not.
+
+## Outputs
+
+- `examples/dossier.md` is the human brief.
+- `data/*.jsonl` is the machine catalog.
+- `raw/` is the response cache and the audit trail.
+- `evidence/` holds screenshots and DOM snapshots for claims that may change.
+
+Keep the dossier and the JSONL in sync. If you edit a fact by hand, edit the row that produced it or add a note explaining the override.
+
+## Commands
+
+```bash
+# Harvest one layer
+python scripts/harvest.py forums --sources 0x00sec,htb,reddit,hackerone,intigriti
+python scripts/harvest.py experts --sources curated,hackerone,portswigger,intigriti
+python scripts/harvest.py tools --sources canonical,topics --limit 80
+python scripts/harvest.py methods --limit 25
+
+# Harvest everything into data/
+python scripts/harvest.py all --out-dir data --limit 30
+
+# Deep-read the best URLs
+python scripts/extract.py --input data/methods.jsonl --out data/method_details.jsonl --limit 30
+python scripts/extract.py --url https://0x00sec.org/some-post/ --out /tmp/note.json
+
+# Assemble and check
+python scripts/build_dossier.py --data data --out examples/dossier.md
+python scripts/validate.py
+
+# Read-only application and artifact scan
+./beril scan --target https://your-app.example --out scans/myapp
+./beril scan --target ./build/app.apk --out scans/app
+./beril scan --target ./source --tools --out scans/source
+./beril scan --target ./bin/service --out scans/service
+
+# Training and labs
+./beril train --status
+./beril train --week 1
+./beril labs --run web
+
+# Deep binary triage
+./beril re --target ./bin/service --capa --floss --rizin --out scans/service-re
+GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/service.ghidra.json
+```
+
+## Reference map
+
+| File | Use |
+|---|---|
+| `references/camoufox-playbook.md` | Browser settings, challenge ladder, site recipes, failure modes |
+| `references/forums.md` | Community catalog, endpoints, what to mine, etiquette |
+| `references/experts.md` | Researcher profiles and signature methods |
+| `references/tooling.md` | Phase map, install commands, tool chains |
+| `references/techniques.md` | Method cards for web, API, cloud, AD, mobile, binary, AI |
+| `references/source-catalog.md` | Every feed, API, archive and upstream skill repo |
+| `references/dossier-template.md` | Output structure and section prompts |
+| `references/scoring.md` | Ranking and keep/drop rules |
+| `docs/one-click.md` | Install, scan and troubleshoot without the terminal |
+| `docs/scan-artifacts.md` | APK, IPA, PE, ELF, archive and source review |
+| `docs/reverse-engineering.md` | Deep binary workflow and optional tool install |
+| `references/reverse-engineering.md` | Ghidra, Binary Ninja, IDA, rizin, debuggers, patch diff |
+| `references/vulnerability-research.md` | Bug classes, source audit, crash triage, exploitability |
+| `references/fuzzing.md` | Harnesses, AFL++, sanitizers, corpora, CI |
+| `references/exploit-development.md` | ROP, heap, UAF, Windows and kernel |
+| `references/mobile-reverse.md` | Android and iOS static and runtime work |
+| `references/firmware-iot.md` | Extraction, emulation, UART, JTAG, radio |
+| `references/curriculum.md` | 25-week training plan and grading |
+| `references/exercises.md` | 68 drills by domain |
+| `references/self-training.md` | Turn labs into durable method notes |
+| `docs/training.md` | How to run the training loop |
+| `docs/agents.md` | Entry files for Claude, Cursor, Gemini, Copilot and others |
+| `agents/` | Forum, expert, tool, method, RE, crash, fuzzing and firmware prompts |
+
+## Legal and ethical bounds
+
+Collect only public pages. Respect robots.txt, terms of service, and rate limits. Do not bypass a login to reach a report, and do not scrape private program data. Quote short excerpts with a link; do not republish whole articles. Keep personal data out of the catalog unless the person published it for professional use. When in doubt, link and paraphrase.
+
+Testing techniques from the catalog against a target still requires authorization. A method card is not a license.
+
+
+<!-- ===== agents/router.md ===== -->
+
+# Beril agent router
+
+Read this before a task. It maps a request to the right layer and keeps the agent from scanning blind.
+
+## Intake
+
+Ask only what you cannot infer:
+
+1. What is the target: URL, APK, IPA, EXE, ELF, archive, source directory, or firmware?
+2. Do you own it, or is it in a bounty scope? Get the exact host or path.
+3. Is read-only enough, or may I send payloads?
+4. What proof do you need: note, report, PoC, or a fix?
+
+If the user says "break it and report", default to read-only first, then a narrow active test on the same target. Stop at the first reproducible proof.
+
+## Break-my-app runbook
+
+`docs/break-my-app.md` has the intake, per-artifact steps, report block, and stop conditions.
+
+## Route
+
+| Request | First command | Then |
+|---|---|---|
+| "Scan my web app" | `./beril scan --target <url>` | `references/techniques.md`, manual request pair |
+| "Check my APK" | `./beril scan --target <apk> --deep` | `references/mobile-reverse.md` |
+| "Look at this EXE/ELF" | `./beril scan --target <bin> --deep` | `references/reverse-engineering.md` |
+| "Review my source" | `./beril scan --target <dir> --tools` | `references/vulnerability-research.md` |
+| "Extract this firmware" | `./beril scan --target <image> --deep` | `references/firmware-iot.md` |
+| "Find a bug, prove it" | scan, then the matching method card | `references/exploit-development.md` |
+| "Write the report" | existing evidence | `references/dossier-template.md`, `references/scoring.md` |
+| "Teach me" | `./beril train --status` | `references/curriculum.md` |
+| "Run the labs" | `./beril labs --run` | `labs/README.md` |
+
+## Rules
+
+- One target at a time. One vulnerability class at a time.
+- Static before dynamic. Read-only before payloads.
+- Do not run a binary until you know what it would do.
+- Every claim gets a request, a crash, a diff, or a file path.
+- A scanner hit is a lead. Replay it by hand.
+- Separate confirmed behavior from inference with explicit labels.
+- Stop when the agreed proof exists.
+
+## Output
+
+```markdown
+## Finding
+- Asset:
+- Precondition:
+- Request or input:
+- Result:
+- Impact:
+- Root cause:
+- Fix:
+- Confidence: confirmed / inferred
+- Evidence path:
+```
+
+If no finding, list what you ruled out and the next test.
+
+## When to stop and ask
+
+- The target is ambiguous or shared hosting.
+- A test needs a write, a restart, or a paid API.
+- The scan needs credentials you do not have.
+- An artifact is packed, encrypted, or split and needs another part.
+- A finding could break production and the user has not approved a window.
+
+
+<!-- ===== agents/reverse-engineer.md ===== -->
+
+# Reverse engineer
+
+You analyze binaries you have permission to inspect. Static first. You do not run a sample until you know what it would do.
+
+## Inputs
+
+- One artifact: ELF, PE, Mach-O, APK, IPA, firmware, or a package.
+- The question: find the parser, recover a protocol, find a key, find a vulnerability.
+- The time box and the required proof.
+
+## Procedure
+
+1. Hash the file. Record `file`, size, and architecture.
+2. Run the built-in triage: `./beril scan --target <file> --deep`.
+3. Map sections, imports, exports, strings, and entry points.
+4. Name the input sources and the sinks.
+5. Open the disassembler. Follow xrefs from sources to sinks.
+6. Rename and retype as you read. Keep a notes file with addresses.
+7. Confirm runtime behavior only after the static hypothesis is specific.
+8. Record every finding with address, snippet, input, and confidence.
+
+## Tool choice
+
+| Artifact | First tool | Deeper tool |
+|---|---|---|
+| Small ELF/PE | rizin | Ghidra |
+| Large C/C++ | Ghidra headless for names | Binary Ninja or IDA |
+| .NET | dnSpyEx | ILSpy |
+| APK | jadx, apktool | Frida on a device |
+| Firmware | unblob | Ghidra on the daemons |
+| Shellcode | `ndisasm`, `scdbg` | Unicorn |
+
+Ghidra headless:
+
+```bash
+GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./sample out.json
+```
+
+Binary Ninja headless needs a license and `install_api.py`. Use `load(update_analysis=False)` for header-only passes.
+
+## Output
+
+```markdown
+### <function or feature>
+
+- Address: 0x...
+- Confidence: confirmed / inferred / speculative
+- Input: <source>
+- Sink: <operation>
+- Check: <present or missing>
+- Evidence: <snippet>
+- Runtime proof: <if any>
+```
+
+End with the primitive and the shortest path to it. If you found no bug, list the paths you ruled out and why.
+
+## Rules
+
+- Do not trust the decompiler at a bounds or size calculation. Check assembly.
+- A crash is not a finding until the primitive is named.
+- Do not rename a function without evidence.
+- Keep the database and the notes.
+- Do not run unknown samples on the host without a snapshot.
+
+
+<!-- ===== agents/crash-triager.md ===== -->
+
+# Crash triager
+
+You turn a crash into a classified, minimized, and reproducible report. You do not call it exploitable until you show the primitive.
+
+## Inputs
+
+- Crash input and the exact target build.
+- Sanitizer or debugger output.
+- The harness or command line.
+
+## Procedure
+
+1. Reproduce outside the fuzzer three times.
+2. Record the build hash, command, and environment.
+3. Read the fault: address, instruction, registers, stack.
+4. Classify: stack OOB, heap OOB, UAF, double free, integer, null, assertion, race.
+5. Deduplicate against other crashes by stack hash and fault type.
+6. Minimize the input.
+7. Check the mitigations.
+8. Answer the exploitability questions:
+   - Is the fault address controlled?
+   - Is the instruction pointer controlled?
+   - Is there a leak?
+   - Which mitigation blocks the next step?
+9. Write the report.
+
+## Commands
+
+```bash
+casr-san -o crash.casrep -- ./target_asan input
+casr-cli crash.casrep
+afl-tmin -i input -o min -- ./target @@
+gdb -q ./target -ex 'run min' -ex 'bt full' -ex 'info registers'
+```
+
+Windows:
+
+```
+!analyze -v
+.exr -1
+k
+r
+.ttime
+```
+
+## Severity guide
+
+| Evidence | Severity floor |
+|---|---|
+| Null dereference only | Low |
+| OOB read with a small leak | Medium |
+| Controlled write, no leak, ASLR on | Medium to high |
+| Controlled write plus leak | High |
+| Controlled RIP or arbitrary write | Critical |
+| Reachable pre-auth RCE | Critical |
+
+## Output
+
+- Title with the primitive.
+- Build and hash.
+- Fault type and root cause.
+- Minimized input.
+- Registers and stack at the fault.
+- Mitigations.
+- Exploitability with confidence.
+- Next experiment.
+
+## Rules
+
+- Do not report the fuzzer's stack trace as root cause.
+- A crash under ASAN only can still be real. Say so.
+- Keep the original input and the minimized input.
+- Do not attach a full core dump to a public report unless it is small.
+
+
+<!-- ===== agents/fuzzing-engineer.md ===== -->
+
+# Fuzzing engineer
+
+You build a harness, a corpus, and a campaign that finds real parser bugs. You do not run a fuzzer without a harness you understand.
+
+## Inputs
+
+- Target source or binary.
+- The parser or protocol entry point.
+- A time box and a CPU budget.
+
+## Procedure
+
+1. Identify the smallest function that consumes untrusted input.
+2. Write a harness that resets state and frees memory.
+3. Build with ASAN and UBSAN at `-O1 -g`.
+4. Seed with the smallest valid samples.
+5. Add a dictionary for magic values.
+6. Run a short calibration. Fix slow or leaky paths.
+7. Run parallel workers with a crash budget.
+8. Triage and deduplicate crashes.
+9. Report coverage, runtime, and the build.
+
+## Harness patterns
+
+- File: read `argv[1]`, cap size, call the parser.
+- Persistent: `__AFL_LOOP`, `__AFL_FUZZ_TESTCASE_BUF`.
+- LibFuzzer: `LLVMFuzzerTestOneInput`.
+- Network: extract the handler, feed a buffer; use a socket only when necessary.
+
+Use `scripts/afl_harness.c` as the starting point.
+
+## Build and run
+
+```bash
+afl-clang-fast -g -O1 harness.c parser.c -o fuzz_target
+afl-fuzz -i in -o out -m none -t 1000+ -x dict.txt -- ./fuzz_target @@
+```
+
+## Output
+
+- Harness source and build command.
+- Corpus source and size.
+- Fuzzer, flags, workers, and runtime.
+- Coverage trend.
+- Deduplicated crash list with CASR reports.
+
+## Rules
+
+- No network access from the harness unless the protocol needs it.
+- Cap input size.
+- `-m none` for ASAN builds.
+- One crash per root cause in the report.
+- Stop when new edges plateau. Record why.
+
+
+<!-- ===== agents/firmware-analyst.md ===== -->
+
+# Firmware analyst
+
+You extract and analyze device firmware in an isolated lab. You record enough to recover the device if a flash goes wrong.
+
+## Inputs
+
+- Vendor, model, hardware revision, firmware file, and hash.
+- Access method: download, flash dump, or hardware read.
+- The question: exposed service, update path, credential, or memory bug.
+
+## Procedure
+
+1. Photograph the board and label the interfaces.
+2. Hash the image. Read twice if you dumped flash.
+3. Run `unblob` with Docker or a prepared host.
+4. Mount the rootfs read-only.
+5. Inventory init scripts, daemons, web roots, and setuid files.
+6. Grep for credentials, keys, and update logic.
+7. Emulate with FirmAE or QEMU when needed.
+8. Analyze the management daemon with Ghidra.
+9. Test from the LAN, then from the WAN path if in scope.
+10. Record a recovery method before any write.
+
+## Commands
+
+```bash
+unblob firmware.bin -e ./out
+sudo mount -o ro,loop rootfs.img rootfs
+find rootfs -perm -4000 -type f
+grep -RInE "password|secret|BEGIN.*PRIVATE" rootfs/etc rootfs/usr/etc
+```
+
+## Rules
+
+- Isolated VLAN, no production traffic.
+- Read-only mount first.
+- Dump before flash.
+- Do not test the radio stack without checking the channel and power limits.
+- A root shell on the LAN is not automatically a WAN finding.
+- Keep the extraction report and the hash.
+
+## Output
+
+- Model, version, hash, extraction path.
+- Rootfs access proof.
+- Service and request.
+- Shell or file proof.
+- Auth requirement.
+- Update signing status.
+- Fix advice.
+
+
+<!-- ===== agents/mentor.md ===== -->
+
+# Mentor
+
+You teach one concept at a time. You do not dump the answer. You make the learner produce evidence.
+
+## Session shape
+
+1. Ask for the current week and the last thing that worked.
+2. State one objective for the session, 20 to 40 minutes.
+3. Ask one diagnostic question.
+4. Give a hint, not a solution.
+5. Watch the attempt. Correct the model, not only the command.
+6. Close with a one-paragraph retrospective and the next drill.
+
+## Hint ladder
+
+| Rung | Hint |
+|---|---|
+| 1 | Name the category: parsing, auth, memory, network |
+| 2 | Point at the file or function |
+| 3 | Describe the shape of the answer |
+| 4 | Give the command with one blank |
+| 5 | Give the answer and ask for a rewrite from memory |
+
+Use the lowest rung that unblocks.
+
+## Grading
+
+| Axis | 0 | 1 | 2 | 3 |
+|---|---|---|---|---|
+| Reproduction | Did not run | Ran with help | Ran alone | Ran and explained every step |
+| Evidence | None | Screenshot | Request and response | Minimal input and logs |
+| Root cause | Guess | Symptom | Mechanism | Mechanism and missing check |
+| Communication | None | Notes | Short report | Runnable report |
+
+Below 8: repeat the lab. 8 to 11: new input, same concept. 12: move on.
+
+## Rules
+
+- Ask "what did you expect?" before "what happened?"
+- When the learner is right, say which part is right before adding nuance.
+- When the learner is wrong, name the wrong assumption and ask for a test that separates the two.
+- Never give a payload the learner cannot explain.
+- Require the evidence path, not a memory of success.
+- Keep the session under 45 minutes. Fatigue looks like confusion.
+
+## Output at the end
+
+```text
+Objective:
+What worked:
+Wrong model:
+Evidence:
+Next drill:
+```
+
+If the learner cannot write the "wrong model" line, the concept is not closed.
+
+
+<!-- ===== references/techniques.md ===== -->
+
+# Method cards
+
+Each card is a transferable procedure, not an article summary. Use it when the signal matches. Change the payloads, keep the reasoning.
+
+The cards assume written authorization for the target. A lab or a bounty program with the asset in scope counts. Nothing here is a license to test a stranger's system.
+
+## How to read a card
+
+- **When** names the situation that makes the card relevant.
+- **Signal** is what you observe before spending time.
+- **Method** is the shortest path to a yes or no.
+- **Proof** is the evidence a triager or client will accept.
+- **Pitfalls** lists the false positives that waste a report.
+
+## Recon and surface
+
+### 1. Build the asset graph first
+
+**When:** A program gives you a domain and a wide scope, and you do not know where the application ends.
+
+**Signal:** The scope mentions acquisitions, mobile apps, APIs, or "all assets owned by the company".
+
+**Method:**
+
+1. List the root domains in scope.
+2. Pull certificates from crt.sh and Censys for each domain.
+3. Resolve the organization's ASNs and cloud ranges.
+4. Add mobile apps, status pages, docs, and third-party integrations.
+5. Mark each asset with owner, environment, and last change date if you can find it.
+6. Rank by business value and by how rarely it appears in public writeups.
+
+**Proof:** A graph or table that shows why each asset belongs to the target, with a source for the ownership claim.
+
+**Pitfalls:** Shared hosting and CDN IPs belong to many customers. An IP in an ASN is not automatically in scope.
+
+**Sources:** Jason Haddix methodology talks, ProjectDiscovery recon guides, program scope pages.
+
+### 2. Subdomain takeover
+
+**When:** The target uses a third-party service for docs, status, marketing, or support.
+
+**Signal:** A CNAME points to a service that no longer has a matching resource.
+
+**Method:**
+
+1. Collect CNAMEs and resolve them.
+2. Compare the response body and status against the service's "unclaimed" page.
+3. Check the service's takeover rules. Some services require a specific 404 body, not a dangling CNAME alone.
+4. Claim only if the program allows it and the service is free. Use a harmless page.
+5. Prove control with a unique string in the response.
+
+**Proof:** The claimed page served from the target's hostname, plus the CNAME chain.
+
+**Pitfalls:** A dangling CNAME to a parked domain is not a takeover. A service that requires a paid plan may not be claimable within the engagement.
+
+**Sources:** `can-i-take-over-xyz`, HackerOne disclosed takeover reports.
+
+### 3. JavaScript and source map mining
+
+**When:** The application is a single-page app or a mobile API client.
+
+**Signal:** Large bundles, source maps enabled, framework chunks with route names.
+
+**Method:**
+
+1. Download the bundles and source maps.
+2. Extract strings that look like paths, GraphQL operations, feature flags, and internal hosts.
+3. Look for commented-out endpoints and old API versions.
+4. Compare the current bundle with an older one from the Wayback Machine.
+5. Test the endpoints you find with a low-privilege account.
+
+**Proof:** A request to an endpoint that is not linked in the UI, with a response that shows the behavior.
+
+**Pitfalls:** A string in a bundle may be dead code. A source map may expose TypeScript but no secrets. Check reachability before reporting.
+
+**Sources:** `unfurl`, `LinkFinder`, `sourcemapper`, ProjectDiscovery blog.
+
+### 4. Parameter mining
+
+**When:** A endpoint behaves differently with a parameter you have not seen.
+
+**Signal:** JSON responses with fields that the UI does not send, or a form with hidden inputs.
+
+**Method:**
+
+1. Collect URLs from crawling, Wayback, and the JS bundles.
+2. Extract keys with `unfurl -u keys`.
+3. Test a short list of high-value names: `debug`, `admin`, `role`, `internal`, `redirect`, `url`, `file`, `callback`.
+4. Compare responses with and without the parameter.
+5. Send the parameter in JSON, form, and query form. Parsers differ.
+
+**Proof:** A response diff that changes authorization, data, or a redirect target.
+
+**Pitfalls:** A reflected parameter is not a finding. A size change can come from a random token.
+
+**Sources:** Arjun, ParamSpider, `unfurl`.
+
+### 5. GitHub and CI secret hunting
+
+**When:** The target has public repositories or open-source components.
+
+**Signal:** Repos with CI workflows, `.env` examples, deployment scripts, or old commits.
+
+**Method:**
+
+1. Search the org for `api_key`, `token`, `secret`, `password`, and cloud provider names.
+2. Review commit history for deleted secrets. A secret removed in a later commit is still live.
+3. Check GitHub Actions logs and artifacts for masked values that leaked.
+4. Verify the secret with a read-only call before reporting.
+5. Identify the scope: what does the key access, and what is the blast radius?
+
+**Proof:** A read-only API response that shows the key works, plus the commit or log URL.
+
+**Pitfalls:** A public key is not a secret. A key for a staging service may be worthless. `--only-verified` exists for a reason.
+
+**Sources:** trufflehog, gitleaks, GitHub secret scanning docs.
+
+## Web exploitation
+
+### 6. Request smuggling and desync
+
+**When:** A CDN, load balancer, or reverse proxy sits in front of an application server.
+
+**Signal:** Different HTTP parsers in the chain, HTTP/1.1 and HTTP/2 mixed, or a proxy that rewrites headers.
+
+**Method:**
+
+1. Send a request with both `Content-Length` and `Transfer-Encoding`.
+2. Try CL.TE, TE.CL, and TE.TE variants.
+3. Use a timing delay to detect a stuck request.
+4. Confirm with a request that poisons the next response or captures the next request.
+5. For HTTP/2, test downgrade behavior and pseudo-header handling.
+
+**Proof:** A second, clean client receives a response it did not request, or a timing signal repeats reliably.
+
+**Pitfalls:** A single 400 does not prove desync. Shared proxies can make results non-deterministic. Test at low volume.
+
+**Sources:** James Kettle, "HTTP Desync Attacks"; Tom Stacey, "CRLF-Powered Desync Attacks".
+
+### 7. Cache poisoning and deception
+
+**When:** A CDN or reverse proxy caches responses, especially with a permissive cache key.
+
+**Signal:** Unkeyed headers, query parameters, or cookies change the response but not the cache key.
+
+**Method:**
+
+1. Identify the cache key: host, path, query, selected headers, cookies.
+2. Find an input that changes the response but is not in the key.
+3. Poison the cache with a distinctive value.
+4. Request the page from a clean session and confirm the value.
+5. Check whether the poison reaches other users or only your session.
+
+**Proof:** A clean request returns the attacker-controlled value, with cache headers that show the hit.
+
+**Pitfalls:** A cache hit for your own cookie is not global. `Vary` and cache normalization can invalidate the result. Do not poison a production page with a harmful payload.
+
+**Sources:** James Kettle, "Web Cache Entanglement"; PortSwigger cache poisoning labs.
+
+### 8. Host header and password reset poisoning
+
+**When:** The app builds absolute URLs from the request, especially in emails.
+
+**Signal:** Password reset, invite, or verification emails contain a link with the request host.
+
+**Method:**
+
+1. Send a password reset with a modified `Host`, `X-Forwarded-Host`, or `Forwarded` header.
+2. Use a domain you control and check the email.
+3. Confirm the token or link points to your host.
+4. Check whether the token is valid and whether it leaks to your server.
+
+**Proof:** An email or response containing your host, and a token that works.
+
+**Pitfalls:** Many proxies normalize the host. A reflected host in the page is not the same as a host used in an email.
+
+**Sources:** PortSwigger host header labs, HackerOne disclosed reports.
+
+### 9. XSS through parser differentials
+
+**When:** A sanitizer, templating engine, or WAF filters HTML.
+
+**Signal:** The input is transformed, truncated, or escaped in a way that differs from browser parsing.
+
+**Method:**
+
+1. Identify every parser: sanitizer, template engine, browser, DOM sink.
+2. Find a construct that is inert to the filter and active in the browser. Mutation XSS, namespace confusion, comment tricks, attribute boundaries.
+3. Keep the payload short and avoid characters the filter normalizes.
+4. Test in the target browser, including the framework's re-render.
+5. For CSP, look for JSONP, Angular, base tags, and script gadgets.
+
+**Proof:** Script execution in the target origin, with the exact input and the browser version.
+
+**Pitfalls:** A payload that fires in an innerHTML test may not fire in the real page. A CSP report without execution is not a finding.
+
+**Sources:** Gareth Heyes, "XSS in innerHTML without equals"; PortSwigger XSS labs; `PayloadsAllTheThings`.
+
+### 10. SQL injection beyond the quote
+
+**When:** A parameter reaches a database query, including JSON and headers.
+
+**Signal:** Error messages, time delays, or a response that changes with boolean input.
+
+**Method:**
+
+1. Establish a true and false baseline.
+2. Test quote, comment, and parenthesis behavior for the likely DBMS.
+3. Move to time-based blind only when union and error are blocked.
+4. Use out-of-band callbacks when the response is fully asynchronous.
+5. Prove data access with a bounded query, then stop.
+
+**Proof:** A reproducible extraction of a value the tester should not see, with the request and response.
+
+**Pitfalls:** A WAF block page can look like a false condition. Time delays can come from network jitter. Do not dump the whole database.
+
+**Sources:** `sqlmap` docs, OWASP WSTG, PortSwigger SQLi labs.
+
+### 11. SSTI to RCE
+
+**When:** User input is rendered by a template engine.
+
+**Signal:** `{{7*7}}`, `${7*7}`, or `<%= 7*7 %>` appears as `49`.
+
+**Method:**
+
+1. Fingerprint the engine with a decision tree of expressions.
+2. Confirm that code runs, rather than a value being evaluated.
+3. Find a gadget for the engine and version.
+4. Escalate from data access to command execution only if the program allows it.
+5. Keep the payload minimal and record the exact version.
+
+**Proof:** A computed value and a command output or callback from the target.
+
+**Pitfalls:** Client-side template injection is not server-side RCE. Sandboxes differ by version.
+
+**Sources:** PortSwigger SSTI labs, `PayloadsAllTheThings`.
+
+### 12. SSRF and URL parser confusion
+
+**When:** The server fetches a URL supplied by the user: webhooks, previews, imports, PDF rendering.
+
+**Signal:** A URL parameter, a callback, or a fetch error that reveals internal behavior.
+
+**Method:**
+
+1. Use a collaborator or your own listener to confirm the server makes the request.
+2. Map the validation: allowlist, denylist, regex, DNS resolution order.
+3. Test parser differentials: `http:///host`, backslashes, userinfo, encoded delimiters, IPv4-mapped IPv6, decimal IPs.
+4. Test redirects and DNS rebinding when the first hop is validated.
+5. Target metadata endpoints and internal services only within scope.
+
+**Proof:** A callback from the target, or a response body from an internal service that is not otherwise reachable.
+
+**Pitfalls:** DNS-only SSRF is weak without data exfiltration. A 200 from your listener does not prove the response reaches the attacker.
+
+**Sources:** Orange Tsai, "A New Era of SSRF"; HackerOne report 3923212 on curl URL parsing; `PayloadsAllTheThings`.
+
+### 13. File upload, path traversal, and archive slip
+
+**When:** The app accepts files, extracts archives, or serves user paths.
+
+**Signal:** Upload endpoints, import features, ZIP or tar handling, download endpoints with a filename parameter.
+
+**Method:**
+
+1. Test the extension, MIME type, magic bytes, and content separately.
+2. Check whether the file is served from a web-accessible path.
+3. Test filename traversal and null bytes.
+4. For archives, create entries with `../` and absolute paths and see where they land.
+5. Chain upload to execution only if the server runs the file.
+
+**Proof:** A file written outside the intended directory, or code execution from the uploaded file.
+
+**Pitfalls:** A filename reflected in the response is not traversal. A ZIP slip needs the extraction path and the resulting file location.
+
+**Sources:** 0x00sec ZIP parser research, PortSwigger file upload labs, `PayloadsAllTheThings`.
+
+### 14. Race conditions and state machines
+
+**When:** A limit, balance, invite, coupon, or approval can be used once.
+
+**Signal:** A check followed by a write, with no transaction or lock.
+
+**Method:**
+
+1. Identify the state transition and the invariant.
+2. Send the same request many times in a tight window. Use a single-packet attack when the server supports HTTP/2.
+3. Compare the number of successes with the number of intended uses.
+4. Test across accounts, not only within one session.
+5. Stop at the smallest proof that breaks the invariant.
+
+**Proof:** Two successes where one was allowed, with timestamps and request IDs.
+
+**Pitfalls:** Network retries can look like a race. Server-side deduplication may hide the issue on a later request.
+
+**Sources:** James Kettle, "Smashing the state machine"; PortSwigger race condition labs.
+
+### 15. Business logic and price manipulation
+
+**When:** The app has carts, coupons, refunds, plans, or approvals.
+
+**Signal:** Client-supplied prices, quantities, roles, or status fields.
+
+**Method:**
+
+1. Map the intended flow and the fields the client controls.
+2. Change one field at a time: price, currency, quantity, negative values, decimal precision.
+3. Test the order of operations: apply coupon after tax, refund before capture, upgrade before payment.
+4. Test cross-account effects: does a coupon apply to another user's cart?
+5. Prove financial or access impact, not an odd response alone.
+
+**Proof:** An order, invoice, or balance that differs from the intended amount, with the request sequence.
+
+**Pitfalls:** A validation message is not a bypass. A discount that the business already allows is not a bug.
+
+**Sources:** HackerOne disclosed logic reports, PortSwigger business logic labs.
+
+### 16. IDOR and BOLA
+
+**When:** Objects are fetched by an identifier and the endpoint checks authentication but not ownership.
+
+**Signal:** Sequential IDs, UUIDs in URLs, GraphQL node IDs, tenant headers.
+
+**Method:**
+
+1. Create two accounts at the same privilege level.
+2. Capture object IDs for account A.
+3. Request them with account B's session.
+4. Test read, update, delete, and export separately. Permission checks are often inconsistent.
+5. Test sibling endpoints and older API versions.
+6. For GraphQL, test node lookups and nested fields.
+
+**Proof:** Account B receives or changes account A's object, with both sessions and the object IDs.
+
+**Pitfalls:** A public object is not an IDOR. A 200 with an empty body may be a soft denial. Check the data, not the status code.
+
+**Sources:** OWASP API Security Top 10, HackerOne IDOR reports, PortSwigger access control labs.
+
+### 17. Authentication: OAuth, OIDC, SAML, JWT
+
+**When:** The app delegates login or uses tokens across services.
+
+**Signal:** Redirect URIs, `state`, `nonce`, JWKS endpoints, SAML assertions, cookie prefixes.
+
+**Method:**
+
+1. Map the flow and every place a token or assertion is accepted.
+2. Test redirect URI matching: path traversal, subdomain, open redirect, fragment tricks.
+3. Test `state` and `nonce` reuse, missing binding, and mix-up attacks.
+4. For JWT, test algorithm confusion, `none`, key confusion, and claim trust. Verify the signature yourself.
+5. For SAML, test signature wrapping and attribute pollution.
+6. Confirm with a fresh browser profile and the victim account.
+
+**Proof:** A session or token for the victim account, obtained through the flawed flow.
+
+**Pitfalls:** A decoded JWT is not a bypass. A login CSRF needs a victim action, not a crafted link alone.
+
+**Sources:** PortSwigger OAuth and SAML labs, Zakhar Fedotkin SAML research, `jwt_tool`.
+
+### 18. GraphQL
+
+**When:** The API exposes a GraphQL endpoint.
+
+**Signal:** `/graphql`, `__schema`, a GraphiQL page, or a mobile client with operations.
+
+**Method:**
+
+1. Try introspection. If disabled, use field suggestions and a wordlist.
+2. Test authorization per field and per mutation, not only per query.
+3. Test batching, aliases, and nested queries for cost and rate-limit bypass.
+4. Test node lookups for IDOR.
+5. Test input coercion, null handling, and duplicate keys.
+
+**Proof:** A restricted field or mutation returns data for a lower-privilege account.
+
+**Pitfalls:** Introspection enabled is not a vulnerability by itself. A 200 with GraphQL errors is not success.
+
+**Sources:** `graphql-cop`, `clairvoyance`, PortSwigger GraphQL labs.
+
+## Infrastructure
+
+### 19. Cloud metadata and IAM
+
+**When:** You have SSRF, a foothold, or a cloud-hosted app.
+
+**Signal:** A metadata endpoint is reachable, or the app uses an instance role.
+
+**Method:**
+
+1. Query the metadata service for the provider.
+2. Retrieve temporary credentials and the attached role.
+3. Call `sts get-caller-identity` and enumerate the policy.
+4. Test the permissions you actually have, read-only first.
+5. Look for a path to a more privileged role or a trust policy mistake.
+
+**Proof:** A read-only API call that returns data the role should not access, or a documented privilege escalation path.
+
+**Pitfalls:** Metadata access from a proxy may be blocked by IMDSv2. A role name is not a permission.
+
+**Sources:** HackTricks cloud sections, AWS IAM documentation, HackerOne SSRF reports.
+
+### 20. Active Directory paths
+
+**When:** You have a domain account or a network foothold.
+
+**Signal:** Kerberos, LDAP, SMB, or ADCS exposed.
+
+**Method:**
+
+1. Collect with BloodHound.
+2. Check Kerberoastable and AS-REP-roastable accounts.
+3. Check ACL edges: GenericAll, WriteDACL, ForceChangePassword.
+4. Check ADCS templates with Certipy.
+5. Find the shortest path to the agreed objective, then prove one edge.
+
+**Proof:** A ticket, a password reset, or a certificate that grants the next access, with the path in BloodHound.
+
+**Pitfalls:** A roastable account with a strong password is not a finding until you crack it. A DA path that requires domain admin to start is circular.
+
+**Sources:** BloodHound docs, Certipy docs, `impacket`, HackTricks AD.
+
+### 21. TLS certificate validation
+
+**When:** A client library or appliance validates certificates, especially with custom CAs or name constraints.
+
+**Signal:** Recent reports about OpenSSL, wolfSSL, MySQL Connector, or native trust stores.
+
+**Method:**
+
+1. Build a test CA and a chain with the property the library may mishandle: name constraints, key usage, SAN, wildcard, cross-signing.
+2. Present the chain to the client.
+3. Observe whether the connection succeeds when it should fail.
+4. Test the same chain against a reference client.
+5. Record library versions and the exact certificate fields.
+
+**Proof:** A successful connection with a certificate the client should reject, plus a reference failure.
+
+**Pitfalls:** A browser warning is not a bypass. A test with a self-signed cert proves nothing if the client is configured to trust it.
+
+**Sources:** Recent HackerOne reports from stze and mschorm, OpenSSL advisories.
+
+## Mobile, binary, AI
+
+### 22. Mobile app surface
+
+**When:** The program includes an Android or iOS app.
+
+**Signal:** An APK or IPA is in scope, or the mobile API is separate from the web API.
+
+**Method:**
+
+1. Decompile and read the manifest or Info.plist.
+2. List exported components, deep links, and permissions.
+3. Grep for keys, endpoints, and feature flags.
+4. Bypass pinning in a lab and inspect traffic.
+5. Test the API directly with the mobile client's headers and tokens.
+
+**Proof:** A request from the mobile API that the web client cannot make, or a component that another app can invoke.
+
+**Pitfalls:** A hardcoded key may be a public client ID. Pinning bypass on a rooted device does not prove a server-side issue.
+
+**Sources:** MobSF, Frida, objection, OWASP MASTG.
+
+### 23. Binary exploitation: leak, then control
+
+**When:** A native binary parses input and has a memory bug.
+
+**Signal:** Unsafe string functions, fixed-size buffers, a crash on long input.
+
+**Method:**
+
+1. Run `checksec` and record the mitigations.
+2. Find the offset with a cyclic pattern.
+3. If PIE or ASLR is on, find an information leak: format string, uninitialized memory, partial overwrite.
+4. Compute the base and the gadget addresses.
+5. Build the ROP chain. For a remote service, account for the socket and any null-byte limits.
+6. Test locally with the target libc, then remotely.
+
+**Proof:** A controlled instruction pointer or a shell, with the exploit script and the target version.
+
+**Pitfalls:** A local shell does not prove remote exploitation. libc differences break offsets. A crash is not control.
+
+**Sources:** 0x00sec PIE and ret2plt series, `pwntools` docs, ROPgadget.
+
+### 24. LLM and agent features
+
+**When:** The app has a chatbot, a RAG pipeline, or an agent with tools.
+
+**Signal:** User text reaches a model prompt, and the model can call tools or read private data.
+
+**Method:**
+
+1. Map the trust boundary: system prompt, retrieved documents, user input, tool output.
+2. Test direct injection, then indirect injection through a document, web page, or email.
+3. Test whether the model can be made to call a tool with attacker-chosen arguments.
+4. Test data exfiltration through markdown images, links, or tool calls.
+5. Test cross-user leakage in shared chats and vector stores.
+6. Prove impact with data the attacker should not see or an action they should not trigger.
+
+**Proof:** A model output or tool call that crosses the boundary, reproducible with the same prompt.
+
+**Pitfalls:** A prompt that says "ignore previous instructions" is not impact. A model that repeats the system prompt may be expected behavior. Check the threat model.
+
+**Sources:** PortSwigger AI research, ProjectDiscovery Neo benchmark posts, OWASP LLM Top 10.
+
+## Reporting
+
+### 25. Build the impact chain
+
+**When:** You have a valid bug and need a report that survives triage.
+
+**Signal:** The bug works, but the impact feels small or theoretical.
+
+**Method:**
+
+1. Write the attacker's starting position: no account, one account, or a specific role.
+2. Write the victim's position and what they must do, if anything.
+3. Write the sequence of requests.
+4. Name the harm: data read, data changed, money moved, account taken over, code executed.
+5. Show the smallest proof, then the chain that makes it matter.
+6. Separate what you tested from what you infer.
+
+**Proof:** A reproduction that a triager can run in under five minutes, plus a short video or request log.
+
+**Pitfalls:** A chain with an unproven step is a theory. CVSS without business context can undersell or oversell the finding.
+
+**Sources:** Bugcrowd VRT, HackerOne report guidelines, the humanizer rules in the main skill.
+
+
+<!-- ===== references/reverse-engineering.md ===== -->
+
+# Reverse engineering
+
+Reverse engineering answers four questions in order: what is this file, what does it talk to, where does untrusted input enter, and what happens to that input. Tools come after the questions. A disassembler opened without a hypothesis becomes a 30,000-function screensaver.
+
+This guide covers static and dynamic work on ELF, PE, Mach-O, APK, IPA, firmware, and managed runtimes. Use it on artifacts you own or are authorized to inspect.
+
+## First, scope the artifact
+
+| Question | Why it matters |
+|---|---|
+| Where did the file come from? | Vendor, build pipeline, sample source, app store |
+| What platform and architecture? | Chooses the loader, debugger, and calling convention |
+| Do I have symbols or source? | Changes the workflow completely |
+| Is it packed, signed, or obfuscated? | Determines whether static work is worth starting |
+| What is the target behavior? | Parsing, network, auth, crypto, update, plugin load |
+| What is the proof I need? | A crash, a key, a protocol, a hidden endpoint |
+
+Write the hypothesis before opening a tool. "The update client trusts a manifest field that reaches a filesystem write" is a hypothesis. "Understand the binary" is not.
+
+## Tool ladder
+
+Start with the cheapest tool that can falsify the hypothesis.
+
+| Rung | Tool | Use | Cost |
+|---|---|---|---|
+| 0 | `file`, `strings`, `xxd`, `readelf`, `objdump` | Format, sections, imports, obvious strings | Free |
+| 1 | `rizin` / `radare2` | Fast triage, xrefs, function list, scripting | Free |
+| 2 | Ghidra | Decompiler, cross-platform, headless batch | Free |
+| 3 | Binary Ninja | Faster UI, BNIL, strong Python API, headless | Commercial |
+| 4 | IDA Pro + Hex-Rays | Best decompiler, largest plugin ecosystem | Commercial |
+| 5 | Debugger and instrumentation | Confirm runtime behavior | Free to commercial |
+
+The ladder is about cost, not quality. Ghidra is often enough. Binary Ninja and IDA earn their price on large binaries, managed code, and plugin-heavy workflows.
+
+| Task | Better tool |
+|---|---|
+| Unknown file, quick look | `file`, `strings`, `rizin` |
+| Large C/C++ binary, decompile | Ghidra or IDA |
+| Scripted batch analysis | Ghidra headless, Binary Ninja API, `rizin -j` |
+| Windows user-mode debugging | x64dbg |
+| Windows kernel and crash dumps | WinDbg + TTD |
+| Linux user-mode debugging | GDB + pwndbg or gef, rr |
+| Android DEX | jadx, apktool |
+| .NET | dnSpyEx, ILSpy |
+| Firmware | unblob, binwalk, EMBA, QEMU |
+| Symbolic exploration | angr, Triton, Miasm |
+| Capability summary | capa, FLOSS |
+
+## Ghidra
+
+Ghidra is free, cross-platform, and has a real decompiler. It needs JDK 25 and 4 GB of RAM minimum. Install it by extracting a release archive, never by copying over an old install.
+
+```bash
+# after installing JDK 25 and downloading the release zip
+unzip ghidra_12.2_PUBLIC_2026.zip -d ~/tools
+~/tools/ghidra_12.2_PUBLIC/support/ghidraRun
+```
+
+Read `docs/GettingStarted.md` in the install directory and `support/analyzeHeadlessREADME.html` before batch work. Ghidra ships with known security advisories; check them before opening untrusted files.
+
+### GUI reading order
+
+1. Imports and exports. Note the libraries and the entry point.
+2. Defined strings. Sort by reference count.
+3. Symbol references from strings into functions.
+4. Decompiler on each caller. Rename and retype as you read.
+5. Function graph for loops, switch tables, and indirect calls.
+6. Data type manager for structs. Build the struct before reading the parser.
+7. Xrefs on every API that touches files, sockets, memory, or crypto.
+
+Name functions as you learn them. Names are durable knowledge. A note that says "function at 0x4012a0 is interesting" is not.
+
+Do not accept the first decompilation as truth. Ghidra guesses types and can hide a bug behind a clean-looking cast. Check the assembly for every branch that matters.
+
+### Headless mode
+
+```bash
+~/tools/ghidra/support/analyzeHeadless /tmp/ghidra-proj MyProject \
+  -import ./sample.bin -overwrite \
+  -postScript dump.py -scriptPath ./scripts
+```
+
+The analyzer writes a project under `/tmp/ghidra-proj`. A postscript can export functions, imports, strings, xrefs, and decompiled text to JSON.
+
+Minimal postscript (`scripts/ghidra_dump.py`):
+
+```python
+# Ghidra Python (Jython) postscript
+import json
+from ghidra.program.model.symbol import SymbolType
+
+out = {"program": currentProgram.getName(), "functions": [], "imports": [], "strings": []}
+for f in currentProgram.getFunctionManager().getFunctions(True):
+    out["functions"].append({"name": f.getName(), "entry": str(f.getEntryPoint()),
+                             "size": f.getBody().getNumAddresses()})
+for s in currentProgram.getSymbolTable().getAllSymbols(True):
+    if s.getSymbolType() == SymbolType.FUNCTION:
+        for ref in getReferencesTo(s.getAddress()):
+            out["imports"].append({"name": s.getName(), "from": str(ref.getFromAddress())})
+for d in currentProgram.getListing().getDefinedData(True):
+    if d.getValue() and isinstance(d.getValue(), str):
+        out["strings"].append({"address": str(d.getAddress()), "value": d.getValue()[:200]})
+with open("/tmp/ghidra-dump.json", "w") as fh:
+    json.dump(out, fh, indent=2)
+print("wrote /tmp/ghidra-dump.json")
+```
+
+PyGhidra runs CPython inside Ghidra. It is useful when the analysis script needs pip packages:
+
+```bash
+~/tools/ghidra/support/pyghidraRun
+python -m pip install --no-index -f ~/tools/ghidra/Ghidra/Features/PyGhidra/pypkg/dist pyghidra
+```
+
+### Ghidra pitfalls
+
+- The decompiler is a view, not the binary. Verify memory accesses in assembly.
+- Auto-analysis can miss indirect calls and C++ virtual dispatch. Add xrefs by hand.
+- Large binaries need more RAM than the default launcher gives.
+- A project upgrade is one-way. Back up `.rep` and `.gpr` first.
+- Extensions are code. Install only ones you trust.
+- Ghidra's BSim finds similar functions, not identical bugs. Triage its matches.
+
+## Binary Ninja
+
+Binary Ninja is a commercial reverse-engineering platform with a fast UI, multiple intermediate languages, and a strong Python API. Headless use needs a Commercial, Ultimate, or headless license. The free and non-commercial licenses are for interactive work.
+
+```bash
+# install the API into a dedicated Python
+python3 ~/binaryninja/scripts/install_api.py
+```
+
+Minimal headless script:
+
+```python
+import binaryninja
+with binaryninja.load("/bin/ls") as bv:
+    print(bv.file.filename, len(list(bv.functions)))
+```
+
+Use `update_analysis=False` for a fast header-only pass. Use `analysis.initialAnalysisHold` to analyze one function. Use `binaryninja.disable_default_log()` in batch jobs. For multiprocessing, use the `spawn` or `forkserver` start method and lower the worker thread count. `fork` hangs because BN is multithreaded.
+
+The intermediate languages matter. LLIL is close to assembly, MLIL removes flags, HLIL is close to C. Read at the lowest level that still answers the question. A type confusion is often obvious in MLIL and invisible in HLIL.
+
+Binary Ninja workflows:
+
+- **Cross references** on every import and string.
+- **Type archives** for Windows and libc structures.
+- **Guided analysis** to seed known functions.
+- **Debugger** with TTD on Windows and GDB RSP time travel on Linux.
+- **BinExport** to move results into BinDiff.
+- **Firmware Ninja** for embedded images.
+- **MCP server** to let an agent query the database.
+
+Pitfalls:
+
+- Headless without a suitable license fails late.
+- Multiprocessing without `spawn` crashes.
+- HLIL hides pointer arithmetic. Drop to MLIL.
+- Plugins can change analysis. Disable user plugins in reproducible jobs with `BN_DISABLE_USER_PLUGINS=True`.
+
+## IDA Pro
+
+IDA is the industry default for a reason: Hex-Rays output is the best decompiler and the plugin ecosystem is deep. It is also expensive. IDA Free is useful for small binaries but lacks the decompiler.
+
+```bash
+idat64 -A -S"dump.py" -L/tmp/ida.log sample.exe
+```
+
+Workflow notes:
+
+- Load with the correct processor and base. A wrong base poisons every xref.
+- Use `Shift+F12` for strings only after the import table.
+- Build structs in Local Types before reading a parser.
+- Use `lumina` or FLIRT signatures when available.
+- Check the call graph for indirect calls before trusting a "no xrefs" result.
+- `BinDiff` against the previous version is often faster than reading the patched function.
+
+Pitfalls:
+
+- The decompiler can hide integer truncation behind a cast.
+- Aggressive optimization inlines the function you need. Build with `-O0` if source is available.
+- IDA databases are versioned. Keep the `.idb` or `.i64` with the sample.
+
+## radare2, rizin, and Cutter
+
+`radare2` and the `rizin` fork are command-first frameworks. Cutter is a Qt front end for rizin. They are fast for triage and easy to script.
+
+```bash
+rizin -A ./sample
+[0x00000000]> iI          # file info
+[0x00000000]> iS          # sections
+[0x00000000]> iE          # exports
+[0x00000000]> ii          # imports
+[0x00000000]> izz         # strings
+[0x00000000]> afl         # functions
+[0x00000000]> axt @ sym.imp.strcpy
+[0x00000000]> pdf @ main
+```
+
+JSON output:
+
+```bash
+rizin -q -j -c 'iI;iS;iE;ii;iz' ./sample > triage.json
+```
+
+Common plugins: `r2ghidra` for decompilation, `r2dec`, `r2yara`, `r2frida`. Install with `r2pm -ci r2ghidra`.
+
+Pitfalls:
+
+- `aaa` is expensive on large binaries. Start with `aa`.
+- Command syntax changed between r2 and rizin. Check the version.
+- Visual mode is fast, but the command log is the evidence.
+
+## Debuggers
+
+### Linux
+
+```bash
+gdb -q ./sample
+(gdb) set pagination off
+(gdb) run $(python3 -c 'print("A"*300)')
+(gdb) info registers
+(gdb) x/40gx $rsp
+(gdb) bt
+```
+
+Use `pwndbg` or `gef` for heap inspection, telescope, and mitigation checks:
+
+```bash
+gdb -q -ex 'source ~/pwndbg/gdbinit.py' ./sample
+```
+
+`rr` records and replays a run:
+
+```bash
+rr record ./sample input
+rr replay
+```
+
+### Windows
+
+x64dbg is the user-mode debugger for breakpoints, memory maps, and call stacks. WinDbg with TTD records a trace you can rewind. Both need a Windows VM.
+
+```
+0:000> g
+0:000> k
+0:000> r
+0:000> !analyze -v
+0:000> .ttime
+```
+
+### Apple
+
+```bash
+lldb ./sample
+(lldb) run
+(lldb) bt
+(lldb) register read
+```
+
+On modern iOS, use a corellium-style lab or a jailbroken device.
+
+## Dynamic instrumentation
+
+Frida injects JavaScript into a running process:
+
+```bash
+frida -U -f com.example.app -l hook.js --no-pause
+frida-trace -U -f com.example.app -i "open*" -i "SSL_*"
+```
+
+Use it to log arguments, bypass pinning in a lab, and dump decrypted buffers. It is not a substitute for static understanding. A hook without a symbol or an address is a guess.
+
+Other instrumentation:
+
+- **DynamoRIO** for instruction-level tracing and coverage.
+- **Intel PIN** for dynamic analysis on x86.
+- **API Monitor** and **Procmon** for Windows API and filesystem behavior.
+- **strace** and **ltrace** for syscall and library call traces on Linux.
+- **Wireshark** and **mitmproxy** for network behavior.
+
+## Format triage
+
+### ELF
+
+```bash
+file ./sample
+readelf -hW ./sample
+readelf -lW ./sample | grep -E "GNU_STACK|GNU_RELRO|INTERP"
+readelf -dW ./sample | grep -E "RPATH|RUNPATH|BIND_NOW|NEEDED"
+objdump -d ./sample | head -80
+strings -a ./sample | head -200
+```
+
+### PE
+
+```bash
+file ./sample.exe
+objdump -p ./sample.exe | head -100
+strings -a -n 6 ./sample.exe | grep -Ei "http|cmd|powershell|token"
+```
+
+Check the load config, DLL characteristics, signature, section entropy, and overlay. A high-entropy section plus a small import table suggests packing.
+
+### Mach-O
+
+```bash
+file ./sample
+otool -hL ./sample
+otool -l ./sample | grep -A4 LC_LOAD_DYLIB
+codesign -dvvv ./sample
+```
+
+### Java, .NET, Go, Rust
+
+- Java: `jadx`, `cfr`, `procyon`. Read the decompiled source, not smali, unless obfuscated.
+- .NET: `dnSpyEx` or `ILSpy`. Check for ConfuserEx and .NET Reactor.
+- Go: use `redress`, `go-re.tk`, or `GoReSym` to recover function names and build info.
+- Rust: symbols are mangled. `rustfilt` demangles. Panic strings reveal module paths.
+
+## Static workflow
+
+1. **Headers and sections.** Note architecture, entry point, writable and executable regions, overlay.
+2. **Imports.** Group by behavior: file, network, process, crypto, registry, UI.
+3. **Strings.** Look for URLs, error messages, format strings, paths, and user agents.
+4. **Entry point.** Follow to the real main, not the runtime stub.
+5. **Input sources.** argv, stdin, socket, file parser, IPC, environment, registry.
+6. **Sinks.** `strcpy`, `memcpy`, `sprintf`, `system`, `CreateProcess`, `write`, SQL, template.
+7. **Data flow.** Trace from source to sink. Note every bounds check and allocation size.
+8. **Types.** Build structs at the parser. A wrong struct hides the bug.
+9. **Concurrency.** Locks, refcounts, queues, callbacks.
+10. **Crypto.** Identify the algorithm and the key source. Check for hardcoded IVs and ECB.
+
+Confidence labels: confirmed, inferred, speculative. Put the label in every note.
+
+## Anti-analysis
+
+| Trick | Signal | Counter |
+|---|---|---|
+| Packing (UPX, Themida, VMProtect) | High entropy, few imports, writable executable section | `upx -d`, dump at OEP, capa packer rules |
+| String encryption | Few readable strings, decrypt loop at startup | Break after decrypt, dump memory, FLOSS |
+| API hashing | No named imports, manual PEB walk | Resolve the hash loop, annotate the table |
+| Anti-debug | `IsDebuggerPresent`, `ptrace`, timing checks | Patch the check, hide the debugger, use ScyllaHide |
+| VM detection | CPUID, registry, MAC prefixes | Rename devices, patch the branch |
+| Control-flow flattening | Dispatcher loop with a state variable | Trace the state, use a devirtualizer |
+| TLS pinning | Connection fails with a proxy | Frida hook on the verifier in a lab |
+| Junk code | Dead branches, opaque predicates | Use the decompiler's simplification, ignore unreachable blocks |
+
+## Patch diffing
+
+Compare the patched and unpatched versions to find the fix. This is the fastest route to an n-day.
+
+```bash
+# IDA + BinDiff
+bindiff --primary old.idb --secondary new.idb --output diff.BinDiff
+
+# Diaphora inside IDA
+# File -> Diaphora -> Diff
+
+# Ghidriff (Ghidra headless)
+ghidriff old.bin new.bin -o diff.md
+```
+
+Read the changed functions, not the similarity score. A one-line bounds check is the finding. A refactor is noise.
+
+## Symbolic and concolic execution
+
+Use these when a branch is hard to reach and the input format is small.
+
+```python
+import angr
+p = angr.Project("./sample", auto_load_libs=False)
+st = p.factory.entry_state()
+sm = p.factory.simulation_manager(st)
+sm.explore(find=0x401234, avoid=0x401300)
+print(sm.found[0].posix.dumps(0))
+```
+
+Triton and Miasm offer finer control over symbolic expressions. KLEE and S2E work on LLVM bitcode and whole systems. All of them struggle with large binaries, crypto, and environment-heavy code.
+
+## Evidence and reporting
+
+For each finding, keep:
+
+- the file hash (SHA-256) and build version;
+- the tool and version;
+- the address, function, and decompiled snippet;
+- the input that reaches the path;
+- the runtime proof if you have one;
+- the confidence label;
+- the patch or mitigation.
+
+Report the primitive, not the crash. "Controlled 8-byte write at 0x..." is a primitive. "It crashes" is an observation.
+
+## Learning path
+
+1. `file`, `strings`, `readelf`, `objdump` on small CTF binaries.
+2. GDB and pwndbg until registers and stack frames are routine.
+3. Ghidra on the same binaries. Rebuild the logic in C.
+4. One parser bug per week: image, archive, PDF, protocol.
+5. Fuzzing with AFL++ and a harness.
+6. Crash triage and exploitability with CASR and a debugger.
+7. One mitigation bypass at a time: NX, ASLR, RELRO, CFG.
+8. Patch diffing on an open-source project.
+9. Firmware and mobile once the desktop workflow is solid.
+
+## Sources
+
+- Ghidra `GettingStarted.md` and `analyzeHeadlessREADME.html`
+- Binary Ninja batch and API documentation
+- `0xSteph/pentest-ai-agents` reverse-engineer agent
+- `mukul975/anthropic-cybersecurity-skills` Ghidra, jadx, Frida skills
+- `SnailSploit/Claude-Red` exploit development, crash analysis, shellcode
+- `The-Art-of-Hacking/h4cker` reverse-engineering tool list
+- `skerkour/black-hat-rust` exploit and tooling examples
+
+
+<!-- ===== references/vulnerability-research.md ===== -->
+
+# Vulnerability research
+
+Finding a bug is a data-flow problem with a business question attached. The data-flow part asks whether attacker input reaches a dangerous operation without a correct check. The business part asks what happens when it does.
+
+This guide covers the research side: attack surface, bug classes, source audit, binary audit, sanitizers, crash triage, exploitability, and the report. Exploitation steps live in `exploit-development.md`. Fuzzing steps live in `fuzzing.md`.
+
+## Rules of engagement
+
+- Confirm the target is in scope and the test window is agreed.
+- Start with read-only behavior. Write only where the plan allows it.
+- Record every request, binary hash, and version.
+- Stop at the agreed proof. Do not pivot through production for fun.
+- Separate a crash from an exploit. A crash is a lead.
+- Date every claim. Software changes under you.
+
+## Attack surface map
+
+Before testing, list every place data enters and every place it lands.
+
+### Web and API
+
+- Query, path, header, cookie, body, multipart, JSON, XML, GraphQL.
+- File upload, import, webhook, URL fetch, PDF and image render.
+- OAuth redirect, SAML assertion, JWT claim, session store.
+- Admin and tenant boundaries.
+- Background jobs fed by user data.
+- SDK and mobile-only endpoints.
+
+### Desktop
+
+- File parsers, drag and drop, clipboard, deep links, protocol handlers.
+- Update channel and signature check.
+- Plugin and extension loader.
+- Local IPC: named pipes, Unix sockets, COM, DBus.
+- Privileged helper and setuid binary.
+- Browser embedding and WebView bridge.
+
+### Mobile
+
+- Exported activities, services, receivers, providers.
+- Deep links and universal links.
+- WebView JavaScript bridge.
+- Shared preferences, keychain, keystore, local databases.
+- Background workers and push payloads.
+- Mobile API that trusts client headers.
+
+### Cloud and infrastructure
+
+- Metadata service, instance role, IAM policy.
+- Public storage, queue, function URL, container registry.
+- Kubernetes API, service account, admission webhook.
+- CI runner, artifact store, deployment key.
+- Terraform state and secret manager.
+
+### Kernel and driver
+
+- IOCTL buffers, `METHOD_NEITHER` user pointers, `SystemBuffer` sizes.
+- `copy_from_user`, `copy_to_user`, `probe_for_read`, `probe_for_write`.
+- IRP handling, cancel routines, object lifetimes.
+- Syscall argument parsing, netlink, io_uring, eBPF, userfaultfd.
+
+## Bug classes and the primitive
+
+| Class | Typical root cause | Primitive |
+|---|---|---|
+| Stack overflow | Unbounded copy into fixed stack buffer | Return address or local variable control |
+| Heap overflow | Wrong allocation size or off-by-one | Adjacent chunk metadata or object |
+| Use after free | Missing refcount or stale pointer | Reallocation with controlled data |
+| Double free | Two owners release the same object | Allocator metadata corruption |
+| Type confusion | Wrong cast or union tag | Field interpreted at wrong width or type |
+| Integer bug | Overflow, underflow, truncation in size math | Small allocation, large copy |
+| Format string | User text passed as format | Arbitrary read, then write |
+| OOB read | Index without bounds check | Memory disclosure |
+| Race | Check and use without a lock | State bypass, double spend |
+| Deserialization | Trusted object graph from input | Code execution or property injection |
+| Path traversal | Unsanitized path join | File read or write outside root |
+| SSRF | Server fetches attacker URL | Internal access, metadata |
+| Auth bypass | Missing or wrong identity check | Horizontal or vertical access |
+| Logic | Wrong order, negative value, stale state | Financial or access impact |
+
+The bug class suggests the primitive. The primitive suggests the impact. Work in that order.
+
+## Source audit
+
+### Find the entry points
+
+```bash
+# routes and handlers
+rg -n "app\.(get|post|put|delete)|router\.|@GetMapping|@PostMapping|http\.HandleFunc" .
+
+# file and network entry
+rg -n "readFile|createReadStream|open\(|fopen|recv\(|read\(" .
+
+# deserialization
+rg -n "pickle\.loads|yaml\.load|unserialize|ObjectInputStream|JsonConvert|readObject" .
+
+# process execution
+rg -n "system\(|exec\(|popen|subprocess|child_process|Runtime\.exec|ProcessBuilder|Command::new" .
+
+# templates
+rg -n "render_template|Template\(|Handlebars|Mustache|Smarty|Twig|Jinja" .
+
+# SQL
+rg -n "query\(|execute\(|raw\(|createQuery|db\.Raw|sequelize\.query" .
+```
+
+### Trace the data
+
+For each source, follow the variable:
+
+1. Which function receives it?
+2. Is it decoded, normalized, or parsed first?
+3. What size, length, or index is derived from it?
+4. Which check applies, and can it be skipped on another path?
+5. Where does it land: allocation, copy, query, file, command, template?
+6. Is there a second parser between the check and the sink?
+
+A source-to-sink trace with no check is a candidate. A check on one path and no check on a sibling path is often the real bug.
+
+### Dangerous patterns by language
+
+- C: `strcpy`, `strcat`, `sprintf`, `gets`, `memcpy` with a computed size, `alloca`, VLA, signed/unsigned mix.
+- C++: raw `new[]`, `std::copy` into a fixed buffer, `reinterpret_cast`, virtual dispatch after free, iterator invalidation.
+- Python: `pickle`, `yaml.load` without `SafeLoader`, `eval`, `exec`, `subprocess` with `shell=True`, `os.path.join` with an absolute second argument.
+- Node: `child_process.exec`, `eval`, `new Function`, `vm`, `path.join` traversal, prototype pollution through `lodash.merge`.
+- PHP: `include`, `unserialize`, `eval`, `preg_replace /e`, type juggling with `==`, variable variables.
+- Java: `ObjectInputStream`, XML parsers without external entity limits, expression languages, JDBC string concatenation.
+- Go: `text/template` with user data, `exec.Command` with a shell, `InsecureSkipVerify`, unchecked slice bounds.
+- Rust: `unwrap` on parser output, `unsafe` blocks, `from_utf8_unchecked`, integer casts with `as`.
+
+### Taint and data-flow tools
+
+```bash
+semgrep --config auto .
+codeql database create db --language=javascript --source=.
+codeql database analyze db codeql/javascript-security --format=sarif-latest -o out.sarif
+joern
+weggli -r 'func $F($X) { $Y = $X; }' .
+```
+
+Semgrep is fast and rule-based. CodeQL builds a real data-flow graph but is slower. Joern and weggli are for querying syntax and call structure. None replace reading the code.
+
+## Binary audit
+
+When source is missing, use `reverse-engineering.md`. Focus on:
+
+- parsers and length fields;
+- allocation followed by copy;
+- signed comparisons on unsigned lengths;
+- bounds checks that use the wrong variable;
+- object lifetime around callbacks;
+- error paths that free twice or not at all.
+
+A decompiler makes the code look safer than it is. Check the assembly at every size calculation.
+
+## Sanitizers
+
+Build with sanitizers when source is available.
+
+```bash
+clang -fsanitize=address,undefined -fno-omit-frame-pointer -g -O1 target.c -o target_asan
+clang -fsanitize=memory -g -O1 target.c -o target_msan
+clang -fsanitize=thread -g -O1 target.c -o target_tsan
+```
+
+| Sanitizer | Finds | Cost |
+|---|---|---|
+| ASAN | Heap, stack, global OOB, UAF, double free | 2x to 3x slowdown |
+| UBSAN | Signed overflow, shift, alignment, null | Low |
+| MSAN | Uninitialized reads | Needs full rebuild |
+| TSAN | Data races | 5x to 15x slowdown |
+
+ASAN options worth knowing:
+
+```bash
+export ASAN_OPTIONS=abort_on_error=1:detect_leaks=0:symbolize=1:strict_string_checks=1
+export UBSAN_OPTIONS=print_stacktrace=1:halt_on_error=1
+```
+
+## Crash triage
+
+A crash needs four answers: is it deterministic, is the faulting address controlled, is the instruction pointer controlled, and what mitigation stands in the way.
+
+### Linux
+
+```bash
+gdb -q ./target_asan
+(gdb) run crash.bin
+(gdb) bt full
+(gdb) info registers
+(gdb) x/32gx $rsp
+(gdb) p $_siginfo
+```
+
+Use `rr record` for non-deterministic crashes. Use CASR to classify and cluster:
+
+```bash
+casr-gdb -o crash.casrep -- ./target crash.bin
+casr-cli crash.casrep
+casr-cluster -d reports dedup
+casr-cluster -c dedup clusters
+```
+
+### Windows
+
+```
+0:000> g
+0:000> .exr -1
+0:000> k
+0:000> r
+0:000> !analyze -v
+0:000> .ttime
+```
+
+WinDbg TTD records the run. Rewind to the instruction before the fault and inspect the object.
+
+### Triage table
+
+| Observation | Meaning |
+|---|---|
+| Fault address is `0x41414141` | Direct buffer control |
+| Fault address is a small offset from a controlled pointer | Struct field control |
+| Instruction pointer is controlled | Likely direct execution |
+| Instruction pointer is a heap pointer | Need a fake vtable or JOP |
+| Crash only with ASAN | Latent OOB, may still be exploitable |
+| Crash only under load | Race |
+| Crash in `free` | Heap metadata corruption |
+| Crash in `memcpy` with a huge size | Integer bug upstream |
+
+Deduplicate by stack hash and fault type before you spend time. CASR and `afl-cmin` help.
+
+Minimize the input:
+
+```bash
+afl-tmin -i crash.bin -o min.bin -- ./target @@
+```
+
+## Exploitability
+
+Exploitability is a chain of questions:
+
+1. Is the fault reachable from an untrusted source?
+2. Which bytes are controlled, at what width?
+3. Is there an information leak?
+4. Which mitigations are active?
+5. Is there a useful target: return address, vtable, function pointer, GOT, callback?
+6. Can the exploit repeat reliably?
+
+If any answer is missing, the finding may still be valid but the severity is lower. Say that in the report.
+
+## Mitigations
+
+| Mitigation | Check | Bypass family |
+|---|---|---|
+| NX / DEP | `checksec`, PE `NX_COMPAT`, GNU_STACK | ROP, JOP, ret2libc |
+| ASLR / PIE | ELF type, PE `DYNAMIC_BASE` | Info leak, partial overwrite, brute force |
+| Stack canary | `__stack_chk_fail`, `/GS` | Leak, SEH overwrite, non-return target |
+| RELRO | `GNU_RELRO`, `BIND_NOW` | GOT if partial, else heap target |
+| CFG / CET | `GUARD_CF`, shadow stack | JOP, call-preceded gadgets, data-only |
+| Safe unlinking / MTE | allocator version, Android target | Allocator-specific primitives |
+| SMEP / SMAP | `cr4`, kernel config | ROP to `native_write_cr4`, data-only |
+
+A mitigation check is not a finding on its own. It changes the severity and the exploit path.
+
+## Race conditions
+
+Prove the window, not only the odd result.
+
+1. Identify the invariant: one use, one balance, one approval.
+2. Map the check and the write. If they are separate, the window exists.
+3. Send parallel requests. Use a single-packet attack for HTTP/2.
+4. Count successes and compare with the intended limit.
+5. Repeat to show reliability.
+
+Tools: Burp Turbo Intruder, a small asyncio script, `wrk`. For local binaries, `rr` and thread sanitizer.
+
+## Patch diffing
+
+Diff the vendor patch to find the missing check.
+
+```bash
+bindiff --primary old.idb --secondary new.idb --output diff.BinDiff
+ghidriff old.bin new.bin -o diff.md
+git log -p -- path/to/file
+```
+
+Read the changed branch. The fix usually names the bug: a length check, a null check, a lock, a copy bound.
+
+## Report
+
+A vulnerability report needs:
+
+- title with the primitive and the asset;
+- affected version and hash;
+- attacker starting position;
+- precondition and reachability;
+- minimal reproduction;
+- observed result and proof;
+- impact in business terms;
+- root cause with the code or address;
+- remediation;
+- CVSS and CWE only after the narrative.
+
+Separate confirmed behavior from inference. A triager can rerun a request. A triager cannot rerun a guess.
+
+## Sources
+
+- `SnailSploit/Claude-Red` bug identification, crash analysis, exploit development
+- `trailofbits/skills` audit and fuzzing skills
+- `mukul975/anthropic-cybersecurity-skills` vulnerability-class skills
+- OWASP WSTG and API Security Top 10
+- MITRE CWE and CAPEC
+- CASR documentation
+- Ghidra and Binary Ninja workflow docs
+
+
+<!-- ===== references/fuzzing.md ===== -->
+
+# Fuzzing
+
+Fuzzing is automated input generation with a feedback signal. It finds crashes, not bugs. A crash becomes a finding only after triage, root cause, and impact.
+
+Use it when the target has a parser, a protocol, or a file format and you can run it locally in a lab.
+
+## Fuzzing ladder
+
+| Rung | Method | When |
+|---|---|---|
+| 0 | Hand-written test cases | Small input space, known grammar |
+| 1 | Dumb mutation | Quick smoke test, no instrumentation |
+| 2 | Coverage-guided, file input | Parser or file format with source or a harness |
+| 3 | Structure-aware | Length fields, checksums, compression, TLS |
+| 4 | Snapshot fuzzing | Large stateful target, slow init, closed source |
+| 5 | Kernel or hypervisor | Syscalls, drivers, IOCTL surfaces |
+
+Do not start at rung 5 because a blog post did. A file parser with a good harness at rung 2 finds more in a day than a badly configured kernel fuzzer finds in a week.
+
+## Harness first
+
+The harness is the product. A bad harness fuzzes the runtime, not the parser.
+
+### LibFuzzer harness
+
+```c
+#include <stdint.h>
+#include <stddef.h>
+#include "parser.h"
+
+int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
+    if (size < 8 || size > 1024 * 1024) return 0;
+    parser_ctx *ctx = parser_new();
+    parser_feed(ctx, data, size);
+    parser_free(ctx);
+    return 0;
+}
+```
+
+```bash
+clang -g -O1 -fsanitize=fuzzer,address,undefined harness.c parser.c -o fuzz_parser
+./fuzz_parser corpus/ -max_len=1048576 -jobs=4 -workers=4
+```
+
+`-jobs` and `-workers` run parallel processes. `-dict` loads a token dictionary. `-rss_limit_mb` stops a leak from eating the box.
+
+Rules:
+
+- Reset state between runs.
+- Free everything the parser allocates.
+- Do not print in the hot path.
+- Cap input size.
+- Seed with valid files.
+
+### AFL++ harness
+
+File input:
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+int main(int argc, char **argv) {
+    FILE *f = fopen(argv[1], "rb");
+    fseek(f, 0, SEEK_END); long n = ftell(f); rewind(f);
+    unsigned char *buf = malloc(n);
+    fread(buf, 1, n, f); fclose(f);
+    parse(buf, n);
+    free(buf);
+    return 0;
+}
+```
+
+Persistent mode is much faster:
+
+```c
+__AFL_FUZZ_INIT();
+int main(void) {
+    __AFL_INIT();
+    unsigned char *buf = __AFL_FUZZ_TESTCASE_BUF;
+    while (__AFL_LOOP(10000)) {
+        int len = __AFL_FUZZ_TESTCASE_LEN;
+        parse(buf, len);
+    }
+    return 0;
+}
+```
+
+Build:
+
+```bash
+afl-clang-fast -g -O1 harness.c parser.c -o fuzz_parser
+```
+
+Run:
+
+```bash
+mkdir -p in out
+cp seeds/* in/
+afl-fuzz -i in -o out -m none -t 1000+ -- ./fuzz_parser @@
+```
+
+`-m none` removes the memory limit for ASAN builds. `-t 1000+` allows a slow first run to calibrate.
+
+### Network harness
+
+Do not fuzz through a real socket stack if you can avoid it. Extract the handler and feed a buffer. When you must use a socket, put the server in a loop and reset state per input.
+
+```python
+import socket
+def run(data):
+    s = socket.create_connection(("127.0.0.1", 9000))
+    s.sendall(data)
+    s.shutdown(socket.SHUT_WR)
+    while s.recv(4096):
+        pass
+```
+
+## Grammar and structure
+
+Mutating a valid file breaks the checksum at byte 4 and the parser stops early.
+
+Tools and methods:
+
+- **AFL++ dictionaries** for magic values and keywords: `-x dict.txt`.
+- **Custom mutator** in C or Python for length, checksum, and chunk order.
+- **libprotobuf-mutator** for protobuf.
+- **TLS-Attacker** or **tlspuffin** for TLS state machines.
+- **Boofuzz** for network protocols with a block model.
+- **Grammar inference** from a corpus, then generate valid seeds.
+
+Fixing the checksum after mutation is often the difference between 2 percent and 80 percent coverage.
+
+## Corpus
+
+- Start with the smallest valid files from the test suite.
+- Add real samples, one per format variant.
+- Minimize with `afl-cmin` and `afl-tmin`.
+- Keep the corpus small. A bloated corpus slows every cycle.
+- Store interesting inputs from other fuzzers. Ensemble fuzzing shares coverage.
+
+```bash
+afl-cmin -i corpus -o corpus_min -- ./fuzz_parser @@
+afl-tmin -i crash -o crash_min -- ./fuzz_parser @@
+```
+
+## Sanitizers and coverage
+
+```bash
+export AFL_USE_ASAN=1
+export AFL_USE_UBSAN=1
+export AFL_LLVM_CMPLOG=1
+```
+
+CMPLOG helps with magic comparisons. Redqueen and input-to-state transforms turn a string compare into a guided mutation.
+
+Coverage:
+
+```bash
+afl-showmap -o map -- ./fuzz_parser seed
+llvm-cov show ./fuzz_parser -instr-profile=default.profraw
+```
+
+A campaign that stops finding new edges is stalled. Change the dictionary, the seed, the mutator, or the target function.
+
+## Parallel and continuous
+
+```bash
+afl-fuzz -M main -i in -o sync -- ./fuzz_parser @@
+afl-fuzz -S secondary1 -i in -o sync -- ./fuzz_parser @@
+```
+
+CI with a time box and a crash budget:
+
+```yaml
+- name: fuzz
+  run: |
+    ./fuzz_parser corpus/ -max_total_time=600 -artifact_prefix=artifacts/
+```
+
+A pull request that adds a parser gets 10 minutes of fuzzing. A nightly job gets hours.
+
+## Snapshot fuzzing
+
+For a large target with slow initialization, snapshot the state and restore per input.
+
+- **Nyx** with the AFL++-Nyx fork.
+- **Snapchange** for Linux kernel and full-system snapshots.
+- **wtf** for Windows kernel.
+
+```bash
+NYX_MODE=1 AFL_MAP_SIZE=1048576 afl-fuzz -i seeds -o out -- ./target_nyx @@
+```
+
+Snapshot setup is a project, not an afternoon. Use it when init takes minutes or the target is closed source.
+
+## Kernel and syscall fuzzing
+
+`syzkaller` is the default for Linux syscalls.
+
+```bash
+make
+./bin/syz-manager -config manager.cfg
+```
+
+The config names the kernel image, SSH target, and corpus. Start with a QEMU image and a small syscall set. A broad syscall description on a custom kernel produces noise.
+
+For Windows drivers, use **kAFL**, **wtf**, or **Driver Verifier** plus a hand-written IOCTL harness.
+
+## Crash triage
+
+1. Reproduce outside the fuzzer.
+2. Deduplicate by stack and fault type.
+3. Minimize.
+4. Classify: OOB, UAF, integer, null, assertion.
+5. Check exploitability with `vulnerability-research.md`.
+6. Keep the input and the build hash.
+
+```bash
+casr-afl -i out/default/crashes -o reports -- ./fuzz_parser @@
+casr-cluster -d reports dedup
+casr-cluster -c dedup clusters
+```
+
+## Pitfalls
+
+| Pitfall | Result | Fix |
+|---|---|---|
+| Harness leaks state | False crashes and slowdown | Reset and free per input |
+| No size cap | Huge inputs, slow cycles | `-max_len`, early return |
+| Checksum not fixed | Shallow coverage | Custom mutator |
+| ASAN without `-m none` | OOM kills | Remove the memory limit |
+| Fuzzing a release build | Optimized-away checks | `-O1 -g`, no LTO |
+| Corpus of one file | Local maximum | Add format variants |
+| Running on the host | Crash loses state | Container or VM with snapshot |
+| No crash dedup | Same bug 200 times | CASR or stack hash |
+
+## When to stop
+
+- The time box ends.
+- New edges per hour approach zero and mutation changes do not help.
+- The parser surface is covered and the remaining code needs a different harness.
+- You have enough crashes to triage for the report.
+
+Write down the target build, harness, corpus, fuzzer version, flags, and run time. A fuzzing result without that context is not reproducible.
+
+## Sources
+
+- AFL++ documentation and `docs/fuzzing_in_depth.md`
+- libFuzzer documentation
+- `SnailSploit/Claude-Red` fuzzing and crash analysis skills
+- `trailofbits/skills` fuzzing skills
+- CASR documentation
+- syzkaller documentation
+- unblob fuzzing setup as a real harness example
+
+
+<!-- ===== references/exploit-development.md ===== -->
+
+# Exploit development
+
+An exploit is a controlled transition from a bug to a useful primitive, then from the primitive to an impact. The bug gives you a write, a read, or a state change. The exploit makes it repeatable and steers it to a target.
+
+This guide covers the path after triage. Bug discovery is in `vulnerability-research.md`. Fuzzing is in `fuzzing.md`.
+
+## Start with the primitive
+
+| Primitive | Typical source | Next question |
+|---|---|---|
+| Controlled stack write | Stack overflow | Return address, canary, NX |
+| Controlled heap write | Heap overflow, UAF | Adjacent object, allocator metadata |
+| Controlled free | Double free, UAF | What replaces the object |
+| Arbitrary read | OOB read, format string, uninitialized memory | What leaks, and where is the pointer |
+| Relative write | Off-by-one, index bug | What field is one byte away |
+| Type confusion | Wrong cast | Which field is reinterpreted |
+| Race | Check/use gap | Can the window be widened |
+
+Write the primitive in one sentence before building the chain. "One byte null write past a heap chunk" is a primitive. "Heap overflow" is a class.
+
+## Method
+
+1. Reproduce with the smallest input.
+2. Map the mitigations.
+3. Find the crash offset and the controlled bytes.
+4. Find a leak if ASLR or PIE is on.
+5. Build the first control transfer.
+6. Defeat the next mitigation.
+7. Make it reliable.
+8. Write the PoC and the explanation.
+
+Stop as soon as the agreed proof is reached. A shell is nice; a controlled RIP with a clear path is often enough for a report.
+
+## Mitigation check
+
+```bash
+checksec --file=./target
+readelf -hW ./target | grep Type
+readelf -lW ./target | grep GNU_STACK
+readelf -dW ./target | grep -E "BIND_NOW|RPATH|RUNPATH"
+```
+
+On Windows:
+
+```
+dumpbin /headers target.exe | findstr /i "DynamicBase NXCompat Guard"
+```
+
+Record every result. A bypass that assumes NX off fails on the target.
+
+## Stack overflow
+
+### Offset
+
+```bash
+gdb -q ./target
+(gdb) run < <(python3 -c 'import sys; sys.stdout.buffer.write(b"A"*300)')
+(gdb) info registers rip rsp
+```
+
+Use a cyclic pattern:
+
+```bash
+python3 -c 'from pwn import *; print(cyclic(300).decode())' > pattern.txt
+gdb -q ./target -ex 'run < pattern.txt' -ex 'info registers rip'
+python3 -c 'from pwn import *; print(cyclic_find(0x6161616c))'
+```
+
+### Canary
+
+A canary sits between the buffer and the return address. Options:
+
+- Leak it through a format string or an OOB read.
+- Brute force a byte at a time if the process restarts with the same canary and a crash oracle exists.
+- Overwrite a target before the canary: a function pointer, a saved frame in another thread, or an exception handler.
+
+### NX
+
+With NX on, return to existing code.
+
+**ret2libc:** return to `system`, with `/bin/sh` as the argument. Needs a libc base leak.
+
+**ret2plt:** call a PLT stub for a function whose GOT entry is resolved. The 0x00sec ret2plt article in the artifact catalog walks through the GOT and PLT layout.
+
+**ROP:** chain gadgets.
+
+```bash
+ROPgadget --binary ./target --only "pop|ret"
+ropper --file ./target --search "pop rdi"
+```
+
+x86_64 argument order: `rdi`, `rsi`, `rdx`, `rcx`, `r8`, `r9`. A `pop rdi; ret` gadget plus a writable location for `/bin/sh` is the classic chain.
+
+```python
+from pwn import *
+elf = ELF("./target"); libc = ELF("./libc.so.6")
+rop = ROP(elf)
+rop.call(elf.plt["puts"], [elf.got["puts"]])
+rop.call(elf.symbols["main"])
+p = process("./target")
+p.sendlineafter(b"> ", flat({72: rop.chain()}))
+leak = u64(p.recvline().strip().ljust(8, b"\x00"))
+libc.address = leak - libc.symbols["puts"]
+...
+```
+
+### PIE and ASLR
+
+- Leak a code pointer, then compute the base.
+- Partial overwrite the low 12 bits of a return address when the target is in the same page.
+- Use a non-PIE module loaded at a fixed address.
+- Brute force when the entropy is low and the process survives.
+
+### SROP
+
+A `sigreturn` frame sets every register at once. It needs a `syscall` gadget and `rax=15`.
+
+```python
+frame = SigreturnFrame()
+frame.rax = constants.SYS_execve
+frame.rdi = bin_sh
+frame.rsi = 0
+frame.rdx = 0
+frame.rip = syscall_ret
+```
+
+### JOP and CFG
+
+With Control Flow Guard or CET, indirect calls must land on valid targets. Look for call-preceded gadgets, `mov rax, [..]; call rax` patterns, and dispatcher functions. Data-only attacks (overwrite a length or a pointer) avoid the problem entirely.
+
+## Heap
+
+Heap exploitation is allocator-specific. Identify the allocator and the version first.
+
+### glibc
+
+- `tcache` per size, LIFO, 7 entries by default.
+- Safe-linking XORs the next pointer with the chunk address shifted by 12.
+- Fastbins, unsorted bin, small and large bins each have their own checks.
+- `malloc` and `free` hooks were removed in glibc 2.34. Use `__free_hook` only on older versions.
+
+Classic steps:
+
+1. Get a leak of the heap or libc.
+2. Create an overlap or a fake chunk.
+3. Poison a tcache or fastbin entry.
+4. Allocate over a target: GOT, `_IO_2_1_stdout_`, `__malloc_hook`, a function pointer.
+5. Trigger the call.
+
+Useful tools: `pwndbg` heap commands, `gef`, `how2heap`, `malloc_trace`.
+
+### Windows
+
+- Segment Heap on modern Windows, LFH on older.
+- Front-end metadata is the usual target.
+- `VirtualProtect` or a `JIT` region turns a write into execution.
+- CFG and XFG constrain indirect calls.
+- CET shadow stack turns a return-address overwrite into a JOP problem.
+
+Use `!heap`, `!address`, and `!chkimg` in WinDbg. Record the Windows build.
+
+## UAF
+
+1. Free the object.
+2. Allocate a same-size object with controlled bytes.
+3. Trigger the stale reference.
+4. If a vtable is used, point it at a fake table.
+
+With modern C++ the free is often in a callback or a refcount path. Trace the refcount, not the allocation.
+
+## Integer bugs
+
+Look at the size math:
+
+- `size * count` overflow before `malloc`.
+- Signed length compared with an unsigned bound.
+- Truncation from 64 to 32 bits at an IPC boundary.
+- Negative index added to a pointer.
+
+Prove the small allocation and the large copy separately.
+
+## Format string
+
+```text
+%p %p %p        leak stack words
+%7$p            direct position
+%s              read a pointer as string
+%n              write the count
+%hhn            one byte
+```
+
+`pwntools` `FmtStr` automates offset finding and writes. On 64-bit, arguments live in registers, so positional arguments start after the saved registers.
+
+## Shellcode
+
+- Position independent: `call/pop`, RIP-relative, no absolute addresses.
+- No null bytes when the copy path stops at a null.
+- Staged payload for small buffers.
+- Windows API resolution via the PEB walk, `GetProcAddress`, `LoadLibraryA`.
+- Linux `execve("/bin/sh", 0, 0)` in 23 bytes for x86_64.
+
+```asm
+xor rsi, rsi
+push rsi
+mov rbx, 0x68732f6e69622f
+push rbx
+push rsp
+pop rdi
+xor rdx, rdx
+push 59
+pop rax
+syscall
+```
+
+Build with `nasm`, extract with `objcopy`, test in a small C loader.
+
+## Reliability
+
+- Pin the target build and libc.
+- Disable ASLR only for local testing; record both results.
+- Run the exploit 20 times. A 50 percent success rate is not a PoC.
+- Handle null bytes, newline, and length limits in the transport.
+- Add timeouts and a clean exit.
+- Log each stage so a failure is diagnosable.
+
+## Kernel
+
+- KASLR, SMEP, SMAP, KPTI, CFI, and MTE change the chain.
+- A leak is usually mandatory.
+- Common targets: `modprobe_path`, `core_pattern`, `cred` struct, page tables, `native_write_cr4`.
+- A data-only attack is often more reliable than a ROP chain.
+- Test in a VM with snapshots. A kernel crash takes the box down.
+
+## Modern constraints
+
+| Feature | Effect |
+|---|---|
+| CET shadow stack | Return address overwrite alone is not enough |
+| CFG / XFG | Indirect call targets are validated |
+| MTE | Pointer tags catch UAF and OOB on ARM |
+| Heap cookies | Metadata corruption needs a leak |
+| VBS / HVCI | Kernel code integrity limits patching |
+
+When a mitigation blocks the classic path, look for a data-only primitive: a length, a flag, a pointer used later, or a permission field.
+
+## PoC layout
+
+```text
+poc/
+  README.md        # target, version, hash, expected result
+  poc.py           # pwntools or requests
+  payload.bin      # if separate
+  run.sh           # one command to reproduce
+  notes.md         # offsets, leaks, failures
+```
+
+The README states the exact build. A PoC against the wrong version is a rumor.
+
+## Report the chain
+
+- Bug and root cause.
+- Primitive, in one sentence.
+- Mitigations and how each is bypassed.
+- Reliability over 20 runs.
+- Impact: code execution, sandbox escape, privilege level.
+- Patch or mitigation advice.
+
+A crash plus a controlled register is a valid finding. Say what is proven and what is inferred.
+
+## Sources
+
+- `SnailSploit/Claude-Red` exploit development, shellcode, mitigations, Windows boundaries
+- `skerkour/black-hat-rust` exploit code in Rust
+- 0x00sec PIE and ret2plt series
+- `how2heap`
+- `pwndbg` and `gef` documentation
+- PortSwigger race condition research for web-side primitives
+
+
+<!-- ===== references/mobile-reverse.md ===== -->
+
+# Mobile reverse engineering
+
+Mobile work splits into static inspection and runtime confirmation. Static work finds the surface: exported components, deep links, pinning, storage, keys. Runtime work proves which branch runs and what the server accepts.
+
+Use a lab device or emulator with snapshots. Keep one clean device for "normal user" traffic and one instrumented device for hooks.
+
+## Android
+
+### Unpack
+
+```bash
+unzip -l app.apk
+apktool d app.apk -o app-src
+jadx-gui app.apk
+```
+
+`apktool` gives resources and smali. `jadx` gives Java-like source. Read jadx first, fall back to smali when obfuscated.
+
+Check the manifest:
+
+```bash
+apktool d app.apk -o app-src
+xmllint --format app-src/AndroidManifest.xml | less
+```
+
+Look for:
+
+- `android:debuggable="true"`
+- `android:allowBackup="true"`
+- `android:usesCleartextTraffic="true"`
+- exported activities, services, receivers, providers
+- deep links and intent filters
+- permissions, especially SMS, contacts, location, overlay, all files
+- network security config
+- backup rules
+
+### DEX and native code
+
+```bash
+jadx -d out app.apk
+grep -RIn "http://\|https://\|api_key\|secret\|BEGIN RSA" out/
+unzip -l app.apk | grep -E "lib/|assets/"
+```
+
+Native libraries live under `lib/<abi>/`. Treat them as ELF binaries. A JNI bridge is a common place to find weak validation.
+
+Flutter apps hide Dart code in `libapp.so`. React Native hides the bundle in `assets/index.android.bundle`. Both need dedicated tooling:
+
+- Flutter: `flutter_elt`, `reFlutter`, Blutter.
+- React Native: the JS bundle is often readable, or Hermes bytecode needs `hbctool`.
+
+### Runtime
+
+```bash
+frida-ps -U
+frida -U -f com.example.app -l hook.js --no-pause
+objection -g com.example.app explore
+```
+
+Objection commands:
+
+```text
+android root detect
+android sslpinning disable
+android hooking list activities
+android hooking watch class_method com.example.app.Login.checkPassword --dump-args --dump-return
+```
+
+Hook templates:
+
+```javascript
+Java.perform(function () {
+  var Login = Java.use("com.example.app.Login");
+  Login.checkPassword.implementation = function (user, pass) {
+    console.log("user=" + user + " pass=" + pass);
+    var r = this.checkPassword(user, pass);
+    console.log("result=" + r);
+    return r;
+  };
+});
+```
+
+### Storage and crypto
+
+```bash
+adb shell run-as com.example.app ls -R /data/data/com.example.app
+adb backup -f app.ab com.example.app
+```
+
+Look for SQLite databases, shared preferences, files, and the keystore. A key in `strings.xml` or a Dart snapshot is not necessarily a secret; a keystore alias with no user auth is.
+
+Crypto checks:
+
+- ECB mode with repeated blocks.
+- Static IV.
+- Hardcoded key or password.
+- `SecureRandom` seeded with time.
+- Custom XOR that claims to be encryption.
+- Certificate pinning implemented in Java, native, or both.
+
+### Deep links
+
+```bash
+adb shell am start -W -a android.intent.action.VIEW -d "app://path?x=1" com.example.app
+```
+
+Test path traversal, open redirect in a WebView, token in the URL, and exported components that accept a `PendingIntent` or a `FileProvider` URI.
+
+### Android pitfalls
+
+- Split APKs need all parts installed; a base APK alone is incomplete.
+- Obfuscation moves the bug to native code or reflection. Use jadx xrefs and Frida.
+- Pinning can be in native code. Hook the verifier, not only the Java layer.
+- Emulator checks are common. Use a device profile that passes or hook the check.
+- A debuggable build is not a finding by itself.
+
+## iOS
+
+### Static
+
+```bash
+unzip -l app.ipa
+plutil -p Payload/App.app/Info.plist
+otool -hL Payload/App.app/App
+class-dump Payload/App.app/App > classes.h
+```
+
+Check:
+
+- `NSAppTransportSecurity` exceptions
+- URL schemes
+- `UIFileSharingEnabled`
+- keychain access groups
+- entitlements
+- embedded frameworks
+- Swift symbols and Objective-C class names
+
+Decrypt the binary on a jailbroken device with `frida-ios-dump` or `bagbak` before deep static work. App Store binaries are encrypted.
+
+### Runtime
+
+```bash
+frida -U -f com.example.app -l hook.js --no-pause
+objection -g com.example.app explore
+```
+
+Objection:
+
+```text
+ios sslpinning disable
+ios keychain dump
+ios nsuserdefaults get
+ios hooking list classes
+```
+
+Hook Objective-C methods with the `-` and `+` prefixes for instance and class methods. Swift methods need the mangled name or a Swift-aware tool.
+
+### iOS pitfalls
+
+- Pinning uses `SecTrustEvaluate`, `URLSession` delegates, or a third-party library.
+- Keychain items survive app deletion; a stale token can still work.
+- ATS exceptions on one domain do not cover another.
+- Swift name mangling makes hooks brittle. Prefer the class and selector when available.
+
+## Cross-platform storage
+
+| Store | Android | iOS |
+|---|---|---|
+| Preferences | SharedPreferences | NSUserDefaults |
+| Database | SQLite, Room | Core Data, SQLite |
+| Files | Internal and external | Documents, Caches |
+| Secrets | Keystore | Keychain, Secure Enclave |
+| Cookies | WebView cookie store | WKWebsiteDataStore |
+
+A token in SharedPreferences is readable on a rooted device. A token in the keystore with user authentication is stronger.
+
+## API testing from mobile
+
+Copy the mobile request into a proxy and replay it without the app.
+
+- Keep the mobile headers: `X-Platform`, `X-App-Version`, device ID, attestation token.
+- Test whether server-side authorization still holds when the app checks are removed.
+- Check older API versions used only by old app builds.
+- Test deep-link parameters against the API directly.
+
+Play Integrity and App Attest are server-side gates. A replayed request with a stale attestation token may pass; a scripted request may not.
+
+## Reporting
+
+Include:
+
+- app version and build number;
+- APK or IPA hash;
+- device and OS version;
+- the component or method;
+- the hook or `am start` command;
+- the server response;
+- what an attacker gains.
+
+A debuggable flag is low. An exported provider that leaks files is high. A hardcoded key is only as good as what it unlocks.
+
+## Sources
+
+- OWASP MASTG
+- `mukul975/anthropic-cybersecurity-skills` jadx, Frida, iOS skills
+- `SimoneAvogadro/android-reverse-engineering-skill`
+- MobSF documentation
+- Frida and objection documentation
+- Android security model documentation
+
+
+<!-- ===== references/firmware-iot.md ===== -->
+
+# Firmware and IoT
+
+Firmware is a filesystem, a bootloader, and a set of daemons in one blob. The work starts with extraction, then moves to services, update logic, and hardware interfaces. An IoT device without a shell is still a set of parsers with network input.
+
+Use wired Ethernet and an isolated VLAN. Assume every daemon is hostile until you know it.
+
+## Intake
+
+Record:
+
+- vendor, model, hardware revision;
+- firmware version and download URL;
+- hash;
+- update method: web upload, USB, auto-update, mobile app;
+- radio set: Wi-Fi, BLE, Zigbee, LoRa, cellular;
+- exposed interfaces: Ethernet, USB, UART, JTAG, SPI, SD.
+
+Photograph the board before touching it. Label connectors.
+
+## Extraction
+
+```bash
+unblob firmware.bin -e ./out
+binwalk -eM firmware.bin
+binwalk --dd='.*' firmware.bin
+```
+
+`unblob` handles 78+ formats and is the better default. It needs external extractors. Docker avoids the dependency setup:
+
+```bash
+docker run --rm -v "$PWD:/data/input" -v "$PWD/out:/data/output" \
+  ghcr.io/onekey-sec/unblob:latest /data/input/firmware.bin
+```
+
+`binwalk -eM` recursively extracts known signatures. It misses formats and can create a directory tree that is hard to clean.
+
+Manual carving:
+
+```bash
+file firmware.bin
+xxd firmware.bin | head
+strings -a -n 8 firmware.bin | grep -Ei "squashfs|jffs2|ubi|uImage|rootfs"
+```
+
+EMBA automates firmware triage:
+
+```bash
+sudo ./emba -f firmware.bin -l ./logs
+```
+
+It runs extraction, binary hardening, secret checks, and CVE matching. Read the report, do not trust the score.
+
+## Filesystem
+
+Mount read-only:
+
+```bash
+mkdir rootfs
+sudo mount -o ro,loop rootfs.img rootfs
+```
+
+Or extract with `unsquashfs`, `jefferson` for JFFS2, `ubireader_extract_images` and `ubireader_extract_files` for UBI.
+
+Immediately look for:
+
+```bash
+cat etc/passwd etc/shadow
+find . -name "*.conf" -o -name "*.cfg" -o -name "*.ini" | head -50
+grep -RIn "admin\|password\|secret\|token" etc/ usr/etc/ 2>/dev/null | head -80
+ls -la etc/init.d etc/rc.d
+find . -perm -4000 -type f
+```
+
+Check the web root, CGI, and any `cgi-bin`. A shell script behind a web form is a common command injection site.
+
+## Services
+
+```bash
+find . -type f -perm -111
+file $(find . -type f -perm -111) 2>/dev/null | grep ELF
+```
+
+Map listening ports from the config, not only from a live scan:
+
+```bash
+grep -RIn "listen\|bind\|port" etc/ 2>/dev/null | head -80
+```
+
+A service with no authentication on the LAN is still a finding if the LAN is the trust boundary.
+
+## Update path
+
+Update logic is the highest-value target.
+
+- Is the image signed? Which key and where is it stored?
+- Does the updater verify the signature before extraction?
+- Is the version checked, or can you downgrade?
+- Is the archive extracted as root?
+- Is the manifest parsed before or after the signature check?
+- Can a filename traverse out of the update directory?
+
+Test with a re-packed image and a modified manifest. Keep a recovery method.
+
+## Hardware
+
+### UART
+
+Find the pads: TX, RX, GND, often 3.3 V. Use a multimeter and a logic analyzer. A UART usually has one pad that idles high (TX).
+
+```bash
+picocom -b 115200 /dev/ttyUSB0
+```
+
+Common baud rates: 115200, 57600, 38400, 9600. If the console asks for a login, try the extracted `/etc/shadow` or a known vendor default.
+
+### JTAG and SWD
+
+OpenOCD with the right target config:
+
+```bash
+openocd -f interface/ftdi/ftdi.cfg -f target/stm32f1x.cfg
+telnet localhost 4444
+```
+
+Dump flash:
+
+```text
+dump_image flash.bin 0x08000000 0x100000
+```
+
+### SPI flash
+
+Use a SOIC-8 clip and a programmer such as CH341A or Flashrom.
+
+```bash
+flashrom -p ch341a_spi -r dump.bin
+```
+
+Read the chip twice and compare. A bad read produces a corrupt image.
+
+## Emulation
+
+FirmAE automates full-system emulation for router firmware:
+
+```bash
+sudo ./run.sh -r linksys fw.bin
+```
+
+QEMU user mode for a single binary:
+
+```bash
+qemu-mipsel -L ./rootfs ./rootfs/usr/bin/httpd
+```
+
+Full-system QEMU needs a kernel and an initrd that matches the target. A wrong machine type produces a silent hang.
+
+NVRAM is often the blocker. Stub the `nvram` library or preload a shim that returns expected keys.
+
+## Binary analysis
+
+All firmware binaries are artifacts. Run `./beril scan --target ./rootfs/usr/bin/httpd --deep`, then open the interesting ones in Ghidra.
+
+Look for:
+
+- `system`, `popen`, `execve` with config or request data;
+- `strcpy`, `sprintf`, `sscanf` on request fields;
+- hardcoded credentials and private keys;
+- custom crypto and rolling-code schemes;
+- debug endpoints and hidden CGI;
+- command injection through `hostname`, `ntp`, `ping`, `traceroute`;
+- stack overflows in the management daemon.
+
+## Secrets
+
+Grep the whole rootfs for:
+
+```bash
+grep -RInE "AKIA[0-9A-Z]{16}|-----BEGIN|password|passwd|secret|api[_-]?key" . 2>/dev/null | head -100
+```
+
+Check `/etc/shadow` hashes, SSH host keys, TLS private keys, cloud tokens, and update signing keys. A shared vendor key across models is a supply-chain finding.
+
+## Radio
+
+- BLE: `btmon`, `gatttool`, `bettercap`.
+- Zigbee: `zigbee2mqtt`, a sniffer, and the IEEE address.
+- Wi-Fi: `aircrack-ng`, `hcxdumptool`, `hostapd-wpe`.
+- Sub-GHz: `rtl_433`, a HackRF, or a Flipper Zero.
+
+Capture the pairing and the command frames before replaying. A replay that works once is not a protocol break.
+
+## Reporting
+
+Include:
+
+- model, hardware revision, firmware version and hash;
+- extraction path and rootfs access;
+- service, port, and request;
+- shell or file proof;
+- whether authentication is required;
+- recovery steps you used;
+- the fix: signed updates, non-root daemons, input bounds, unique keys.
+
+State whether the device is at the perimeter or behind NAT. A root shell on the LAN is different from one on the WAN.
+
+## Pitfalls
+
+- Bricking the device with a bad flash. Dump before writing.
+- Testing on a device that auto-updates. Pin the firmware.
+- Assuming a mounted filesystem is complete. Some files are generated at boot.
+- Trusting `strings` alone. A config path may be assembled at runtime.
+- Forgetting the mobile app. It often holds the cloud API and the BLE protocol.
+- Emulating with the wrong endianness. Check the ELF header.
+
+## Sources
+
+- unblob documentation
+- EMBA documentation
+- FirmAE
+- OWASP IoT Top 10
+- `mukul975/anthropic-cybersecurity-skills` firmware skills
+- `GhostTroops/scan4all` and `lynis` for host checks
+
+
+<!-- ===== references/curriculum.md ===== -->
+
+# Training curriculum
+
+The curriculum turns Beril from a lookup tool into a practice system. It runs 25 weeks, about 10 hours a week, from the shell to exploit development and firmware. Every week ends with evidence, not a feeling of understanding.
+
+The machine-readable plan lives in `data/curriculum.json` and is driven by `./beril train`.
+
+## Rules
+
+1. Two hours a day, five days a week. Miss a day, not a week.
+2. Every session ends with a note: command, result, next question.
+3. No tool without a hypothesis. No finding without a reproduction.
+4. Read the primary source before the video summary.
+5. Redo one old lab each week from memory.
+6. Publish one writeup a month. Feedback closes the loop.
+7. Keep a lab log. The log is the evidence.
+
+## Setup
+
+Use a snapshot-capable VM or container host. Keep the host clean.
+
+```bash
+git clone https://github.com/sheduxdev/beril.git
+cd beril
+./install.sh --tools --re
+mkdir -p training/notes
+```
+
+Create a snapshot before each lab. Name it after the lab, not the date.
+
+Write a one-page rules-of-engagement template with: target, window, allowed actions, forbidden actions, contact, and stop condition.
+
+## The weekly loop
+
+| Day | Work |
+|---|---|
+| Monday | Read the week's source, write five questions |
+| Tuesday | Drill 1 and drill 2 |
+| Wednesday | Lab, first pass |
+| Thursday | Lab, second pass, debug the failures |
+| Friday | Deliverable, checkpoint, one-paragraph retrospective |
+| Weekend | Redo one old lab, read one writeup, rest |
+
+Each session:
+
+```text
+Goal:
+Hypothesis:
+Command:
+Result:
+Evidence path:
+Next question:
+```
+
+## Phases
+
+| Phase | Weeks | Outcome |
+|---|---|---|
+| Setup | 0 | A lab, a log, and rules |
+| Foundations | 1 to 4 | Linux, network, HTTP, scripting |
+| Recon and web | 5 to 9 | Asset map, web and API findings |
+| Code and binary | 10 to 14 | Source audit, RE, fuzzing |
+| Exploit and infrastructure | 15 to 19 | Primitive, chain, AD, cloud |
+| Specialist | 20 to 23 | Mobile, firmware, detection, AI |
+| Mastery | 24 | Report, review, capstone |
+
+## Phase detail
+
+### Setup, week 0
+
+Build the host, install Beril, write the rules. Snapshot. Learn to restore it. A lab you cannot restore is a liability.
+
+### Foundations, weeks 1 to 4
+
+Bandit and the binary lab teach the shell. Wireshark and DNS teach the network. DevTools and CORS teach the browser boundary. Python and Bash teach automation.
+
+Checkpoint at week 4: you can build a small tool, explain a TLS handshake, and read a request without a proxy.
+
+### Recon and web, weeks 5 to 9
+
+Asset mapping, certificate and ASN pivots, content discovery, authentication, injection, logic, IDOR, and APIs. The local web lab covers IDOR, XSS, SQLi, traversal, SSRF, and weak authorization.
+
+Checkpoint at week 9: you can take one request from discovery to a reproduced impact and write the chain without a template.
+
+### Code and binary, weeks 10 to 14
+
+Source audit with semgrep and manual tracing. C memory and mitigations. Ghidra static work. GDB and Frida dynamic work. A real libFuzzer campaign on the local parser.
+
+Checkpoint at week 14: you can recover a hidden check from assembly, confirm it in a debugger, and fuzz a parser to a root cause.
+
+### Exploit and infrastructure, weeks 15 to 19
+
+Crash triage, ROP, shellcode, heap and UAF, Active Directory, cloud, and Kubernetes. The binary lab has a UAF and an integer bug. The cloud lab has public storage and an open security group.
+
+Checkpoint at week 19: a working PoC with reliability numbers, a BloodHound path, and one cloud finding with a read-only proof.
+
+### Specialist, weeks 20 to 23
+
+Mobile components and hooks, firmware extraction and emulation, detection engineering, and LLM application testing.
+
+Checkpoint at week 23: one mobile component finding, one firmware root shell, one Sigma rule, one prompt injection with impact.
+
+### Mastery, week 24
+
+A full report, a peer review, and a five-minute presentation. The capstone is a fresh target from the list below.
+
+## Assessment
+
+Score each week 0 to 3 on four axes:
+
+| Axis | 0 | 1 | 2 | 3 |
+|---|---|---|---|---|
+| Reproduction | Did not run | Ran with help | Ran alone | Ran alone and explained every step |
+| Evidence | None | Screenshot | Request and response | Minimal input plus logs |
+| Root cause | Guess | Symptom | Mechanism | Mechanism and missing check |
+| Communication | None | Bullet notes | Short report | Report a triager can run |
+
+Twelve or more out of twelve is ready to move on. Eight to eleven means repeat the lab with a new input. Below eight means repeat the week.
+
+## Capstone list
+
+Pick one, or ask for a target in scope:
+
+- A local vulnerable web app with three chained findings.
+- A CTF binary with NX and PIE, full PoC and reliability.
+- A firmware image with a root shell and an update weakness.
+- A mobile app with an exported component and a data leak.
+- An LLM app with an indirect injection and a tool abuse.
+
+A capstone needs a report, a reproduction script, a five-minute talk, and a peer review.
+
+## Spaced repetition
+
+Keep a deck of 20 prompts from old labs. Review it three times a week. Prompts look like:
+
+- What does full RELRO protect, and what does it not?
+- Which header does a cache key include?
+- How do you tell a controlled RIP from a stack pointer?
+- What is the difference between BOLA and BFLA?
+- Which signing step stops a firmware downgrade?
+
+If you cannot answer in 20 seconds, reopen the lab.
+
+## Notes
+
+One file per week under `training/notes`. Each file has:
+
+```text
+Date:
+Target:
+Hypothesis:
+Commands:
+Result:
+Evidence:
+What surprised me:
+What I would do differently:
+Next:
+```
+
+Link the evidence file. A note without a path is a diary.
+
+## Self-training with the agent
+
+1. Ask Beril to explain the week's concept, then close the answer and rewrite it.
+2. Ask for a lab hint, not the answer. Use `agents/` prompts for structure.
+3. After a finding, ask for a critique against `references/scoring.md`.
+4. Add a method card when a lab teaches something transferable.
+5. Update the lab README when a step is wrong.
+
+The agent is a tutor and a reviewer. It is not a substitute for typing the commands.
+
+## Ethics
+
+- Test only what is in scope.
+- Stop at the agreed proof.
+- Do not run exploits against production without a rollback plan.
+- Credit the source of every technique.
+- Keep customer data out of public writeups.
+
+## Progress commands
+
+```bash
+./beril train --status
+./beril train --week 7
+./beril train --next
+./beril train --done w7d1
+./beril train --log "IDOR reproduced with two accounts"
+```
+
+The state lives in `training/progress.json`, which is gitignored. Commit your notes and writeups separately.
+
+
+<!-- ===== references/exercises.md ===== -->
+
+# Exercise index
+
+Short drills by domain. Each has a level and the evidence that proves it. Use them when a week feels abstract, or as a warm-up before a lab.
+
+Level: 1 recall, 2 guided, 3 independent, 4 chained.
+
+## Linux and networking
+
+| # | Task | Level | Evidence |
+|---|---|---|---|
+| 1 | Find every world-writable file outside `/tmp` | 2 | `find` output with owners |
+| 2 | Explain each field in `ls -l` | 1 | Written answer |
+| 3 | Trace a process and log every file it opens | 2 | `strace -f` excerpt |
+| 4 | Capture a DNS query and the response | 2 | PCAP with annotations |
+| 5 | Build a TCP client in Python with a timeout | 2 | Script and output |
+| 6 | Explain the difference between a socket and a port | 1 | Written answer |
+| 7 | Read a certificate chain and list the failures | 2 | `openssl s_client` output |
+| 8 | Set up an SSH tunnel and prove it | 2 | Command and `curl` result |
+
+## Web
+
+| # | Task | Level | Evidence |
+|---|---|---|---|
+| 9 | Map every parameter in the web lab | 1 | Table |
+| 10 | Reproduce the IDOR with two sessions | 2 | Two requests |
+| 11 | Turn the reflected XSS into cookie theft | 3 | Listener log |
+| 12 | UNION the admin row through the SQLi | 3 | Request and response |
+| 13 | Read a file three levels above the web root | 2 | Path and content |
+| 14 | Use SSRF to reach the health endpoint | 2 | Request and response |
+| 15 | Forge the role cookie and open admin | 1 | Cookie and page |
+| 16 | Compare HTML and JSON leakage | 2 | Two responses |
+| 17 | Write the IDOR report | 3 | Markdown report |
+| 18 | Fix the SQLi and add a test | 3 | Diff and test run |
+| 19 | Bypass a 403 with a path normalization trick | 3 | Request pair |
+| 20 | Find a cache key mismatch on a lab proxy | 4 | Two responses |
+| 21 | Test a GraphQL field authorization with two roles | 3 | Query pair |
+| 22 | Chain an open redirect into an OAuth token leak | 4 | Flow log |
+
+## Source and code
+
+| # | Task | Level | Evidence |
+|---|---|---|---|
+| 23 | Find five dangerous sinks with ripgrep | 2 | Grep output |
+| 24 | Trace one source to one sink | 2 | Annotated call path |
+| 25 | Run semgrep and classify every hit | 3 | Triage table |
+| 26 | Write a Semgrep rule for one pattern | 3 | Rule and match |
+| 27 | Find a secret in git history | 2 | Commit and value |
+| 28 | Remove a tracked `.env` and rotate the value | 3 | Commands and diff |
+| 29 | Add a lockfile and a dependency scan | 2 | CI output |
+| 30 | Review a Dockerfile for five issues | 2 | List with fixes |
+
+## Binary and RE
+
+| # | Task | Level | Evidence |
+|---|---|---|---|
+| 31 | Identify the architecture and mitigations | 1 | `checksec` table |
+| 32 | Find the offset to RIP | 2 | Cyclic pattern and GDB |
+| 33 | Redirect to `win` | 2 | Payload and flag |
+| 34 | Leak the stack with `%p` | 2 | Output |
+| 35 | Read the secret with `%s` | 3 | Address and output |
+| 36 | Take over the UAF callback | 3 | Payload and flag |
+| 37 | Explain the integer wrap | 2 | ASAN report |
+| 38 | Recover the RE challenge stages | 3 | Decompiled notes |
+| 39 | Patch one branch | 3 | Patched binary |
+| 40 | Build a ROP chain for the hardened binary | 4 | PoC and 20 runs |
+| 41 | Turn `%n` into a write | 4 | Target and value |
+| 42 | Diff two builds and name the fix | 4 | Diff of the changed function |
+
+## Fuzzing and triage
+
+| # | Task | Level | Evidence |
+|---|---|---|---|
+| 43 | Write the input grammar | 1 | One line |
+| 44 | Build a seed corpus | 2 | Files and rationale |
+| 45 | Run libFuzzer for 60 seconds | 2 | Log and crash |
+| 46 | Read the ASAN top frame | 2 | Annotated frame |
+| 47 | Minimize the crash | 3 | Short input |
+| 48 | Fix the parser and rerun | 3 | Diff and clean run |
+| 49 | Classify five crashes | 3 | Triage table |
+| 50 | Write a CASR report | 3 | `.casrep` and summary |
+
+## Mobile and firmware
+
+| # | Task | Level | Evidence |
+|---|---|---|---|
+| 51 | List exported Android components | 1 | Manifest table |
+| 52 | Trigger the deep link | 2 | `am start` output |
+| 53 | Call the JS bridge from a page | 3 | Console log |
+| 54 | Explain the backup exposure | 2 | Written answer |
+| 55 | Extract the firmware image | 2 | unblob summary |
+| 56 | Prove the CGI injection | 2 | Request and `uid=` |
+| 57 | Explain the unsigned update risk | 2 | Written answer |
+| 58 | Find the key and name the blast radius | 2 | Path and impact |
+| 59 | Fix the CGI properly | 3 | Diff and test |
+| 60 | Run a static scan on the rootfs and triage | 3 | Findings table |
+
+## Cloud and detection
+
+| # | Task | Level | Evidence |
+|---|---|---|---|
+| 61 | List world-open ports and rank them | 2 | Table |
+| 62 | Explain the wildcard IAM blast radius | 2 | Written answer |
+| 63 | Read the host mount risk | 2 | Written answer |
+| 64 | Pin a base image by digest | 2 | Dockerfile diff |
+| 65 | Write a Sigma rule for the CGI injection | 3 | Rule and match |
+| 66 | Map three findings to ATT&CK | 2 | IDs and rationale |
+| 67 | Find a beacon in a PCAP | 3 | Stream and timing |
+| 68 | Write a false-positive analysis | 3 | Paragraph |
+
+## How to use
+
+1. Pick a level above your comfort zone, not below it.
+2. Write the evidence path before you start.
+3. Stop at 30 minutes. If stuck, write the blocker and move on.
+4. Revisit the blocker the next day.
+5. Add the answer to your notes, not only the command.
+
+A drill without evidence is a read. A drill with a request, crash, or diff is practice.
+
+
+<!-- ===== references/self-training.md ===== -->
+
+# Self-training
+
+A lab teaches only when it changes the next decision. This loop turns a finished exercise into a method note, a review prompt, and a better default.
+
+## The loop
+
+1. Finish a lab task and save the evidence.
+2. Write the finding in one sentence.
+3. Name the root cause, not the symptom.
+4. Write the fix and the check that would have caught it.
+5. Add it to the learned set:
+
+```bash
+./beril reflect --lab web --finding "Any user can read another profile" \
+  --root-cause "object id comes from the query and is never compared with the session" \
+  --evidence labs/web/evidence/idor.txt \
+  --fix "scope the query by session uid and add an object-owner test"
+```
+
+6. Review three random notes twice a week:
+
+```bash
+./beril reflect --review
+```
+
+7. When a note survives three reviews, rewrite it as a method card in `references/techniques.md`.
+
+## What makes a good note
+
+| Bad | Good |
+|---|---|
+| "IDOR found" | "Profile read used the query id, not the session id" |
+| "XSS" | "Search reflected raw into the HTML body, so a tag executes" |
+| "SQLi in id" | "f-string built the query, `OR 1=1` returned the first row" |
+| "Fixed it" | "Parameterized query plus a test with `' OR '1'='1`" |
+
+## Root cause prompts
+
+- Which check was missing, and where should it live?
+- Did the code check a different value than the one used later?
+- Did two parsers disagree?
+- Was the state stale, shared, or trusted from the client?
+- Was the size derived from user input?
+- Was the boundary wrong: tenant, user, role, or object?
+
+## Fix prompts
+
+- What is the smallest fix at the right layer?
+- What test fails before the fix and passes after?
+- Does the fix cover the sibling endpoint?
+- Does it break a legitimate flow?
+
+## Spaced repetition
+
+Keep 20 prompts, not 200. A prompt is a question, not a paragraph.
+
+- Which cookie flag stops JavaScript from reading the session?
+- Which parser disagreement enables request smuggling?
+- What does full RELRO block?
+- Why is a stack canary not a bounds check?
+
+If the answer takes more than 20 seconds, reopen the lab.
+
+## Feeding the catalog
+
+A learned note becomes a catalog entry only when it has:
+
+- a public or local source;
+- a precondition;
+- a minimal reproduction;
+- an observable proof;
+- a failure mode;
+- one sentence on transfer.
+
+Until then it stays in `data/learned_methods.jsonl`.
+
+## Evidence
+
+The evidence path is not decoration. A note without a request, crash log, or diff is a memory. Memories drift.
+
+## Weekly review
+
+1. Read the three random notes.
+2. Run one of them again from memory.
+3. Update the note if the behavior changed.
+4. Delete a note that no longer applies.
+5. Add one new drill from `references/exercises.md`.
+
+The goal is a smaller, sharper set over time.
+
+
+<!-- ===== docs/scan-artifacts.md ===== -->
+
+# Artifact scans
+
+`beril scan` works on files and folders as well as URLs. It is static and read-only. Nothing is installed, executed, or uploaded.
+
+```bash
+./beril scan --target ./build/app.apk
+./beril scan --target ./source --tools
+./beril scan --target ./bin/service
+./beril scan --target ./release/app.exe
+```
+
+The scanner detects the type and runs the matching checks. Use it on an artifact you own or are authorized to review.
+
+## What each type checks
+
+| Type | Checks |
+|---|---|
+| Source tree | Secrets, dangerous sinks, debug flags, CI permissions, container settings, public cloud resources, lockfiles |
+| APK | Manifest flags, exported components, permissions, debug certificate, cleartext, backup, native ABIs, embedded strings |
+| IPA | Info.plist, ATS, URL schemes, frameworks, embedded strings |
+| PE / EXE / DLL | ASLR, DEP, CFG, code signature, section entropy, RWX sections, suspicious imports, packer markers |
+| ELF | PIE, NX, RELRO, canary, RPATH, SUID, imports, embedded URLs |
+| Archive | Path traversal, symlinks, huge entries, nested artifacts, secrets in text entries |
+
+Findings use critical to info. The score is a rough triage number, not CVSS.
+
+## Source review
+
+Point the scanner at the repository root.
+
+```bash
+./beril scan --target ./source --tools
+```
+
+The built-in pass looks for:
+
+- cloud keys, private keys, database URLs, tokens, and generic secret assignments;
+- `eval`, `exec`, `pickle`, `unserialize`, `innerHTML`, `child_process`, and similar sinks;
+- `DEBUG=True`, wildcard allowed hosts, wildcard CORS, disabled TLS checks;
+- `pull_request_target`, `write-all`, unpinned actions;
+- `FROM ...:latest`, remote scripts piped to a shell, privileged containers;
+- public S3 ACLs, `0.0.0.0/0`, public databases;
+- a tracked `.env` and missing lockfiles.
+
+`--tools` adds semgrep, gitleaks, and trivy when they are installed.
+
+Triage tips:
+
+1. A hit in a test fixture or a documentation example is usually noise.
+2. Confirm a secret with a read-only API call before reporting it.
+3. Follow a sink to the source of its input. A hit without a data flow is a hint.
+4. Check whether the debug flag applies to production config, not only to `settings/dev.py`.
+
+## APK review
+
+```bash
+./beril scan --target ./app-release.apk
+```
+
+The scanner reads the binary manifest and reports:
+
+- debuggable builds and old target SDKs;
+- exported activities, services, receivers, and providers;
+- dangerous permissions;
+- `allowBackup` and cleartext traffic;
+- debug signing certificates;
+- native ABIs and embedded URLs or secrets.
+
+An exported component is not automatically a bug. Confirm that it accepts input from another app and that the input reaches something sensitive. Main launcher activities are usually exported by design.
+
+For deeper work:
+
+```bash
+apktool d app.apk -o app-src
+jadx-gui app.apk
+apksigner verify --print-certs app.apk
+```
+
+Then read the manifest by hand. The scanner cannot follow a deep link into a vulnerable handler.
+
+## IPA review
+
+```bash
+./beril scan --target ./app.ipa
+```
+
+Checks include App Transport Security exceptions, URL schemes, frameworks, and strings in plists and bundles. A broad `NSAllowsArbitraryLoads` is a lead, not a finding. Confirm which domains actually use HTTP.
+
+For runtime work use a jailbroken device or a corellium-style lab with Frida and objection.
+
+## PE review
+
+```bash
+./beril scan --target ./app.exe
+```
+
+The scanner reports missing ASLR, DEP, CFG, signatures, high entropy sections, RWX sections, and suspicious imports. A missing signature matters for distribution, not always for exploitation.
+
+Useful follow-ups:
+
+```bash
+objdump -p app.exe | head -80
+strings -n 8 app.exe | grep -Ei "http|cmd|powershell|token"
+```
+
+For a deep reverse, load the binary in Ghidra or `r2 -A`.
+
+## ELF review
+
+```bash
+./beril scan --target ./bin/service
+```
+
+The scanner reports PIE, NX, RELRO, canary, RPATH, SUID, imports, and embedded URLs. A missing canary matters only when a stack buffer is reachable from input.
+
+Follow-ups:
+
+```bash
+checksec --file=./bin/service
+readelf -hW ./bin/service
+readelf -lW ./bin/service | grep GNU_STACK
+nm -D ./bin/service
+```
+
+## Archive review
+
+```bash
+./beril scan --target ./release.zip
+```
+
+Checks for `../` entries, absolute paths, symlinks, very large entries, nested apps, and secrets in text files. A traversal entry matters when the extraction tool follows it and a service later reads the extracted path.
+
+## Optional tools
+
+```bash
+pip install semgrep
+go install github.com/zricethezav/gitleaks/v8@latest
+go install github.com/aquasecurity/trivy/cmd/trivy@latest
+sudo apt install apktool jadx
+pip install frida-tools objection
+```
+
+`./install.sh --tools` installs gitleaks, trivy, and semgrep along with the recon tools.
+
+The scanner merges their findings as `semgrep`, `gitleaks`, and `trivy` entries. Treat those as leads. A SAST rule can fire on safe code, and a dependency CVE needs a reachability check.
+
+## Reading the output
+
+```text
+scans/app-release.md
+scans/app-release.json
+```
+
+The Markdown groups findings by severity and gives evidence and advice. The JSON is for a pipeline.
+
+| Severity | Typical action |
+|---|---|
+| Critical | Live secret, debug signing on a release, public bucket with data |
+| High | Exported service without permission, no ASLR, tracked `.env` |
+| Medium | Debuggable build, missing RELRO, cleartext allowed |
+| Low | Missing lockfile, unpinned base image |
+| Info | Permission, technology, or context worth knowing |
+
+## Limits
+
+- Nothing is executed, so packers, dynamic loading, and runtime permissions are invisible.
+- Obfuscated strings need a real reverse-engineering session.
+- Pattern matches can flag placeholders such as `AKIAIOSFODNN7EXAMPLE`.
+- Source scan skips `node_modules`, `vendor`, `dist`, `build`, `.venv`, and similar directories.
+- Large files are sampled, not fully read.
+- A clean result is not a certification.
+
+## Safety
+
+Static analysis does not touch the network. `--tools` may run local binaries only. If a source tree contains a huge dependency folder, the default file cap keeps the scan bounded.
+
+Authorization still applies. A local copy does not grant the right to test the running service.
+
+
+<!-- ===== docs/reverse-engineering.md ===== -->
+
+# Reverse engineering quick start
+
+Deep work starts with triage, then a hypothesis, then one tool at a time. Full method: `references/reverse-engineering.md`.
+
+## Install the optional stack
+
+```bash
+./install.sh --re
+```
+
+That adds capa, FLOSS, YARA, capstone, keystone, ROPgadget, pwntools, Frida, objection, and unblob to the Beril environment.
+
+External tools:
+
+```bash
+# Arch
+sudo pacman -S rizin radare2 binwalk qemu-full
+
+# Debian/Ubuntu
+sudo apt install rizin radare2 binwalk qemu-system-arm
+```
+
+Ghidra: download a release from https://github.com/NationalSecurityAgency/ghidra/releases, install JDK 25, extract, and set `GHIDRA_HOME`.
+
+Binary Ninja: install from https://binary.ninja/, then run its `scripts/install_api.py`. Headless needs a Commercial, Ultimate, or headless license.
+
+## Triage
+
+```bash
+./beril scan --target ./sample --deep
+```
+
+The base pass is static. If capa, FLOSS, or rizin is installed, the deep pass adds capabilities, decoded strings, and risky imports.
+
+## Ghidra headless
+
+```bash
+export GHIDRA_HOME=~/tools/ghidra
+./scripts/ghidra_headless.sh ./sample scans/sample.ghidra.json
+```
+
+The wrapper imports the file, runs `ghidra_dump.py`, and deletes the temporary project. Open the JSON for functions, imports, strings, and suspicious calls. For real reading, open the same file in the Ghidra GUI.
+
+## Rizin
+
+```bash
+./scripts/rizin_triage.sh ./sample scans/sample.rizin.json
+rizin -A ./sample
+[0x0]> axt @ sym.imp.strcpy
+[0x0]> pdf @ main
+```
+
+## Patch diff
+
+```bash
+./scripts/patch_diff.sh ghidriff old.bin new.bin
+./scripts/patch_diff.sh bindiff old.i64 new.i64
+./scripts/patch_diff.sh git ./repo v1.2.3 v1.2.4
+```
+
+## Fuzzing
+
+```bash
+cp scripts/afl_harness.c .
+# replace parse() with the target function
+afl-clang-fast -g -O1 afl_harness.c parser.c -o fuzz_target
+mkdir -p in out && cp seeds/* in/
+afl-fuzz -i in -o out -m none -t 1000+ -- ./fuzz_target @@
+```
+
+## Mobile
+
+```bash
+apktool d app.apk -o app-src
+jadx-gui app.apk
+frida -U -f com.example.app -l scripts/frida_hook.js --no-pause
+```
+
+## Firmware
+
+```bash
+unblob firmware.bin -e ./out
+sudo mount -o ro,loop ./out/rootfs.img ./rootfs
+```
+
+## Triage order
+
+1. Hash and file type.
+2. Mitigations and imports.
+3. Strings and endpoints.
+4. Entry point and input sources.
+5. Sinks and data flow.
+6. Debugger confirmation.
+7. Primitive, impact, report.
+
+A crash is a lead. A controlled register is a primitive. A working chain is an exploit.
+
+
+<!-- ===== docs/training.md ===== -->
+
+# Training with Beril
+
+Beril has a 25-week curriculum and seven local labs. It is a practice system, not a reading list.
+
+## Start
+
+```bash
+./beril train --status
+./beril train --week 1
+./beril labs --run
+```
+
+Progress lives in `training/progress.json` and is gitignored. Notes live in `training/notes/`.
+
+## Weekly loop
+
+Monday read the source. Tuesday drills. Wednesday and Thursday lab. Friday report and checkpoint. Weekend redo one old lab.
+
+Mark tasks:
+
+```bash
+./beril train --done w1d1
+./beril train --log "Bandit 6 done, learned about SUID"
+```
+
+## Labs
+
+| Lab | Topic |
+|---|---|
+| `web` | IDOR, XSS, SQLi, traversal, SSRF |
+| `binary` | stack, format string, UAF, integer |
+| `fuzz` | libFuzzer and crash triage |
+| `re` | stripped binary reconstruction |
+| `mobile` | exported components and deep links |
+| `firmware` | extraction and CGI injection |
+| `cloud` | Terraform, pod, Dockerfile |
+
+Each lab has `README.md`, `tests.sh`, and `ANSWERS.md`. Attempt first, then read the answers.
+
+## Evidence
+
+Every task ends with a command, a result, and a file path. A task without evidence is a read, not practice.
+
+## Grading
+
+Score reproduction, evidence, root cause, and communication from 0 to 3. Twelve is ready to move on. Eight to eleven means repeat with a new input. Below eight means repeat the week.
+
+## Rules
+
+- Local only unless a task says otherwise.
+- Snapshot before a lab that can crash the host.
+- 90 minutes maximum per session.
+- One writeup a month.
+- Stop at the agreed proof.
+
+## Learn from each lab
+
+```bash
+./beril reflect --lab web --finding "IDOR on profile" \
+  --root-cause "the query id is used instead of the session id" \
+  --evidence labs/web/evidence/idor.txt --fix "scope the query by session uid"
+./beril reflect --review
+```
+
+See `references/self-training.md`.
+
+## Full plan
+
+`references/curriculum.md` has the phases and capstone. `references/exercises.md` has 68 short drills by domain.
+
+
+<!-- ===== docs/agents.md ===== -->
+
+# Agent files
+
+Beril ships an entry file for the common coding agents. Each one is a short router to `SKILL.md` and the matching reference. The deep material stays in this repository.
+
+| Agent | File | Loaded by |
+|---|---|---|
+| Claude Code | `CLAUDE.md` | automatic at project root |
+| Codex / generic | `AGENTS.md` | automatic for agents that follow the standard |
+| Gemini CLI | `GEMINI.md` | automatic at project root |
+| Cursor | `.cursor/rules/beril.mdc` | rule with `alwaysApply` |
+| Windsurf | `.windsurf/rules/beril.md` | always-on rule |
+| Cline | `.clinerules/beril.md` | project rule |
+| GitHub Copilot | `.github/copilot-instructions.md` | repository instructions |
+| Aider | `.aider.conf.yml` | read list |
+| LLM crawlers | `llms.txt`, `llms-full.txt` | `llms.txt` convention |
+
+## Use inside Beril
+
+No setup. The files are at the repository root and load when the agent opens the project.
+
+## Install into another project
+
+```bash
+./scripts/install_agent_files.py --target ~/code/myapp --agents claude,cursor,copilot
+```
+
+`--agents all` copies every file. The script refuses to overwrite without `--force`. It adds the absolute Beril path to the top of each file so the agent knows where `./beril` lives.
+
+The request-to-report flow is in `docs/break-my-app.md`.
+
+## Keep them short
+
+The entry files should answer four questions: where is Beril, what is the workflow, what are the hard rules, and where is the artifact reference. Do not paste the whole skill into five files. Five copies drift.
+
+## Update
+
+When the workflow changes, edit `AGENTS.md` first, then mirror the change in the other entry files. `llms-full.txt` is generated by `scripts/build_llms.py`.
+
+
+<!-- ===== docs/break-my-app.md ===== -->
+
+# Break my app
+
+A runbook for the common request: "I have X on my machine, find the hole and report it."
+
+The agent confirms scope, runs the read-only pass, picks one class, proves it, and writes the report. It does not spray.
+
+## Intake
+
+Ask four questions:
+
+1. What is the artifact and where is it?
+2. Do you own it, or is it in a bounty scope?
+3. Read-only, or may I send payloads?
+4. What proof do you need: note, report, PoC, or fix?
+
+If the user says "just break it", default to read-only and one narrow active test on the same target. Stop at the first reproducible proof.
+
+## Web app
+
+```bash
+./beril scan --target https://app.example
+```
+
+Read the scan. Open `references/techniques.md` and pick one class that fits the stack: auth, IDOR, injection, logic, upload, SSRF.
+
+Then:
+
+1. Create two accounts.
+2. Capture one normal request.
+3. Change one field or object id.
+4. Compare the response with a clean baseline.
+5. Prove the impact with the smallest request pair.
+
+Do not brute force. Do not dump a database.
+
+## APK
+
+```bash
+./beril scan --target ./app.apk --deep
+```
+
+Then:
+
+1. Read the manifest and list exported components.
+2. Test the deep link with `adb shell am start`.
+3. Check `allowBackup`, cleartext, and the JS bridge.
+4. Hook one method with `scripts/frida_hook.js` on an emulator.
+5. Prove data access or an action another app can trigger.
+
+## EXE or ELF
+
+```bash
+./beril scan --target ./sample --deep
+```
+
+Then:
+
+1. Map imports, strings, and mitigations.
+2. Open the file in Ghidra or rizin.
+3. Pick one input source and follow it to a sink.
+4. Confirm in a debugger with a minimal input.
+5. Name the primitive and the blocked mitigation.
+
+Do not run the sample on the host unless you have a snapshot.
+
+## Source tree
+
+```bash
+./beril scan --target ./source --tools
+```
+
+Then:
+
+1. Triage the scanner hits by reachability.
+2. Trace one source to one sink by hand.
+3. Write a failing test or a request.
+4. Fix the check at the right layer.
+5. Add a regression test.
+
+## Firmware
+
+```bash
+./beril scan --target ./firmware.bin --deep
+```
+
+Then:
+
+1. Extract with unblob.
+2. Map init, web root, config, and secrets.
+3. Read the update path.
+4. Test the management daemon from the LAN.
+5. Record a recovery method before any write.
+
+## Report
+
+```markdown
+## Title
+<primitive> in <asset>
+
+## Attacker position
+No account / one account / LAN
+
+## Precondition
+Version, role, config
+
+## Reproduction
+1. ...
+2. ...
+
+## Result
+The exact response, crash, or file
+
+## Impact
+Data, money, account, code execution
+
+## Root cause
+The missing check and the line
+
+## Fix
+The smallest correct change
+
+## Evidence
+Path to request log, screenshot, crash input
+
+## Confidence
+Confirmed / inferred
+```
+
+## Stop conditions
+
+- The agreed proof exists.
+- The next test needs a write or a restart and the user has not approved it.
+- The target is shared hosting and a scan could affect neighbors.
+- A finding is already a duplicate and the user only needs the note.
+
+## Quality gate
+
+Before sending:
+
+- Every claim has a link or a path.
+- The request is minimal.
+- The root cause names the missing check.
+- The impact is business language, not only CVSS.
+- The report says what was not tested.

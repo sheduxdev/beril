@@ -15,6 +15,10 @@ Two problems get in the way. Security sites block plain HTTP clients, and the re
 ```text
 beril/
 ├── SKILL.md                     # the agent-facing skill
+├── AGENTS.md                    # generic agent entry
+├── CLAUDE.md                    # Claude Code entry
+├── GEMINI.md                    # Gemini CLI entry
+├── llms.txt                     # LLM index
 ├── scripts/
 │   ├── camo.py                  # Camoufox session, cache, parsing helpers
 │   ├── harvest.py               # forums, experts, tools, methods
@@ -39,6 +43,8 @@ beril/
 ├── docs/scan-artifacts.md       # APK, binary and source review
 ├── docs/reverse-engineering.md  # deep binary workflow
 ├── docs/training.md             # how to train with Beril
+├── docs/agents.md               # agent file matrix and installer
+├── docs/break-my-app.md         # request-to-report runbook
 ├── references/
 │   ├── camoufox-playbook.md     # challenge ladder and site recipes
 │   ├── forums.md                # community catalog
@@ -89,6 +95,18 @@ Optional known-CVE pass, if nuclei is installed:
 nuclei -u https://your-app.example -severity medium,high,critical \
   -tags cve,exposure,misconfig -o scans/nuclei.txt
 ```
+
+## Use with any agent
+
+Every major coding agent has an entry file: `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `.cursor/rules/beril.mdc`, `.windsurf/rules/beril.md`, `.clinerules/beril.md`, `.github/copilot-instructions.md`, `.aider.conf.yml`, and `llms.txt`.
+
+Install the routers into another project:
+
+```bash
+./scripts/install_agent_files.py --target ~/code/myapp --agents claude,cursor,copilot
+```
+
+The files route to `SKILL.md` and the matching reference. They stay short on purpose. See `docs/agents.md`.
 
 ## Training
 
