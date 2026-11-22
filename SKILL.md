@@ -38,6 +38,17 @@ cd skills/beril
 python scripts/validate.py
 ```
 
+## One-click scan
+
+For a first pass on an application you own:
+
+```bash
+./install.sh
+./beril scan --target https://your-app.example
+```
+
+The scanner is read-only. It reports headers, TLS, cookies, exposed paths and fingerprints as Markdown and JSON. Add nuclei for a known-CVE pass. The full walkthrough is in `docs/one-click.md`.
+
 ## Ten-minute run
 
 ```bash
@@ -258,6 +269,9 @@ python scripts/extract.py --url https://0x00sec.org/some-post/ --out /tmp/note.j
 # Assemble and check
 python scripts/build_dossier.py --data data --out examples/dossier.md
 python scripts/validate.py
+
+# Read-only application scan
+./beril scan --target https://your-app.example --out scans/myapp
 ```
 
 ## Reference map
@@ -272,6 +286,7 @@ python scripts/validate.py
 | `references/source-catalog.md` | Every feed, API, archive and upstream skill repo |
 | `references/dossier-template.md` | Output structure and section prompts |
 | `references/scoring.md` | Ranking and keep/drop rules |
+| `docs/one-click.md` | Install, scan and troubleshoot without the terminal |
 | `agents/` | Prompts for parallel forum, expert, tool and method research |
 
 ## Legal and ethical bounds

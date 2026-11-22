@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-label="Beril, green eyes and pistachio">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07110d"/>
+      <stop offset="0.55" stop-color="#0a1712"/>
+      <stop offset="1" stop-color="#0e1f18"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.76" cy="0.48" r="0.42">
+      <stop offset="0" stop-color="#6fe39a" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#6fe39a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#efd3b0"/>
+      <stop offset="1" stop-color="#d8ac83"/>
+    </linearGradient>
+    <linearGradient id="hair" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#17211c"/>
+      <stop offset="1" stop-color="#0a100d"/>
+    </linearGradient>
+    <radialGradient id="iris" cx="0.42" cy="0.38" r="0.7">
+      <stop offset="0" stop-color="#b9ffcf"/>
+      <stop offset="0.35" stop-color="#5fe08b"/>
+      <stop offset="0.75" stop-color="#1f9d5c"/>
+      <stop offset="1" stop-color="#0c4b2c"/>
+    </radialGradient>
+    <linearGradient id="shell" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e9d9a8"/>
+      <stop offset="1" stop-color="#b7c977"/>
+    </linearGradient>
+    <linearGradient id="nut" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9dbb62"/>
+      <stop offset="1" stop-color="#5d7c3a"/>
+    </linearGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.045"/></feComponentTransfer>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="500" fill="url(#bg)"/>
+  <rect width="1200" height="500" fill="url(#glow)"/>
+  <g stroke="#5fe08b" stroke-width="1" opacity="0.07">
+    <path d="M0 100h1200M0 200h1200M0 300h1200M0 400h1200"/>
+    <path d="M100 0v500M200 0v500M300 0v500M400 0v500M500 0v500M600 0v500M700 0v500M800 0v500M900 0v500M1000 0v500M1100 0v500"/>
+  </g>
+  <rect width="1200" height="500" filter="url(#grain)" opacity="0.7"/>
+
+  <g font-family="Inter, Helvetica, Arial, sans-serif">
+    <text x="80" y="220" fill="#effff7" font-size="118" font-weight="700" letter-spacing="10">BERIL</text>
+    <text x="86" y="272" fill="#7be5a4" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="21" letter-spacing="4">CYBER INTELLIGENCE</text>
+    <text x="86" y="330" fill="#a9c4b6" font-size="19" letter-spacing="1">green eyes. pistachio patience. evidence first.</text>
+    <path d="M86 360h210" stroke="#5fe08b" stroke-width="2" opacity="0.7"/>
+    <text x="86" y="400" fill="#6b8d7b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" letter-spacing="2">FORUMS / EXPERTS / TOOLS / METHODS</text>
+  </g>
+
+  <g transform="translate(900 250)">
+    <ellipse cx="0" cy="230" rx="210" ry="42" fill="#06100b" opacity="0.55" filter="url(#soft)"/>
+
+    <path d="M-188 -40 C-206 -176 -132 -258 -18 -262 C110 -266 190 -184 186 -46 C184 34 214 96 196 164 C178 230 118 282 4 284 C-112 286 -176 232 -194 164 C-212 96 -190 40 -188 -40 Z" fill="url(#hair)"/>
+    <path d="M-152 106 C-170 196 -128 248 -48 266 L-156 274 C-190 232 -198 160 -172 96 Z" fill="#0b1510"/>
+    <path d="M152 106 C170 196 128 248 48 266 L156 274 C190 232 198 160 172 96 Z" fill="#0b1510"/>
+
+    <path d="M-98 236 C-58 286 58 286 98 236 L104 330 C58 356 -58 356 -104 330 Z" fill="url(#skin)"/>
+    <ellipse cx="0" cy="18" rx="128" ry="160" fill="url(#skin)"/>
+
+    <path d="M-124 -18 C-118 -112 -62 -152 0 -152 C62 -152 118 -112 124 -18 C92 -84 44 -102 0 -102 C-44 -102 -92 -84 -124 -18 Z" fill="url(#hair)"/>
+
+    <g fill="none" stroke="#4b2f24" stroke-width="4" stroke-linecap="round">
+      <path d="M-92 -18 C-72 -38 -40 -38 -20 -18"/>
+      <path d="M20 -18 C40 -38 72 -38 92 -18"/>
+    </g>
+
+    <g>
+      <path d="M-96 28 C-72 6 -36 6 -12 28 C-36 52 -72 52 -96 28 Z" fill="#fbf6ec"/>
+      <circle cx="-54" cy="29" r="23" fill="url(#iris)"/>
+      <circle cx="-54" cy="29" r="9" fill="#07110c"/>
+      <circle cx="-61" cy="21" r="6" fill="#ffffff" opacity="0.9"/>
+      <circle cx="-46" cy="38" r="3" fill="#d7ffe6" opacity="0.8"/>
+      <path d="M-96 28 C-72 6 -36 6 -12 28" fill="none" stroke="#1c1512" stroke-width="5" stroke-linecap="round"/>
+      <path d="M-96 28 C-72 52 -36 52 -12 28" fill="none" stroke="#b98668" stroke-width="2" opacity="0.7"/>
+    </g>
+    <g>
+      <path d="M12 28 C36 6 72 6 96 28 C72 52 36 52 12 28 Z" fill="#fbf6ec"/>
+      <circle cx="54" cy="29" r="23" fill="url(#iris)"/>
+      <circle cx="54" cy="29" r="9" fill="#07110c"/>
+      <circle cx="47" cy="21" r="6" fill="#ffffff" opacity="0.9"/>
+      <circle cx="62" cy="38" r="3" fill="#d7ffe6" opacity="0.8"/>
+      <path d="M12 28 C36 6 72 6 96 28" fill="none" stroke="#1c1512" stroke-width="5" stroke-linecap="round"/>
+      <path d="M12 28 C36 52 72 52 96 28" fill="none" stroke="#b98668" stroke-width="2" opacity="0.7"/>
+    </g>
+
+    <path d="M-2 44 C-10 80 -14 96 2 104 C10 108 18 106 22 100" fill="none" stroke="#b98668" stroke-width="3" stroke-linecap="round"/>
+    <path d="M-34 136 C-16 146 16 146 34 136 C18 158 -18 158 -34 136 Z" fill="#b96b67"/>
+    <path d="M-34 136 C-14 142 14 142 34 136" fill="none" stroke="#8d4a49" stroke-width="2"/>
+
+    <g fill="none" stroke="#efe3c8" stroke-width="2" opacity="0.45">
+      <path d="M-128 -54 C-150 -92 -136 -140 -104 -160"/>
+      <path d="M128 -54 C150 -92 136 -140 104 -160"/>
+      <path d="M-104 150 C-132 176 -138 208 -126 232"/>
+    </g>
+  </g>
+
+  <g>
+    <g transform="translate(700 420) rotate(-18)">
+      <ellipse cx="0" cy="0" rx="30" ry="20" fill="url(#shell)"/>
+      <path d="M-30 0 C-14 -8 14 -8 30 0 C14 8 -14 8 -30 0 Z" fill="url(#nut)"/>
+      <path d="M-26 0 C-10 -4 10 -4 26 0" fill="none" stroke="#41552c" stroke-width="1.5" opacity="0.7"/>
+    </g>
+    <g transform="translate(1120 120) rotate(24)">
+      <ellipse cx="0" cy="0" rx="24" ry="16" fill="url(#shell)"/>
+      <path d="M-24 0 C-11 -6 11 -6 24 0 C11 6 -11 6 -24 0 Z" fill="url(#nut)"/>
+    </g>
+    <g transform="translate(770 90) rotate(8)">
+      <ellipse cx="0" cy="0" rx="18" ry="12" fill="url(#shell)"/>
+      <path d="M-18 0 C-8 -5 8 -5 18 0 C8 5 -8 5 -18 0 Z" fill="url(#nut)"/>
+    </g>
+    <g transform="translate(1080 380) rotate(-32)">
+      <ellipse cx="0" cy="0" rx="22" ry="14" fill="url(#shell)"/>
+      <path d="M-22 0 C-10 -5 10 -5 22 0 C10 5 -10 5 -22 0 Z" fill="url(#nut)"/>
+    </g>
+    <g transform="translate(660 330) rotate(12)" opacity="0.8">
+      <ellipse cx="0" cy="0" rx="16" ry="10" fill="url(#shell)"/>
+      <path d="M-16 0 C-7 -4 7 -4 16 0 C7 4 -7 4 -16 0 Z" fill="url(#nut)"/>
+    </g>
+  </g>
+</svg>

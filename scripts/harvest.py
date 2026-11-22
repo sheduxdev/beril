@@ -203,19 +203,69 @@ def forums_intigriti(s: CamoSession, limit: int) -> list[dict]:
     return rows
 
 
+def solve_cloudflare(s: CamoSession, url: str, max_wait: int = 50) -> str:
+    """Open a Cloudflare-protected page and wait for the challenge to clear."""
+    s.page.goto(url, wait_until="domcontentloaded", timeout=60_000)
+    for _ in range(max_wait // 5):
+        s.page.wait_for_timeout(5_000)
+        title = s.page.title()
+        if "Just a moment" not in title and "Challenge" not in title:
+            break
+        try:
+            frame = s.page.frame_locator("iframe[src*='challenges.cloudflare.com']")
+            box = frame.locator("input[type=checkbox]")
+            if box.count():
+                box.first.click(timeout=3_000)
+        except Exception:
+            pass
+    return s.page.content()
+
+
 def forums_hackforums(s: CamoSession, limit: int) -> list[dict]:
     rows = []
-    html = s.get("https://hackforums.net/", wait_ms=8000)
-    if not html:
-        return rows
-    for href, text in extract_links(html, "https://hackforums.net/"):
-        if "showthread.php?tid=" in href and text:
+    ads = ("DARKVPS", "Spoof Call", "WEB PENTEST", "Best Crypter", "LEARN HOW TO MAKE")
+    sections = [(43, "website-hacking"), (4, "beginner-hacking"), (10, "hacking-tools"),
+                (447, "blackhat-redteam"), (45, "exploits"), (287, "malware")]
+    per_section = max(2, limit // len(sections))
+    seen = set()
+    home = solve_cloudflare(s, "https://hackforums.net/")
+    for fid, slug in sections:
+        url = f"https://hackforums.net/forumdisplay.php?fid={fid}"
+        try:
+            s.page.goto(url, wait_until="domcontentloaded", timeout=60_000)
+            s.page.wait_for_timeout(5_000)
+            html = s.page.content()
+            if "Just a moment" in s.page.title():
+                html = solve_cloudflare(s, url, max_wait=30)
+        except Exception:
+            continue
+        added = 0
+        for href, text in extract_links(html or "", url):
+            if "showthread.php?tid=" not in href or not text or href in seen:
+                continue
+            if any(ad.lower() in text.lower() for ad in ads) or len(text) < 12:
+                continue
+            seen.add(href)
             rows.append({"type": "thread", "source": "HackForums", "url": href,
-                         "title": text, "author": "", "date": "", "tags": ["forum"],
-                         "summary": "", "collected_at": NOW()})
-            if len(rows) >= limit:
+                         "title": text, "author": "", "date": "",
+                         "tags": ["hackforums", slug], "summary": "",
+                         "forum": slug, "collected_at": NOW()})
+            added += 1
+            if added >= per_section:
                 break
-    return rows
+        s._polite()
+    if not rows and home:
+        for href, text in extract_links(home, "https://hackforums.net/"):
+            if "showthread.php?tid=" in href and text and href not in seen:
+                if any(ad.lower() in text.lower() for ad in ads):
+                    continue
+                seen.add(href)
+                rows.append({"type": "thread", "source": "HackForums", "url": href,
+                             "title": text, "author": "", "date": "", "tags": ["hackforums"],
+                             "summary": "", "collected_at": NOW()})
+                if len(rows) >= limit:
+                    break
+    return rows[:limit * 2]
 
 
 FORUMS = {"0x00sec": forums_0x00sec, "htb": forums_htb, "reddit": forums_reddit,
@@ -432,6 +482,7 @@ def main() -> None:
     ap.add_argument("--headful", action="store_true", help="show the browser window")
     ap.add_argument("--cache", default="raw", help="cache directory, empty string disables")
     ap.add_argument("--fresh", action="store_true", help="ignore the cache")
+    ap.add_argument("--profile", default="", help="persistent browser profile directory (for challenge clearance)")
     args = ap.parse_args()
 
     tables = {"forums": FORUMS, "experts": EXPERTS, "tools": TOOLS, "methods": METHODS}
@@ -457,7 +508,8 @@ def main() -> None:
     total = 0
     with CamoSession(headless=not args.headful, min_delay=args.delay,
                      max_delay=args.delay + 1.2, cache_dir=args.cache or None,
-                     fresh=args.fresh) as session:
+                     fresh=args.fresh, persistent_context=bool(args.profile),
+                     user_data_dir=args.profile or None) as session:
         for cmd, name, fn, target in jobs:
             print(f"== {cmd}:{name}")
             try:

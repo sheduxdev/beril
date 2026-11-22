@@ -2,7 +2,7 @@
   "snapshot": "2026-11-22",
   "collector": "Camoufox v158.0.1-beta.41, Firefox patched build",
   "counts": {
-    "threads.jsonl": 269,
+    "threads.jsonl": 299,
     "experts.jsonl": 94,
     "canonical_tools.jsonl": 87,
     "methods.jsonl": 85,
@@ -19,7 +19,8 @@
     "r/ReverseEngineering": 10,
     "r/blueteamsec": 8,
     "HackerOne Hacktivity": 100,
-    "Intigriti": 20
+    "Intigriti": 20,
+    "HackForums": 30
   },
   "upstream": {
     "repos": 43,
@@ -31,6 +32,8 @@
   "notes": [
     "Star counts and disclosure totals are snapshots, not live values.",
     "HackerOne report bodies may be private; only public metadata and summaries are stored.",
-    "Reddit post text can include comments; trim before quoting."
+    "Reddit post text can include comments; trim before quoting.",
+    "HackForums requires headful Camoufox under Xvfb with a persistent profile; a fresh IP may be needed after repeated challenges.",
+    "HackForums rows come from the public homepage feed. Section harvesting is implemented; Cloudflare clearance is intermittent and improves with a fresh profile and a new IP."
   ]
 }

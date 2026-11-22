@@ -192,9 +192,16 @@ Example thread titles from the build snapshot:
 
 - URL: `https://hackforums.net/`
 - Platform: forum behind Cloudflare
-- Read it with: headful Camoufox under Xvfb, a persistent profile, and a 12 second wait. A cold headless request returns 403 and the title "Just a moment...".
-- Take: beginner questions, marketplace chatter, old exploit threads.
-- Watch out: quality varies and the marketplace has scams. Use it for leads, not for facts.
+- Read it with: headful Camoufox under Xvfb, a persistent profile, and a wait loop. A cold headless request returns 403 and the title "Just a moment...". A working command:
+
+  ```bash
+  xvfb-run -a ./beril harvest forums --sources hackforums --headful \
+    --profile profile/hackforums --limit 30
+  ```
+
+- The challenge clears in about 15 to 40 seconds when the IP is not already flagged. If it stays on "Just a moment", delete the profile, use a new profile directory, and try a residential or mobile connection. Repeated attempts from the same address make the block longer.
+- Take: beginner questions, marketplace chatter, old exploit threads, forum sections such as Website Hacking (fid 43), Beginner Hacking (fid 4), Hacking Tools (fid 10), and Blackhat / Red Team (fid 447).
+- Watch out: quality varies and the marketplace has scams. The homepage feed is mostly advertisements. Parse a section page and filter ad titles before you build a reading list.
 
 ### Discord communities
 

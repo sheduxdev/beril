@@ -1,18 +1,14 @@
 # Beril
 
-![Beril banner](assets/banner.svg)
+![Beril, green eyes and pistachio](assets/beril.svg)
 
-A cybersecurity intelligence skill that reads the web with Camoufox, keeps what it finds as evidence-linked catalogs, and turns the result into a dossier a human can act on.
+A cybersecurity intelligence skill that reads the web with Camoufox, keeps what it finds as evidence-linked catalogs, and turns the result into a dossier a human can act on. The palette is pistachio green and the eyes are green, because the project is named after someone who likes both.
 
 Beril was built from 43 public security skill repositories and a live collection pass over forums, disclosed reports, researcher blogs, and GitHub tool shelves.
 
 ## Why it exists
 
-Most security reading lists are stale, unsourced, or a wall of links. Beril fixes three problems:
-
-- **Access.** Security sites block plain HTTP clients. Camoufox gets through challenges without pretending to be a stealth service.
-- **Structure.** Threads, experts, tools, and methods are stored in one schema with dates and URLs, so a claim can be traced.
-- **Use.** The output is a short dossier with a reading queue, a tool shelf, and method cards that name a precondition and a proof.
+Two problems get in the way. Security sites block plain HTTP clients, and the reading lists people keep are stale or unsourced. Beril uses Camoufox for the first, stores every item with a date and URL for the second, and turns the result into a short dossier with a reading queue, a tool shelf, and method cards that name a precondition and a proof.
 
 ## What's inside
 
@@ -23,8 +19,12 @@ beril/
 │   ├── camo.py                  # Camoufox session, cache, parsing helpers
 │   ├── harvest.py               # forums, experts, tools, methods
 │   ├── extract.py               # headings, intros, code density
+│   ├── scan_app.py              # read-only scan for your own application
 │   ├── build_dossier.py         # JSONL -> Markdown brief
 │   └── validate.py              # schema, links, prose checks
+├── install.sh                   # one-click setup
+├── beril                        # command wrapper
+├── docs/one-click.md            # install and scan without the terminal
 ├── references/
 │   ├── camoufox-playbook.md     # challenge ladder and site recipes
 │   ├── forums.md                # community catalog
@@ -37,10 +37,29 @@ beril/
 ├── agents/                      # parallel research prompts
 ├── data/                        # snapshot catalogs
 ├── examples/dossier.md          # generated sample brief
+├── examples/scan-example.md     # sample application scan
 └── requirements.txt
 ```
 
-## Quick start
+## One-click scan
+
+```bash
+git clone https://github.com/sheduxdev/beril.git
+cd beril
+./install.sh
+./beril scan --target https://your-app.example
+```
+
+The scan is read-only. It checks headers, TLS, cookies, a short list of exposed paths, and basic fingerprints. Open the Markdown report in `scans/`. See `docs/one-click.md` for the full walkthrough and the limits.
+
+Optional known-CVE pass, if nuclei is installed:
+
+```bash
+nuclei -u https://your-app.example -severity medium,high,critical \
+  -tags cve,exposure,misconfig -o scans/nuclei.txt
+```
+
+## Manual quick start
 
 ```bash
 git clone https://github.com/sheduxdev/beril.git
@@ -87,7 +106,7 @@ Read `SKILL.md` for the full loop and the quality gates.
 
 | Layer | Snapshot | What it answers |
 |---|---:|---|
-| Threads and reports | 269 | What is being found now? |
+| Threads and reports | 299 | What is being found now? |
 | Experts | 94 | Who knows this best? |
 | Tools | 87 | What should I run? |
 | Methods | 85 | How do they do it? |

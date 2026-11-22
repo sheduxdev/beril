@@ -70,6 +70,8 @@ class CamoSession:
     page_timeout_ms: int = 60_000
     extra: dict = field(default_factory=dict)
     fresh: bool = False
+    persistent_context: bool = False
+    user_data_dir: str | None = None
 
     browser: object | None = None
     page: object | None = None
@@ -91,6 +93,9 @@ class CamoSession:
             kwargs["proxy"] = {"server": self.proxy}
         if self.geoip:
             kwargs["geoip"] = True
+        if self.persistent_context:
+            kwargs["persistent_context"] = True
+            kwargs["user_data_dir"] = self.user_data_dir or "profile"
         kwargs.update(self.extra)
         self._ctx = Camoufox(**kwargs)
         self.browser = self._ctx.__enter__()
