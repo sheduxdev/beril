@@ -1,0 +1,61 @@
+name: Bug report
+description: A command, a parser or a catalog row does not behave as documented.
+title: "bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Run `./beril validate` first and paste the last lines. Remove tokens, cookies and private report text.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: The command, the expected result and the actual result.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Smallest sequence that shows the problem. Include the target type, not the private target name if needed.
+      placeholder: |
+        1. ./beril ...
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: Last 40 lines. Mask secrets.
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `git describe --tags --always`.
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - Linux
+        - macOS
+        - Windows
+        - WSL
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before posting
+      options:
+        - label: I ran `./beril validate`
+          required: true
+        - label: I removed secrets and private report text
+          required: true

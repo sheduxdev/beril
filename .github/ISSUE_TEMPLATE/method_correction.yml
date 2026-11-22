@@ -1,0 +1,39 @@
+name: Method correction
+description: A method card, tool entry or training answer is wrong or stale.
+title: "method: "
+labels: ["documentation", "method"]
+body:
+  - type: input
+    id: path
+    attributes:
+      label: File
+      description: Path to the card, reference or lab answer.
+    validations:
+      required: true
+  - type: textarea
+    id: claim
+    attributes:
+      label: Wrong claim
+      description: Quote the sentence and say what it should be.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Primary source
+      description: Public link that shows the corrected behavior. A second independent link if the first is secondary.
+    validations:
+      required: true
+  - type: textarea
+    id: proof
+    attributes:
+      label: Proof
+      description: Minimal request, response diff, crash input or command output.
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Affected versions
+      description: Product or project versions where the old claim fails.

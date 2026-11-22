@@ -1,0 +1,61 @@
+name: New source
+description: Propose a public feed, forum, archive or repository for the catalog.
+title: "source: "
+labels: ["enhancement", "source"]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Public URL
+      description: The exact endpoint, not only the site root.
+    validations:
+      required: true
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Layer
+      options:
+        - threads and reports
+        - experts
+        - tools
+        - methods
+    validations:
+      required: true
+  - type: input
+    id: format
+    attributes:
+      label: Format
+      description: RSS, JSON, HTML, shadow DOM, sitemap or something else.
+    validations:
+      required: true
+  - type: input
+    id: refresh
+    attributes:
+      label: Refresh cadence
+      description: Daily, weekly, monthly or on demand.
+    validations:
+      required: true
+  - type: textarea
+    id: access
+    attributes:
+      label: Access notes
+      description: Rate limit, challenge type, login wall, robots.txt rule, test date.
+    validations:
+      required: true
+  - type: textarea
+    id: sample
+    attributes:
+      label: Sample rows
+      description: Two or three example titles with URLs and dates.
+      render: text
+    validations:
+      required: true
+  - type: checkboxes
+    id: test
+    attributes:
+      label: Test
+      options:
+        - label: I fetched the endpoint from page context with Camoufox, not only with curl
+          required: true
+        - label: The rows carry a public URL and a date
+          required: true

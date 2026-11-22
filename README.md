@@ -335,7 +335,7 @@ Useful contributions:
 - a tool entry with a verified install command;
 - a failure mode that the playbook does not cover.
 
-Keep the schema, date your snapshot and run `./beril validate` before opening a pull request.
+Keep the schema, date your snapshot and run `./beril validate` before opening a pull request. The full checklist is in `CONTRIBUTING.md`. Report a vulnerability in Beril through `SECURITY.md`.
 
 ## Versioning
 

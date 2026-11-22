@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Usage and install
+    url: https://github.com/sheduxdev/beril/blob/main/docs/one-click.md
+    about: Install, scan and troubleshooting without the terminal.
+  - name: Artifact scans
+    url: https://github.com/sheduxdev/beril/blob/main/docs/scan-artifacts.md
+    about: What a static scan covers and what it does not.
+  - name: Security report
+    url: https://github.com/sheduxdev/beril/security/advisories/new
+    about: Report a vulnerability in the code with a private advisory.
