@@ -1,24 +1,30 @@
 name: dependabot auto-merge
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, reopened, synchronize, ready_for_review]
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: Pull request number
+        required: true
+        type: number
 
 permissions:
   contents: write
   pull-requests: write
 
 concurrency:
-  group: dependabot-auto-merge-${{ github.event.pull_request.number }}
+  group: dependabot-auto-merge-${{ github.event.pull_request.number || inputs.pr }}
   cancel-in-progress: true
 
 jobs:
   enable:
-    if: github.actor == 'dependabot[bot]' && github.event.pull_request.draft == false
+    if: github.event_name == 'workflow_dispatch' || (github.actor == 'dependabot[bot]' && github.event.pull_request.draft == false)
     runs-on: ubuntu-latest
     steps:
       - name: Enable squash auto-merge
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR: ${{ github.event.pull_request.number }}
+          PR: ${{ github.event.pull_request.number || inputs.pr }}
         run: gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --auto --squash --delete-branch
