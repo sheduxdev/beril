@@ -258,6 +258,12 @@
       "url": "https://github.com/zan8in/afrog",
       "skill_files": 0,
       "kind": "tool_or_reference"
+    },
+    {
+      "repo": "BaaRai/ARTEX",
+      "url": "https://github.com/BaaRai/ARTEX",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
     }
   ],
   "total_skill_files": 22976

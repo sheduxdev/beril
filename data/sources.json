@@ -4,11 +4,11 @@
   "counts": {
     "threads.jsonl": 311,
     "experts.jsonl": 94,
-    "canonical_tools.jsonl": 87,
+    "canonical_tools.jsonl": 89,
     "methods.jsonl": 85,
     "method_details.jsonl": 42,
     "thread_details.jsonl": 38,
-    "re_tools.jsonl": 52,
+    "re_tools.jsonl": 499,
     "curriculum.json": 25,
     "learned_methods.jsonl": 1
   },
@@ -26,7 +26,7 @@
     "HackForums": 42
   },
   "upstream": {
-    "repos": 43,
+    "repos": 44,
     "skill_files": 22976,
     "repos_with_skills": 21,
     "clone_depth": 1,

@@ -26,6 +26,7 @@ Start with the cheapest tool that can falsify the hypothesis.
 | 0 | `file`, `strings`, `xxd`, `readelf`, `objdump` | Format, sections, imports, obvious strings | Free |
 | 1 | `rizin` / `radare2` | Fast triage, xrefs, function list, scripting | Free |
 | 2 | Ghidra | Decompiler, cross-platform, headless batch | Free |
+| 2b | Ghidrust | Rust-native CLI, MCP and GUI | Free |
 | 3 | Binary Ninja | Faster UI, BNIL, strong Python API, headless | Commercial |
 | 4 | IDA Pro + Hex-Rays | Best decompiler, largest plugin ecosystem | Commercial |
 | 5 | Debugger and instrumentation | Confirm runtime behavior | Free to commercial |
@@ -45,6 +46,8 @@ The ladder is about cost, not quality. Ghidra is often enough. Binary Ninja and 
 | Firmware | unblob, binwalk, EMBA, QEMU |
 | Symbolic exploration | angr, Triton, Miasm |
 | Capability summary | capa, FLOSS |
+
+Ghidra and GhidRust are different. GhidRust is a paused Ghidra plugin for Rust binaries. Ghidrust is a separate Rust-native tool. Read `ghidra-ecosystem.md` before installing either.
 
 ## Ghidra
 

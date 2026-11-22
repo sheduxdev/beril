@@ -71,7 +71,7 @@ RSS may arrive as a download. Fetch it from page context with `fetch()` after wa
 
 ## Upstream skill corpus
 
-The build downloaded 43 public repositories into `sources/` with shallow clones. The list and per-repo skill counts are in `data/upstream_repos.json`. The total was about 3.1 GB, and 22,976 `SKILL.md` files were found across 21 of them. Several repos vendor copies of the same skills, so the unique count is lower.
+The build downloaded 44 public repositories into `sources/` with shallow clones. The list and per-repo skill counts are in `data/upstream_repos.json`. The total was about 3.1 GB, and 22,976 `SKILL.md` files were found across 21 of them. Several repos vendor copies of the same skills, so the unique count is lower.
 
 ### Repositories with skill files
 
@@ -88,6 +88,7 @@ The build downloaded 43 public repositories into `sources/` with shallow clones.
 | `trailofbits/skills` | 99 | Audit, fuzzing, cryptography, supply chain |
 | `trilwu/secskills` | 94 | Offensive and defensive skill pack |
 | `elementalsouls/Claude-BugHunter` | 83 | Bug bounty skill bundle with disclosed report patterns |
+| `BaaRai/ARTEX` | 0 | Autonomous agent platform with planner, workers and evidence |
 | `NVIDIA/SkillSpector` | 34 | Skill quality and security review |
 | `SubhiSec/claude-ai-cyber-security-skills` | 30 | Compact cyber skill set |
 | `awarexone/Agentic-Bug-Hunter` | 26 | Full bug bounty workflow and vuln classes |
@@ -126,6 +127,10 @@ The build downloaded 43 public repositories into `sources/` with shallow clones.
 | `yogeshojha/rengine` | Recon and vulnerability management |
 | `zan8in/afrog` | Vulnerability scanner |
 
+Bug bounty material came from `elementalsouls/Claude-BugHunter`. Autonomous execution architecture came from `BaaRai/ARTEX`.
+
+GhidRust material came from `DMaroo/GhidRust` and `oofz/Ghidrust`. Plugin inventory came from GitHub topic and search results, then folded into `data/re_tools.jsonl`.
+
 Reverse-engineering material came from `0xSteph/pentest-ai-agents` (RE agent), `mukul975/anthropic-cybersecurity-skills` (Ghidra, jadx, Frida), `SnailSploit/Claude-Red` (exploit development, crash analysis, shellcode), `CyberStrikeus/CyberStrike` (Ghidra bridge and REA docs), `trailofbits/skills` (audit and fuzzing), and `skerkour/black-hat-rust`.
 
 The upstream repos keep their own licenses. Check the license before copying text or code into a report or a product.
@@ -142,7 +147,7 @@ The `data/` directory in this skill contains:
 | `methods.jsonl` | 85 | Method and research URLs |
 | `method_details.jsonl` | 42 | Headings, intros, code density |
 | `thread_details.jsonl` | 38 | Thread and report extracts |
-| `re_tools.jsonl` | 52 | Reverse-engineering and exploitation tool shelf |
+| `re_tools.jsonl` | 499 | Reverse-engineering and exploitation tool shelf |
 | `curriculum.json` | 25 | Training plan with drills and checkpoints |
 | `learned_methods.jsonl` | 1 | Reflection notes from labs |
 

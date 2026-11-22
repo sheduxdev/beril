@@ -32,6 +32,10 @@ Binary Ninja: install from https://binary.ninja/, then run its `scripts/install_
 
 The base pass is static. If capa, FLOSS, or rizin is installed, the deep pass adds capabilities, decoded strings, and risky imports.
 
+## GhidRust
+
+`GhidRust` is a paused Ghidra extension for Rust binaries. It offers Rust detection and a libstd FunctionID database. Ghidra upstream Rust support is now better. Details: `references/ghidra-ecosystem.md` and `references/rust-reverse.md`.
+
 ## Ghidra headless
 
 ```bash

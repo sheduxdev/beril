@@ -312,6 +312,11 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `references/exploit-development.md` | ROP, heap, UAF, Windows and kernel |
 | `references/mobile-reverse.md` | Android and iOS static and runtime work |
 | `references/firmware-iot.md` | Extraction, emulation, UART, JTAG, radio |
+| `references/ghidra-ecosystem.md` | GhidRust, Ghidrust, plugin safety and high-signal plugins |
+| `references/rust-reverse.md` | Rust layout, symbols, monomorphization and tooling |
+| `references/re-plugin-index.md` | Generated plugin and tool index by ecosystem |
+| `references/claude-bughunter.md` | 83-skill bounty bundle, 7-Question Gate, evidence hygiene |
+| `references/artex.md` | Autonomous multi-agent pentest platform |
 | `references/curriculum.md` | 25-week training plan and grading |
 | `references/exercises.md` | 68 drills by domain |
 | `references/self-training.md` | Turn labs into durable method notes |

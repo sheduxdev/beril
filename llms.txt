@@ -23,6 +23,11 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 - [references/exploit-development.md](references/exploit-development.md): ROP, heap, UAF
 - [references/mobile-reverse.md](references/mobile-reverse.md): Android and iOS
 - [references/firmware-iot.md](references/firmware-iot.md): extraction and emulation
+- [references/ghidra-ecosystem.md](references/ghidra-ecosystem.md): GhidRust and plugins
+- [references/rust-reverse.md](references/rust-reverse.md): Rust binaries
+- [references/re-plugin-index.md](references/re-plugin-index.md): plugin index
+- [references/claude-bughunter.md](references/claude-bughunter.md): bounty bundle
+- [references/artex.md](references/artex.md): autonomous runner
 
 ## Training
 

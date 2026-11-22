@@ -107,6 +107,17 @@ Level: 1 recall, 2 guided, 3 independent, 4 chained.
 | 67 | Find a beacon in a PCAP | 3 | Stream and timing |
 | 68 | Write a false-positive analysis | 3 | Paragraph |
 
+## Rust and Ghidra plugins
+
+| # | Task | Level | Evidence |
+|---|---|---|---|
+| 69 | Identify a Rust binary from panic strings and mangled names | 2 | Strings and demangled sample |
+| 70 | Recover a crate name and version from a build path | 2 | Path and version |
+| 71 | Install GhidRust in a test Ghidra and apply FunctionID | 3 | Install log and renamed function |
+| 72 | Compare GhidRust output with Ghidra's upstream Rust support | 3 | Two decompiler views |
+| 73 | Write the Rust slice and trait-object layouts from memory | 2 | Diagram |
+| 74 | Map an async state machine to its await points | 4 | State table |
+
 ## How to use
 
 1. Pick a level above your comfort zone, not below it.

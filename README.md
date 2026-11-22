@@ -4,7 +4,7 @@
 
 A cybersecurity intelligence skill that reads the web with Camoufox, keeps what it finds as evidence-linked catalogs, and turns the result into a dossier a human can act on. The palette is pistachio green and the eyes are green, because the project is named after someone who likes both.
 
-Beril was built from 43 public security skill repositories and a live collection pass over forums, disclosed reports, researcher blogs, and GitHub tool shelves.
+Beril was built from 44 public security skill repositories and a live collection pass over forums, disclosed reports, researcher blogs, and GitHub tool shelves.
 
 ## Why it exists
 
@@ -61,7 +61,12 @@ beril/
 │   ├── firmware-iot.md          # extraction, emulation, hardware
 │   ├── curriculum.md            # 25-week training plan
 │   ├── books.md                 # reading canon
-│   ├── exercises.md             # 68 drills by domain
+│   ├── ghidra-ecosystem.md      # GhidRust, Ghidrust, plugin safety
+│   ├── rust-reverse.md          # Rust binary analysis
+│   ├── re-plugin-index.md       # plugin index by ecosystem
+│   ├── claude-bughunter.md      # bounty bundle notes
+│   ├── artex.md                 # autonomous agent platform
+│   ├── exercises.md             # 74 drills by domain
 │   ├── source-catalog.md        # provenance and upstream repos
 │   ├── dossier-template.md      # output structure
 │   └── scoring.md               # ranking rules
@@ -193,7 +198,7 @@ Read `SKILL.md` for the full loop and the quality gates.
 |---|---:|---|
 | Threads and reports | 311 | What is being found now? |
 | Experts | 94 | Who knows this best? |
-| Tools | 139 | What should I run? |
+| Tools | 587 | What should I run? |
 | Methods | 85 | How do they do it? |
 
 The snapshot is a sample, not a census. See `references/source-catalog.md` for endpoints, dates, and gaps.
@@ -212,7 +217,7 @@ Start with `references/camoufox-playbook.md`.
 
 ## Research base
 
-The build downloaded 43 public repositories and found 22,976 `SKILL.md` files across 21 of them. The upstream corpus includes:
+The build downloaded 44 public repositories and found 22,976 `SKILL.md` files across 21 of them. The upstream corpus includes:
 
 - broad libraries: `mukul975/anthropic-cybersecurity-skills`, `ComeOnOliver/skillshub`;
 - focused packs: `uphiago/recon-skills`, `Security-Talent/bugskill-ai`, `penligent/AIPentest_Skills`;

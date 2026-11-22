@@ -11,7 +11,7 @@ JSONL files collected on 2026-11-22 with Camoufox. The schema is documented in `
 | `method_details.jsonl` | 42 | Headings, intros, code density |
 | `thread_details.jsonl` | 38 | Extracted thread and report notes |
 | `sources.json` | 1 | Counts, dates, and provenance |
-| `re_tools.jsonl` | 52 | Reverse-engineering and exploitation tool shelf |
+| `re_tools.jsonl` | 499 | Reverse-engineering and exploitation tool shelf |
 | `curriculum.json` | 25 | Training weeks, drills, labs and checkpoints |
 | `learned_methods.jsonl` | 1 | Notes produced by the reflection loop |
 | `upstream_repos.json` | 43 | Downloaded upstream repositories and skill counts |

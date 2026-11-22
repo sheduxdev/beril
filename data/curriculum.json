@@ -490,6 +490,11 @@
           "key": "w12d3",
           "text": "Rebuild the flag logic without running the binary",
           "minutes": 20
+        },
+        {
+          "key": "w12d4",
+          "text": "Install GhidRust in a test Ghidra and compare its FunctionID with upstream Rust support",
+          "minutes": 25
         }
       ],
       "reading": "https://github.com/NationalSecurityAgency/ghidra/blob/master/GhidraDocs/GettingStarted.md",
