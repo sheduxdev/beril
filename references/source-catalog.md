@@ -71,7 +71,7 @@ RSS may arrive as a download. Fetch it from page context with `fetch()` after wa
 
 ## Upstream skill corpus
 
-The build downloaded 43 public repositories into `sources/` with shallow clones. The total was about 3.1 GB, and 22,976 `SKILL.md` files were found across 21 of them. Several repos vendor copies of the same skills, so the unique count is lower.
+The build downloaded 43 public repositories into `sources/` with shallow clones. The list and per-repo skill counts are in `data/upstream_repos.json`. The total was about 3.1 GB, and 22,976 `SKILL.md` files were found across 21 of them. Several repos vendor copies of the same skills, so the unique count is lower.
 
 ### Repositories with skill files
 

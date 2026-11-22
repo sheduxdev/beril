@@ -1,0 +1,264 @@
+{
+  "snapshot": "2026-11-22",
+  "repos": [
+    {
+      "repo": "0xSteph/pentest-ai-agents",
+      "url": "https://github.com/0xSteph/pentest-ai-agents",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "0xmaximus/Galaxy-Bugbounty-Checklist",
+      "url": "https://github.com/0xmaximus/Galaxy-Bugbounty-Checklist",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "0xsteph/pentest-ai",
+      "url": "https://github.com/0xsteph/pentest-ai",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "Armur-Ai/Pentest-Swarm-AI",
+      "url": "https://github.com/Armur-Ai/Pentest-Swarm-AI",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "Astrosp/Awesome-OSINT-List",
+      "url": "https://github.com/Astrosp/Awesome-OSINT-List",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "Autumn-27/ScopeSentry",
+      "url": "https://github.com/Autumn-27/ScopeSentry",
+      "skill_files": 1,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "CISOfy/lynis",
+      "url": "https://github.com/CISOfy/lynis",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "ComeOnOliver/skillshub",
+      "url": "https://github.com/ComeOnOliver/skillshub",
+      "skill_files": 12423,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "CyberStrikeus/CyberStrike",
+      "url": "https://github.com/CyberStrikeus/CyberStrike",
+      "skill_files": 7667,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "GhostTroops/scan4all",
+      "url": "https://github.com/GhostTroops/scan4all",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "GreyDGL/PentestGPT",
+      "url": "https://github.com/GreyDGL/PentestGPT",
+      "skill_files": 17,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "H-mmer/pentest-agents",
+      "url": "https://github.com/H-mmer/pentest-agents",
+      "skill_files": 306,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "Hack-with-Github/Awesome-Hacking",
+      "url": "https://github.com/Hack-with-Github/Awesome-Hacking",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "KeygraphHQ/shannon",
+      "url": "https://github.com/KeygraphHQ/shannon",
+      "skill_files": 1,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "Masriyan/Claude-Code-CyberSecurity-Skill",
+      "url": "https://github.com/Masriyan/Claude-Code-CyberSecurity-Skill",
+      "skill_files": 22,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "NVIDIA/SkillSpector",
+      "url": "https://github.com/NVIDIA/SkillSpector",
+      "skill_files": 34,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "Security-Talent/bugskill-ai",
+      "url": "https://github.com/Security-Talent/bugskill-ai",
+      "skill_files": 162,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "SubhiSec/claude-ai-cyber-security-skills",
+      "url": "https://github.com/SubhiSec/claude-ai-cyber-security-skills",
+      "skill_files": 30,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "The-Art-of-Hacking/h4cker",
+      "url": "https://github.com/The-Art-of-Hacking/h4cker",
+      "skill_files": 1,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "arkadiyt/bounty-targets-data",
+      "url": "https://github.com/arkadiyt/bounty-targets-data",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "awarexone/Agentic-Bug-Hunter",
+      "url": "https://github.com/awarexone/Agentic-Bug-Hunter",
+      "skill_files": 26,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "crazyMarky/pentest-skills",
+      "url": "https://github.com/crazyMarky/pentest-skills",
+      "skill_files": 11,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "danieldurnea/FBI-tools",
+      "url": "https://github.com/danieldurnea/FBI-tools",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "dwisiswant0/awesome-oneliner-bugbounty",
+      "url": "https://github.com/dwisiswant0/awesome-oneliner-bugbounty",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "elementalsouls/Claude-BugHunter",
+      "url": "https://github.com/elementalsouls/Claude-BugHunter",
+      "skill_files": 83,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "kpcyrd/sn0int",
+      "url": "https://github.com/kpcyrd/sn0int",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "lintsinghua/DeepAudit",
+      "url": "https://github.com/lintsinghua/DeepAudit",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "mukul975/anthropic-cybersecurity-skills",
+      "url": "https://github.com/mukul975/anthropic-cybersecurity-skills",
+      "skill_files": 818,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "nahamsec/Resources-for-Beginner-Bug-Bounty-Hunters",
+      "url": "https://github.com/nahamsec/Resources-for-Beginner-Bug-Bounty-Hunters",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "penligent/AIPentest/Skills",
+      "url": "https://github.com/penligent/AIPentest/Skills",
+      "skill_files": 159,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "reddelexc/hackerone-reports",
+      "url": "https://github.com/reddelexc/hackerone-reports",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "samugit83/redamon",
+      "url": "https://github.com/samugit83/redamon",
+      "skill_files": 20,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "six2dez/reconftw",
+      "url": "https://github.com/six2dez/reconftw",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "skerkour/black-hat-rust",
+      "url": "https://github.com/skerkour/black-hat-rust",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "sundowndev/hacker-roadmap",
+      "url": "https://github.com/sundowndev/hacker-roadmap",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "swisskyrepo/PayloadsAllTheThings",
+      "url": "https://github.com/swisskyrepo/PayloadsAllTheThings",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "trailofbits/skills",
+      "url": "https://github.com/trailofbits/skills",
+      "skill_files": 99,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "trilwu/secskills",
+      "url": "https://github.com/trilwu/secskills",
+      "skill_files": 94,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "uphiago/recon-skills",
+      "url": "https://github.com/uphiago/recon-skills",
+      "skill_files": 137,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "vxcontrol/pentagi",
+      "url": "https://github.com/vxcontrol/pentagi",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "xalgorix/xalgorix",
+      "url": "https://github.com/xalgorix/xalgorix",
+      "skill_files": 865,
+      "kind": "skill_pack"
+    },
+    {
+      "repo": "yogeshojha/rengine",
+      "url": "https://github.com/yogeshojha/rengine",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    },
+    {
+      "repo": "zan8in/afrog",
+      "url": "https://github.com/zan8in/afrog",
+      "skill_files": 0,
+      "kind": "tool_or_reference"
+    }
+  ],
+  "total_skill_files": 22976
+}

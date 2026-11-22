@@ -11,6 +11,7 @@ JSONL files collected on 2026-11-22 with Camoufox. The schema is documented in `
 | `method_details.jsonl` | 42 | Headings, intros, code density |
 | `thread_details.jsonl` | 38 | Extracted thread and report notes |
 | `sources.json` | 1 | Counts, dates, and provenance |
+| `upstream_repos.json` | 43 | Downloaded upstream repositories and skill counts |
 
 ## Schema
 
