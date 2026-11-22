@@ -1,0 +1,9 @@
+{
+  "default": {"in": 0, "out": 0},
+  "gpt-5.2": {"in": 1.25, "out": 10.0},
+  "claude-sonnet-4.5": {"in": 3.0, "out": 15.0},
+  "claude-opus-4.5": {"in": 5.0, "out": 25.0},
+  "gemini-3-pro": {"in": 2.0, "out": 12.0},
+  "deepseek-v4": {"in": 0.28, "out": 1.1},
+  "local": {"in": 0, "out": 0}
+}

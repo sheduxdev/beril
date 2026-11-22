@@ -115,7 +115,7 @@ nuclei -u https://your-app.example -severity medium,high,critical \
 
 ![dashboard](assets/dashboard.png)
 
-A local, Orbit-style dashboard at `127.0.0.1:8788`. Overview, threads, experts, tools, methods, GitHub atlas, labs, training, scans and sources. Ten labs run from the UI, scans run read-only. Loopback only. See `docs/dashboard.md`.
+A local dark workspace at `127.0.0.1:8788`. Tracks spend, jobs, tokens, budget, labs, scans and every catalog. Ten labs run from the UI, scans run read-only. Loopback only. See `docs/dashboard.md`.
 
 ## Use with any agent
 

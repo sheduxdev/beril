@@ -16,6 +16,9 @@ import threading
 import urllib.parse
 import webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import argparse as ap_ns
+import job as jobmod
+from dashboard_page import PAGE as _PAGE
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data")
@@ -83,6 +86,53 @@ def lab_runs() -> dict:
         return {}
 
 
+def job_start(kind: str, title: str, target: str = "") -> str:
+    ns = ap_ns.Namespace(type=kind, title=title, status="running", actor="human", model="",
+                         target=target, parent="", tokens_in=0, tokens_out=0, cost=0,
+                         log="", notes="")
+    return jobmod.create(ns)["id"]
+
+
+def costs() -> dict:
+    rows = jobmod.load()
+    now = dt.datetime.now(dt.timezone.utc)
+    def bucket(days):
+        return round(sum(float(r.get("cost_usd") or 0) for r in rows
+                         if r.get("started_at") and (now - dt.datetime.fromisoformat(r["started_at"])).days < days), 6)
+    daily = {}
+    for r in rows:
+        if not r.get("started_at"):
+            continue
+        day = r["started_at"][:10]
+        daily[day] = round(daily.get(day, 0) + float(r.get("cost_usd") or 0), 6)
+    by_model, by_type = {}, {}
+    for r in rows:
+        c = float(r.get("cost_usd") or 0)
+        by_model[r.get("model") or "none"] = round(by_model.get(r.get("model") or "none", 0) + c, 6)
+        by_type[r.get("type") or "other"] = round(by_type.get(r.get("type") or "other", 0) + c, 6)
+    budget = json.load(open(os.path.join(DATA, "budget.json"))) if os.path.exists(os.path.join(DATA, "budget.json")) else {"monthly_usd": 25}
+    return {"today": bucket(1), "week": bucket(7), "month": bucket(30), "total": round(sum(float(r.get("cost_usd") or 0) for r in rows), 6),
+            "by_model": by_model, "by_type": by_type, "daily": daily, "budget": budget, "jobs": len(rows)}
+
+
+def activity(limit: int = 40) -> list[dict]:
+    out = []
+    for r in jobmod.load()[-60:]:
+        out.append({"at": r.get("finished_at") or r.get("started_at"), "kind": "job",
+                    "title": r.get("title"), "status": r.get("status"), "type": r.get("type"),
+                    "actor": r.get("actor"), "cost": r.get("cost_usd") or 0, "target": r.get("target")})
+    tr = training()
+    for j in tr["journal"]:
+        out.append({"at": j.get("at"), "kind": "journal", "title": j.get("text"), "status": "note", "type": "note", "actor": "human", "cost": 0})
+    for name, run in lab_runs().items():
+        out.append({"at": run.get("at"), "kind": "lab", "title": name, "status": "done" if run.get("ok") else "failed", "type": "lab", "actor": "human", "cost": 0})
+    for sc in list_scans()[:20]:
+        out.append({"at": sc["mtime"], "kind": "scan", "title": sc["name"], "status": "done", "type": "scan", "actor": "human", "cost": 0})
+    out = [x for x in out if x.get("at")]
+    out.sort(key=lambda x: x["at"], reverse=True)
+    return out[:limit]
+
+
 def list_scans() -> list[dict]:
     if not os.path.isdir(SCANS):
         return []
@@ -118,6 +168,7 @@ def md_render(text: str) -> str:
 
 
 def run_scan(target: str) -> dict:
+    jid = job_start("scan", f"scan {target}", target)
     stamp = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
     slug = re.sub(r"[^A-Za-z0-9._-]+", "_", target)[:60]
     out = os.path.join(SCANS, f"dash-{stamp}-{slug}")
@@ -126,6 +177,7 @@ def run_scan(target: str) -> dict:
            "--target", target, "--out", out]
     try:
         p = subprocess.run(cmd, capture_output=True, text=True, timeout=300, cwd=ROOT, errors="replace")
+        jobmod.update(jid, {"status": "done" if p.returncode == 0 else "failed", "finished_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "log": os.path.basename(out) + ".md"})
         return {"ok": p.returncode == 0, "report": os.path.basename(out) + ".md",
                 "output": (p.stdout or p.stderr)[-4000:]}
     except Exception as exc:
@@ -135,11 +187,13 @@ def run_scan(target: str) -> dict:
 def run_lab(name: str) -> dict:
     if name not in LABS:
         return {"ok": False, "output": "unknown lab"}
+    jid = job_start("lab", f"lab {name}")
     try:
         p = subprocess.run(["bash", os.path.join(ROOT, "labs", name, "tests.sh")],
                            capture_output=True, text=True, timeout=300, cwd=ROOT, errors="replace")
         res = {"ok": p.returncode == 0, "output": (p.stdout or p.stderr)[-4000:],
                "at": dt.datetime.now().isoformat(timespec="minutes")}
+        jobmod.update(jid, {"status": "done" if p.returncode == 0 else "failed", "finished_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")})
     except Exception as exc:
         res = {"ok": False, "output": f"{type(exc).__name__}: {exc}"}
     with LOCK:
@@ -198,7 +252,17 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/overview":
             return self.json({"stats": stats(), "training": training(), "labs": lab_runs(),
                               "scans": list_scans()[:6], "recent": rows("threads.jsonl")[:8],
-                              "thread_sources": {}})
+                              "costs": costs(), "activity": activity(8)})
+        if path == "/api/jobs":
+            items = jobmod.load()
+            st = q.get("status", [""])[0]
+            if st:
+                items = [r for r in items if r.get("status") == st]
+            return self.json(filter_rows(list(reversed(items)), q.get("q", [""])[0], 200, 0))
+        if path == "/api/activity":
+            return self.json(activity(int(q.get("limit", [60])[0])))
+        if path == "/api/costs":
+            return self.json(costs())
         if path == "/api/threads":
             items = rows("threads.jsonl")
             src = q.get("source", [""])[0]
@@ -248,6 +312,31 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
         p = urllib.parse.urlsplit(self.path)
         body = self.body()
+        if p.path == "/api/jobs":
+            ns = ap_ns.Namespace(type=body.get("type", "manual"), title=body.get("title", "untitled"),
+                                 status=body.get("status", "running"), actor=body.get("actor", "human"),
+                                 model=body.get("model", ""), target=body.get("target", ""),
+                                 parent=body.get("parent", ""), tokens_in=int(body.get("tokens_in") or 0),
+                                 tokens_out=int(body.get("tokens_out") or 0), cost=float(body.get("cost") or 0),
+                                 log=body.get("log", ""), notes=body.get("notes", ""))
+            return self.json(jobmod.create(ns))
+        if p.path == "/api/jobs/finish":
+            jid = body.get("id", "")
+            model = body.get("model", "")
+            pin, pout = jobmod.price(model)
+            patch = {"status": body.get("status", "done"),
+                     "finished_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+                     "tokens_in": int(body.get("tokens_in") or 0), "tokens_out": int(body.get("tokens_out") or 0),
+                     "notes": body.get("notes", ""), "log": body.get("log", "")}
+            if body.get("cost"):
+                patch["cost_usd"] = float(body["cost"])
+            elif model and (patch["tokens_in"] or patch["tokens_out"]):
+                patch["cost_usd"] = round(patch["tokens_in"] / 1_000_000 * pin + patch["tokens_out"] / 1_000_000 * pout, 6)
+            return self.json(jobmod.update(jid, patch) or {"error": "not found"})
+        if p.path == "/api/budget":
+            amount = float(body.get("monthly_usd") or 25)
+            json.dump({"monthly_usd": amount}, open(os.path.join(DATA, "budget.json"), "w"), indent=1)
+            return self.json(costs())
         if p.path == "/api/lab/run":
             return self.json(run_lab(body.get("lab", "")))
         if p.path == "/api/scan/run":
@@ -415,6 +504,9 @@ async function route(){const q=$('#q').value;
 addEventListener('hashchange',()=>{const [p]=location.hash.slice(1).split('?');if(p)nav(p)});
 if(location.hash)nav(location.hash.slice(1).split('?')[0]);else overview();
 </script></body></html>"""
+
+
+PAGE = _PAGE
 
 
 def main() -> None:

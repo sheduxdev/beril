@@ -4,7 +4,8 @@
     ./beril scan --target https://example.com
     ./beril harvest forums --sources 0x00sec,reddit
     ./beril dossier
-    ./beril validate
+    ./beril dashboard
+    ./beril job log --type scan --title "example.com" --status done
 """
 from __future__ import annotations
 
@@ -25,6 +26,7 @@ COMMANDS = {
     "reflect": "reflect.py",
     "github": "github_sweep.py",
     "dashboard": "dashboard.py",
+    "job": "job.py",
 }
 
 

@@ -13,6 +13,9 @@ JSONL files collected on 2026-11-22 with Camoufox. The schema is documented in `
 | `sources.json` | 1 | Counts, dates, and provenance |
 | `re_tools.jsonl` | 570 | Reverse-engineering and exploitation tool shelf |
 | `github_atlas.jsonl` | 2064 | Security repositories by topic and stars |
+| `jobs.jsonl` | 10 | Job ledger: actor, model, tokens, cost |
+| `llm_prices.json` | 7 | Per-million token prices |
+| `budget.json` | 1 | Monthly spend budget |
 | `curriculum.json` | 25 | Training weeks, drills, labs and checkpoints |
 | `learned_methods.jsonl` | 1 | Notes produced by the reflection loop |
 | `upstream_repos.json` | 43 | Downloaded upstream repositories and skill counts |

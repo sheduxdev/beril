@@ -155,6 +155,7 @@ The `data/` directory in this skill contains:
 | `thread_details.jsonl` | 38 | Thread and report extracts |
 | `re_tools.jsonl` | 570 | Reverse-engineering and exploitation tool shelf |
 | `github_atlas.jsonl` | 2064 | Security repository atlas |
+| `jobs.jsonl` | 10 | Job and cost ledger |
 | `curriculum.json` | 25 | Training plan with drills and checkpoints |
 | `learned_methods.jsonl` | 1 | Reflection notes from labs |
 

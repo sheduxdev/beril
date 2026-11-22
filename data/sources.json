@@ -11,7 +11,8 @@
     "re_tools.jsonl": 570,
     "curriculum.json": 25,
     "learned_methods.jsonl": 1,
-    "github_atlas.jsonl": 2064
+    "github_atlas.jsonl": 2064,
+    "jobs.jsonl": 10
   },
   "thread_sources": {
     "0x00sec": 20,
