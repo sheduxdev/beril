@@ -4,7 +4,7 @@ JSONL files collected on 2026-11-22 with Camoufox. The schema is documented in `
 
 | File | Rows | Contents |
 |---|---:|---|
-| `threads.jsonl` | 299 | Forum threads, disclosed reports, article leads |
+| `threads.jsonl` | 311 | Forum threads, disclosed reports, article leads |
 | `experts.jsonl` | 94 | Named researchers, handles, and public works |
 | `canonical_tools.jsonl` | 87 | Curated tools with install commands |
 | `methods.jsonl` | 85 | Method and research URLs |

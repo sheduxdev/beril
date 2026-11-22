@@ -134,7 +134,7 @@ The `data/` directory in this skill contains:
 
 | File | Rows | What it holds |
 |---|---:|---|
-| `threads.jsonl` | 299 | Forums, reports, and article leads |
+| `threads.jsonl` | 311 | Forums, reports, and article leads |
 | `experts.jsonl` | 94 | Named researchers, handles, and works |
 | `canonical_tools.jsonl` | 87 | Curated tool shelf with install lines |
 | `methods.jsonl` | 85 | Method and research URLs |
@@ -143,7 +143,7 @@ The `data/` directory in this skill contains:
 
 The snapshot is a sample, not a complete map. HackerOne alone publishes thousands of reports. The selection favors recent, public, and method-rich material.
 
-HackForums contributes 30 rows from its public homepage feed. A section pass is implemented in `harvest.py`, but Cloudflare clearance is intermittent. The data was collected with headful Camoufox under Xvfb and a persistent profile. If the challenge returns, use a new profile and a new IP, then retry.
+HackForums contributes 42 rows from its public homepage and section feeds. A section pass is implemented in `harvest.py`, but Cloudflare clearance is intermittent. The data was collected with headful Camoufox under Xvfb and a persistent profile. If the challenge returns, use a new profile and a new IP, then retry.
 
 ## Refresh schedule
 

@@ -106,7 +106,7 @@ Read `SKILL.md` for the full loop and the quality gates.
 
 | Layer | Snapshot | What it answers |
 |---|---:|---|
-| Threads and reports | 299 | What is being found now? |
+| Threads and reports | 311 | What is being found now? |
 | Experts | 94 | Who knows this best? |
 | Tools | 87 | What should I run? |
 | Methods | 85 | How do they do it? |

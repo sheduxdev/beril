@@ -2,7 +2,7 @@
   "snapshot": "2026-11-22",
   "collector": "Camoufox v158.0.1-beta.41, Firefox patched build",
   "counts": {
-    "threads.jsonl": 299,
+    "threads.jsonl": 311,
     "experts.jsonl": 94,
     "canonical_tools.jsonl": 87,
     "methods.jsonl": 85,
@@ -20,7 +20,7 @@
     "r/blueteamsec": 8,
     "HackerOne Hacktivity": 100,
     "Intigriti": 20,
-    "HackForums": 30
+    "HackForums": 42
   },
   "upstream": {
     "repos": 43,
