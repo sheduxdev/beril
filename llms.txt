@@ -29,6 +29,8 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 - [references/curriculum.md](references/curriculum.md): 25 weeks
 - [references/exercises.md](references/exercises.md): 68 drills
 - [references/self-training.md](references/self-training.md): reflection loop
+- [references/books.md](references/books.md): reading canon
+- [docs/mastery.md](docs/mastery.md): long-term tracks
 - [labs/README.md](labs/README.md): local labs
 
 ## Commands

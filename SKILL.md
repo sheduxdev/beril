@@ -315,6 +315,8 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `references/curriculum.md` | 25-week training plan and grading |
 | `references/exercises.md` | 68 drills by domain |
 | `references/self-training.md` | Turn labs into durable method notes |
+| `references/books.md` | Reading canon by domain |
+| `docs/mastery.md` | Long-term specialist tracks |
 | `docs/training.md` | How to run the training loop |
 | `docs/agents.md` | Entry files for Claude, Cursor, Gemini, Copilot and others |
 | `agents/` | Forum, expert, tool, method, RE, crash, fuzzing and firmware prompts |

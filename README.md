@@ -46,6 +46,7 @@ beril/
 ├── docs/training.md             # how to train with Beril
 ├── docs/agents.md               # agent file matrix and installer
 ├── docs/break-my-app.md         # request-to-report runbook
+├── docs/mastery.md              # long-term track map
 ├── references/
 │   ├── camoufox-playbook.md     # challenge ladder and site recipes
 │   ├── forums.md                # community catalog
@@ -59,6 +60,7 @@ beril/
 │   ├── mobile-reverse.md        # Android and iOS
 │   ├── firmware-iot.md          # extraction, emulation, hardware
 │   ├── curriculum.md            # 25-week training plan
+│   ├── books.md                 # reading canon
 │   ├── exercises.md             # 68 drills by domain
 │   ├── source-catalog.md        # provenance and upstream repos
 │   ├── dossier-template.md      # output structure

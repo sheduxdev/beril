@@ -67,6 +67,10 @@ Score reproduction, evidence, root cause, and communication from 0 to 3. Twelve 
 
 See `references/self-training.md`.
 
+## Long game
+
+Read `mastery.md` for the track map and `references/books.md` for the canon.
+
 ## Full plan
 
 `references/curriculum.md` has the phases and capstone. `references/exercises.md` has 68 short drills by domain.

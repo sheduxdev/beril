@@ -8,7 +8,7 @@ FILES = [
     "references/vulnerability-research.md", "references/fuzzing.md",
     "references/exploit-development.md", "references/mobile-reverse.md",
     "references/firmware-iot.md", "references/curriculum.md",
-    "references/exercises.md", "references/self-training.md",
+    "references/exercises.md", "references/self-training.md", "references/books.md", "docs/mastery.md",
     "references/scan-artifacts.md" if False else "docs/scan-artifacts.md",
     "docs/reverse-engineering.md", "docs/training.md", "docs/agents.md", "docs/break-my-app.md",
 ]

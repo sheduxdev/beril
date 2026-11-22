@@ -517,6 +517,8 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `references/curriculum.md` | 25-week training plan and grading |
 | `references/exercises.md` | 68 drills by domain |
 | `references/self-training.md` | Turn labs into durable method notes |
+| `references/books.md` | Reading canon by domain |
+| `docs/mastery.md` | Long-term specialist tracks |
 | `docs/training.md` | How to run the training loop |
 | `docs/agents.md` | Entry files for Claude, Cursor, Gemini, Copilot and others |
 | `agents/` | Forum, expert, tool, method, RE, crash, fuzzing and firmware prompts |
@@ -3570,6 +3572,199 @@ The evidence path is not decoration. A note without a request, crash log, or dif
 The goal is a smaller, sharper set over time.
 
 
+<!-- ===== references/books.md ===== -->
+
+# Reading canon
+
+Books age. The ones below teach a model that outlives a tool version. Read the chapter that answers your current question, not the whole book.
+
+## Web
+
+| Work | Why | Note |
+|---|---|---|
+| The Web Application Hacker's Handbook | The classic testing model | Old tools, durable classes |
+| Real-World Bug Hunting | Logic and bounty thinking | Read the case studies |
+| Bug Bounty Bootcamp | Program workflow | Useful first month |
+| OWASP WSTG | Checklist and vocabulary | Free, keep it open |
+| PortSwigger research | Current primitives | Read the primary posts |
+| PayloadsAllTheThings | Payload memory aid | Confirm the parser |
+
+## Binary and exploitation
+
+| Work | Why | Note |
+|---|---|---|
+| Hacking: The Art of Exploitation | Memory model from first principles | Old Linux, still the best model |
+| The Shellcoder's Handbook | Shellcode and exploitation | Dated, conceptual |
+| Practical Malware Analysis | Static and dynamic workflow | Labs need a VM |
+| POA: Practice and Theory | Modern exploit development | Follow the labs in order |
+| how2heap | glibc primitives | Version-specific |
+| Windows Internals | Kernel and object model | Reference, not a read-through |
+| Android Internals | Android architecture | Deep reference |
+
+## Network and infrastructure
+
+| Work | Why | Note |
+|---|---|---|
+| TCP/IP Illustrated | Packet-level truth | Slow read |
+| Attacking Network Protocols | Protocol analysis | Good harness mindset |
+| Unix Network Programming | Sockets and servers | Reference |
+| Site Reliability Engineering | Why prod breaks | Useful for test windows |
+
+## Cloud and AD
+
+| Work | Why | Note |
+|---|---|---|
+| HackTricks cloud sections | Provider-specific paths | Fast moving |
+| BloodHound docs | Graph thinking | Import a real lab |
+| AWS IAM docs | Policy semantics | Primary source |
+| Kubernetes docs | Control plane | Read the security section |
+| Azure AD docs | Identity | Primary source |
+
+## Mobile and firmware
+
+| Work | Why | Note |
+|---|---|---|
+| OWASP MASTG | Test cases | Free |
+| Android Security Internals | Platform model | Deep |
+| iOS Hacking | Runtime and hooking | Needs a lab |
+| EMBA docs | Firmware pipeline | Tool-guided |
+| unblob docs | Extraction | Format list |
+
+## Detection and response
+
+| Work | Why | Note |
+|---|---|---|
+| The Practice of Network Security Monitoring | Data and workflow | Conceptual |
+| Applied Network Security Monitoring | Sensors and analysis | Dated tools |
+| MITRE ATT&CK | Shared vocabulary | Not a test plan |
+| Sigma docs | Rule format | Pair with a backend |
+
+## Research and writing
+
+| Work | Why | Note |
+|---|---|---|
+| The Craft of Research | Question and evidence | General, useful |
+| Style: Lessons in Clarity and Grace | Sentence control | Read the short version |
+| Writing for Busy Readers | Triage reality | Report design |
+
+## Papers and venues
+
+- USENIX Security, CCS, NDSS, S&P for academic primitives.
+- Black Hat and DEF CON archives for industry work.
+- Project Zero blog for disclosure craft.
+- PortSwigger Research for web primitives.
+- Google Project Zero, watchTowr, Horizon3 for appliance research.
+
+## How to read
+
+1. State the question before opening the text.
+2. Read the abstract, headings, and conclusion first.
+3. Read the method twice. Take notes in your own words.
+4. Reproduce one figure, request, or lab.
+5. Write three lines: what it claims, what it proves, what it misses.
+6. Add a drill to `references/exercises.md` if the gap is yours.
+
+A book you cannot reproduce is a podcast.
+
+
+<!-- ===== docs/mastery.md ===== -->
+
+# Mastery map
+
+The 25-week curriculum gets you to competent. This map is the longer climb. Pick one primary track, keep one secondary, and measure by artifacts, not courses.
+
+## Milestones
+
+| Stage | Evidence | Typical time |
+|---|---|---|
+| Beginner | 20 solved labs, 5 writeups, a clean report | 0 to 6 months |
+| Operator | 3 real findings, one chain, one tool built | 6 to 18 months |
+| Specialist | 10 findings in one class, a talk or a CVE | 18 to 36 months |
+| Researcher | Novel primitive or a named technique | 3 to 6 years |
+| Teacher | Others reproduce your work, you review theirs | after research |
+
+Certifications help at gates. They do not replace artifacts. OSCP, OSWE, OSED, CRTO, CISSP and cloud certs each signal a different thing. Pick for the job you want, not for the badge.
+
+## Tracks
+
+### Web and API
+
+- Deep: auth, OAuth, SAML, request parsing, cache, race, GraphQL, business logic.
+- Build: a proxy plugin, a parser diff tool, a fuzzer for a spec.
+- Read: PortSwigger research, Bugcrowd VRT, OWASP WSTG, disclosed reports.
+- Proof: a chain with a clean reproduction and a fix.
+- Ceiling: novel parser or protocol research.
+
+### Binary and RE
+
+- Deep: C/C++, mitigations, heap internals, kernel, hypervisor, firmware.
+- Build: a Ghidra script, a harness, a crash triage pipeline.
+- Read: POA, Practical Malware Analysis, how2heap, Project Zero.
+- Proof: a PoC with reliability, a patch diff, a CVE.
+- Ceiling: novel exploitation primitive or a full chain on a hardened target.
+
+### Cloud and AD
+
+- Deep: IAM, trust policies, ADCS, delegation, Kubernetes, CI identity.
+- Build: a cloud attack-path graph, a misconfig scanner, a detection rule.
+- Read: HackTricks cloud, BloodHound docs, cloud provider docs, ATT&CK.
+- Proof: a read-only escalation path with a clear blast radius.
+- Ceiling: identity research across providers.
+
+### Mobile and firmware
+
+- Deep: Android internals, iOS, ARM, bootloaders, update signing, radio.
+- Build: a Frida harness, an emulation rig, a firmware diff tool.
+- Read: MASTG, Android Internals, EMBA docs, vendor advisories.
+- Proof: a component chain or a root shell with recovery steps.
+- Ceiling: baseband and secure boot research.
+
+## Research habits
+
+1. Keep a question log. One question per week.
+2. Read one primary paper or advisory a day.
+3. Rebuild one technique from scratch each month.
+4. Diff one patched project each month.
+5. Write down what failed. Failures are the map.
+6. Present at a local meetup before a conference.
+7. Review someone else's report every month.
+
+## Portfolio
+
+- Three writeups with a reproduction and a fix.
+- One tool with a README and tests.
+- One talk or workshop.
+- One disclosed report or CVE.
+- One detection rule with a false-positive analysis.
+- A one-page CV that names the artifacts.
+
+## Anti-patterns
+
+| Pattern | Cost |
+|---|---|
+| Tutorial completion without a lab | False confidence |
+| Tool collection | Choice paralysis |
+| Wide but shallow | Duplicate reports and triage misses |
+| No notes | Every lesson resets |
+| Only CTFs | Weak business impact |
+| Only real targets | Missing fundamentals |
+| No writing | Invisible work |
+
+## Weekly maintenance
+
+- Two labs from an old phase.
+- One new primary source.
+- One review of a peer's work.
+- One hour on the weakest track.
+- One paragraph on what changed in your model.
+
+## Teaching
+
+Teach a topic when you can predict the three mistakes a learner will make. Teaching exposes the gaps faster than another course.
+
+Use `agents/mentor.md` to run a session. Grade against `references/curriculum.md`. Keep the evidence rule for the learner too.
+
+
 <!-- ===== docs/scan-artifacts.md ===== -->
 
 # Artifact scans
@@ -3921,6 +4116,10 @@ Score reproduction, evidence, root cause, and communication from 0 to 3. Twelve 
 ```
 
 See `references/self-training.md`.
+
+## Long game
+
+Read `mastery.md` for the track map and `references/books.md` for the canon.
 
 ## Full plan
 
