@@ -140,7 +140,7 @@ Ten labs are local and runnable: web, binary, fuzz, RE, mobile, firmware, cloud,
 
 `--deep` runs every installed optional pass and keeps the static result. `re` is the same with explicit tool flags. Ghidra needs `GHIDRA_HOME`; Binary Ninja needs a license and `install_api.py`.
 
-The reference set covers Ghidra, Binary Ninja, IDA, rizin, x64dbg, WinDbg, GDB, Frida, angr, capa, FLOSS, AFL++, CASR, unblob, EMBA, MobSF, and the workflows around them:
+The reference set covers Ghidra, GhidRust, Ghidrust, Binary Ninja, IDA, rizin, x64dbg, WinDbg, GDB, Frida, angr, capa, FLOSS, AFL++, CASR, unblob, EMBA, MobSF, and the workflows around them. GhidRust is a paused Ghidra plugin; Ghidrust is a separate Rust-native platform.
 
 - `references/reverse-engineering.md`
 - `references/vulnerability-research.md`
@@ -148,6 +148,9 @@ The reference set covers Ghidra, Binary Ninja, IDA, rizin, x64dbg, WinDbg, GDB, 
 - `references/exploit-development.md`
 - `references/mobile-reverse.md`
 - `references/firmware-iot.md`
+- `references/ghidra-ecosystem.md`
+- `references/rust-reverse.md`
+- `references/re-plugin-index.md`
 
 ## Manual quick start
 
@@ -245,6 +248,13 @@ The full list, counts, and roles are in `references/source-catalog.md`.
 - `camoufox[geoip]`, `beautifulsoup4`, `lxml`
 - About 300 MB for the Camoufox browser
 - `xvfb` for the headful fallback on Linux
+
+## Companion projects
+
+- [Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter): 83 bounty skills, triage gates and report patterns. Notes: `references/claude-bughunter.md`.
+- [ARTEX](https://github.com/BaaRai/ARTEX): autonomous multi-agent pentest runner with evidence graphs. Notes: `references/artex.md`.
+
+Beril supplies the knowledge, scan and evidence layer. The companions supply execution and class-specific hunt patterns.
 
 ## The name
 
