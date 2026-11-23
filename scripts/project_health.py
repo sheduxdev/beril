@@ -46,7 +46,7 @@ def files(root: str) -> list[str]:
     for dirpath, dirnames, filenames in os.walk(root):
         dirnames[:] = [d for d in dirnames if d not in SKIP]
         for name in filenames:
-            out.append(os.path.relpath(os.path.join(dirpath, name), root))
+            out.append(os.path.relpath(os.path.join(dirpath, name), root).replace(os.sep, "/"))
             if len(out) >= MAX_FILES:
                 return out
     return out
