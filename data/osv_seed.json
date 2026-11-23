@@ -1,0 +1,35 @@
+{
+  "note": "Offline OSV seed for demos and air-gapped runs. Refresh scope is small; --online queries the real OSV API.",
+  "updated": "2026-11-22",
+  "packages": {
+    "npm": {
+      "lodash": {"<4.17.21": {"id": "CVE-2021-23337", "summary": "Command injection in template", "severity": "high", "fixed": "4.17.21", "cvss": 7.2}},
+      "axios": {"<1.6.0": {"id": "CVE-2023-45857", "summary": "XSRF token leak to third parties", "severity": "medium", "fixed": "1.6.0", "cvss": 6.5}},
+      "express": {"<4.19.2": {"id": "CVE-2024-29041", "summary": "Open redirect in malformed URL handling", "severity": "medium", "fixed": "4.19.2", "cvss": 6.1}},
+      "next": {"<14.1.1": {"id": "CVE-2024-34351", "summary": "SSRF in server actions", "severity": "high", "fixed": "14.1.1", "cvss": 7.5}},
+      "jsonwebtoken": {"<9.0.0": {"id": "CVE-2022-23529", "summary": "Insecure key handling in verify", "severity": "high", "fixed": "9.0.0", "cvss": 7.6}},
+      "multer": {"<1.4.5-lts.1": {"id": "CVE-2022-24434", "summary": "Denial of service in multipart parsing", "severity": "high", "fixed": "1.4.5-lts.1", "cvss": 7.5}},
+      "semver": {"<7.5.2": {"id": "CVE-2022-25883", "summary": "ReDoS in range parsing", "severity": "medium", "fixed": "7.5.2", "cvss": 5.3}}
+    },
+    "PyPI": {
+      "django": {"<4.2.10": {"id": "CVE-2024-24680", "summary": "Denial of service in intcomma", "severity": "medium", "fixed": "4.2.10", "cvss": 5.3}},
+      "requests": {"<2.31.0": {"id": "CVE-2023-32681", "summary": "Proxy-Authorization header leak", "severity": "medium", "fixed": "2.31.0", "cvss": 6.1}},
+      "flask": {"<3.0.3": {"id": "CVE-2024-34069", "summary": "Debugger RCE when pin is weak", "severity": "high", "fixed": "3.0.3", "cvss": 7.5}},
+      "pillow": {"<10.3.0": {"id": "CVE-2024-28219", "summary": "Heap overflow in image decode", "severity": "high", "fixed": "10.3.0", "cvss": 7.5}},
+      "cryptography": {"<42.0.4": {"id": "CVE-2024-26130", "summary": "NULL dereference in PKCS12", "severity": "high", "fixed": "42.0.4", "cvss": 7.5}},
+      "pyyaml": {"<6.0": {"id": "CVE-2020-14343", "summary": "Arbitrary code via full_load", "severity": "high", "fixed": "6.0", "cvss": 8.0}},
+      "jinja2": {"<3.1.3": {"id": "CVE-2024-22195", "summary": "XSS in xmlattr filter", "severity": "medium", "fixed": "3.1.3", "cvss": 5.4}}
+    },
+    "Maven": {
+      "org.springframework:spring-core": {"<6.1.6": {"id": "CVE-2024-22262", "summary": "Open redirect in UriComponentsBuilder", "severity": "medium", "fixed": "6.1.6", "cvss": 6.1}},
+      "org.apache.logging.log4j:log4j-core": {"<2.17.1": {"id": "CVE-2021-44832", "summary": "RCE via JDBC appender", "severity": "high", "fixed": "2.17.1", "cvss": 7.5}}
+    },
+    "Packagist": {
+      "monolog/monolog": {"<2.9.2": {"id": "CVE-2022-39282", "summary": "Sensitive data in FingersCrossedHandler", "severity": "medium", "fixed": "2.9.2", "cvss": 5.3}}
+    },
+    "RubyGems": {
+      "rack": {"<2.2.8.1": {"id": "CVE-2023-27539", "summary": "ReDoS in header parsing", "severity": "medium", "fixed": "2.2.8.1", "cvss": 5.3}}
+    },
+    "Go": {}
+  }
+}

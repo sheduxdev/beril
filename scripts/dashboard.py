@@ -1,32 +1,40 @@
 #!/usr/bin/env python3
 """Local Beril dashboard. Read-only except scan and lab actions.
 
-    ./beril dashboard --port 8788
+./beril dashboard --port 8788
 """
+
 from __future__ import annotations
 
 import argparse
+import argparse as ap_ns
 import datetime as dt
 import html
 import json
 import os
 import re
 import subprocess
+import sys
 import threading
 import urllib.parse
+import uuid
 import webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-import argparse as ap_ns
+
+import fileio
 import job as jobmod
+import paths
 from dashboard_page import PAGE as _PAGE
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA = os.path.join(ROOT, "data")
+DATA = paths.DATA
 SCANS = os.path.join(ROOT, "scans")
 RUNS = os.path.join(ROOT, "training", "lab_runs.json")
 LABS = ["web", "binary", "fuzz", "re", "mobile", "firmware", "cloud", "ad", "llm", "detection"]
 REPORT_RE = re.compile(r"^[A-Za-z0-9._-]+\.md$")
 LOCK = threading.Lock()
+TOKEN = uuid.uuid4().hex
+PORT = 8788
 
 
 def rows(name: str) -> list[dict]:
@@ -52,9 +60,14 @@ def stats() -> dict:
     tools = rows("canonical_tools.jsonl") + rows("re_tools.jsonl")
     methods = rows("methods.jsonl")
     atlas = rows("github_atlas.jsonl")
-    return {"threads": len(threads), "experts": len(experts), "tools": len(tools),
-            "methods": len(methods), "atlas": len(atlas),
-            "sources": len({r.get("source", "") for r in threads})}
+    return {
+        "threads": len(threads),
+        "experts": len(experts),
+        "tools": len(tools),
+        "methods": len(methods),
+        "atlas": len(atlas),
+        "sources": len({r.get("source", "") for r in threads}),
+    }
 
 
 def training() -> dict:
@@ -62,10 +75,10 @@ def training() -> dict:
     state = {"done": [], "journal": []}
     if os.path.exists(path):
         try:
-            state = json.load(open(path))
+            state = fileio.load_json(path, {"done": [], "journal": []})
         except json.JSONDecodeError:
             pass
-    cur = json.load(open(os.path.join(DATA, "curriculum.json")))
+    cur = fileio.load_json(os.path.join(DATA, "curriculum.json"), {"weeks": []})
     tasks = []
     for w in cur["weeks"]:
         tasks += w["drills"] + [{**w["deliverable"], "week": w["week"]}]
@@ -73,8 +86,14 @@ def training() -> dict:
             t["week"] = w["week"]
     done = len([t for t in tasks if t["key"] in state["done"]])
     nxt = [t for t in tasks if t["key"] not in state["done"]][:5]
-    return {"done": done, "total": len(tasks), "pct": done * 100 // max(1, len(tasks)),
-            "next": nxt, "journal": state.get("journal", [])[-8:], "weeks": cur["weeks"]}
+    return {
+        "done": done,
+        "total": len(tasks),
+        "pct": done * 100 // max(1, len(tasks)),
+        "next": nxt,
+        "journal": state.get("journal", [])[-8:],
+        "weeks": cur["weeks"],
+    }
 
 
 def lab_runs() -> dict:
@@ -87,18 +106,37 @@ def lab_runs() -> dict:
 
 
 def job_start(kind: str, title: str, target: str = "") -> str:
-    ns = ap_ns.Namespace(type=kind, title=title, status="running", actor="human", model="",
-                         target=target, parent="", tokens_in=0, tokens_out=0, cost=0,
-                         log="", notes="")
+    ns = ap_ns.Namespace(
+        type=kind,
+        title=title,
+        status="running",
+        actor="human",
+        model="",
+        target=target,
+        parent="",
+        tokens_in=0,
+        tokens_out=0,
+        cost=0,
+        log="",
+        notes="",
+    )
     return jobmod.create(ns)["id"]
 
 
 def costs() -> dict:
     rows = jobmod.load()
     now = dt.datetime.now(dt.timezone.utc)
-    def bucket(days):
-        return round(sum(float(r.get("cost_usd") or 0) for r in rows
-                         if r.get("started_at") and (now - dt.datetime.fromisoformat(r["started_at"])).days < days), 6)
+
+    def bucket(days: int) -> float:
+        return round(
+            sum(
+                float(r.get("cost_usd") or 0)
+                for r in rows
+                if r.get("started_at") and (now - dt.datetime.fromisoformat(r["started_at"])).days < days
+            ),
+            6,
+        )
+
     daily = {}
     for r in rows:
         if not r.get("started_at"):
@@ -110,27 +148,135 @@ def costs() -> dict:
         c = float(r.get("cost_usd") or 0)
         by_model[r.get("model") or "none"] = round(by_model.get(r.get("model") or "none", 0) + c, 6)
         by_type[r.get("type") or "other"] = round(by_type.get(r.get("type") or "other", 0) + c, 6)
-    budget = json.load(open(os.path.join(DATA, "budget.json"))) if os.path.exists(os.path.join(DATA, "budget.json")) else {"monthly_usd": 25}
-    return {"today": bucket(1), "week": bucket(7), "month": bucket(30), "total": round(sum(float(r.get("cost_usd") or 0) for r in rows), 6),
-            "by_model": by_model, "by_type": by_type, "daily": daily, "budget": budget, "jobs": len(rows)}
+    budget = fileio.load_json(os.path.join(DATA, "budget.json"), {"monthly_usd": 25})
+    return {
+        "today": bucket(1),
+        "week": bucket(7),
+        "month": bucket(30),
+        "total": round(sum(float(r.get("cost_usd") or 0) for r in rows), 6),
+        "by_model": by_model,
+        "by_type": by_type,
+        "daily": daily,
+        "budget": budget,
+        "jobs": len(rows),
+    }
 
 
 def activity(limit: int = 40) -> list[dict]:
     out = []
     for r in jobmod.load()[-60:]:
-        out.append({"at": r.get("finished_at") or r.get("started_at"), "kind": "job",
-                    "title": r.get("title"), "status": r.get("status"), "type": r.get("type"),
-                    "actor": r.get("actor"), "cost": r.get("cost_usd") or 0, "target": r.get("target")})
+        out.append(
+            {
+                "at": r.get("finished_at") or r.get("started_at"),
+                "kind": "job",
+                "title": r.get("title"),
+                "status": r.get("status"),
+                "type": r.get("type"),
+                "actor": r.get("actor"),
+                "cost": r.get("cost_usd") or 0,
+                "target": r.get("target"),
+            }
+        )
     tr = training()
     for j in tr["journal"]:
-        out.append({"at": j.get("at"), "kind": "journal", "title": j.get("text"), "status": "note", "type": "note", "actor": "human", "cost": 0})
+        out.append(
+            {
+                "at": j.get("at"),
+                "kind": "journal",
+                "title": j.get("text"),
+                "status": "note",
+                "type": "note",
+                "actor": "human",
+                "cost": 0,
+            }
+        )
     for name, run in lab_runs().items():
-        out.append({"at": run.get("at"), "kind": "lab", "title": name, "status": "done" if run.get("ok") else "failed", "type": "lab", "actor": "human", "cost": 0})
+        out.append(
+            {
+                "at": run.get("at"),
+                "kind": "lab",
+                "title": name,
+                "status": "done" if run.get("ok") else "failed",
+                "type": "lab",
+                "actor": "human",
+                "cost": 0,
+            }
+        )
     for sc in list_scans()[:20]:
-        out.append({"at": sc["mtime"], "kind": "scan", "title": sc["name"], "status": "done", "type": "scan", "actor": "human", "cost": 0})
+        out.append(
+            {
+                "at": sc["mtime"],
+                "kind": "scan",
+                "title": sc["name"],
+                "status": "done",
+                "type": "scan",
+                "actor": "human",
+                "cost": 0,
+            }
+        )
     out = [x for x in out if x.get("at")]
     out.sort(key=lambda x: x["at"], reverse=True)
     return out[:limit]
+
+
+def posture() -> dict:
+    """Aggregate local scan JSON for the posture page."""
+    series: dict[str, dict] = {}
+    latest: dict[str, dict] = {}
+    top: dict[str, dict] = {}
+    scans = 0
+    authorized = 0
+    with_detail = 0
+    suppressed = 0
+    if os.path.isdir(SCANS):
+        for name in sorted(os.listdir(SCANS)):
+            if not name.endswith(".json"):
+                continue
+            path = os.path.join(SCANS, name)
+            try:
+                with open(path, encoding="utf-8") as handle:
+                    data = json.load(handle)
+            except (OSError, json.JSONDecodeError):
+                continue
+            scans += 1
+            day = str(data.get("started_at", ""))[:10] or "unknown"
+            counts = data.get("counts", {})
+            row = series.setdefault(day, {"day": day, "critical": 0, "total": 0})
+            row["critical"] += int(counts.get("critical", 0))
+            row["total"] += sum(int(counts.get(k, 0)) for k in counts)
+            if data.get("authorization"):
+                authorized += 1
+            checked = len((data.get("scope") or {}).get("checked", []))
+            if checked >= 5:
+                with_detail += 1
+            suppressed += int((data.get("meta") or {}).get("suppressed", 0))
+            item = {
+                "target": data.get("target", "?"),
+                "mode": data.get("mode", "?"),
+                "at": str(data.get("started_at", ""))[:16],
+                "counts": {k: int(counts.get(k, 0)) for k in ("critical", "high", "medium", "low", "info")},
+                "checked": checked,
+                "suppressed": int((data.get("meta") or {}).get("suppressed", 0)),
+            }
+            target = item["target"]
+            if target not in latest or item["at"] >= latest[target]["at"]:
+                latest[target] = item
+            for finding in data.get("findings", []):
+                key = finding.get("check", "?")
+                top.setdefault(key, {"check": key, "count": 0, "severity": finding.get("severity", "info")})
+                top[key]["count"] += 1
+    pct = lambda n: round(n / scans * 100) if scans else 0  # noqa: E731
+    return {
+        "scans": scans,
+        "series": [series[k] for k in sorted(series)][-30:],
+        "latest": sorted(latest.values(), key=lambda x: x["at"], reverse=True)[:12],
+        "top": sorted(top.values(), key=lambda x: -x["count"])[:15],
+        "coverage": [
+            {"label": "Scans with an authorization record", "value": pct(authorized)},
+            {"label": "Scans with a full check list", "value": pct(with_detail)},
+            {"label": "Baseline suppressions", "value": suppressed},
+        ],
+    }
 
 
 def list_scans() -> list[dict]:
@@ -140,8 +286,13 @@ def list_scans() -> list[dict]:
     for name in sorted(os.listdir(SCANS), reverse=True):
         if name.endswith(".md"):
             p = os.path.join(SCANS, name)
-            out.append({"name": name, "size": os.path.getsize(p),
-                        "mtime": dt.datetime.fromtimestamp(os.path.getmtime(p)).isoformat(timespec="minutes")})
+            out.append(
+                {
+                    "name": name,
+                    "size": os.path.getsize(p),
+                    "mtime": dt.datetime.fromtimestamp(os.path.getmtime(p)).isoformat(timespec="minutes"),
+                }
+            )
     return out
 
 
@@ -173,13 +324,32 @@ def run_scan(target: str) -> dict:
     slug = re.sub(r"[^A-Za-z0-9._-]+", "_", target)[:60]
     out = os.path.join(SCANS, f"dash-{stamp}-{slug}")
     os.makedirs(SCANS, exist_ok=True)
-    cmd = [os.path.join(ROOT, ".venv", "bin", "python"), os.path.join(ROOT, "scripts", "scan.py"),
-           "--target", target, "--out", out]
+    python = os.path.join(ROOT, ".venv", "bin", "python")
+    if not os.path.exists(python):
+        python = sys.executable
+    cmd = [
+        python,
+        os.path.join(ROOT, "scripts", "scan.py"),
+        "--target",
+        target,
+        "--out",
+        out,
+    ]
     try:
         p = subprocess.run(cmd, capture_output=True, text=True, timeout=300, cwd=ROOT, errors="replace")
-        jobmod.update(jid, {"status": "done" if p.returncode == 0 else "failed", "finished_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "log": os.path.basename(out) + ".md"})
-        return {"ok": p.returncode == 0, "report": os.path.basename(out) + ".md",
-                "output": (p.stdout or p.stderr)[-4000:]}
+        jobmod.update(
+            jid,
+            {
+                "status": "done" if p.returncode == 0 else "failed",
+                "finished_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+                "log": os.path.basename(out) + ".md",
+            },
+        )
+        return {
+            "ok": p.returncode == 0,
+            "report": os.path.basename(out) + ".md",
+            "output": (p.stdout or p.stderr)[-4000:],
+        }
     except Exception as exc:
         return {"ok": False, "output": f"{type(exc).__name__}: {exc}"}
 
@@ -189,18 +359,33 @@ def run_lab(name: str) -> dict:
         return {"ok": False, "output": "unknown lab"}
     jid = job_start("lab", f"lab {name}")
     try:
-        p = subprocess.run(["bash", os.path.join(ROOT, "labs", name, "tests.sh")],
-                           capture_output=True, text=True, timeout=300, cwd=ROOT, errors="replace")
-        res = {"ok": p.returncode == 0, "output": (p.stdout or p.stderr)[-4000:],
-               "at": dt.datetime.now().isoformat(timespec="minutes")}
-        jobmod.update(jid, {"status": "done" if p.returncode == 0 else "failed", "finished_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")})
+        p = subprocess.run(
+            ["bash", os.path.join(ROOT, "labs", name, "tests.sh")],
+            capture_output=True,
+            text=True,
+            timeout=300,
+            cwd=ROOT,
+            errors="replace",
+        )
+        res = {
+            "ok": p.returncode == 0,
+            "output": (p.stdout or p.stderr)[-4000:],
+            "at": dt.datetime.now().isoformat(timespec="minutes"),
+        }
+        jobmod.update(
+            jid,
+            {
+                "status": "done" if p.returncode == 0 else "failed",
+                "finished_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+            },
+        )
     except Exception as exc:
         res = {"ok": False, "output": f"{type(exc).__name__}: {exc}"}
     with LOCK:
         data = lab_runs()
         data[name] = res
         os.makedirs(os.path.dirname(RUNS), exist_ok=True)
-        json.dump(data, open(RUNS, "w"), indent=1)
+        fileio.write_json(RUNS, data, indent=1)
     return res
 
 
@@ -208,30 +393,48 @@ def filter_rows(items: list[dict], q: str, limit: int, offset: int) -> list[dict
     if q:
         ql = q.lower()
         items = [r for r in items if ql in json.dumps(r, ensure_ascii=False).lower()]
-    return items[offset: offset + limit]
+    return items[offset : offset + limit]
 
 
 class Handler(BaseHTTPRequestHandler):
     server_version = "BerilDash/1"
 
-    def log_message(self, fmt, *args):
-        print("%s - %s" % (self.address_string(), fmt % args))
+    def log_message(self, fmt: str, *args: object) -> None:
+        print(f"{self.address_string()} - {fmt % args}")
 
-    def json(self, data, code=200):
+    def common_headers(self) -> None:
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.send_header("X-Frame-Options", "DENY")
+        self.send_header("Referrer-Policy", "no-referrer")
+        self.send_header("Cache-Control", "no-store")
+
+    def json(self, data: object, code: int = 200) -> None:
         raw = json.dumps(data, ensure_ascii=False).encode()
         self.send_response(code)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(raw)))
+        self.common_headers()
         self.end_headers()
         self.wfile.write(raw)
 
-    def html(self, text):
+    def html(self, text: str) -> None:
         raw = text.encode()
         self.send_response(200)
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(raw)))
+        self.send_header(
+            "Content-Security-Policy",
+            "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data:",
+        )
+        self.common_headers()
         self.end_headers()
         self.wfile.write(raw)
+
+    def same_origin(self) -> bool:
+        origin = self.headers.get("Origin", "")
+        if not origin:
+            return True
+        return origin in (f"http://127.0.0.1:{PORT}", f"http://localhost:{PORT}")
 
     def body(self) -> dict:
         n = int(self.headers.get("Content-Length", 0))
@@ -242,7 +445,7 @@ class Handler(BaseHTTPRequestHandler):
         except json.JSONDecodeError:
             return {}
 
-    def do_GET(self):
+    def do_GET(self) -> None:
         p = urllib.parse.urlsplit(self.path)
         q = urllib.parse.parse_qs(p.query)
         path = p.path
@@ -250,9 +453,17 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/":
             return self.html(PAGE)
         if path == "/api/overview":
-            return self.json({"stats": stats(), "training": training(), "labs": lab_runs(),
-                              "scans": list_scans()[:6], "recent": rows("threads.jsonl")[:8],
-                              "costs": costs(), "activity": activity(8)})
+            return self.json(
+                {
+                    "stats": stats(),
+                    "training": training(),
+                    "labs": lab_runs(),
+                    "scans": list_scans()[:6],
+                    "recent": rows("threads.jsonl")[:8],
+                    "costs": costs(),
+                    "activity": activity(8),
+                }
+            )
         if path == "/api/jobs":
             items = jobmod.load()
             st = q.get("status", [""])[0]
@@ -268,7 +479,9 @@ class Handler(BaseHTTPRequestHandler):
             src = q.get("source", [""])[0]
             if src:
                 items = [r for r in items if r.get("source") == src]
-            return self.json(filter_rows(items, q.get("q", [""])[0], int(q.get("limit", [50])[0]), int(q.get("offset", [0])[0])))
+            return self.json(
+                filter_rows(items, q.get("q", [""])[0], int(q.get("limit", [50])[0]), int(q.get("offset", [0])[0]))
+            )
         if path == "/api/experts":
             return self.json(filter_rows(rows("experts.jsonl"), q.get("q", [""])[0], 200, 0))
         if path == "/api/tools":
@@ -293,6 +506,8 @@ class Handler(BaseHTTPRequestHandler):
             return self.json(training())
         if path == "/api/scans":
             return self.json(list_scans())
+        if path == "/api/posture":
+            return self.json(posture())
         if path == "/api/report":
             name = q.get("name", [""])[0]
             if not REPORT_RE.match(name):
@@ -309,33 +524,49 @@ class Handler(BaseHTTPRequestHandler):
             return self.json(sorted(counts.items(), key=lambda x: -x[1]))
         return self.json({"error": "not found"}, 404)
 
-    def do_POST(self):
+    def do_POST(self) -> None:
+        if not self.same_origin() or self.headers.get("X-Beril-Token", "") != TOKEN:
+            return self.json({"error": "unauthorized"}, 403)
         p = urllib.parse.urlsplit(self.path)
         body = self.body()
         if p.path == "/api/jobs":
-            ns = ap_ns.Namespace(type=body.get("type", "manual"), title=body.get("title", "untitled"),
-                                 status=body.get("status", "running"), actor=body.get("actor", "human"),
-                                 model=body.get("model", ""), target=body.get("target", ""),
-                                 parent=body.get("parent", ""), tokens_in=int(body.get("tokens_in") or 0),
-                                 tokens_out=int(body.get("tokens_out") or 0), cost=float(body.get("cost") or 0),
-                                 log=body.get("log", ""), notes=body.get("notes", ""))
+            ns = ap_ns.Namespace(
+                type=body.get("type", "manual"),
+                title=body.get("title", "untitled"),
+                status=body.get("status", "running"),
+                actor=body.get("actor", "human"),
+                model=body.get("model", ""),
+                target=body.get("target", ""),
+                parent=body.get("parent", ""),
+                tokens_in=int(body.get("tokens_in") or 0),
+                tokens_out=int(body.get("tokens_out") or 0),
+                cost=float(body.get("cost") or 0),
+                log=body.get("log", ""),
+                notes=body.get("notes", ""),
+            )
             return self.json(jobmod.create(ns))
         if p.path == "/api/jobs/finish":
             jid = body.get("id", "")
             model = body.get("model", "")
             pin, pout = jobmod.price(model)
-            patch = {"status": body.get("status", "done"),
-                     "finished_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
-                     "tokens_in": int(body.get("tokens_in") or 0), "tokens_out": int(body.get("tokens_out") or 0),
-                     "notes": body.get("notes", ""), "log": body.get("log", "")}
+            patch = {
+                "status": body.get("status", "done"),
+                "finished_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+                "tokens_in": int(body.get("tokens_in") or 0),
+                "tokens_out": int(body.get("tokens_out") or 0),
+                "notes": body.get("notes", ""),
+                "log": body.get("log", ""),
+            }
             if body.get("cost"):
                 patch["cost_usd"] = float(body["cost"])
             elif model and (patch["tokens_in"] or patch["tokens_out"]):
-                patch["cost_usd"] = round(patch["tokens_in"] / 1_000_000 * pin + patch["tokens_out"] / 1_000_000 * pout, 6)
+                patch["cost_usd"] = round(
+                    patch["tokens_in"] / 1_000_000 * pin + patch["tokens_out"] / 1_000_000 * pout, 6
+                )
             return self.json(jobmod.update(jid, patch) or {"error": "not found"})
         if p.path == "/api/budget":
             amount = float(body.get("monthly_usd") or 25)
-            json.dump({"monthly_usd": amount}, open(os.path.join(DATA, "budget.json"), "w"), indent=1)
+            fileio.write_json(os.path.join(DATA, "budget.json"), {"monthly_usd": amount}, indent=1)
             return self.json(costs())
         if p.path == "/api/lab/run":
             return self.json(run_lab(body.get("lab", "")))
@@ -350,10 +581,10 @@ class Handler(BaseHTTPRequestHandler):
             os.makedirs(os.path.dirname(path), exist_ok=True)
             state = {"done": [], "journal": []}
             if os.path.exists(path):
-                state = json.load(open(path))
+                state = fileio.load_json(path, {"done": [], "journal": []})
             if key and key not in state["done"]:
                 state["done"].append(key)
-                json.dump(state, open(path, "w"), indent=1)
+                fileio.write_json(path, state, indent=1)
             return self.json({"ok": True, "training": training()})
         return self.json({"error": "not found"}, 404)
 
@@ -510,13 +741,16 @@ PAGE = _PAGE
 
 
 def main() -> None:
+    global PAGE, PORT
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--port", type=int, default=8788)
     ap.add_argument("--no-open", action="store_true")
     args = ap.parse_args()
+    PORT = args.port
+    PAGE = _PAGE.replace("__BERIL_TOKEN__", TOKEN)
     srv = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
     url = f"http://127.0.0.1:{args.port}/"
-    print(f"dashboard {url}")
+    print(f"dashboard {url} (POST token active)")
     if not args.no_open:
         threading.Timer(0.8, lambda: webbrowser.open(url)).start()
     srv.serve_forever()

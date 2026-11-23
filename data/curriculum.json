@@ -69,6 +69,12 @@
       "weeks": [
         24
       ]
+    },
+    {
+      "name": "Incident practice",
+      "weeks": [
+        25
+      ]
     }
   ],
   "weeks": [
@@ -901,6 +907,46 @@
         "text": "A public-quality report and a capstone demo",
         "minutes": 40
       }
+    },
+    {
+      "key": "w25",
+      "week": 25,
+      "phase": "Incident practice",
+      "title": "Published incident cases",
+      "minutes": 120,
+      "goal": "Work five published incidents from event to rule, with no leaked data.",
+      "drills": [
+        {
+          "key": "w25d1",
+          "text": "Log4Shell: explain the lookup and write the detection line",
+          "minutes": 24
+        },
+        {
+          "key": "w25d2",
+          "text": "PaperCut bypass: find the version and the child process signal",
+          "minutes": 24
+        },
+        {
+          "key": "w25d3",
+          "text": "MSSQL brute force: write the 4625 and xp_cmdshell timeline",
+          "minutes": 24
+        },
+        {
+          "key": "w25d4",
+          "text": "Barracuda ESG: compare the perl webshell to a normal admin one-liner",
+          "minutes": 24
+        },
+        {
+          "key": "w25d5",
+          "text": "Volt Typhoon: baseline three built-in tools",
+          "minutes": 24
+        }
+      ],
+      "reading": [
+        "https://www.cisa.gov/news-events/cybersecurity-advisories/aa21-356a",
+        "references/incident-library.md"
+      ],
+      "lab": "labs/detection/incidents"
     }
   ]
 }

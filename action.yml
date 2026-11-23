@@ -1,0 +1,65 @@
+name: Beril scan
+description: Passive-first scan of a repository or artifact with one evidence schema. Offline by default.
+author: Deniz USTA
+branding:
+  icon: shield
+  color: green
+
+inputs:
+  target:
+    description: Path or URL to scan. A repository path needs no network.
+    default: "."
+  profile:
+    description: Report profile (engineer, bugbounty or smb).
+    default: engineer
+  fail-on:
+    description: Exit non-zero at or above this severity (none, low, medium, high, critical).
+    default: "high"
+  baseline:
+    description: Earlier JSON report; matching findings are suppressed.
+    default: ""
+  sarif:
+    description: Write a SARIF 2.1.0 file for code scanning.
+    default: "true"
+  args:
+    description: Extra Beril scan flags, for example "--jar" or "--online-deps".
+    default: ""
+
+outputs:
+  json:
+    description: Absolute path to the JSON report.
+    value: ${{ steps.scan.outputs.json }}
+  sarif:
+    description: Absolute path to the SARIF report when enabled.
+    value: ${{ steps.scan.outputs.sarif }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+      with:
+        python-version: "3.12"
+    - name: Install Beril
+      shell: bash
+      run: python -m pip install --no-cache-dir "$GITHUB_ACTION_PATH"
+    - name: Scan
+      id: scan
+      shell: bash
+      env:
+        INPUT_TARGET: ${{ inputs.target }}
+        INPUT_PROFILE: ${{ inputs.profile }}
+        INPUT_FAILON: ${{ inputs.fail-on }}
+        INPUT_BASELINE: ${{ inputs.baseline }}
+        INPUT_SARIF: ${{ inputs.sarif }}
+        INPUT_ARGS: ${{ inputs.args }}
+      run: |
+        set -euo pipefail
+        out="${RUNNER_TEMP}/beril/scan"
+        mkdir -p "$(dirname "$out")"
+        set -- --target "$INPUT_TARGET" --profile "$INPUT_PROFILE" --fail-on "$INPUT_FAILON" --out "$out"
+        if [ -n "$INPUT_BASELINE" ]; then set -- "$@" --baseline "$INPUT_BASELINE"; fi
+        if [ "$INPUT_SARIF" = "true" ]; then set -- "$@" --sarif; fi
+        if [ -n "$INPUT_ARGS" ]; then read -r -a extra <<< "$INPUT_ARGS"; set -- "$@" "${extra[@]}"; fi
+        beril scan "$@"
+        echo "json=${out}.json" >> "$GITHUB_OUTPUT"
+        if [ -f "${out}.sarif" ]; then echo "sarif=${out}.sarif" >> "$GITHUB_OUTPUT"; else echo "sarif=" >> "$GITHUB_OUTPUT"; fi

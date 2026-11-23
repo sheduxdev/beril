@@ -32,6 +32,15 @@ Certifications help at gates. They do not replace artifacts. OSCP, OSWE, OSED, C
 - Proof: a PoC with reliability, a patch diff, a CVE.
 - Ceiling: novel exploitation primitive or a full chain on a hardened target.
 
+### Network defense
+
+- Deep: flow and packet analysis, DNS, TLS and ECH, IDS tuning, segmentation, egress, DDoS, zero trust, BGP and RPKI.
+- Build: a beacon scorer, a Sigma rule set, a segmented lab, a honeypot with alerting.
+- Read: NIST SP 800-94 and 800-61r3, CISA CPGs, SANS flow and metadata papers, ATT&CK and D3FEND.
+- Proof: a segmentation test with a closed bypass, a tuned rule with measured false positives, an incident timeline.
+- Ceiling: detection engineering at scale or protocol visibility research.
+- Track: `references/network-curriculum.md`.
+
 ### Cloud and AD
 
 - Deep: IAM, trust policies, ADCS, delegation, Kubernetes, CI identity.

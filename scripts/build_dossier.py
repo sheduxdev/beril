@@ -5,6 +5,7 @@ Example
 -------
 python scripts/build_dossier.py --data data --out examples/dossier.md
 """
+
 from __future__ import annotations
 
 import argparse
@@ -13,13 +14,16 @@ import datetime as dt
 import json
 import os
 import re
+from pathlib import Path
 
 
 def rows(path: str) -> list[dict]:
     if not os.path.exists(path):
         return []
     out = []
-    for line in open(path, encoding="utf-8"):
+    with open(path, encoding="utf-8") as handle:
+        lines = handle.readlines()
+    for line in lines:
         try:
             out.append(json.loads(line))
         except json.JSONDecodeError:
@@ -27,7 +31,7 @@ def rows(path: str) -> list[dict]:
     return out
 
 
-def stars(value) -> float:
+def stars(value: object) -> float:
     text = str(value or "").lower().replace(",", "").replace("$", "")
     text = re.sub(r"[^0-9.k]", "", text)
     if not text:
@@ -62,14 +66,21 @@ def main() -> None:
     today = dt.date.today().isoformat()
     add(f"# {args.title}")
     add("")
-    add(f"Collected {today}. Every entry links to its public source. Counts describe this snapshot, not the whole internet.")
+    add(
+        f"Collected {today}. Every entry links to its public source. Counts describe this snapshot, not the whole internet."
+    )
     add("")
 
     add("## Coverage")
     add("")
     add("| Layer | Rows | Sources |")
     add("|---|---:|---|")
-    for label, dataset in (("Threads and reports", threads), ("Experts", experts), ("Tools", tools), ("Methods and research", methods)):
+    for label, dataset in (
+        ("Threads and reports", threads),
+        ("Experts", experts),
+        ("Tools", tools),
+        ("Methods and research", methods),
+    ):
         add(f"| {label} | {len(dataset)} | {len({r.get('source', '') for r in dataset})} |")
     add("")
 
@@ -78,9 +89,11 @@ def main() -> None:
         add("")
         cool = sorted(
             threads,
-            key=lambda r: (stars(r.get("metrics", {}).get("bounty", "")),
-                           stars(r.get("metrics", {}).get("score", "")),
-                           float(r.get("metrics", {}).get("replies") or 0)),
+            key=lambda r: (
+                stars(r.get("metrics", {}).get("bounty", "")),
+                stars(r.get("metrics", {}).get("score", "")),
+                float(r.get("metrics", {}).get("replies") or 0),
+            ),
             reverse=True,
         )[: args.top]
         for r in cool:
@@ -152,7 +165,7 @@ def main() -> None:
     add("")
 
     os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
-    open(args.out, "w", encoding="utf-8").write("\n".join(lines))
+    Path(args.out).write_text("\n".join(lines), encoding="utf-8")
     print(f"wrote {args.out} ({len(lines)} lines)")
 
 

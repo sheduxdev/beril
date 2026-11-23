@@ -1,0 +1,122 @@
+{
+  "note": "MCP configuration linter rules. A hit is a review lead, not a verdict.",
+  "updated": "2026-11-23",
+  "instruction_patterns": [
+    "(?i)ignore (all )?(previous|prior) instructions",
+    "(?i)before (using|calling) (this|the) tool",
+    "(?i)always (run|call|read|send)",
+    "(?i)do not (tell|mention|show)",
+    "(?i)send .{0,40}(to|at) https?://",
+    "(?i)you (must|should) "
+  ],
+  "risky_args": [
+    {
+      "match": "--allow-all|--allow-all-paths|--dangerously-skip-permissions|--yolo",
+      "title": "Broad permission flag",
+      "severity": "medium",
+      "fix": "Drop the flag and grant only the directories you need."
+    },
+    {
+      "match": "-v\\s+/var/run/docker.sock",
+      "title": "Docker socket mounted",
+      "severity": "high",
+      "fix": "Socket access gives the container host power. Consider a read-only mount."
+    },
+    {
+      "match": "--privileged",
+      "title": "Privileged container",
+      "severity": "medium",
+      "fix": "Narrow the capabilities."
+    },
+    {
+      "match": "(?:^|\\s)(?:/|~|\\$HOME|/home|/Users)(?:\\s|$)",
+      "title": "Root or home directory shared",
+      "severity": "medium",
+      "fix": "Limit it to the project directory."
+    },
+    {
+      "match": "\\bsh\\b\\s+-c|\\bcmd(?:\\.exe)?\\s+/c",
+      "title": "Launch through a shell",
+      "severity": "low",
+      "fix": "Use a direct executable when possible."
+    },
+    {
+      "match": "--ignore-robots|--no-verify|--insecure",
+      "title": "Verification relaxed",
+      "severity": "low",
+      "fix": "Note why it was relaxed."
+    }
+  ],
+  "supply_chain": [
+    {
+      "regex": "npx\\s+(?:-y|--yes)\\s+(@?[\\w./-]+)(?!@\\d)",
+      "title": "Unpinned npx launch",
+      "severity": "medium",
+      "fix": "Pin the package version, for example pkg@1.2.3, and review the postinstall script.",
+      "false_positive": "A local workspace package."
+    },
+    {
+      "regex": "\\buvx\\s+[\\w.-]+(?!@)",
+      "title": "Unpinned uvx launch",
+      "severity": "low",
+      "fix": "Pin the version: uvx pkg==1.2.3.",
+      "false_positive": "A tool resolved from a lockfile."
+    },
+    {
+      "regex": "\\\"type\\\"\\s*:\\s*\\\"(?:sse|http)\\\"[\\s\\S]{0,120}?http://",
+      "title": "Remote MCP over plain HTTP",
+      "severity": "medium",
+      "fix": "Use HTTPS or terminate TLS in front of the server.",
+      "false_positive": "A loopback address."
+    },
+    {
+      "regex": "curl[^\\n|]*\\|\\s*(?:ba)?sh",
+      "title": "curl piped to a shell",
+      "severity": "high",
+      "fix": "Download, read the script, then run it. Pin a checksum.",
+      "false_positive": "A short official installer."
+    },
+    {
+      "regex": "allowed-tools\\s*:\\s*Bash\\s*$",
+      "title": "Skill allows any Bash",
+      "severity": "medium",
+      "fix": "Restrict with a command pattern where the skill only needs a few commands.",
+      "false_positive": "A skill built around arbitrary commands."
+    },
+    {
+      "regex": "--dangerously-skip-permissions|--trust-all|--no-sandbox|--yolo",
+      "title": "Trust or sandbox flag relaxed",
+      "severity": "medium",
+      "fix": "Confirm the scope the flag opens.",
+      "false_positive": "A throwaway container."
+    },
+    {
+      "regex": "\\\"postinstall\\\"\\s*:",
+      "title": "postinstall script present",
+      "severity": "low",
+      "fix": "Read the script before the first install.",
+      "false_positive": "A build step that only compiles assets."
+    },
+    {
+      "regex": "docker\\s+run[^\\n]*:latest|image:\\s*\\S+:latest",
+      "title": "latest image tag",
+      "severity": "low",
+      "fix": "Pin a digest.",
+      "false_positive": "None."
+    },
+    {
+      "regex": "\\\"source\\\"\\s*:\\s*\\\"https?://[^\\\"]+\\\"",
+      "title": "Remote plugin source",
+      "severity": "low",
+      "fix": "Pin the source to a commit and review the diff before update.",
+      "false_positive": "A source already pinned by tag."
+    },
+    {
+      "regex": "pip\\s+install\\s+(?!--require-hashes)[\\w.-]+",
+      "title": "Unpinned pip install",
+      "severity": "low",
+      "fix": "Use a constraints file or --require-hashes.",
+      "false_positive": "A dev environment note."
+    }
+  ]
+}

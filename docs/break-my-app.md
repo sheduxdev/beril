@@ -15,6 +15,35 @@ Ask four questions:
 
 If the user says "just break it", default to read-only and one narrow active test on the same target. Stop at the first reproducible proof.
 
+## Gate
+
+An active test needs a record:
+
+```bash
+./beril verify --new app.example     # publish the token, then:
+./beril verify --verify app.example
+```
+
+or an explicit `--owned` acknowledgement. A scope file narrows hosts and paths:
+
+```bash
+./beril scan --target https://app.example --active --scope scope.txt
+```
+
+Without a record the active scan exits before the first payload. Details:
+`docs/verification.md`.
+
+## Reader
+
+Pick a profile before writing:
+
+- `engineer`: the person who fixes it.
+- `bugbounty`: program triage, CVSS and request pair.
+- `smb`: one-page SMB report, traffic light, KVKK note.
+- `maintainer`: open source disclosure.
+
+Never mix two profiles in one report.
+
 ## Web app
 
 ```bash
@@ -93,6 +122,12 @@ Then:
 
 ## Report
 
+```bash
+./beril report --input scans/app.json --profile engineer --out rapor.md
+```
+
+Manual block when the renderer is not used:
+
 ```markdown
 ## Title
 <primitive> in <asset>
@@ -132,6 +167,8 @@ Confirmed / inferred
 - The next test needs a write or a restart and the user has not approved it.
 - The target is shared hosting and a scan could affect neighbors.
 - A finding is already a duplicate and the user only needs the note.
+- The budget is spent or the WAF returns 429 twice.
+- Active work lost its ownership record and the user has not renewed it.
 
 ## Quality gate
 

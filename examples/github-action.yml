@@ -1,0 +1,43 @@
+name: security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  beril:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Beril
+        id: beril
+        uses: sheduxdev/beril@684aa7a4df80dfaca4cfcbb894234fef2829f8c1
+        with:
+          target: .
+          fail-on: high
+          sarif: "true"
+      - name: Upload SARIF
+        if: always() && steps.beril.outputs.sarif != ''
+        uses: github/codeql-action/upload-sarif@d2aacf54c2fbc910db8d7ec338fdb54ea48c692d # v3
+        with:
+          sarif_file: ${{ steps.beril.outputs.sarif }}
+          category: beril
+      - name: Keep the report
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: beril-report
+          path: |
+            ${{ steps.beril.outputs.json }}
+          if-no-files-found: ignore

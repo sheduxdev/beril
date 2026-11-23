@@ -1,3 +1,4 @@
+# ruff: noqa: F821, UP031
 # Ghidra postscript. Run with analyzeHeadless and -postScript.
 # Environment: BERIL_GHIDRA_OUT points to the JSON output path.
 import json
@@ -6,17 +7,29 @@ import os
 from ghidra.program.model.symbol import SymbolType
 
 OUT = os.environ.get("BERIL_GHIDRA_OUT", "/tmp/beril-ghidra.json")
-SUSPICIOUS = {"strcpy", "strcat", "sprintf", "gets", "memcpy", "system", "popen",
-              "execve", "CreateProcessA", "WinExec", "recv", "read", "VirtualProtect"}
+SUSPICIOUS = {
+    "strcpy",
+    "strcat",
+    "sprintf",
+    "gets",
+    "memcpy",
+    "system",
+    "popen",
+    "execve",
+    "CreateProcessA",
+    "WinExec",
+    "recv",
+    "read",
+    "VirtualProtect",
+}
 
 data = {"program": currentProgram.getName(), "functions": [], "imports": [], "strings": [], "suspicious": []}
 
 fm = currentProgram.getFunctionManager()
-count = 0
-for f in fm.getFunctions(True):
-    data["functions"].append({"name": f.getName(), "entry": str(f.getEntryPoint()),
-                              "size": f.getBody().getNumAddresses()})
-    count += 1
+for count, f in enumerate(fm.getFunctions(True)):
+    data["functions"].append(
+        {"name": f.getName(), "entry": str(f.getEntryPoint()), "size": f.getBody().getNumAddresses()}
+    )
     if count >= 20000:
         break
 

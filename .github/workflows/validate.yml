@@ -4,13 +4,106 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
 jobs:
-  catalog:
-    runs-on: ubuntu-latest
+  test:
+    name: test ${{ matrix.os }} py${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.os != 'ubuntu-latest' }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ["3.10", "3.11", "3.12", "3.13"]
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - name: Install
+        run: python -m pip install -q -e ".[dev]"
+      - name: Lint with ruff
+        run: ruff check scripts tests
+      - name: Check formatting
+        run: ruff format --check scripts tests
+      - name: Type check with pyright
+        run: pyright
+      - name: Compile every script
+        run: python -m compileall -q scripts
+      - name: Run the regression suite
+        run: python -m pytest -q
+      - name: Validate catalog schema, machine data and prose
+        run: python scripts/validate.py
+      - name: Check the report schema on a fixture scan
+        run: |
+          python scripts/scan_app.py --target https://example.com --json --out "$RUNNER_TEMP/scan" >/dev/null
+          python - <<'EOF'
+          import json, os, sys
+          sys.path.insert(0, "scripts")
+          from beril_model import validate_finding_dict
+          data = json.load(open(os.path.join(os.environ["RUNNER_TEMP"], "scan.json")))
+          assert data["schema"] == "beril.report/1"
+          for finding in data["findings"]:
+              problems = validate_finding_dict(finding)
+              assert not problems, (finding.get("check"), problems)
+          EOF
+
+  package:
+    name: wheel install
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
           python-version: "3.12"
-      - name: Validate catalog schema and prose
-        run: python scripts/validate.py
+          cache: pip
+      - name: Build the wheel
+        run: |
+          python -m pip install -q build
+          python -m build --wheel --outdir "$RUNNER_TEMP/dist"
+      - name: Install into a clean venv and smoke it
+        run: |
+          python -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install -q --no-deps "$RUNNER_TEMP"/dist/*.whl
+          "$RUNNER_TEMP/venv/bin/beril" help >/dev/null
+          "$RUNNER_TEMP/venv/bin/beril" validate | tail -1
+          printf 'requests==2.31.0\n' > "$RUNNER_TEMP/req.txt"
+          mkdir "$RUNNER_TEMP/proj" && mv "$RUNNER_TEMP/req.txt" "$RUNNER_TEMP/proj/requirements.txt"
+          "$RUNNER_TEMP/venv/bin/beril" deps --target "$RUNNER_TEMP/proj" | head -3
+
+  image:
+    name: container offline smoke
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Build
+        run: docker build -t beril:ci .
+      - name: Run with no network and a non-root user
+        run: |
+          docker run --rm --network none --entrypoint id beril:ci
+          docker run --rm --network none beril:ci help >/dev/null
+          mkdir -p "$RUNNER_TEMP/proj" "$RUNNER_TEMP/out"
+          printf 'requests==2.31.0\n' > "$RUNNER_TEMP/proj/requirements.txt"
+          chmod 777 "$RUNNER_TEMP/out"
+          docker run --rm --network none \
+            -v "$RUNNER_TEMP/proj:/work:ro" -v "$RUNNER_TEMP/out:/out" \
+            beril:ci sbom --target /work --out /out/sbom.json --spdx /out/sbom.spdx.json
+          test -s "$RUNNER_TEMP/out/sbom.json"
+          test -s "$RUNNER_TEMP/out/sbom.spdx.json"

@@ -1,0 +1,120 @@
+{
+  "note": "Behavioral indicators from public Minecraft malware reporting. Strings are leads, not signatures. known_good_sha256 is a tiny pinned distribution list, not a reputation service.",
+  "updated": "2026-11-23",
+  "files": [
+    "plugin-config.bin",
+    ".data",
+    "config.bin",
+    "META-INF/services/javax.script.ScriptEngineFactory"
+  ],
+  "strings": [
+    {
+      "needle": "plugin-config.bin",
+      "label": "Shai-Hulud/WeedHack config file",
+      "severity": "high"
+    },
+    {
+      "needle": "Runtime.getRuntime",
+      "label": "Command execution (Runtime.exec)",
+      "severity": "medium"
+    },
+    {
+      "needle": "ProcessBuilder",
+      "label": "Process launch",
+      "severity": "low"
+    },
+    {
+      "needle": "URLClassLoader",
+      "label": "Remote class loading",
+      "severity": "medium"
+    },
+    {
+      "needle": "defineClass",
+      "label": "Dynamic class definition",
+      "severity": "medium"
+    },
+    {
+      "needle": "setOp(",
+      "label": "Operator grant (setOp)",
+      "severity": "medium"
+    },
+    {
+      "needle": "pastebin.com",
+      "label": "Pastebin drop",
+      "severity": "medium"
+    },
+    {
+      "needle": "discord.com/api/webhooks",
+      "label": "Discord webhook",
+      "severity": "medium"
+    },
+    {
+      "needle": "discordapp.com/api/webhooks",
+      "label": "Discord webhook (old)",
+      "severity": "low"
+    },
+    {
+      "needle": "stratum+tcp",
+      "label": "Mining pool",
+      "severity": "medium"
+    },
+    {
+      "needle": "raw.githubusercontent.com",
+      "label": "Remote file pull at run time",
+      "severity": "medium"
+    },
+    {
+      "needle": "Base64.getDecoder",
+      "label": "Base64 decode",
+      "severity": "low"
+    },
+    {
+      "needle": "Cipher.getInstance",
+      "label": "Encryption",
+      "severity": "low"
+    },
+    {
+      "needle": "MessageDigest",
+      "label": "Hash calculation",
+      "severity": "low"
+    },
+    {
+      "needle": "getDeclaredMethod",
+      "label": "Reflection",
+      "severity": "low"
+    },
+    {
+      "needle": "Class.forName",
+      "label": "Class loading",
+      "severity": "low"
+    },
+    {
+      "needle": "System.getProperty",
+      "label": "System property read",
+      "severity": "low"
+    },
+    {
+      "needle": "user.home",
+      "label": "Home directory read",
+      "severity": "low"
+    }
+  ],
+  "known_sha256": {},
+  "plugins": [
+    "EssentialsX",
+    "Vault",
+    "WorldEdit",
+    "WorldGuard",
+    "LuckPerms",
+    "PlaceholderAPI",
+    "ViaVersion",
+    "ProtocolLib",
+    "Citizens",
+    "Multiverse-Core"
+  ],
+  "known_good_sha256": {
+    "bda4685105977fca2e209820a9f0ad24275bd103390a03236f38e59bfdac58e6": "EssentialsX 2.22.0, Modrinth",
+    "870dbedba40445180cd05c1377545419fd251d97e164e75b8f53d559551ba530": "LuckPerms v5.5.87-neoforge, Modrinth",
+    "948b134c013b842f75a3a1d709a9d5e376ca31a5512df7ee3c6984ee00436826": "ViaVersion 5.12.3-SNAPSHOT, Modrinth"
+  }
+}

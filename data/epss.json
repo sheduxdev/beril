@@ -1,0 +1,19 @@
+{
+  "source": "https://api.first.org/data/v1/epss",
+  "updated": "2026-11-22",
+  "note": "Seed estimates for the KEV seed set. Refresh with python scripts/priority.py --update.",
+  "scores": {
+    "CVE-2021-44228": 0.943,
+    "CVE-2021-45046": 0.742,
+    "CVE-2022-22965": 0.912,
+    "CVE-2023-22515": 0.887,
+    "CVE-2023-34362": 0.936,
+    "CVE-2023-44487": 0.641,
+    "CVE-2023-4966": 0.902,
+    "CVE-2024-23897": 0.812,
+    "CVE-2024-3094": 0.556,
+    "CVE-2024-3400": 0.918,
+    "CVE-2024-4577": 0.871,
+    "CVE-2025-0282": 0.784
+  }
+}

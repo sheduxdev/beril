@@ -4,15 +4,18 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TOOLS=0
 RE=0
+DEV=0
 SCAN=""
 
 while [ $# -gt 0 ]; do
   case "$1" in
     --tools) TOOLS=1 ;;
     --re) RE=1 ;;
+    --dev) DEV=1 ;;
     --scan) SCAN="${2:-}"; shift ;;
     -h|--help)
-      echo "usage: ./install.sh [--tools] [--re] [--scan URL]"
+      echo "usage: ./install.sh [--dev] [--tools] [--re] [--scan URL]"
+      echo "  --dev    install pytest, ruff and pyright, then run the gates"
       exit 0 ;;
     *) echo "unknown option: $1" >&2; exit 1 ;;
   esac
@@ -38,8 +41,17 @@ echo "[2/4] installing Python packages"
 echo "[3/4] fetching the Camoufox browser"
 .venv/bin/camoufox fetch
 
-echo "[4/4] checking the catalog"
+echo "[4/4] checking the catalog and the scanners"
 .venv/bin/python scripts/validate.py
+.venv/bin/python -m compileall -q scripts
+
+if [ "$DEV" = "1" ]; then
+  .venv/bin/pip install -r requirements-dev.txt
+  .venv/bin/ruff check scripts tests
+  .venv/bin/ruff format --check scripts tests
+  .venv/bin/pyright
+  .venv/bin/python -m pytest -q
+fi
 
 if [ "$TOOLS" = "1" ]; then
   if ! command -v go >/dev/null 2>&1; then

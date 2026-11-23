@@ -4,6 +4,7 @@ Camoufox is a Firefox build with fingerprint patches and Playwright's API. This
 module adds caching, polite retries and the handful of parsing helpers the
 harvesters share. Import it, do not run it.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -13,12 +14,11 @@ import random
 import re
 import time
 import urllib.parse
+from collections.abc import Iterable
 from dataclasses import dataclass, field
-from typing import Iterable
+from pathlib import Path
 
-DEFAULT_UA = (
-    "Mozilla/5.0 (X11; Linux x86_64; rv:135.0) Gecko/20100101 Firefox/135.0"
-)
+DEFAULT_UA = "Mozilla/5.0 (X11; Linux x86_64; rv:135.0) Gecko/20100101 Firefox/135.0"
 
 
 def clean(text: str | None, limit: int | None = None) -> str:
@@ -78,15 +78,15 @@ class CamoSession:
     _ctx: object | None = None
     _last_request: float = 0.0
 
-    def __enter__(self) -> "CamoSession":
+    def __enter__(self) -> CamoSession:
         from camoufox.sync_api import Camoufox
 
-        kwargs = dict(
-            headless=self.headless,
-            humanize=self.humanize,
-            locale=self.locale,
-            i_know_what_im_doing=True,
-        )
+        kwargs = {
+            "headless": self.headless,
+            "humanize": self.humanize,
+            "locale": self.locale,
+            "i_know_what_im_doing": True,
+        }
         if self.os_name:
             kwargs["os"] = self.os_name
         if self.proxy:
@@ -110,7 +110,7 @@ class CamoSession:
             os.makedirs(self.cache_dir, exist_ok=True)
         return self
 
-    def __exit__(self, *exc) -> None:
+    def __exit__(self, *exc: object) -> None:
         if getattr(self, "_ctx", None):
             self._ctx.__exit__(None, None, None)
 
@@ -157,14 +157,14 @@ class CamoSession:
                     self.page.wait_for_selector(selector, timeout=20_000)
                 raw = self.page.content() if kind == "html" else self.page.inner_text("body")
                 if cache_path and raw:
-                    open(cache_path, "w", encoding="utf-8").write(raw)
+                    Path(cache_path).write_text(raw, encoding="utf-8")
                 return raw
             except Exception as exc:
                 if "Download is starting" in str(exc):
                     try:
                         raw = self.page.evaluate("u => fetch(u).then(r => r.text())", url)
                         if cache_path and raw:
-                            open(cache_path, "w", encoding="utf-8").write(raw)
+                            Path(cache_path).write_text(raw, encoding="utf-8")
                         return raw
                     except Exception:
                         pass
@@ -202,9 +202,7 @@ class CamoSession:
 
     def headings(self, selector: str = "h2, h3") -> list[str]:
         try:
-            values = self.page.eval_on_selector_all(
-                selector, "els => els.map(e => e.innerText)"
-            )
+            values = self.page.eval_on_selector_all(selector, "els => els.map(e => e.innerText)")
             return [clean(v) for v in values if 3 < len(clean(v)) < 160]
         except Exception:
             return []
@@ -219,27 +217,29 @@ class CamoSession:
         html_path = os.path.join(folder, stem + ".html")
         png_path = os.path.join(folder, stem + ".png")
         txt_path = os.path.join(folder, stem + ".txt")
-        open(html_path, "w", encoding="utf-8").write(self.page.content())
-        open(txt_path, "w", encoding="utf-8").write(self.page.inner_text("body"))
+        Path(html_path).write_text(self.page.content(), encoding="utf-8")
+        Path(txt_path).write_text(self.page.inner_text("body"), encoding="utf-8")
         try:
             self.page.screenshot(path=png_path, full_page=True)
         except Exception:
             png_path = ""
-        return {"url": url, "status": resp.status if resp else None,
-                "html": html_path, "text": txt_path, "screenshot": png_path}
+        return {
+            "url": url,
+            "status": resp.status if resp else None,
+            "html": html_path,
+            "text": txt_path,
+            "screenshot": png_path,
+        }
 
 
 def parse_feed(xml: str) -> list[dict]:
     """Minimal RSS/Atom parser that tolerates CDATA and missing fields."""
     items = []
-    chunks = re.findall(r"<item\b.*?</item>", xml, re.S) or re.findall(
-        r"<entry\b.*?</entry>", xml, re.S
-    )
+    chunks = re.findall(r"<item\b.*?</item>", xml, re.S) or re.findall(r"<entry\b.*?</entry>", xml, re.S)
     for block in chunks:
-        def value(tag: str) -> str:
-            m = re.search(
-                rf"<{tag}[^>]*>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?</{tag}>", block, re.S
-            )
+
+        def value(tag: str, block: str = block) -> str:
+            m = re.search(rf"<{tag}[^>]*>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?</{tag}>", block, re.S)
             if not m:
                 return ""
             return clean(re.sub(r"<[^>]+>", "", m.group(1)))
@@ -248,20 +248,24 @@ def parse_feed(xml: str) -> list[dict]:
         if not link:
             m = re.search(r'<link[^>]+href="([^"]+)"', block)
             link = m.group(1) if m else ""
-        items.append({
-            "title": value("title"),
-            "url": link,
-            "author": value("dc:creator") or value("author") or value("name"),
-            "date": value("pubDate") or value("updated") or value("published"),
-            "summary": value("description") or value("summary") or value("content"),
-        })
+        items.append(
+            {
+                "title": value("title"),
+                "url": link,
+                "author": value("dc:creator") or value("author") or value("name"),
+                "date": value("pubDate") or value("updated") or value("published"),
+                "summary": value("description") or value("summary") or value("content"),
+            }
+        )
     return items
 
 
 def iter_jsonl(path: str) -> Iterable[dict]:
     if not os.path.exists(path):
         return []
-    for line in open(path, encoding="utf-8"):
+    with open(path, encoding="utf-8") as handle:
+        lines = handle.readlines()
+    for line in lines:
         line = line.strip()
         if line:
             try:
@@ -270,13 +274,13 @@ def iter_jsonl(path: str) -> Iterable[dict]:
                 continue
 
 
-def write_jsonl(path: str, rows: Iterable[dict], key_fields=("type", "url", "title")) -> int:
+def write_jsonl(path: str, rows: Iterable[dict], key_fields: tuple[str, ...] = ("type", "url", "title")) -> int:
     """Merge, dedupe and write. Returns the number of unique rows."""
     os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
     merged = list(iter_jsonl(path)) + list(rows)
     seen, unique = set(), []
     for row in merged:
-        ident = (row.get("url") or row.get("repo") or row.get("profile") or row.get("name") or "")
+        ident = row.get("url") or row.get("repo") or row.get("profile") or row.get("name") or ""
         key = (row.get("type", ""), ident, row.get("title") or row.get("name") or row.get("handle") or "")
         if key in seen:
             continue

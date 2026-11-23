@@ -1,6 +1,6 @@
-# Scan: https://example.com
+# Scan: http://127.0.0.1:8099
 
-Scanned 2026-11-22T02:29:11+00:00. Read-only checks. Score: 10.
+Generated 2026-11-23T11:12:17+00:00 by Beril 1.4.0. Mode: passive.
 
 | Severity | Count |
 |---|---:|
@@ -8,63 +8,213 @@ Scanned 2026-11-22T02:29:11+00:00. Read-only checks. Score: 10.
 | high | 0 |
 | medium | 2 |
 | low | 4 |
-| info | 1 |
+| info | 3 |
 
-## Target
+## Fix now
 
-- URL: https://example.com
-- HTTP status: 200
-- Title: Example Domain
-- TLS: TLSv1.3, expires Dec 25 22:56:35 2026 GMT (33 days)
-- Issuer: SSL Corporation
+1. **CSP missing** (medium, confidence high): Add a Content-Security-Policy that fits the app.
+2. **HTTP answers and does not force HTTPS** (medium, confidence high): Add a permanent redirect and HSTS.
+
+## Authorization
+
+- No authorization record. Fine for passive checks, not for active ones.
+
+## Scope
+
+**Checks attempted**
+- Security headers and CSP content
+- Cookie flags
+- CORS behavior (one Origin)
+- Common exposed files and admin paths
+- TLS certificate, expiry and version
+- SPF, DKIM and DMARC records
+- MySQL, PostgreSQL, MongoDB, Redis, Elasticsearch, Memcached and Docker ports
+- Technology and version hints, error signatures, directory listing
+
+**Checks not attempted**
+- Pages and APIs behind a login
+- Business logic, authorization and IDOR
+- Parameter injection (active mode required)
+- Content built by JavaScript
+- Subdomains and hosts outside the inventory
+- WAF rule quality and rate limit policy
+- Known CVE matching (dependency scan is a separate command)
+
+**Out of scope**
+- Out of scope subdomains
+- Write operations
+- Authenticated areas
+
+## Limits
+
+- User agent: Beril/1.4 (authorized read-only scan; +https://github.com/sheduxdev/beril)
+- Request budget: 250
+- Requests sent: 38
+- Rate limit: 2.0
+- Backoff on 429/503: 0
+- robots.txt: respected
 
 ## Findings
 
-### Missing strict-transport-security
+### [MEDIUM] CSP missing
 
-- Severity: medium
-- Evidence: Header absent
-- Advice: HSTS is missing. Add it on HTTPS responses.
+- Confidence: high
+- Source: passive
+- CWE: CWE-693
 
-### Missing content-security-policy
+**Evidence:** http://127.0.0.1:8099: header missing
 
-- Severity: medium
-- Evidence: Header absent
-- Advice: CSP is missing. Add a policy that fits the app.
+```http
+GET / HTTP/1.1
+```
 
-### Missing x-content-type-options
+```http
+HTTP 200
+```
 
-- Severity: low
-- Evidence: Header absent
-- Advice: X-Content-Type-Options is missing. Set it to nosniff.
+**Impact:** Browser defence is weak, so the impact of the same bug class grows.
 
-### Missing x-frame-options
+**Fix:** Add a Content-Security-Policy that fits the app.
 
-- Severity: low
-- Evidence: Header absent
-- Advice: X-Frame-Options is missing. Use CSP frame-ancestors or DENY.
+### [MEDIUM] HTTP answers and does not force HTTPS
 
-### Missing referrer-policy
+- Confidence: high
+- Source: passive
+- CWE: CWE-319
 
-- Severity: low
-- Evidence: Header absent
-- Advice: Referrer-Policy is missing. Set strict-origin-when-cross-origin.
+**Evidence:** GET http://127.0.0.1:8099 -> HTTP 200
 
-### Missing permissions-policy
+**Impact:** An active attacker can change the content.
 
-- Severity: low
-- Evidence: Header absent
-- Advice: Permissions-Policy is missing. Disable unused browser features.
+**Fix:** Add a permanent redirect and HSTS.
 
-### Server header exposed
+### [LOW] X-Content-Type-Options missing
 
-- Severity: info
-- Evidence: cloudflare
-- Advice: Remove version details if the server does not need to advertise them.
+- Confidence: high
+- Source: passive
+- CWE: CWE-693
 
-## What this scan does not do
+**Evidence:** http://127.0.0.1:8099: header missing
 
-- No authentication, fuzzing, injection, or brute force.
-- No JavaScript rendering. Use Camoufox harvesters for app flows.
-- No vulnerability database match. Run nuclei separately for known CVEs.
-- A clean result is a starting point, not a certification.
+```http
+GET / HTTP/1.1
+```
+
+```http
+HTTP 200
+```
+
+**Impact:** Browser defence is weak, so the impact of the same bug class grows.
+
+**Fix:** Set nosniff.
+
+### [LOW] X-Frame-Options missing
+
+- Confidence: high
+- Source: passive
+- CWE: CWE-693
+
+**Evidence:** http://127.0.0.1:8099: header missing
+
+```http
+GET / HTTP/1.1
+```
+
+```http
+HTTP 200
+```
+
+**Impact:** Browser defence is weak, so the impact of the same bug class grows.
+
+**Fix:** Use CSP frame-ancestors or X-Frame-Options.
+
+### [LOW] Referrer-Policy missing
+
+- Confidence: high
+- Source: passive
+- CWE: CWE-693
+
+**Evidence:** http://127.0.0.1:8099: header missing
+
+```http
+GET / HTTP/1.1
+```
+
+```http
+HTTP 200
+```
+
+**Impact:** Browser defence is weak, so the impact of the same bug class grows.
+
+**Fix:** Set strict-origin-when-cross-origin.
+
+### [LOW] Permissions-Policy missing
+
+- Confidence: high
+- Source: passive
+- CWE: CWE-693
+
+**Evidence:** http://127.0.0.1:8099: header missing
+
+```http
+GET / HTTP/1.1
+```
+
+```http
+HTTP 200
+```
+
+**Impact:** Browser defence is weak, so the impact of the same bug class grows.
+
+**Fix:** Disable unused browser features.
+
+### [INFO] COOP missing
+
+- Confidence: high
+- Source: passive
+- CWE: CWE-693
+
+**Evidence:** http://127.0.0.1:8099: header missing
+
+```http
+GET / HTTP/1.1
+```
+
+```http
+HTTP 200
+```
+
+**Impact:** Browser defence is weak, so the impact of the same bug class grows.
+
+**Fix:** Consider same-origin.
+
+### [INFO] CORP missing
+
+- Confidence: high
+- Source: passive
+- CWE: CWE-693
+
+**Evidence:** http://127.0.0.1:8099: header missing
+
+```http
+GET / HTTP/1.1
+```
+
+```http
+HTTP 200
+```
+
+**Impact:** Browser defence is weak, so the impact of the same bug class grows.
+
+**Fix:** Consider same-site.
+
+### [INFO] Server version exposed
+
+- Confidence: high
+- Source: passive
+
+**Evidence:** http://127.0.0.1:8099: BerilLab/oops Python/3.14.9
+
+**Impact:** Makes version specific matching easier.
+
+**Fix:** Shorten the banner or hide the version.

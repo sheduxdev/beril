@@ -1,0 +1,19 @@
+{
+  "source": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+  "updated": "2026-11-22",
+  "note": "Seed subset, not the full catalog. Refresh with python scripts/priority.py --update.",
+  "cves": {
+    "CVE-2021-44228": {"name": "Apache Log4j2 remote code execution", "vendor": "Apache", "date_added": "2021-12-10", "ransomware": "Known"},
+    "CVE-2021-45046": {"name": "Apache Log4j2 denial of service and RCE", "vendor": "Apache", "date_added": "2021-12-14", "ransomware": "Known"},
+    "CVE-2022-22965": {"name": "Spring Framework Spring4Shell", "vendor": "Spring", "date_added": "2022-04-04", "ransomware": "Known"},
+    "CVE-2023-22515": {"name": "Atlassian Confluence privilege escalation", "vendor": "Atlassian", "date_added": "2023-10-04", "ransomware": "Known"},
+    "CVE-2023-34362": {"name": "Progress MOVEit SQL injection", "vendor": "Progress", "date_added": "2023-06-02", "ransomware": "Known"},
+    "CVE-2023-44487": {"name": "HTTP/2 Rapid Reset denial of service", "vendor": "Multi", "date_added": "2023-10-10", "ransomware": "Known"},
+    "CVE-2023-4966": {"name": "Citrix NetScaler session token leak", "vendor": "Citrix", "date_added": "2023-10-18", "ransomware": "Known"},
+    "CVE-2024-23897": {"name": "Jenkins CLI arbitrary file read", "vendor": "Jenkins", "date_added": "2024-01-24", "ransomware": "Known"},
+    "CVE-2024-3094": {"name": "xz-utils backdoor", "vendor": "Tukaani", "date_added": "2024-03-29", "ransomware": "Unknown"},
+    "CVE-2024-3400": {"name": "Palo Alto Networks PAN-OS command injection", "vendor": "Palo Alto", "date_added": "2024-04-12", "ransomware": "Known"},
+    "CVE-2024-4577": {"name": "PHP CGI argument injection", "vendor": "PHP", "date_added": "2024-06-12", "ransomware": "Known"},
+    "CVE-2025-0282": {"name": "Ivanti Connect Secure stack overflow", "vendor": "Ivanti", "date_added": "2025-01-08", "ransomware": "Known"}
+  }
+}

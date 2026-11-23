@@ -1,0 +1,15 @@
+{
+  "name": "beril",
+  "owner": {
+    "name": "Deniz USTA",
+    "url": "https://github.com/sheduxdev"
+  },
+  "plugins": [
+    {
+      "name": "beril",
+      "source": "./plugin/claude-code",
+      "description": "Passive-first security assessment, authorized active probes, local hunt and one evidence schema.",
+      "version": "1.4.0"
+    }
+  ]
+}

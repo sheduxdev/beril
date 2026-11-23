@@ -1,0 +1,575 @@
+{
+  "note": "Static audit rules. All are known classes from Bandit/Semgrep/CodeQL/CWE. Confirmation needs reading the data flow.",
+  "updated": "2026-11-23",
+  "rules": [
+    {
+      "id": "tls-verify-off",
+      "title": "TLS verification disabled",
+      "severity": "medium",
+      "confidence": "high",
+      "regex": "verify\\s*=\\s*False|InsecureSkipVerify\\s*:\\s*true|rejectUnauthorized\\s*:\\s*false|NODE_TLS_REJECT_UNAUTHORIZED\\s*=\\s*['\"]?0",
+      "cwe": [
+        "CWE-295"
+      ],
+      "impact": "An attacker in the middle can hide a certificate error.",
+      "fix": "Enable verification or pin a CA.",
+      "false_positive": "Deliberate in a local test environment."
+    },
+    {
+      "id": "debug-on",
+      "title": "Debug mode on in production",
+      "severity": "medium",
+      "confidence": "medium",
+      "regex": "debug\\s*=\\s*True|DEBUG\\s*=\\s*True|debug:\\s*true",
+      "cwe": [
+        "CWE-489"
+      ],
+      "impact": "Stack traces, paths and variables leak. An interactive debugger can run code remotely.",
+      "fix": "Bind it to an environment variable and turn it off in production.",
+      "false_positive": "Harmless in a development settings file."
+    },
+    {
+      "id": "cors-star-credentials",
+      "title": "CORS wildcard with credentials",
+      "severity": "medium",
+      "confidence": "high",
+      "regex": "Allow-Origin['\"]?\\s*[:,]\\s*['\"]\\*['\"][\\s\\S]{0,200}?Allow-Credentials['\"]?\\s*[:,]\\s*['\"]?true",
+      "cwe": [
+        "CWE-942"
+      ],
+      "impact": "Any origin can read session data.",
+      "fix": "Reflect the origin from an allowlist.",
+      "false_positive": "Browser behavior differs by version."
+    },
+    {
+      "id": "eval-exec",
+      "title": "Dynamic code execution",
+      "severity": "medium",
+      "confidence": "low",
+      "regex": "\\b(?:eval|exec)\\s*\\(|new\\s+Function\\s*\\(|Function\\s*\\(['\"]",
+      "cwe": [
+        "CWE-95"
+      ],
+      "impact": "Code injection when input is unchecked.",
+      "fix": "Validate input or use a safe alternative.",
+      "false_positive": "Low risk with constant expressions."
+    },
+    {
+      "id": "unsafe-deserialize",
+      "title": "Unsafe deserialisation",
+      "severity": "high",
+      "confidence": "medium",
+      "regex": "pickle\\.loads?\\(|yaml\\.load\\(|unserialize\\(|ObjectInputStream|Marshal\\.load",
+      "cwe": [
+        "CWE-502"
+      ],
+      "impact": "Untrusted data can run code.",
+      "fix": "Use a safe loader, a signature or an allowlist.",
+      "false_positive": "Lower risk when only your own data is parsed."
+    },
+    {
+      "id": "shell-exec",
+      "title": "Command through a shell",
+      "severity": "medium",
+      "confidence": "medium",
+      "regex": "os\\.system\\(|shell\\s*=\\s*True|shell_exec\\(|Runtime\\.getRuntime\\(\\)\\.exec\\(|child_process",
+      "cwe": [
+        "CWE-78"
+      ],
+      "impact": "Command injection when input reaches the shell.",
+      "fix": "Pass an argument list and turn the shell off.",
+      "false_positive": "Low risk with a fixed command."
+    },
+    {
+      "id": "sql-concat",
+      "title": "Query string concatenation",
+      "severity": "medium",
+      "confidence": "low",
+      "regex": "(?:SELECT|INSERT|UPDATE|DELETE)[^;\\n]{0,120}(?:\\+|%s|\\.format\\(|f['\"])",
+      "cwe": [
+        "CWE-89"
+      ],
+      "impact": "SQL injection when not parameterised.",
+      "fix": "Move to parameterised queries.",
+      "false_positive": "Safe when the driver sends parameters separately."
+    },
+    {
+      "id": "hardcoded-password",
+      "title": "Password in code",
+      "severity": "medium",
+      "confidence": "low",
+      "regex": "(?i)(?:password|passwd|pwd)\\s*[:=]\\s*['\"][^'\"]{6,}['\"]",
+      "cwe": [
+        "CWE-798"
+      ],
+      "impact": "Direct login if it leaks.",
+      "fix": "Move it to an environment variable.",
+      "false_positive": "Placeholders and test values."
+    },
+    {
+      "id": "jwt-none",
+      "title": "Weak JWT signature validation",
+      "severity": "high",
+      "confidence": "medium",
+      "regex": "algorithms\\s*=\\s*\\[[^\\]]*['\"]none['\"]|verify_signature['\"]?\\s*[:=]\\s*(?:False|false)",
+      "cwe": [
+        "CWE-347"
+      ],
+      "impact": "Tokens can be forged.",
+      "fix": "Pin the algorithm and reject none.",
+      "false_positive": "Lower impact for short lived tokens on an internal network."
+    },
+    {
+      "id": "weak-random",
+      "title": "Weak randomness for tokens",
+      "severity": "low",
+      "confidence": "medium",
+      "regex": "Math\\.random\\(\\)|random\\.random\\(\\)|rand\\(\\)",
+      "cwe": [
+        "CWE-338"
+      ],
+      "impact": "Predictable tokens or passwords.",
+      "fix": "Use a CSPRNG.",
+      "false_positive": "Irrelevant for cosmetic values."
+    },
+    {
+      "id": "template-injection",
+      "title": "Template injection candidate",
+      "severity": "high",
+      "confidence": "low",
+      "regex": "render_template_string\\(|Template\\([^)]*request|Handlebars\\.compile\\(|nunjucks\\.renderString",
+      "cwe": [
+        "CWE-1336"
+      ],
+      "impact": "Server side code runs when user input reaches the template.",
+      "fix": "Escape for the context or use a sandbox.",
+      "false_positive": "No risk with fixed templates."
+    },
+    {
+      "id": "innerhtml",
+      "title": "HTML sink",
+      "severity": "low",
+      "confidence": "low",
+      "regex": "\\.innerHTML\\s*=|dangerouslySetInnerHTML|document\\.write\\(",
+      "cwe": [
+        "CWE-79"
+      ],
+      "impact": "XSS when user data is not sanitized.",
+      "fix": "Sanitize or use textContent.",
+      "false_positive": "No risk with fixed content."
+    },
+    {
+      "id": "postmessage-star",
+      "title": "postMessage target wildcard",
+      "severity": "low",
+      "confidence": "medium",
+      "regex": "postMessage\\([^,]+,\\s*['\"]\\*['\"]",
+      "cwe": [
+        "CWE-345"
+      ],
+      "impact": "The message goes to every origin.",
+      "fix": "Pin the target origin and validate the receiver.",
+      "false_positive": "Deliberate in public widgets."
+    },
+    {
+      "id": "dotenv-commit",
+      "title": ".env style key assignment",
+      "severity": "high",
+      "confidence": "high",
+      "regex": "(?m)^(?:DB_|API_|SECRET_|AWS_|NEXT_PUBLIC_|VITE_)[A-Z0-9_]*\\s*=",
+      "cwe": [
+        "CWE-538"
+      ],
+      "impact": "Every secret sits in the clone.",
+      "fix": "Remove it from the index and rotate values.",
+      "false_positive": "A .env.example with sample values is harmless."
+    },
+    {
+      "id": "docker-latest",
+      "title": "Docker latest tag",
+      "severity": "low",
+      "confidence": "high",
+      "regex": "FROM\\s+\\S+:latest|image:\\s*\\S+:latest",
+      "cwe": [
+        "CWE-1104"
+      ],
+      "impact": "The version changes silently on the next pull.",
+      "fix": "Pin a version or a digest.",
+      "false_positive": "None."
+    },
+    {
+      "id": "docker-privileged",
+      "title": "Privileged container",
+      "severity": "medium",
+      "confidence": "high",
+      "regex": "privileged\\s*:\\s*true|--privileged",
+      "cwe": [
+        "CWE-250"
+      ],
+      "impact": "A container escape reaches the host.",
+      "fix": "Narrow the capabilities.",
+      "false_positive": "Some system containers need it."
+    },
+    {
+      "id": "docker-root",
+      "title": "Container runs as root",
+      "severity": "low",
+      "confidence": "medium",
+      "regex": "^USER\\s+root|^\\s*user:\\s*['\"]?root",
+      "cwe": [
+        "CWE-250"
+      ],
+      "impact": "A broken process is privileged on host files.",
+      "fix": "Switch to a low privilege user with USER.",
+      "false_positive": "Needed during first setup."
+    },
+    {
+      "id": "ci-pr-target",
+      "title": "pull_request_target workflow",
+      "severity": "medium",
+      "confidence": "medium",
+      "regex": "pull_request_target",
+      "cwe": [
+        "CWE-829"
+      ],
+      "impact": "Supply chain risk when PR code runs with secrets.",
+      "fix": "Narrow the permissions and pin the checkout ref.",
+      "false_positive": "No risk in workflows that only label."
+    },
+    {
+      "id": "ci-unpinned",
+      "title": "Unpinned GitHub Action",
+      "severity": "low",
+      "confidence": "high",
+      "regex": "uses:\\s*[\\w-]+/[\\w-]+@(?:v\\d+|main|master)\\b",
+      "cwe": [
+        "CWE-1104"
+      ],
+      "impact": "The code changes when the tag moves.",
+      "fix": "Pin the full commit SHA.",
+      "false_positive": "First party actions carry less risk."
+    },
+    {
+      "id": "curl-pipe-shell",
+      "title": "Remote script piped to a shell",
+      "severity": "low",
+      "confidence": "high",
+      "regex": "curl[^\\n|]*\\|\\s*(?:ba)?sh|wget[^\\n|]*\\|\\s*(?:ba)?sh",
+      "cwe": [
+        "CWE-494"
+      ],
+      "impact": "The content can change during download.",
+      "fix": "Pin a version and verify a checksum.",
+      "false_positive": "None."
+    },
+    {
+      "id": "s3-public",
+      "title": "Public S3 ACL",
+      "severity": "high",
+      "confidence": "medium",
+      "regex": "acl\\s*=\\s*['\"]public-read",
+      "cwe": [
+        "CWE-284"
+      ],
+      "impact": "The bucket is open to all.",
+      "fix": "Limit it to the needed objects or use OAC.",
+      "false_positive": "A static site bucket can be public on purpose."
+    },
+    {
+      "id": "ingress-world",
+      "title": "Ingress open to the world",
+      "severity": "medium",
+      "confidence": "high",
+      "regex": "0\\.0\\.0\\.0/0",
+      "cwe": [
+        "CWE-284"
+      ],
+      "impact": "Every port, including admin, is exposed.",
+      "fix": "Narrow to known ranges.",
+      "false_positive": "Expected on a public load balancer."
+    },
+    {
+      "id": "k8s-hostpath",
+      "title": "hostPath volume",
+      "severity": "medium",
+      "confidence": "medium",
+      "regex": "hostPath\\s*:",
+      "cwe": [
+        "CWE-250"
+      ],
+      "impact": "The pod reaches the host filesystem.",
+      "fix": "Use a read-only, narrow path.",
+      "false_positive": "Node agents need it."
+    },
+    {
+      "id": "terraform-secret",
+      "title": "Plain secret in Terraform",
+      "severity": "medium",
+      "confidence": "low",
+      "regex": "(?i)(?:password|secret|token|api_key)\\s*=\\s*['\"][^'\"$]{8,}['\"]",
+      "cwe": [
+        "CWE-798"
+      ],
+      "impact": "It sits in state and the repo.",
+      "fix": "Move it to a variable fed from a secret store.",
+      "false_positive": "A variable reference is not a real secret."
+    },
+    {
+      "id": "chmod-777",
+      "title": "chmod 777",
+      "severity": "low",
+      "confidence": "high",
+      "regex": "chmod\\s+777|0o777|0777",
+      "cwe": [
+        "CWE-732"
+      ],
+      "impact": "Every user can write.",
+      "fix": "Use 755 or 750.",
+      "false_positive": "Sometimes needed for a shared temp directory."
+    },
+    {
+      "id": "error-swallow",
+      "title": "Errors swallowed silently",
+      "severity": "low",
+      "confidence": "medium",
+      "regex": "except\\s*:\\s*(?:pass)?\\s*$|except\\s+Exception\\s*:\\s*pass",
+      "cwe": [
+        "CWE-703"
+      ],
+      "impact": "Failures go invisible and an empty result looks normal.",
+      "fix": "Log at minimum and catch narrow types.",
+      "false_positive": "Acceptable in cleanup code."
+    },
+    {
+      "id": "no-timeout",
+      "title": "No timeout on a network call",
+      "severity": "low",
+      "confidence": "medium",
+      "regex": "requests\\.(?:get|post)\\([^)]*\\)|urlopen\\([^)]*\\)|axios\\.(?:get|post)\\([^)]*\\)",
+      "cwe": [
+        "CWE-400"
+      ],
+      "impact": "A slow service locks the process.",
+      "fix": "Set an explicit timeout.",
+      "false_positive": "The call may be wrapped in another layer."
+    },
+    {
+      "id": "c-gets",
+      "title": "gets without a bound",
+      "severity": "high",
+      "confidence": "high",
+      "regex": "\\bgets\\s*\\(",
+      "languages": [
+        "c"
+      ],
+      "cwe": [
+        "CWE-120"
+      ],
+      "impact": "A long line overflows the buffer.",
+      "fix": "Use fgets with sizeof.",
+      "false_positive": "A wrapper that checks the length."
+    },
+    {
+      "id": "c-strcpy",
+      "title": "strcpy without a bound",
+      "severity": "medium",
+      "confidence": "high",
+      "regex": "\\bstrcpy\\s*\\(",
+      "languages": [
+        "c"
+      ],
+      "cwe": [
+        "CWE-120"
+      ],
+      "impact": "The destination can overflow.",
+      "fix": "Use strncpy or snprintf and terminate.",
+      "false_positive": "The source length is proven bound."
+    },
+    {
+      "id": "c-sprintf",
+      "title": "sprintf into a fixed buffer",
+      "severity": "medium",
+      "confidence": "medium",
+      "regex": "\\bsprintf\\s*\\(",
+      "languages": [
+        "c"
+      ],
+      "cwe": [
+        "CWE-120"
+      ],
+      "impact": "A long formatted value overflows.",
+      "fix": "Use snprintf with the buffer size.",
+      "false_positive": "The buffer is sized above the maximum output."
+    },
+    {
+      "id": "c-system",
+      "title": "Shell execution",
+      "severity": "medium",
+      "confidence": "medium",
+      "regex": "\\b(?:system|popen|execlp?|execvp?)\\s*\\(",
+      "languages": [
+        "c"
+      ],
+      "cwe": [
+        "CWE-78"
+      ],
+      "impact": "A shell or program call with tainted input can inject.",
+      "fix": "Pass a fixed program and quote or validate arguments.",
+      "false_positive": "A constant command with no input."
+    },
+    {
+      "id": "java-sql-concat",
+      "title": "SQL built by concatenation",
+      "severity": "high",
+      "confidence": "medium",
+      "regex": "createStatement\\s*\\(\\s*\\)[\\s\\S]{0,200}?\\+\\s*\\w+|execute(?:Query|Update)?\\s*\\([^;\\n]{0,120}\\+",
+      "languages": [
+        "java"
+      ],
+      "cwe": [
+        "CWE-89"
+      ],
+      "impact": "A quote in the value changes the query.",
+      "fix": "Use PreparedStatement with parameters.",
+      "false_positive": "The value comes from a constant or a numeric cast."
+    },
+    {
+      "id": "java-xss-writer",
+      "title": "Request value written to the response",
+      "severity": "medium",
+      "confidence": "medium",
+      "regex": "getWriter\\s*\\(\\s*\\)\\.(?:print|write)\\([^;\\n]{0,120}(?:getParameter|request\\.)",
+      "languages": [
+        "java"
+      ],
+      "cwe": [
+        "CWE-79"
+      ],
+      "impact": "Script in the parameter runs in the browser.",
+      "fix": "Encode with an HTML encoder or a template engine.",
+      "false_positive": "The value is encoded earlier."
+    },
+    {
+      "id": "java-md5",
+      "title": "MD5 used for hashing",
+      "severity": "low",
+      "confidence": "high",
+      "regex": "MessageDigest\\.getInstance\\s*\\(\\s*[\\\"']MD5[\\\"']",
+      "languages": [
+        "java"
+      ],
+      "cwe": [
+        "CWE-328"
+      ],
+      "impact": "MD5 collisions are cheap.",
+      "fix": "Use SHA-256 unless the format requires MD5.",
+      "false_positive": "A checksum for compatibility."
+    },
+    {
+      "id": "path-from-request",
+      "title": "Path built from request input",
+      "severity": "medium",
+      "confidence": "medium",
+      "regex": "(?:os\\.path\\.join|Path)\\s*\\([^)\\n]{0,80}(?:request\\.|req\\.query|req\\.params)",
+      "languages": [
+        "python",
+        "javascript",
+        "typescript"
+      ],
+      "cwe": [
+        "CWE-22"
+      ],
+      "impact": "A crafted path can escape the directory.",
+      "fix": "Resolve the real path and check the prefix.",
+      "false_positive": "The input is an allowlisted name."
+    },
+    {
+      "id": "ssrf-url-from-request",
+      "title": "URL built from request input",
+      "severity": "medium",
+      "confidence": "medium",
+      "regex": "(?:requests\\.(?:get|post)|urlopen|fetch)\\s*\\([^)\\n]{0,80}(?:request\\.|req\\.query|req\\.body)",
+      "languages": [
+        "python",
+        "javascript",
+        "typescript"
+      ],
+      "cwe": [
+        "CWE-918"
+      ],
+      "impact": "The server can be pointed at internal hosts.",
+      "fix": "Allowlist schemes and hosts, block link-local ranges.",
+      "false_positive": "A fixed upstream."
+    },
+    {
+      "id": "open-redirect",
+      "title": "Redirect target from request input",
+      "severity": "medium",
+      "confidence": "medium",
+      "regex": "(?:redirect|location\\.assign|res\\.redirect)\\s*\\([^)\\n]{0,80}(?:request\\.|req\\.query|req\\.params|next)",
+      "languages": [
+        "python",
+        "javascript",
+        "typescript"
+      ],
+      "cwe": [
+        "CWE-601"
+      ],
+      "impact": "The link can send the user to another site.",
+      "fix": "Allowlist relative paths or known hosts.",
+      "false_positive": "The value is mapped to a fixed table."
+    },
+    {
+      "id": "insecure-cookie",
+      "title": "Cookie without the secure flag",
+      "severity": "medium",
+      "confidence": "medium",
+      "regex": "setSecure\\s*\\(\\s*false\\s*\\)|secure\\s*:\\s*false|Secure\\s*:\\s*false",
+      "cwe": [
+        "CWE-614"
+      ],
+      "impact": "The cookie can travel over plain HTTP.",
+      "fix": "Set Secure and HttpOnly, then SameSite.",
+      "false_positive": "A local development cookie."
+    },
+    {
+      "id": "csrf-disabled",
+      "title": "CSRF protection disabled",
+      "severity": "medium",
+      "confidence": "high",
+      "regex": "csrf\\s*\\(\\s*\\)\\.disable\\s*\\(\\)|csrfProtection\\s*:\\s*false",
+      "cwe": [
+        "CWE-352"
+      ],
+      "impact": "Cross-site requests are accepted.",
+      "fix": "Enable CSRF or use SameSite cookies with an origin check.",
+      "false_positive": "A stateless API with a bearer token only."
+    },
+    {
+      "id": "hardcoded-iv",
+      "title": "Fixed IV or nonce",
+      "severity": "low",
+      "confidence": "medium",
+      "regex": "\\b(?:iv|IV|nonce)\\s*[:=]\\s*['\\\"][^'\\\"]{8,}['\\\"]",
+      "cwe": [
+        "CWE-329"
+      ],
+      "impact": "Reuse weakens the cipher mode.",
+      "fix": "Generate a random IV per message and store it with the ciphertext.",
+      "false_positive": "A test vector."
+    },
+    {
+      "id": "cors-wildcard",
+      "title": "CORS allows any origin",
+      "severity": "medium",
+      "confidence": "high",
+      "regex": "allow_origins\\s*=\\s*\\[\\s*['\\\"]\\*['\\\"]|Access-Control-Allow-Origin['\\\"]?\\s*[:,]\\s*['\\\"]\\*",
+      "cwe": [
+        "CWE-942"
+      ],
+      "impact": "Any site can read the response.",
+      "fix": "List the origins, or keep the wildcard only for public data.",
+      "false_positive": "A public read-only API."
+    }
+  ]
+}

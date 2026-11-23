@@ -12,17 +12,20 @@ Read `AGENTS.md` and `SKILL.md` before a security task.
 
 ```bash
 ./beril scan --target <url-or-path>
-./beril scan --target <binary> --deep
+./beril scan --target <web> --profile smb
+./beril secrets --target <dir> --history
+./beril verify --new <host>
+./beril scan --target <web> --active
+./beril hunt --target <repo> --sandbox
 ./beril re --target <binary>
-./beril labs --run
 ```
 
 ## Rules
 
-- Confirm target and authorization first.
-- Read-only scan, then one manual class at a time.
-- Static before dynamic. No execution of unknown binaries without a snapshot.
+- Confirm target and authorization first. No record, no active probe.
+- Passive scan, then one manual class at a time.
+- Static before dynamic. No execution of unknown binaries without a snapshot or sandbox.
 - A scanner hit is a lead. Replay it.
-- Report with `references/dossier-template.md`.
+- Mask secrets, revoke before history cleanup.
 - Label confirmed and inferred. Keep evidence paths.
 - Stop at the agreed proof.

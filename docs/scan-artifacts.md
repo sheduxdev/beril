@@ -4,9 +4,13 @@
 
 ```bash
 ./beril scan --target ./build/app.apk
-./beril scan --target ./source --tools
+./beril scan --target ./source --tools --vibe
 ./beril scan --target ./bin/service
 ./beril scan --target ./release/app.exe
+./beril scan --target ./plugins --jar
+./beril secrets --target ./source --history
+./beril deps --target ./source --reachability
+./beril sbom --target ./source --out sbom.cdx.json --spdx sbom.spdx.json
 ```
 
 The scanner detects the type and runs the matching checks. Use it on an artifact you own or are authorized to review.
@@ -15,11 +19,12 @@ The scanner detects the type and runs the matching checks. Use it on an artifact
 
 | Type | Checks |
 |---|---|
-| Source tree | Secrets, dangerous sinks, debug flags, CI permissions, container settings, public cloud resources, lockfiles |
-| APK | Manifest flags, exported components, permissions, debug certificate, cleartext, backup, native ABIs, embedded strings |
-| IPA | Info.plist, ATS, URL schemes, frameworks, embedded strings |
-| PE / EXE / DLL | ASLR, DEP, CFG, code signature, section entropy, RWX sections, suspicious imports, packer markers |
-| ELF | PIE, NX, RELRO, canary, RPATH, SUID, imports, embedded URLs |
+| Source tree | Masked secrets and history, 25 source rules, dangerous sinks, debug flags, CI permissions, container settings, public cloud resources, lockfiles, dependency and OSV match, fan-in |
+| APK | Manifest flags, exported components, permissions, debug certificate, cleartext, backup, native ABIs, embedded strings and secrets |
+| IPA | Info.plist, ATS, URL schemes, frameworks, embedded strings and secrets |
+| PE / EXE / DLL | ASLR, DEP, CFG, code signature, section entropy, RWX sections, suspicious imports, packer markers, secrets |
+| ELF | PIE, NX, RELRO, canary, RPATH, SUID, imports, embedded URLs, secrets |
+| JAR | plugin.yml, IOC files, class strings, external URLs, Base64, nested archives, obfuscation, hash |
 | Archive | Path traversal, symlinks, huge entries, nested artifacts, secrets in text entries |
 
 Findings use critical to info. The score is a rough triage number, not CVSS.
@@ -34,15 +39,21 @@ Point the scanner at the repository root.
 
 The built-in pass looks for:
 
-- cloud keys, private keys, database URLs, tokens, and generic secret assignments;
+- cloud keys, private keys, database URLs, tokens, and generic secret assignments, all masked;
 - `eval`, `exec`, `pickle`, `unserialize`, `innerHTML`, `child_process`, and similar sinks;
 - `DEBUG=True`, wildcard allowed hosts, wildcard CORS, disabled TLS checks;
 - `pull_request_target`, `write-all`, unpinned actions;
 - `FROM ...:latest`, remote scripts piped to a shell, privileged containers;
 - public S3 ACLs, `0.0.0.0/0`, public databases;
-- a tracked `.env` and missing lockfiles.
+- a tracked `.env` and missing lockfiles;
+- missing `create policy` after `create table`, client-side service_role, public secret prefixes;
+- vulnerable dependency versions, with an import reachability filter.
 
-`--tools` adds semgrep, gitleaks, and trivy when they are installed.
+`--tools` adds semgrep and gitleaks when they are installed. `--vibe` adds the
+Supabase and client-secret checks. `--sbom` writes a component list.
+
+Secret handling order: revoke first, rotate, deploy, then clean history. Full
+guide: `docs/secrets.md`.
 
 Triage tips:
 
@@ -122,6 +133,27 @@ readelf -lW ./bin/service | grep GNU_STACK
 nm -D ./bin/service
 ```
 
+## JAR and Minecraft plugin review
+
+```bash
+./beril jar --target ./plugins
+./beril jar --target ./FreeRank.jar
+```
+
+Checks the manifest, `plugin.yml` name and version, IOC file names such as
+`plugin-config.bin`, class strings for process and class loading, external URLs,
+Base64 blocks, nested archives, obfuscation ratio and timestamps. The hash is
+always printed for comparison.
+
+A behavior string is not guilt. Open the class in a decompiler:
+
+```bash
+cfr FreeRank.jar --outputdir out
+```
+
+Then follow the call chain to a URL or a `setOp`. Known aile markers:
+`plugin-config.bin` and hidden `.data` files.
+
 ## Archive review
 
 ```bash
@@ -142,7 +174,7 @@ pip install frida-tools objection
 
 `./install.sh --tools` installs gitleaks, trivy, and semgrep along with the recon tools.
 
-The scanner merges their findings as `semgrep`, `gitleaks`, and `trivy` entries. Treat those as leads. A SAST rule can fire on safe code, and a dependency CVE needs a reachability check.
+The scanner merges semgrep and gitleaks results as tool entries. Trivy is installed for manual image or filesystem runs. Treat all of them as leads. A SAST rule can fire on safe code, and a dependency CVE needs a reachability check.
 
 ## Reading the output
 
@@ -165,7 +197,7 @@ The Markdown groups findings by severity and gives evidence and advice. The JSON
 
 - Nothing is executed, so packers, dynamic loading, and runtime permissions are invisible.
 - Obfuscated strings need a real reverse-engineering session.
-- Pattern matches can flag placeholders such as `AKIAIOSFODNN7EXAMPLE`.
+- Pattern matches can flag placeholders such as `AKIAIOSFODNN7EXAMPLE`; the context filter lowers them but does not remove them.
 - Source scan skips `node_modules`, `vendor`, `dist`, `build`, `.venv`, and similar directories.
 - Large files are sampled, not fully read.
 - A clean result is not a certification.

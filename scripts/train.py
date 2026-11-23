@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Training coach for the Beril curriculum.
 
-    ./beril train --status
-    ./beril train --week 1
-    ./beril train --next
-    ./beril train --done w1d1
-    ./beril train --log "Bandit 5 done, learned about setuid"
+./beril train --status
+./beril train --week 1
+./beril train --next
+./beril train --done w1d1
+./beril train --log "Bandit 5 done, learned about setuid"
 """
+
 from __future__ import annotations
 
 import argparse
@@ -15,8 +16,10 @@ import json
 import os
 import sys
 
+import paths
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CURRICULUM = os.path.join(ROOT, "data", "curriculum.json")
+CURRICULUM = os.path.join(paths.DATA, "curriculum.json")
 STATE_DIR = os.path.join(ROOT, "training")
 STATE = os.path.join(STATE_DIR, "progress.json")
 
@@ -37,11 +40,12 @@ def load_state() -> dict:
 
 def save_state(state: dict) -> None:
     os.makedirs(STATE_DIR, exist_ok=True)
-    json.dump(state, open(STATE, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+    with open(STATE, "w", encoding="utf-8") as handle:
+        json.dump(state, handle, ensure_ascii=False, indent=2)
 
 
 def tasks(week: dict) -> list[dict]:
-    out = list(week["drills"]) + [week["deliverable"]]
+    out = [*list(week["drills"]), week["deliverable"]]
     for item in out:
         item["week"] = week["week"]
     return out
@@ -59,14 +63,31 @@ def find_week(curriculum: dict, number: int) -> dict | None:
 
 
 def show_week(week: dict, state: dict) -> str:
-    lines = [f"# Week {week['week']}: {week['title']}", "",
-             f"Phase: {week['phase']}  Time: about {week['minutes']} min", "",
-             f"Goal: {week['goal']}", "", "## Drills"]
+    lines = [
+        f"# Week {week['week']}: {week['title']}",
+        "",
+        f"Phase: {week['phase']}  Time: about {week['minutes']} min",
+        "",
+        f"Goal: {week['goal']}",
+        "",
+        "## Drills",
+    ]
     for d in week["drills"]:
         mark = "x" if d["key"] in state["done"] else " "
         lines.append(f"- [{mark}] {d['text']} ({d['minutes']} min)  `{d['key']}`")
-    lines += ["", "## Lab", f"- {week['lab']}", "", "## Reading", f"- {week['reading']}", "",
-              "## Checkpoint", f"- {week['checkpoint']}", "", "## Deliverable"]
+    lines += [
+        "",
+        "## Lab",
+        f"- {week['lab']}",
+        "",
+        "## Reading",
+        f"- {week['reading']}",
+        "",
+        "## Checkpoint",
+        f"- {week['checkpoint']}",
+        "",
+        "## Deliverable",
+    ]
     d = week["deliverable"]
     mark = "x" if d["key"] in state["done"] else " "
     lines.append(f"- [{mark}] {d['text']}  `{d['key']}`")
@@ -98,7 +119,28 @@ def main() -> None:
     ap.add_argument("--next", action="store_true")
     ap.add_argument("--done", default="")
     ap.add_argument("--log", default="")
+    ap.add_argument("--cases", action="store_true", help="list incident cases")
+    ap.add_argument("--case", default="", help="open one incident case as a drill")
     args = ap.parse_args()
+
+    if args.cases or args.case:
+        import incidents
+
+        if args.cases:
+            for case in incidents.load():
+                print(f"{case['id']:<18} {case['year']} {case['title']}")
+            return
+        case = incidents.find(args.case)
+        if not case:
+            sys.exit(f"unknown case: {args.case}")
+        print(incidents.show(case))
+        print("\n## Drills\n")
+        print("1. Read the source and write the event in one sentence from memory.")
+        print("2. Run `./beril incidents lab` and `run`, then explain why the noise does not match.")
+        print("3. Find one more log line that the rule misses.")
+        print("4. Write the detection as a sigma rule.")
+        print(f"5. Log the session: `./beril train --log \"{case['id']} done\"`.")
+        return
 
     curriculum, state = load_curriculum(), load_state()
 

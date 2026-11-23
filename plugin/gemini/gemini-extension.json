@@ -1,0 +1,10 @@
+{
+  "name": "beril",
+  "version": "1.4.0",
+  "description": "Passive-first security assessment, authorized active probes, local hunt, IaC review and BGP posture.",
+  "contextFileName": "GEMINI.md",
+  "settings": {
+    "passiveDefault": true,
+    "outputDir": "scans"
+  }
+}

@@ -1,22 +1,24 @@
 #!/usr/bin/env python3
 """Optional deep triage for a binary. Runs only tools that are installed.
 
-    python scripts/re_triage.py --target ./sample --out scans/sample-re
-    python scripts/re_triage.py --target ./sample --capa --floss --rizin --ghidra
+python scripts/re_triage.py --target ./sample --out scans/sample-re
+python scripts/re_triage.py --target ./sample --capa --floss --rizin --ghidra
 """
+
 from __future__ import annotations
 
 import argparse
 import json
 import os
-import re
 import shutil
 import subprocess
 import sys
 import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import scan_artifact  # noqa: E402
+import report_render
+import scan_artifact
+from beril_model import Finding
 
 
 def tool(name: str) -> str:
@@ -38,8 +40,20 @@ def run(cmd: list[str], timeout: int = 120) -> tuple[int, str, str]:
         return 1, "", f"{type(exc).__name__}: {exc}"
 
 
-def add(findings: list[dict], sev: str, title: str, evidence: str, advice: str, check: str) -> None:
-    findings.append({"id": check, "severity": sev, "title": title, "evidence": evidence[:600], "advice": advice})
+def add(findings: list[Finding], sev: str, title: str, evidence: str, advice: str, check: str) -> None:
+    findings.append(
+        Finding(
+            check=check,
+            title=title,
+            severity=sev,
+            confidence="medium",
+            evidence=evidence[:600],
+            impact=advice,
+            fix=advice,
+            subject=evidence.split(":", 1)[0][:200],
+            source="tool",
+        )
+    )
 
 
 def capa(path: str, findings: list[dict], timeout: int) -> dict:
@@ -82,7 +96,14 @@ def floss(path: str, findings: list[dict], timeout: int) -> dict:
     stack = data.get("strings", {}).get("stack_strings", [])
     samples = decoded[:20] + stack[:10]
     for s in samples[:20]:
-        add(findings, "info", "floss: decoded string", str(s)[:200], "Review the string for endpoints or keys.", "floss-string")
+        add(
+            findings,
+            "info",
+            "floss: decoded string",
+            str(s)[:200],
+            "Review the string for endpoints or keys.",
+            "floss-string",
+        )
     return {"status": "ok", "decoded": len(decoded), "stack": len(stack), "samples": samples[:20]}
 
 
@@ -103,7 +124,14 @@ def rizin(path: str, findings: list[dict], timeout: int) -> dict:
         if name.split(".")[-1] in risky:
             add(findings, "info", "rizin: risky import", name, "Trace its arguments from input.", "rizin-import")
     if strings:
-        add(findings, "info", "rizin: strings", f"{len(strings)} strings", "Review for endpoints and keys.", "rizin-strings")
+        add(
+            findings,
+            "info",
+            "rizin: strings",
+            f"{len(strings)} strings",
+            "Review for endpoints and keys.",
+            "rizin-strings",
+        )
     return {"status": "ok", "imports": len(imports), "strings": len(strings), "functions": len(funcs)}
 
 
@@ -117,8 +145,19 @@ def ghidra(path: str, findings: list[dict], timeout: int, output: str) -> dict:
     env = os.environ.copy()
     env["BERIL_GHIDRA_OUT"] = dump
     project = tempfile.mkdtemp(prefix="beril-ghidra-")
-    cmd = [analyze, project, "beril", "-import", path, "-overwrite",
-           "-postScript", script, "-scriptPath", os.path.dirname(script), "-deleteProject"]
+    cmd = [
+        analyze,
+        project,
+        "beril",
+        "-import",
+        path,
+        "-overwrite",
+        "-postScript",
+        script,
+        "-scriptPath",
+        os.path.dirname(script),
+        "-deleteProject",
+    ]
     try:
         p = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, env=env, errors="replace")
     except Exception as exc:
@@ -126,13 +165,26 @@ def ghidra(path: str, findings: list[dict], timeout: int, output: str) -> dict:
     if not os.path.exists(dump):
         return {"status": "failed", "error": (p.stderr or p.stdout)[-400:]}
     try:
-        data = json.load(open(dump))
+        with open(dump, encoding="utf-8") as handle:
+            data = json.load(handle)
     except Exception:
         return {"status": "failed", "error": "dump not readable"}
-    add(findings, "info", "ghidra: functions", str(len(data.get("functions", []))), "Open the project for review.", "ghidra-functions")
+    add(
+        findings,
+        "info",
+        "ghidra: functions",
+        str(len(data.get("functions", []))),
+        "Open the project for review.",
+        "ghidra-functions",
+    )
     for item in data.get("suspicious", [])[:20]:
         add(findings, "info", "ghidra: suspicious call", item, "Check the data flow.", "ghidra-call")
-    return {"status": "ok", "functions": len(data.get("functions", [])), "imports": len(data.get("imports", [])), "strings": len(data.get("strings", []))}
+    return {
+        "status": "ok",
+        "functions": len(data.get("functions", [])),
+        "imports": len(data.get("imports", [])),
+        "strings": len(data.get("strings", [])),
+    }
 
 
 def yara(path: str, findings: list[dict], rules: str, timeout: int) -> dict:
@@ -156,10 +208,11 @@ def main() -> None:
     ap.add_argument("--ghidra", action="store_true")
     ap.add_argument("--yara-rules", default="")
     ap.add_argument("--timeout", type=int, default=300)
+    ap.add_argument("--tools", action="store_true", help="also run semgrep and gitleaks")
     args = ap.parse_args()
 
-    base = scan_artifact.scan(args.target)
-    findings = base["findings"]
+    base = scan_artifact.scan(args.target, use_tools=args.tools)
+    findings = base.findings
     tools = {}
     if args.capa:
         tools["capa"] = capa(args.target, findings, args.timeout)
@@ -172,22 +225,24 @@ def main() -> None:
     if args.yara_rules:
         tools["yara"] = yara(args.target, findings, args.yara_rules, args.timeout)
 
-    base["findings"] = findings
-    base["tools"] = tools
-    base["counts"] = {s: sum(1 for f in findings if f["severity"] == s)
-                      for s in ("critical", "high", "medium", "low", "info")}
-    weights = {"critical": 10, "high": 6, "medium": 3, "low": 1, "info": 0}
-    base["score"] = sum(weights.get(f["severity"], 0) for f in findings)
-    text = scan_artifact.render(base)
+    base.findings = findings
+    base.meta["tools"] = tools
+    base.finish()
+    text = report_render.render_markdown(base, "engineer")
     if tools:
         text += "\n## Tool status\n\n"
         for name, status in tools.items():
-            text += f"- {name}: {status.get('status')}" + (f" ({status.get('error', '')[:160]})" if status.get("error") else "") + "\n"
-    print(json.dumps(base, indent=2, ensure_ascii=False) if args.json else text)
+            text += (
+                f"- {name}: {status.get('status')}"
+                + (f" ({status.get('error', '')[:160]})" if status.get("error") else "")
+                + "\n"
+            )
+    print(base.to_json() if args.json else text)
     if args.out:
         os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
-        open(args.out + ".json", "w", encoding="utf-8").write(json.dumps(base, indent=2, ensure_ascii=False))
-        open(args.out + ".md", "w", encoding="utf-8").write(text)
+        base.write_json(args.out + ".json")
+        with open(args.out + ".md", "w", encoding="utf-8") as fh:
+            fh.write(text)
         print(f"\nwrote {args.out}.md", file=sys.stderr)
 
 

@@ -6,6 +6,7 @@
       --fix "scope by session uid"
     ./beril reflect --list
 """
+
 from __future__ import annotations
 
 import argparse
@@ -14,8 +15,10 @@ import json
 import os
 import random
 
+import paths
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(ROOT, "data", "learned_methods.jsonl")
+OUT = os.path.join(paths.DATA, "learned_methods.jsonl")
 
 
 def load() -> list[dict]:
@@ -53,9 +56,14 @@ def main() -> None:
     if not (args.lab and args.finding and args.root_cause and args.fix):
         ap.error("--lab, --finding, --root-cause and --fix are required")
 
-    row = {"lab": args.lab, "finding": args.finding, "root_cause": args.root_cause,
-           "evidence": args.evidence, "fix": args.fix,
-           "at": dt.datetime.now().isoformat(timespec="minutes")}
+    row = {
+        "lab": args.lab,
+        "finding": args.finding,
+        "root_cause": args.root_cause,
+        "evidence": args.evidence,
+        "fix": args.fix,
+        "at": dt.datetime.now().isoformat(timespec="minutes"),
+    }
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "a", encoding="utf-8") as fh:
         fh.write(json.dumps(row, ensure_ascii=False) + "\n")

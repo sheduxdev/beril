@@ -6,17 +6,18 @@ Examples
 python scripts/extract.py --input data/threads.jsonl --out data/thread_details.jsonl --limit 30
 python scripts/extract.py --url https://0x00sec.org/some-post/ --out /tmp/note.json
 """
+
 from __future__ import annotations
 
 import argparse
 import datetime as dt
 import json
 import os
-import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from camo import CamoSession, clean  # noqa: E402
+import guard
+from camo import CamoSession, clean
 
 NOW = lambda: dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")  # noqa: E731
 
@@ -41,9 +42,7 @@ def browser_view(session: CamoSession, url: str) -> tuple[str, list[str], int]:
     body = session.text_of(selector)
     heads = session.headings(f"{selector} h2, {selector} h3")
     try:
-        code = session.page.eval_on_selector_all(
-            f"{selector} pre, {selector} code", "els => els.length"
-        )
+        code = session.page.eval_on_selector_all(f"{selector} pre, {selector} code", "els => els.length")
     except Exception:
         code = 0
     return body, heads, code
@@ -73,9 +72,13 @@ def parse(html: str, fallback_title: str = "") -> dict:
         if len(paras) >= 8:
             break
     intro = " ".join(paras)[:2600]
-    return {"title": title, "headings": heads[:30], "intro": intro,
-            "code_blocks": len(root.find_all(["pre", "code"])),
-            "tables": len(root.find_all("table"))}
+    return {
+        "title": title,
+        "headings": heads[:30],
+        "intro": intro,
+        "code_blocks": len(root.find_all(["pre", "code"])),
+        "tables": len(root.find_all("table")),
+    }
 
 
 def extract_one(session: CamoSession, row: dict, fresh: bool = False) -> dict | None:
@@ -89,11 +92,21 @@ def extract_one(session: CamoSession, row: dict, fresh: bool = False) -> dict | 
         parsed["code_blocks"] = max(code, parsed.get("code_blocks", 0))
     if not parsed or (len(parsed.get("intro", "")) < 120 and not parsed.get("headings")):
         return None
-    return {"type": row.get("type", "thread"), "source": row.get("source", ""),
-            "url": url, "title": parsed.get("title") or row.get("title", ""),
-            "headings": parsed.get("headings", []), "intro": parsed.get("intro", ""),
-            "code_blocks": parsed.get("code_blocks", 0), "tables": parsed.get("tables", 0),
-            "collected_at": NOW()}
+    risk = guard.analyze(parsed.get("intro", ""))
+    return {
+        "type": row.get("type", "thread"),
+        "source": row.get("source", ""),
+        "url": url,
+        "title": parsed.get("title") or row.get("title", ""),
+        "headings": parsed.get("headings", []),
+        "intro": parsed.get("intro", ""),
+        "code_blocks": parsed.get("code_blocks", 0),
+        "tables": parsed.get("tables", 0),
+        "prompt_risk": risk["level"],
+        "prompt_score": risk["risk"],
+        "treat_as": "data",
+        "collected_at": NOW(),
+    }
 
 
 def main() -> None:
@@ -112,14 +125,16 @@ def main() -> None:
     if args.url:
         rows = [{"type": "method", "source": "manual", "url": args.url, "title": ""}]
     else:
-        rows = [json.loads(line) for line in open(args.input, encoding="utf-8") if line.strip()]
+        with open(args.input, encoding="utf-8") as handle:
+            rows = [json.loads(line) for line in handle if line.strip()]
         if args.source:
             rows = [r for r in rows if r.get("source") == args.source]
         rows = [r for r in rows if r.get("url")][: args.limit]
 
     results = []
-    with CamoSession(headless=not args.headful, min_delay=args.delay,
-                     max_delay=args.delay + 1.2, cache_dir=args.cache or None) as session:
+    with CamoSession(
+        headless=not args.headful, min_delay=args.delay, max_delay=args.delay + 1.2, cache_dir=args.cache or None
+    ) as session:
         for i, row in enumerate(rows, 1):
             out = extract_one(session, row, fresh=args.fresh)
             if out:

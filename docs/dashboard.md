@@ -25,7 +25,8 @@ It binds `127.0.0.1:8788` and opens the browser. Use `--port` to change and `--n
 | GitHub atlas | 2,064 repos by category and stars | Open the repo |
 | Labs | Ten labs and last run status | Run the smoke test |
 | Training | Progress, next tasks, journal | Mark done |
-| Scans | Read-only scan and report viewer | Scan a URL or artifact |
+| Posture | Severity trend, latest target, top checks, coverage and suppressed count from local JSON | Open a target report |
+| Scans | Passive scan and report viewer | Scan a URL or artifact |
 | Sources | Row counts per source | Find coverage gaps |
 
 Keyboard: `/` focuses search. Theme is stored in localStorage.
@@ -42,6 +43,22 @@ Jobs store `tokens_in`, `tokens_out`, a model and `cost_usd`. The price table is
 
 Scans and labs create jobs automatically with zero cost. The budget is a soft bar, not a hard stop.
 
+## Design tokens and motion
+
+The page uses a token layer, one skeleton (`shell`) for each page and system
+fonts. Numbers use `tabular-nums`, buttons say the action ("Run scan", "Run
+test"), and the table markup keeps `thead` and `tbody`.
+
+Modern CSS in use:
+
+- `@view-transition` and `startViewTransition` for page changes.
+- `animation-timeline: view()` for a restrained reveal on cards.
+- `grid-template-rows: subgrid` for aligned posture cards.
+- `<details name="faq">` so only one help item is open.
+- `theme-color` and `color-scheme` meta.
+
+Reduced motion disables the reveal and the transition.
+
 ## Design
 
 Inspired by the Polar Orbit system:
@@ -57,13 +74,19 @@ No framework and no build step. One Python file, one HTML string, standard libra
 ## Security
 
 - Binds loopback only.
+- A random per-run token is injected into the page and required as
+  `X-Beril-Token` on every POST.
+- `Origin`, when present, must be the loopback origin.
+- CSP, `nosniff`, `DENY` frame and `no-store` headers are set.
 - Read-only reads for every GET.
-- Two POST actions: run a lab test and run a scan.
+- POST actions: jobs, budget, lab test and scan.
 - Scan targets are passed as list arguments, never a shell string.
 - Report names are matched against `^[A-Za-z0-9._-]+\.md$`.
 - Lab names are checked against a fixed list.
 
-The dashboard has no login. Do not expose it beyond loopback without a proxy and auth.
+The dashboard has no login. The token stops a random local process or a
+cross-site form from firing actions, not a local user. Do not expose it beyond
+loopback without a proxy and auth.
 
 ## Limits
 

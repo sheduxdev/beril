@@ -1,0 +1,334 @@
+{
+  "schema": "beril.report/1",
+  "tool_version": "1.4.0",
+  "target": "http://127.0.0.1:8099",
+  "mode": "passive",
+  "profile": "engineer",
+  "started_at": "2026-11-23T11:11:58+00:00",
+  "finished_at": "2026-11-23T11:12:17+00:00",
+  "authorization": {},
+  "scope": {
+    "in_scope": [],
+    "out_of_scope": [
+      "Out of scope subdomains",
+      "Write operations",
+      "Authenticated areas"
+    ],
+    "checked": [
+      "Security headers and CSP content",
+      "Cookie flags",
+      "CORS behavior (one Origin)",
+      "Common exposed files and admin paths",
+      "TLS certificate, expiry and version",
+      "SPF, DKIM and DMARC records",
+      "MySQL, PostgreSQL, MongoDB, Redis, Elasticsearch, Memcached and Docker ports",
+      "Technology and version hints, error signatures, directory listing"
+    ],
+    "not_checked": [
+      "Pages and APIs behind a login",
+      "Business logic, authorization and IDOR",
+      "Parameter injection (active mode required)",
+      "Content built by JavaScript",
+      "Subdomains and hosts outside the inventory",
+      "WAF rule quality and rate limit policy",
+      "Known CVE matching (dependency scan is a separate command)"
+    ]
+  },
+  "limits": {
+    "user_agent": "Beril/1.4 (authorized read-only scan; +https://github.com/sheduxdev/beril)",
+    "max_requests": 250,
+    "rate_per_second": 2.0,
+    "robots": "respected",
+    "requests_sent": 38,
+    "waf_backoff": 0
+  },
+  "meta": {
+    "status": 200,
+    "final_url": "http://127.0.0.1:8099",
+    "title": "",
+    "tls": {},
+    "fingerprint": {
+      "sha256_16": "f9703878ed8a2acd",
+      "bytes": 362
+    }
+  },
+  "errors": [],
+  "counts": {
+    "critical": 0,
+    "high": 0,
+    "medium": 2,
+    "low": 4,
+    "info": 3
+  },
+  "score": 106,
+  "top_actions": [
+    "0743a4218186",
+    "6e21d70f6bdf"
+  ],
+  "findings": [
+    {
+      "id": "0743a4218186",
+      "check": "web.header.content-security-policy",
+      "title": "CSP missing",
+      "severity": "medium",
+      "confidence": "high",
+      "state": "observed",
+      "verified": false,
+      "source": "passive",
+      "subject": "http://127.0.0.1:8099",
+      "evidence": "http://127.0.0.1:8099: header missing",
+      "impact": "Browser defence is weak, so the impact of the same bug class grows.",
+      "fix": "Add a Content-Security-Policy that fits the app.",
+      "false_positive": "",
+      "cwe": [
+        "CWE-693"
+      ],
+      "tags": [
+        "header"
+      ],
+      "request": "GET / HTTP/1.1",
+      "response": "HTTP 200",
+      "cvss_score": null,
+      "cvss_vector": "",
+      "refs": [],
+      "kev": false,
+      "epss": null,
+      "priority": 30,
+      "priority_reason": "base medium, confidence high"
+    },
+    {
+      "id": "6e21d70f6bdf",
+      "check": "web.https-missing",
+      "title": "HTTP answers and does not force HTTPS",
+      "severity": "medium",
+      "confidence": "high",
+      "state": "observed",
+      "verified": false,
+      "source": "passive",
+      "subject": "http://127.0.0.1:8099",
+      "evidence": "GET http://127.0.0.1:8099 -> HTTP 200",
+      "impact": "An active attacker can change the content.",
+      "fix": "Add a permanent redirect and HSTS.",
+      "false_positive": "",
+      "cwe": [
+        "CWE-319"
+      ],
+      "tags": [],
+      "request": "",
+      "response": "",
+      "cvss_score": null,
+      "cvss_vector": "",
+      "refs": [],
+      "kev": false,
+      "epss": null,
+      "priority": 30,
+      "priority_reason": "base medium, confidence high"
+    },
+    {
+      "id": "21b95aaa18de",
+      "check": "web.header.x-content-type-options",
+      "title": "X-Content-Type-Options missing",
+      "severity": "low",
+      "confidence": "high",
+      "state": "observed",
+      "verified": false,
+      "source": "passive",
+      "subject": "http://127.0.0.1:8099",
+      "evidence": "http://127.0.0.1:8099: header missing",
+      "impact": "Browser defence is weak, so the impact of the same bug class grows.",
+      "fix": "Set nosniff.",
+      "false_positive": "",
+      "cwe": [
+        "CWE-693"
+      ],
+      "tags": [
+        "header"
+      ],
+      "request": "GET / HTTP/1.1",
+      "response": "HTTP 200",
+      "cvss_score": null,
+      "cvss_vector": "",
+      "refs": [],
+      "kev": false,
+      "epss": null,
+      "priority": 10,
+      "priority_reason": "base low, confidence high"
+    },
+    {
+      "id": "8669ca4d41bc",
+      "check": "web.header.x-frame-options",
+      "title": "X-Frame-Options missing",
+      "severity": "low",
+      "confidence": "high",
+      "state": "observed",
+      "verified": false,
+      "source": "passive",
+      "subject": "http://127.0.0.1:8099",
+      "evidence": "http://127.0.0.1:8099: header missing",
+      "impact": "Browser defence is weak, so the impact of the same bug class grows.",
+      "fix": "Use CSP frame-ancestors or X-Frame-Options.",
+      "false_positive": "",
+      "cwe": [
+        "CWE-693"
+      ],
+      "tags": [
+        "header"
+      ],
+      "request": "GET / HTTP/1.1",
+      "response": "HTTP 200",
+      "cvss_score": null,
+      "cvss_vector": "",
+      "refs": [],
+      "kev": false,
+      "epss": null,
+      "priority": 10,
+      "priority_reason": "base low, confidence high"
+    },
+    {
+      "id": "7fb68810a7d1",
+      "check": "web.header.referrer-policy",
+      "title": "Referrer-Policy missing",
+      "severity": "low",
+      "confidence": "high",
+      "state": "observed",
+      "verified": false,
+      "source": "passive",
+      "subject": "http://127.0.0.1:8099",
+      "evidence": "http://127.0.0.1:8099: header missing",
+      "impact": "Browser defence is weak, so the impact of the same bug class grows.",
+      "fix": "Set strict-origin-when-cross-origin.",
+      "false_positive": "",
+      "cwe": [
+        "CWE-693"
+      ],
+      "tags": [
+        "header"
+      ],
+      "request": "GET / HTTP/1.1",
+      "response": "HTTP 200",
+      "cvss_score": null,
+      "cvss_vector": "",
+      "refs": [],
+      "kev": false,
+      "epss": null,
+      "priority": 10,
+      "priority_reason": "base low, confidence high"
+    },
+    {
+      "id": "2e8fa120e8eb",
+      "check": "web.header.permissions-policy",
+      "title": "Permissions-Policy missing",
+      "severity": "low",
+      "confidence": "high",
+      "state": "observed",
+      "verified": false,
+      "source": "passive",
+      "subject": "http://127.0.0.1:8099",
+      "evidence": "http://127.0.0.1:8099: header missing",
+      "impact": "Browser defence is weak, so the impact of the same bug class grows.",
+      "fix": "Disable unused browser features.",
+      "false_positive": "",
+      "cwe": [
+        "CWE-693"
+      ],
+      "tags": [
+        "header"
+      ],
+      "request": "GET / HTTP/1.1",
+      "response": "HTTP 200",
+      "cvss_score": null,
+      "cvss_vector": "",
+      "refs": [],
+      "kev": false,
+      "epss": null,
+      "priority": 10,
+      "priority_reason": "base low, confidence high"
+    },
+    {
+      "id": "d5405458bee3",
+      "check": "web.header.cross-origin-opener-policy",
+      "title": "COOP missing",
+      "severity": "info",
+      "confidence": "high",
+      "state": "observed",
+      "verified": false,
+      "source": "passive",
+      "subject": "http://127.0.0.1:8099",
+      "evidence": "http://127.0.0.1:8099: header missing",
+      "impact": "Browser defence is weak, so the impact of the same bug class grows.",
+      "fix": "Consider same-origin.",
+      "false_positive": "",
+      "cwe": [
+        "CWE-693"
+      ],
+      "tags": [
+        "header"
+      ],
+      "request": "GET / HTTP/1.1",
+      "response": "HTTP 200",
+      "cvss_score": null,
+      "cvss_vector": "",
+      "refs": [],
+      "kev": false,
+      "epss": null,
+      "priority": 2,
+      "priority_reason": "base info, confidence high"
+    },
+    {
+      "id": "9fdf0b772034",
+      "check": "web.header.cross-origin-resource-policy",
+      "title": "CORP missing",
+      "severity": "info",
+      "confidence": "high",
+      "state": "observed",
+      "verified": false,
+      "source": "passive",
+      "subject": "http://127.0.0.1:8099",
+      "evidence": "http://127.0.0.1:8099: header missing",
+      "impact": "Browser defence is weak, so the impact of the same bug class grows.",
+      "fix": "Consider same-site.",
+      "false_positive": "",
+      "cwe": [
+        "CWE-693"
+      ],
+      "tags": [
+        "header"
+      ],
+      "request": "GET / HTTP/1.1",
+      "response": "HTTP 200",
+      "cvss_score": null,
+      "cvss_vector": "",
+      "refs": [],
+      "kev": false,
+      "epss": null,
+      "priority": 2,
+      "priority_reason": "base info, confidence high"
+    },
+    {
+      "id": "8ab3f8cebdec",
+      "check": "web.header.server",
+      "title": "Server version exposed",
+      "severity": "info",
+      "confidence": "high",
+      "state": "observed",
+      "verified": false,
+      "source": "passive",
+      "subject": "http://127.0.0.1:8099",
+      "evidence": "http://127.0.0.1:8099: BerilLab/oops Python/3.14.9",
+      "impact": "Makes version specific matching easier.",
+      "fix": "Shorten the banner or hide the version.",
+      "false_positive": "",
+      "cwe": [],
+      "tags": [],
+      "request": "",
+      "response": "",
+      "cvss_score": null,
+      "cvss_vector": "",
+      "refs": [],
+      "kev": false,
+      "epss": null,
+      "priority": 2,
+      "priority_reason": "base info, confidence high"
+    }
+  ]
+}

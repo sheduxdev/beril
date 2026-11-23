@@ -2,7 +2,64 @@
 
 This file records what Beril reads and what was downloaded to build it. It is the provenance page. If a number in the dossier is challenged, start here.
 
-Snapshot date: 2026-11-22.
+Snapshot date: 2026-11-23.
+
+## Network defense sources
+
+Used for the network visibility, protection and runbook notes. Government and
+standards sources outrank vendor explainers. Product docs are used for fields
+and behavior, not for risk claims.
+
+| Source | Endpoint | Format | Refresh | Notes |
+|---|---|---|---|---|
+| CISA CPGs | `https://www.cisa.gov/cybersecurity-performance-goals-cpgs` | HTML | quarterly | Cross-sector controls |
+| CISA microsegmentation | `https://www.cisa.gov/sites/default/files/2025-07/ZT-Microsegmentation-Guidance-Part-One_508c.pdf` | PDF | yearly | Zero trust, phased |
+| CISA communications hardening | `https://www.cisa.gov/resources-tools/resources/enhanced-visibility-and-hardening-guidance-communications-infrastructure` | HTML and PDF | yearly | Flow and config monitoring |
+| NIST SP 800-94 | `https://csrc.nist.gov/pubs/sp/800/94/final` | HTML | on revision | IDPS classes and tuning |
+| NIST SP 800-61r3 | `https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-61r3.pdf` | PDF | on revision | Incident response |
+| MITRE ATT&CK T1071.004 | `https://attack.mitre.org/techniques/T1071/004/` | HTML | quarterly | DNS C2 and analytics |
+| MITRE D3FEND | `https://d3fend.mitre.org/technique/d3f:NetworkIsolation/` | HTML | quarterly | Isolation taxonomy |
+| SANS flow paper | `https://www.giac.org/paper/gcih/1241/shedding-light-security-incidents-network-flows/102204` | HTML | static | Flow use and limits |
+| SANS capture paper | `https://symantec-enterprise-blogs.security.com/sites/default/files/2021-05/White%20Paper%20%28SANS%29%20-%20Packets%20or%20it%20didn%27t%20happen.pdf` | PDF | static | Metadata and retention tiers |
+| Zeek docs | `https://docs.zeek.org/en/current/script-reference/log-files.html` | HTML | on release | Log fields |
+| Suricata docs | `https://docs.suricata.io/en/latest/output/eve/eve-json-output.html` | HTML | on release | EVE fields |
+| Sigma docs | `https://sigmahq.io/docs/basics/rules.html` | HTML | on release | Rule structure |
+| Tetragon docs | `https://tetragon.io/docs/` | HTML | on release | eBPF telemetry |
+| Cowrie | `https://github.com/cowrie/cowrie` | HTML | on release | SSH honeypot |
+| Cloudflare DDoS | `https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/` | HTML | static | Attack layers and mitigations |
+| Cloudflare ECH | `https://blog.cloudflare.com/encrypted-client-hello/` | HTML | static | ECH and SNI |
+| RFC 8484 | `https://www.rfc-editor.org/rfc/rfc8484.html` | HTML | static | DoH |
+| NIST SP 800-189 | `https://csrc.nist.gov/pubs/sp/800/189/final` | HTML and PDF | on revision | BGP security and DDoS |
+| RFC 7454 | `https://www.rfc-editor.org/rfc/rfc7454.html` | HTML | static | BGP operations and security |
+| RFC 6811 | `https://www.rfc-editor.org/rfc/rfc6811.html` | HTML | static | Origin validation |
+| RFC 6480 | `https://www.rfc-editor.org/rfc/rfc6480.html` | HTML | static | RPKI architecture |
+| RFC 7854 | `https://www.rfc-editor.org/rfc/rfc7854.html` | HTML | static | BGP Monitoring Protocol |
+| RFC 7999 | `https://www.rfc-editor.org/rfc/rfc7999.html` | HTML | static | BLACKHOLE community |
+| MANRS actions | `https://manrs.org/netops/actions/` | HTML | yearly | Routing security actions |
+| MANRS Observatory | `https://observatory.manrs.org/` | HTML | live | Routing readiness |
+| Hurricane Electric BGP Toolkit | `https://bgp.he.net/` | HTML | live | Prefix and ASN lookup |
+| bgp.tools | `https://bgp.tools/` | HTML | live | Prefix, ASN and RPKI lookup |
+| Routinator | `https://github.com/NLnetLabs/routinator` | HTML | on release | Local RPKI validator |
+| ARTEMIS | `https://github.com/FORTH-ICS-INSPIRE/artemis` | HTML | on release | Hijack and leak detection |
+
+## Competitive references
+
+Used only for the comparison in `competitive-gap-analysis.md`. Product docs are
+used for capabilities, not for independent benchmark claims.
+
+| Tool | Endpoint | Refresh | Note |
+|---|---|---|---|
+| OWASP ZAP baseline | `https://www.zaproxy.org/docs/docker/baseline-scan/` | on release | Passive spider, rule config, CI exit codes |
+| Nuclei | `https://docs.projectdiscovery.io/opensource/nuclei/overview` | on release | Template scanner, 6,500+ templates |
+| Semgrep | `https://semgrep.dev/docs/getting-started/quickstart` | on release | SAST rule registry |
+| Trivy | `https://trivy.dev/latest/docs/` | on release | Images, IaC, secrets, licences |
+| OSV-Scanner | `https://github.com/google/osv-scanner` | on release | SCA, containers, call analysis |
+| Gitleaks | `https://github.com/gitleaks/gitleaks` | on release | Secret scan, baseline, SARIF |
+| TruffleHog | `https://github.com/trufflesecurity/trufflehog` | on release | 800+ detectors, live verification |
+| Syft | `https://github.com/anchore/syft` | on release | SBOM in CycloneDX and SPDX |
+| Prowler | `https://docs.prowler.com/` | on release | Multi cloud and K8s posture |
+| Wazuh | `https://documentation.wazuh.com/current/index.html` | on release | SIEM, XDR, FIM, SCA |
+| Strix | `https://github.com/usestrix/strix` | on release | Agentic pentest, PoC, autofix |
 
 ## Live sources
 

@@ -4,6 +4,7 @@
 python scripts/validate.py
 python scripts/validate.py --links --max-links 40
 """
+
 from __future__ import annotations
 
 import argparse
@@ -14,6 +15,8 @@ import os
 import re
 import sys
 import urllib.request
+
+import paths as paths_mod
 
 FILES = {
     "threads.jsonl": ("thread", ("type", "source", "url", "title")),
@@ -30,7 +33,9 @@ FILES = {
 
 def rows(path: str) -> list[dict]:
     out = []
-    for line in open(path, encoding="utf-8"):
+    with open(path, encoding="utf-8") as handle:
+        lines = handle.readlines()
+    for line in lines:
         line = line.strip()
         if not line:
             continue
@@ -43,14 +48,14 @@ def rows(path: str) -> list[dict]:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--data", default="data")
-    ap.add_argument("--docs", default=".")
+    ap.add_argument("--data", default=paths_mod.DATA)
+    ap.add_argument("--docs", default=paths_mod.ROOT)
     ap.add_argument("--links", action="store_true", help="send HEAD requests to every URL")
     ap.add_argument("--max-links", type=int, default=40)
     args = ap.parse_args()
 
     errors, warnings = [], []
-    for name, (kind, required) in FILES.items():
+    for name, (_kind, required) in FILES.items():
         path = os.path.join(args.data, name)
         if not os.path.exists(path):
             warnings.append(f"missing {path}")
@@ -72,9 +77,43 @@ def main() -> None:
             warnings.append(f"{name}: {len(dupes)} duplicate identities, first {dupes[0]}")
         print(f"{name}: {len(dataset)} rows, {sum(1 for r in dataset if r.get('collected_at'))} timestamped")
 
+    # Machine data used by the scanners.
+    machine = [
+        "kev.json",
+        "epss.json",
+        "secret_providers.json",
+        "mcp_rules.json",
+        "jar_iocs.json",
+        "source_rules.json",
+        "cms_vulns.json",
+        "osv_seed.json",
+    ]
+    for name in machine:
+        path = os.path.join(args.data, name)
+        if not os.path.exists(path):
+            errors.append(f"missing machine data {path}")
+            continue
+        try:
+            with open(path, encoding="utf-8") as handle:
+                payload = json.load(handle)
+        except json.JSONDecodeError as exc:
+            errors.append(f"{path} is not valid JSON: {exc}")
+            continue
+        if name == "source_rules.json":
+            for i, rule in enumerate(payload.get("rules", [])):
+                for field in ("id", "title", "severity", "regex", "impact", "fix"):
+                    if not rule.get(field):
+                        errors.append(f"{path} rule {i} missing {field}")
+        if name == "secret_providers.json" and not payload.get("providers"):
+            errors.append(f"{path} has no providers")
+
     # Prose checks from the humanizer rules.
-    for path in glob.glob(os.path.join(args.docs, "*.md")) + glob.glob(os.path.join(args.docs, "references", "*.md")):
-        text = open(path, encoding="utf-8").read()
+    paths = glob.glob(os.path.join(args.docs, "*.md"))
+    paths += glob.glob(os.path.join(args.docs, "docs", "*.md"))
+    paths += glob.glob(os.path.join(args.docs, "references", "*.md"))
+    for path in paths:
+        with open(path, encoding="utf-8") as handle:
+            text = handle.read()
         if "\u2014" in text or "\u2013" in text:
             errors.append(f"{path} contains an em or en dash")
         for pattern in (r"\bnot just\b", r"\bit'?s not .* it'?s\b", r"\bat its core\b", r"\bthe real question\b"):

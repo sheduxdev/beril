@@ -1,0 +1,33 @@
+{
+  "note": "Small offline seed for version hints, not a CVE database. A hit is a lead; confirm against WPScan, Patchstack or NVD before reporting.",
+  "updated": "2026-11-22",
+  "wordpress": {
+    "asset_paths": ["/wp-content/", "/wp-includes/"],
+    "meta_generator": true,
+    "checks": [
+      {"path": "/readme.html", "marker": "WordPress", "severity": "low", "title": "WordPress readme is public", "advice": "Remove readme.html or hide the version."},
+      {"path": "/wp-json/wp/v2/users", "marker": "\"slug\"", "severity": "low", "title": "WordPress REST user enumeration", "advice": "Restrict or cache the users endpoint."},
+      {"path": "/xmlrpc.php", "marker": "XML-RPC", "severity": "low", "title": "XML-RPC is enabled", "advice": "Disable it or rate limit it at the edge."},
+      {"path": "/wp-content/debug.log", "marker": "PHP", "severity": "medium", "title": "WordPress debug.log is public", "advice": "Move it out of the web root or block it."},
+      {"path": "/wp-config.php.bak", "marker": "DB_NAME", "severity": "high", "title": "wp-config backup is public", "advice": "Remove backup copies from the web root."},
+      {"path": "/wp-content/uploads/", "marker": "Index of", "severity": "low", "title": "Upload directory is listable", "advice": "Disable directory listing."}
+    ],
+    "known": [
+      {"below": "6.4.3", "cve": "CVE-2023-2982", "title": "WordPress core auth bypass range", "severity": "high"},
+      {"below": "6.5.5", "cve": "CVE-2024-4577", "title": "PHP CGI exposure range (when on PHP)", "severity": "high"},
+      {"below": "6.6.2", "cve": "CVE-2024-10542", "title": "WordPress core range with known fixes", "severity": "medium"}
+    ]
+  },
+  "drupal": {
+    "meta_generator": true,
+    "checks": [
+      {"path": "/CHANGELOG.txt", "marker": "Drupal", "severity": "medium", "title": "Drupal CHANGELOG is public", "advice": "Block CHANGELOG.txt."}
+    ]
+  },
+  "joomla": {
+    "meta_generator": true,
+    "checks": [
+      {"path": "/administrator/", "marker": "Joomla", "severity": "info", "title": "Joomla administrator is public", "advice": "Restrict by IP or add MFA."}
+    ]
+  }
+}

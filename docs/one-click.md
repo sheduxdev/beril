@@ -24,6 +24,7 @@ That installs the ProjectDiscovery tools, ffuf, gau, waybackurls, assetfinder, g
 
 ```bash
 ./beril scan --target https://your-app.example
+./beril scan --target https://your-app.example --profile smb
 ```
 
 The same command works on local artifacts:
@@ -32,10 +33,13 @@ The same command works on local artifacts:
 ./beril scan --target ./app.apk
 ./beril scan --target ./app.exe
 ./beril scan --target ./bin/service
-./beril scan --target ./source --tools
+./beril scan --target ./source --tools --vibe
+./beril scan --target ./plugins --jar
+./beril secrets --target ./source --history
+./beril mcp --target .
 ```
 
-APK, IPA, PE, ELF, archive and source checks are static. Details are in `scan-artifacts.md` and `reverse-engineering.md`.
+APK, IPA, PE, ELF, JAR, archive and source checks are static. Secrets are masked. Details are in `scan-artifacts.md`, `secrets.md` and `reverse-engineering.md`.
 
 For a binary that needs deeper work:
 
@@ -61,11 +65,22 @@ The scanner makes read-only requests:
 
 - the page itself, its headers, and its title;
 - TLS version, issuer, and certificate expiry;
-- security headers and cookie flags;
-- a short list of paths that are often left exposed: `.git`, `.env`, backups, `phpinfo`, Spring Actuator, OpenAPI, Swagger, GraphQL, `security.txt`;
-- basic HTML fingerprints and password forms served over HTTP.
+- security headers, CSP content, cookie flags and CORS;
+- 35 paths that are often left exposed, from `.git` and `.env` to admin panels and backups;
+- SPF, DKIM and DMARC records;
+- common database and cache ports;
+- HTML fingerprints, SQL error signatures, debug traces and directory listings.
 
-It does not log in, fuzz, inject payloads, brute force, or execute a local binary. Run it only on an app you own or are authorized to test.
+It does not log in, fuzz, brute force, write, or execute a local binary. Run it only on an app you own or are authorized to test.
+
+Active probes are a separate flag and need a one-time ownership proof:
+
+```bash
+./beril verify --new your-app.example
+# put the token in DNS, a well-known file or a meta tag, then:
+./beril verify --verify your-app.example
+./beril scan --target https://your-app.example --active
+```
 
 Output:
 
@@ -97,7 +112,13 @@ Read every match. A nuclei hit is a signature, not proof. Replay the request bef
 | Low | Batch it with other hardening work. |
 | Info | Decide whether it is intended. Do not report it as a bug by itself. |
 
-The most common real finding in this scan is an exposed `.env` or `.git` directory. Rotate any secret you find there, even if you delete the file.
+The most common real finding in this scan is an exposed `.env` or `.git` directory. Revoke any secret you find there first, then remove the file.
+
+A one-page SMB report for a non-technical reader is:
+
+```bash
+./beril scan --target https://your-app.example --profile smb --out scans/ozet
+```
 
 ## 5. Research the stack
 

@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """List and run the local labs.
 
-    ./beril labs
-    ./beril labs --run
-    ./beril labs --run web
+./beril labs
+./beril labs --run
+./beril labs --run web
 """
+
 from __future__ import annotations
 
 import argparse
@@ -23,7 +24,11 @@ LABS = {
     "ad": ["bash", "labs/ad/tests.sh"],
     "llm": ["bash", "labs/llm/tests.sh"],
     "detection": ["bash", "labs/detection/tests.sh"],
-    "fuzz": ["bash", "-c", "cd labs/fuzz && make -s clean all && timeout 20 ./fuzz corpus -runs=20000 -max_len=256 2>&1 | tail -5"],
+    "fuzz": [
+        "bash",
+        "-c",
+        "cd labs/fuzz && make -s clean all && timeout 20 ./fuzz corpus -runs=20000 -max_len=256 2>&1 | tail -5",
+    ],
 }
 
 

@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 """Install Beril's agent entry files into another project.
 
-    ./scripts/install_agent_files.py --target ~/code/app --agents claude,cursor,copilot
-    ./scripts/install_agent_files.py --target . --agents all
+./scripts/install_agent_files.py --target ~/code/app --agents claude,cursor,copilot
+./scripts/install_agent_files.py --target . --agents all
 """
+
 from __future__ import annotations
 
 import argparse
 import os
 import shutil
 import sys
+from pathlib import Path
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -65,10 +67,10 @@ def main() -> None:
             print(f"would write {rel}")
             continue
         os.makedirs(os.path.dirname(dst) or target, exist_ok=True)
-        text = open(src, encoding="utf-8").read()
+        text = Path(src).read_text(encoding="utf-8")
         if name != "aider":
             text = with_header(text, ROOT)
-        open(dst, "w", encoding="utf-8").write(text)
+        Path(dst).write_text(text, encoding="utf-8")
         print(f"wrote {rel}")
         for extra in EXTRA.get(name, []):
             shutil.copyfile(os.path.join(ROOT, extra), os.path.join(target, extra))

@@ -1,0 +1,15 @@
+{
+  "name": "beril",
+  "version": "1.4.0",
+  "description": "Passive-first security assessment skill. Scans what you own, gates active probes behind ownership, hunts local repositories and writes one evidence schema.",
+  "author": {
+    "name": "Deniz USTA",
+    "url": "https://github.com/sheduxdev"
+  },
+  "homepage": "https://github.com/sheduxdev/beril",
+  "repository": "https://github.com/sheduxdev/beril",
+  "license": "MIT",
+  "keywords": ["security", "scanner", "bug-bounty", "secrets", "dependencies", "bgp", "mcp"],
+  "commands": "./commands",
+  "skills": "./skills"
+}

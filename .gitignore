@@ -1,6 +1,10 @@
 .venv/
 __pycache__/
 *.pyc
+.pytest_cache/
+.beril/
+sbom.cdx.json
+licenses.md
 raw/
 evidence/
 profile/
@@ -17,3 +21,10 @@ labs/fuzz/fuzz
 labs/fuzz/artifacts/
 labs/firmware/firmware.bin
 labs/firmware/out/
+.ruff_cache/
+
+data/feed_cache/
+zap-report.json
+build/
+dist/
+*.egg-info/

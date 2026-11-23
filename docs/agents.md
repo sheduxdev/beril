@@ -27,7 +27,9 @@ No setup. The files are at the repository root and load when the agent opens the
 
 `--agents all` copies every file. The script refuses to overwrite without `--force`. It adds the absolute Beril path to the top of each file so the agent knows where `./beril` lives.
 
-The request-to-report flow is in `docs/break-my-app.md`.
+The request-to-report flow is in `docs/break-my-app.md`. The plugin package is in `plugin/` with a Claude marketplace file, a Codex file and a Gemini manifest. Install it with `./scripts/install_plugin.py`. The two lines are in
+`docs/defending.md` and `docs/attacking.md`; the output contract is in
+`docs/report-format.md`.
 
 ## Keep them short
 

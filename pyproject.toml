@@ -1,0 +1,120 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "beril"
+version = "1.4.0"
+description = "Local-first security intelligence skill with a defense scan line and an ownership gated hunt line."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Deniz USTA", email = "sheduxdev@users.noreply.github.com" }]
+keywords = ["security", "scanner", "sbom", "secrets", "bug-bounty", "mcp", "bgp"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: System Administrators",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Security",
+]
+dependencies = [
+  "camoufox[geoip]>=0.4",
+  "beautifulsoup4>=4.12",
+  "lxml>=5.0",
+  "androguard>=4.1",
+  "pefile>=2023.2.7",
+  "pyelftools>=0.31",
+  "esprima>=4.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-timeout>=2.3", "ruff==0.8.6", "pyright>=1.1.390", "jsonschema>=4.20"]
+re = ["flare-capa>=8.0", "flare-floss>=3.2.0", "capstone>=5.0", "keystone-engine>=0.9.2",
+      "ropgadget>=7.7", "pwntools>=4.13", "frida-tools>=14.0", "objection>=1.12.5", "unblob>=26.6.4"]
+
+[project.scripts]
+beril = "scripts.beril_cli:main"
+
+[project.urls]
+Homepage = "https://github.com/sheduxdev/beril"
+Repository = "https://github.com/sheduxdev/beril"
+Issues = "https://github.com/sheduxdev/beril/issues"
+Changelog = "https://github.com/sheduxdev/beril/blob/main/CHANGELOG.md"
+
+[tool.setuptools]
+packages = ["scripts"]
+include-package-data = true
+
+[tool.setuptools.data-files]
+"share/beril/data" = ["data/*.json", "data/*.jsonl"]
+"share/beril/references" = ["references/*.md", "references/*.json"]
+"share/beril/docs" = ["docs/*.md"]
+"share/beril/agents" = ["agents/*.md"]
+"share/beril/benchmarks" = ["benchmarks/manifest.json"]
+"share/beril/benchmarks/owasp" = ["benchmarks/owasp/*.java"]
+"share/beril/benchmarks/juliet" = ["benchmarks/juliet/*.c"]
+"share/beril/benchmarks/secrets" = ["benchmarks/secrets/*.txt"]
+"share/beril/benchmarks/cve" = ["benchmarks/cve/*/*.json"]
+"share/beril/benchmarks/cve/vuln-1" = ["benchmarks/cve/vuln-1/package-lock.json"]
+"share/beril/benchmarks/cve/clean-1" = ["benchmarks/cve/clean-1/package-lock.json"]
+"share/beril/benchmarks/cve/vuln-2" = ["benchmarks/cve/vuln-2/package-lock.json"]
+"share/beril/benchmarks/cve/clean-2" = ["benchmarks/cve/clean-2/package-lock.json"]
+"share/beril/benchmarks/cve/vuln-3" = ["benchmarks/cve/vuln-3/package-lock.json"]
+"share/beril/benchmarks/cve/clean-3" = ["benchmarks/cve/clean-3/package-lock.json"]
+"share/beril/benchmarks/cve/vuln-4" = ["benchmarks/cve/vuln-4/package-lock.json"]
+"share/beril/benchmarks/cve/clean-4" = ["benchmarks/cve/clean-4/package-lock.json"]
+"share/beril/benchmarks/cve/vuln-5" = ["benchmarks/cve/vuln-5/package-lock.json"]
+"share/beril/benchmarks/cve/clean-5" = ["benchmarks/cve/clean-5/package-lock.json"]
+"share/beril/benchmarks/cve/vuln-6" = ["benchmarks/cve/vuln-6/package-lock.json"]
+"share/beril/benchmarks/cve/clean-6" = ["benchmarks/cve/clean-6/package-lock.json"]
+"share/beril/labs/detection/incidents" = ["labs/detection/incidents/*.log", "labs/detection/incidents/*.noise"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+timeout = 120
+addopts = "-q"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+extend-exclude = [".venv", "labs", "profile", "raw", "data"]
+src = ["scripts", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "ANN", "C4", "SIM", "PIE", "RUF"]
+ignore = [
+  "E501",
+  "B008",
+  "SIM105",
+  "RUF001",
+  "RUF002",
+  "RUF003",
+  "ANN401",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "ARG001", "ARG002", "ANN001", "ANN002", "ANN003", "ANN201", "ANN202", "ANN204"]
+"scripts/dashboard_page.py" = ["E501"]
+
+[tool.pyright]
+include = ["scripts", "tests"]
+exclude = [".venv", "labs", "profile", "raw", "data", "scripts/dashboard_page.py"]
+pythonVersion = "3.10"
+extraPaths = ["scripts", "."]
+typeCheckingMode = "basic"
+reportMissingImports = "warning"
+reportMissingModuleSource = "warning"
+reportOptionalMemberAccess = "warning"
+reportAttributeAccessIssue = "warning"
+reportUndefinedVariable = "warning"
+reportArgumentType = "warning"
+reportIndexIssue = "warning"
+reportOptionalSubscript = "warning"

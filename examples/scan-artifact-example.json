@@ -1,0 +1,168 @@
+{
+  "schema": "beril.report/1",
+  "tool_version": "1.4.0",
+  "target": "labs/binary/stack-vuln",
+  "mode": "artifact",
+  "profile": "engineer",
+  "started_at": "2026-11-23T11:12:17+00:00",
+  "finished_at": "2026-11-23T11:12:17+00:00",
+  "authorization": {},
+  "scope": {
+    "in_scope": [],
+    "out_of_scope": [],
+    "checked": [
+      "Hardening flags, RPATH, string secrets",
+      "SUID"
+    ],
+    "not_checked": [
+      "Execution and dynamic behavior",
+      "Packed or encrypted content",
+      "Network verification"
+    ]
+  },
+  "limits": {
+    "max_files": 20000,
+    "max_bytes_per_file": 2000000,
+    "execution": "none"
+  },
+  "meta": {
+    "mode": "0o755",
+    "type": "EXEC",
+    "bind_now": false,
+    "relro": true,
+    "strings": 73,
+    "files": 0,
+    "languages": {},
+    "loc": 0,
+    "kind": "elf"
+  },
+  "errors": [],
+  "counts": {
+    "critical": 0,
+    "high": 2,
+    "medium": 2,
+    "low": 0,
+    "info": 0
+  },
+  "score": 180,
+  "top_actions": [
+    "a55d3bee3707",
+    "22df909efd1b",
+    "04f998ef694b",
+    "b7c95d5abae5"
+  ],
+  "findings": [
+    {
+      "id": "a55d3bee3707",
+      "check": "elf-pie",
+      "title": "No PIE",
+      "severity": "high",
+      "confidence": "high",
+      "state": "observed",
+      "verified": false,
+      "source": "static",
+      "subject": "ELF type EXEC",
+      "evidence": "ELF type EXEC",
+      "impact": "Build with -fPIE -pie.",
+      "fix": "Build with -fPIE -pie.",
+      "false_positive": "",
+      "cwe": [
+        "CWE-693"
+      ],
+      "tags": [],
+      "request": "",
+      "response": "",
+      "cvss_score": null,
+      "cvss_vector": "",
+      "refs": [],
+      "kev": false,
+      "epss": null,
+      "priority": 60,
+      "priority_reason": "base high, confidence high"
+    },
+    {
+      "id": "22df909efd1b",
+      "check": "elf-nx",
+      "title": "Executable stack",
+      "severity": "high",
+      "confidence": "high",
+      "state": "observed",
+      "verified": false,
+      "source": "static",
+      "subject": "GNU_STACK RWE",
+      "evidence": "GNU_STACK RWE",
+      "impact": "Build with -z noexecstack.",
+      "fix": "Build with -z noexecstack.",
+      "false_positive": "",
+      "cwe": [
+        "CWE-693"
+      ],
+      "tags": [],
+      "request": "",
+      "response": "",
+      "cvss_score": null,
+      "cvss_vector": "",
+      "refs": [],
+      "kev": false,
+      "epss": null,
+      "priority": 60,
+      "priority_reason": "base high, confidence high"
+    },
+    {
+      "id": "04f998ef694b",
+      "check": "elf-relro-partial",
+      "title": "Partial RELRO",
+      "severity": "medium",
+      "confidence": "high",
+      "state": "observed",
+      "verified": false,
+      "source": "static",
+      "subject": "BIND_NOW absent",
+      "evidence": "BIND_NOW absent",
+      "impact": "Add -z now for full RELRO.",
+      "fix": "Add -z now for full RELRO.",
+      "false_positive": "",
+      "cwe": [
+        "CWE-693"
+      ],
+      "tags": [],
+      "request": "",
+      "response": "",
+      "cvss_score": null,
+      "cvss_vector": "",
+      "refs": [],
+      "kev": false,
+      "epss": null,
+      "priority": 30,
+      "priority_reason": "base medium, confidence high"
+    },
+    {
+      "id": "b7c95d5abae5",
+      "check": "elf-canary",
+      "title": "No stack canary",
+      "severity": "medium",
+      "confidence": "high",
+      "state": "observed",
+      "verified": false,
+      "source": "static",
+      "subject": "__stack_chk_fail absent",
+      "evidence": "__stack_chk_fail absent",
+      "impact": "Build with -fstack-protector-strong.",
+      "fix": "Build with -fstack-protector-strong.",
+      "false_positive": "",
+      "cwe": [
+        "CWE-693"
+      ],
+      "tags": [],
+      "request": "",
+      "response": "",
+      "cvss_score": null,
+      "cvss_vector": "",
+      "refs": [],
+      "kev": false,
+      "epss": null,
+      "priority": 30,
+      "priority_reason": "base medium, confidence high"
+    }
+  ]
+}

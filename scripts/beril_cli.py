@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """Thin command wrapper for Beril.
 
-    ./beril scan --target https://example.com
-    ./beril harvest forums --sources 0x00sec,reddit
-    ./beril dossier
-    ./beril dashboard
-    ./beril job log --type scan --title "example.com" --status done
+./beril scan --target https://example.com --active
+./beril verify --new example.com
+./beril hunt --target ./repo --sandbox
+./beril harvest forums --sources 0x00sec,reddit
+./beril dossier
+./beril report --input scans/site.json --profile smb
+./beril dashboard
 """
+
 from __future__ import annotations
 
 import os
@@ -16,6 +19,31 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 COMMANDS = {
     "scan": "scan.py",
+    "verify": "authz.py",
+    "secrets": "beril_secrets.py",
+    "mcp": "scan_mcp.py",
+    "jar": "scan_jar.py",
+    "vibe": "scan_vibe.py",
+    "deps": "deps.py",
+    "sbom": "sbom.py",
+    "hunt": "hunt.py",
+    "triage": "triage_crash.py",
+    "guard": "guard.py",
+    "report": "report_render.py",
+    "priority": "priority.py",
+    "bgp": "bgp.py",
+    "run": "run.py",
+    "ingest": "ingest.py",
+    "watch": "watch.py",
+    "infra": "infra.py",
+    "image": "image.py",
+    "netcheck": "netcheck.py",
+    "feeds": "feeds.py",
+    "benchmark": "benchmark.py",
+    "health": "project_health.py",
+    "evidence": "evidence.py",
+    "incidents": "incidents.py",
+    "current": "current_brief.py",
     "harvest": "harvest.py",
     "extract": "extract.py",
     "dossier": "build_dossier.py",
