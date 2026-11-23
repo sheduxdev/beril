@@ -232,7 +232,7 @@ def forums_reddit(s: CamoSession, limit: int) -> list[dict]:
                 {
                     "type": "thread",
                     "source": f"r/{sub}",
-                    "url": "https://www.reddit.com" + permalink,
+                    "url": "https://www.reddit.com" + str(permalink),
                     "title": title,
                     "author": post.get("author", ""),
                     "date": post.get("created-timestamp", ""),
