@@ -61,7 +61,17 @@ def test_extra_headers_are_sent(web_app, auth_store):
     assert report.meta["status"] == 200
 
 
-def test_render_sets_mode(web_app, auth_store):
+def test_render_sets_mode(web_app, auth_store, monkeypatch):
+    monkeypatch.setattr(scan_app, "render_page",
+                        lambda url: ("<html><title>Rendered</title></html>", ""))
     report = scan_app.scan(web_app, rate=10, max_requests=20, render=True)
     assert report.meta["render"] == "camoufox"
     assert report.meta["status"] == 200
+    assert report.meta["title"] == "Rendered"
+
+
+def test_render_failure_falls_back_to_http(web_app, auth_store, monkeypatch):
+    monkeypatch.setattr(scan_app, "render_page", lambda url: ("", "no browser"))
+    report = scan_app.scan(web_app, rate=10, max_requests=20, render=True)
+    assert report.meta["status"] == 200
+    assert any("render failed" in error for error in report.errors)
