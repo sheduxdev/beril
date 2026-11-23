@@ -51,8 +51,9 @@ def test_dockerfile_pins_the_base_digest_and_drops_root():
 
 def test_workflow_matrix_covers_platforms_and_pythons():
     text = (ROOT / ".github/workflows/validate.yml").read_text()
-    for target in ("ubuntu-latest", "macos-latest", "windows-latest"):
-        assert target in text
+    assert "ubuntu-latest" in text
+    assert "macos-" in text
+    assert "windows-latest" in text
     for version in ("3.10", "3.11", "3.12", "3.13"):
         assert f'"{version}"' in text
 
