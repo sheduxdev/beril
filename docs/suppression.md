@@ -39,6 +39,8 @@ Matching is by finding id and normalized fingerprint. The count lands in
 ./beril secrets --target . --suppress .berilignore
 ./beril deps --target . --suppress .berilignore
 ./beril mcp --target . --suppress .berilignore
+./beril infra --target . --suppress .berilignore
+./beril netcheck --target ./configs --suppress .berilignore
 ```
 
 Only an explicit `--suppress` reads the file; a stray `.berilignore` in a

@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Beril
         id: beril
-        uses: sheduxdev/beril@684aa7a4df80dfaca4cfcbb894234fef2829f8c1
+        uses: sheduxdev/beril@5b54bd2d37304ccc529595b6e0a956de1e021e79
         with:
           target: .
           fail-on: high

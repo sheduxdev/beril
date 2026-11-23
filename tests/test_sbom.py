@@ -3,6 +3,8 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 import sbom
@@ -33,10 +35,10 @@ def test_component_has_hash_and_license(tmp_path):
     assert component["properties"][0]["name"] == "beril:manifest"
 
 
-def test_non_spdx_license_becomes_expression(tmp_path):
+def test_non_spdx_license_uses_a_name(tmp_path):
     make_tree(tmp_path, license_value="SEE LICENSE IN LICENSE.md")
     doc = sbom.build(str(tmp_path))
-    assert doc["components"][0]["licenses"] == [{"expression": "SEE LICENSE IN LICENSE.md"}]
+    assert doc["components"][0]["licenses"] == [{"license": {"name": "SEE LICENSE IN LICENSE.md"}}]
 
 
 def test_unvendored_component_has_no_hash(tmp_path):
@@ -112,3 +114,30 @@ def test_cli_writes_all_three_formats(tmp_path, monkeypatch):
     sbom.main()
     assert out.exists() and spdx.exists() and vex.exists()
     assert json.loads(vex.read_text())["statements"][0]["vulnerability"]["name"] == "CVE-2021-23337"
+
+
+def test_cyclonedx_matches_the_official_schema(tmp_path):
+    jsonschema = pytest.importorskip("jsonschema")
+    make_tree(tmp_path)
+    doc = sbom.build(str(tmp_path))
+    schema = json.loads((Path(__file__).resolve().parents[1] / "references" / "cyclonedx-1.5.schema.json").read_text())
+    jsonschema.Draft7Validator(schema).validate(doc)
+
+
+def test_openvex_matches_the_official_schema(tmp_path):
+    jsonschema = pytest.importorskip("jsonschema")
+    make_tree(tmp_path)
+    doc = sbom.build(str(tmp_path))
+    vex = sbom.build_vex(doc, [{"name": "lodash", "version": "4.17.20", "id": "CVE-2021-23337", "fixed": "4.17.21"}])
+    schema = json.loads((Path(__file__).resolve().parents[1] / "references" / "openvex.schema.json").read_text())
+    jsonschema.Draft7Validator(schema).validate(vex)
+
+
+def test_spdx_parses_with_the_official_tools(tmp_path):
+    parser = pytest.importorskip("spdx_tools.spdx.parser.parse_anything")
+    make_tree(tmp_path)
+    doc = sbom.build_spdx(str(tmp_path), sbom.build(str(tmp_path)))
+    path = tmp_path / "out.spdx.json"
+    path.write_text(json.dumps(doc))
+    parsed = parser.parse_file(str(path))
+    assert len(parsed.packages) == 2

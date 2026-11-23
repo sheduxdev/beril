@@ -26,3 +26,12 @@ def test_docker_no_user(tmp_path):
     (tmp_path / "Dockerfile").write_text("FROM alpine:3.20\nRUN true\n")
     report = infra.scan(str(tmp_path))
     assert "infra.docker.no-user" in {f.check for f in report.findings}
+
+
+def test_suppress_rule_removes_finding(tmp_path):
+    import suppress
+
+    (tmp_path / "main.tf").write_text('resource "aws_s3_bucket" "b" {\n  acl = "public-read"\n}\n')
+    report = infra.scan(str(tmp_path))
+    assert suppress.apply_rules(report, [{"check": "infra.tf-public-acl", "reason": "demo"}]) == 1
+    assert "infra.tf-public-acl" not in {f.check for f in report.findings}

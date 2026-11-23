@@ -415,7 +415,7 @@ python -m pytest -q
 ./beril validate
 ```
 
-The suite has 184 tests. It covers the finding model, dedupe, priority, renderers, SARIF schema checks, secret masking and placeholders, the ownership gate, scope matching, the active probes, MCP rules and supply checks, RLS rules, JAR triage, dependency reachability, archive traversal, feed cache and fallback, SBOM with SPDX and OpenVEX, the BGP lookup, adapters, ingest, infra, netcheck, watch, plugins, suppression, the incident library, AST rules, project health, the evidence dossier, packaging and the prompt guard. Web tests run against a local fixture only. Ruff and pyright are pinned to the versions CI uses.
+The suite has 188 tests. It covers the finding model, dedupe, priority, renderers, SARIF schema checks, secret masking and placeholders, the ownership gate, scope matching, the active probes, MCP rules and supply checks, RLS rules, JAR triage, dependency reachability, archive traversal, feed cache and fallback, SBOM with SPDX and OpenVEX, the BGP lookup, adapters, ingest, infra, netcheck, watch, plugins, suppression, the incident library, AST rules, project health, the evidence dossier, packaging and the prompt guard. Web tests run against a local fixture only. Ruff and pyright are pinned to the versions CI uses.
 
 ## Safety model
 

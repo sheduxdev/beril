@@ -50,7 +50,7 @@ def test_sbom_purl_and_license(tmp_path):
     component = data["components"][0]
     assert component["purl"] == "pkg:npm/lodash@4.17.20"
     assert "licenses" not in component
-    assert data["metadata"]["component"]["licenses"][0]["license"]["id"] == "MIT"
+    assert data["metadata"]["component"]["licenses"][0]["license"]["name"] == "MIT"
 
 
 def test_report_cli_roundtrip(tmp_path, web_app):

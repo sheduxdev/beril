@@ -191,7 +191,7 @@ to hand a reader a fix list. Pair it with:
 - Cached KEV, EPSS and OSV access with a seed fallback and an `--online` gate.
 - SARIF 2.1.0 structural check before a document is written.
 - CycloneDX hash and licence completion, SPDX 2.3 and OpenVEX output.
-- 184 tests, including baseline, suppression, gate, feeds, SARIF schema, SPDX/VEX, adapters, AST, incidents, health, evidence,
+- 188 tests, including baseline, suppression, gate, feeds, SARIF schema, SPDX/VEX, adapters, AST, incidents, health, evidence,
   ingest, infra and plugin behavior.
 
 ## Still open

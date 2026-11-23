@@ -35,10 +35,16 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=build /opt/venv /opt/venv
 RUN useradd --uid 10001 --create-home --shell /usr/sbin/nologin beril \
-    && chown -R 10001:10001 /opt/venv/share/beril \
+    && chown -R 10001:10001 /opt/venv \
     && if [ "$WITH_BROWSER" = "1" ]; then \
-         pip install --no-cache-dir camoufox \
-         && su beril -c "python -m camoufox fetch"; \
+         apt-get update \
+         && apt-get install -y --no-install-recommends \
+              libasound2 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdbus-glib-1-2 \
+              libdrm2 libgbm1 libgtk-3-0 libpangocairo-1.0-0 libx11-xcb1 \
+              libxcomposite1 libxdamage1 libxfixes3 libxkbcommon0 libxrandr2 libxt6 \
+         && rm -rf /var/lib/apt/lists/* \
+         && pip install --no-cache-dir camoufox \
+         && su -s /bin/sh beril -c "python -m camoufox fetch"; \
        fi
 USER 10001
 WORKDIR /work

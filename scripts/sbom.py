@@ -156,7 +156,7 @@ def build(root: str) -> dict:
             if license_value in SPDX_IDS:
                 component["licenses"] = [{"license": {"id": license_value}}]
             else:
-                component["licenses"] = [{"expression": license_value}]
+                component["licenses"] = [{"license": {"name": license_value}}]
         out_components.append(component)
     return {
         "bomFormat": "CycloneDX",
@@ -169,9 +169,7 @@ def build(root: str) -> dict:
             "component": {
                 "type": "application",
                 "name": project,
-                "licenses": [{"license": {"id": "NOASSERTION"}}]
-                if not declared_license(root)
-                else [{"license": {"id": declared_license(root)}}],
+                **({"licenses": [{"license": {"name": declared_license(root)}}]} if declared_license(root) else {}),
             },
         },
         "components": out_components,
@@ -187,7 +185,7 @@ def build_spdx(root: str, sbom: dict) -> dict:
     """Render an SPDX 2.3 document from the CycloneDX component list."""
     project = os.path.basename(os.path.abspath(root)) or "project"
     root_license = declared_license(root) or "NOASSERTION"
-    created = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
+    created = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     packages = [
         {
             "SPDXID": "SPDXRef-Package-root",

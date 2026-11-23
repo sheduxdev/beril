@@ -16,6 +16,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import report_render
+import suppress
 from beril_model import Finding, Report, load_report
 
 RULES = [
@@ -198,9 +199,12 @@ def main() -> None:
     ap.add_argument("--out", default="")
     ap.add_argument("--fail-on", default="none", choices=("none", "info", "low", "medium", "high", "critical"))
     ap.add_argument("--baseline", default="")
+    ap.add_argument("--suppress", default="", help="JSON Lines ignore file")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
     report = scan(args.target)
+    if args.suppress:
+        suppress.apply_file(report, args.suppress)
     if args.baseline:
         report.suppress(load_report(args.baseline))
     print(report.to_json() if args.json else report_render.render_markdown(report, "engineer"))
