@@ -292,7 +292,7 @@ What Beril does not know sits in `knowledge/GAPS.md`, ranked. `./beril gaps --ne
 ./beril dashboard
 ```
 
-`127.0.0.1:8788`. Dark only, no framework, no build step, loopback only. Tracks spend, jobs, tokens, budget, labs, scans and every catalog. Ten labs run from the UI. Scans run read-only. `/` focuses search. See `docs/dashboard.md`.
+`127.0.0.1:8788`. Orbit, Apple HIG and Material 3 design rules, light and dark by system, responsive down to a phone, no framework, no build step, loopback only. Tracks spend, jobs, tokens, budget, labs, scans and every catalog. Ten labs run from the UI. Scans run read-only. `/` filters, `Ctrl K` jumps to any page. See `docs/dashboard.md`.
 
 ## Use with any agent
 

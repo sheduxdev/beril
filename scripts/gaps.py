@@ -33,7 +33,7 @@ def save(rows: list[dict]) -> None:
         "|---|---|---|---|---|---|",
     ]
     for i, r in enumerate(rows, 1):
-        status = r["status"] if r["status"] != "covered" else f"covered by `{r.get('covered_by','')}`"
+        status = r["status"] if r["status"] != "covered" else f"covered by `{r.get('covered_by', '')}`"
         lines.append(f"| {i} | {r['domain']} | {r['gap']} | {r['priority']} | `{r['source']}` | {status} |")
     lines += ["", "Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.", ""]
     with open(MD, "w", encoding="utf-8") as fh:
