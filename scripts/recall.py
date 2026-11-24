@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Recall durable knowledge before searching the web.
 
-    ./beril recall "idor object owner check"
-    ./beril recall "saml signature wrapping" --decide
-    ./beril recall "ghidra rust" --json
+./beril recall "idor object owner check"
+./beril recall "saml signature wrapping" --decide
+./beril recall "ghidra rust" --json
 """
+
 from __future__ import annotations
 
 import argparse
@@ -17,7 +18,37 @@ from collections import Counter
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INDEX = os.path.join(ROOT, "knowledge", "index.json")
-STOP = {"a", "an", "and", "are", "as", "at", "be", "by", "for", "from", "has", "have", "in", "is", "it", "its", "of", "on", "or", "that", "the", "this", "to", "was", "with", "without", "into", "not", "no"}
+STOP = {
+    "a",
+    "an",
+    "and",
+    "are",
+    "as",
+    "at",
+    "be",
+    "by",
+    "for",
+    "from",
+    "has",
+    "have",
+    "in",
+    "is",
+    "it",
+    "its",
+    "of",
+    "on",
+    "or",
+    "that",
+    "the",
+    "this",
+    "to",
+    "was",
+    "with",
+    "without",
+    "into",
+    "not",
+    "no",
+}
 
 
 def tokens(text: str) -> list[str]:

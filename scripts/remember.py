@@ -9,6 +9,7 @@
     ./beril remember list
     ./beril remember index
 """
+
 from __future__ import annotations
 
 import argparse
@@ -51,7 +52,9 @@ def parse(path: str) -> dict:
 def load() -> list[dict]:
     if not os.path.isdir(DIR):
         return []
-    return [c for c in (parse(os.path.join(DIR, f)) for f in sorted(os.listdir(DIR)) if f.endswith(".md")) if c.get("id")]
+    return [
+        c for c in (parse(os.path.join(DIR, f)) for f in sorted(os.listdir(DIR)) if f.endswith(".md")) if c.get("id")
+    ]
 
 
 def rebuild() -> list[dict]:
@@ -59,11 +62,18 @@ def rebuild() -> list[dict]:
     os.makedirs(DIR, exist_ok=True)
     with open(INDEX, "w", encoding="utf-8") as fh:
         json.dump(cards, fh, ensure_ascii=False, indent=1)
-    lines = ["# Knowledge index", "",
-             f"{len(cards)} durable cards. Read this before a web search; open a card only when it matches.",
-             "", "| id | title | tags | confidence | updated |", "|---|---|---|---|---|"]
+    lines = [
+        "# Knowledge index",
+        "",
+        f"{len(cards)} durable cards. Read this before a web search; open a card only when it matches.",
+        "",
+        "| id | title | tags | confidence | updated |",
+        "|---|---|---|---|---|",
+    ]
     for c in sorted(cards, key=lambda x: (x.get("tags", [""])[0], x["title"])):
-        lines.append(f"| `{c['id']}` | {c['title']} | {', '.join(c.get('tags', []))} | {c.get('confidence', '?')} | {c.get('updated', '')} |")
+        lines.append(
+            f"| `{c['id']}` | {c['title']} | {', '.join(c.get('tags', []))} | {c.get('confidence', '?')} | {c.get('updated', '')} |"
+        )
     with open(os.path.join(DIR, "INDEX.md"), "w", encoding="utf-8") as fh:
         fh.write("\n".join(lines) + "\n")
     return cards
@@ -72,7 +82,7 @@ def rebuild() -> list[dict]:
 def write_card(data: dict) -> str:
     os.makedirs(DIR, exist_ok=True)
     path = os.path.join(DIR, data["id"] + ".md")
-    text = f'''---
+    text = f"""---
 id: {data["id"]}
 title: {data["title"]}
 tags: {", ".join(data.get("tags", []))}
@@ -99,7 +109,7 @@ status: {data.get("status", "active")}
 ## Failure modes
 
 {data.get("failure", "")}
-'''
+"""
     with open(path, "w", encoding="utf-8") as fh:
         fh.write(text)
     return path
@@ -138,11 +148,19 @@ def main() -> None:
         if os.path.exists(os.path.join(DIR, cid + ".md")):
             print(f"exists: {cid}; use update")
             return
-        write_card({"id": cid, "title": args.title, "claim": args.claim, "test": args.test,
-                    "proof": args.proof, "failure": args.failure,
-                    "tags": [x.strip() for x in args.tags.split(",") if x.strip()],
-                    "sources": [x.strip() for x in args.sources.split(",") if x.strip()],
-                    "confidence": args.confidence})
+        write_card(
+            {
+                "id": cid,
+                "title": args.title,
+                "claim": args.claim,
+                "test": args.test,
+                "proof": args.proof,
+                "failure": args.failure,
+                "tags": [x.strip() for x in args.tags.split(",") if x.strip()],
+                "sources": [x.strip() for x in args.sources.split(",") if x.strip()],
+                "confidence": args.confidence,
+            }
+        )
         rebuild()
         print(cid)
     elif args.cmd == "update":
