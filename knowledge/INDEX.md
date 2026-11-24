@@ -1,6 +1,6 @@
 # Knowledge index
 
-357 durable cards. Read this before a web search; open a card only when it matches.
+381 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -53,6 +53,8 @@
 | `binary-wasm` | Wasm modules have validation and a host boundary | binary, wasm, sandbox | medium | 2026-11-25 |
 | `binary-windows-kernel` | Windows kernel bugs are object and IRP lifetime bugs | binary, windows, kernel | high | 2026-11-25 |
 | `browser-extension-permissions` | An extension is a trusted page with broad APIs | browser, extension, permissions | medium | 2026-11-24 |
+| `build-hermetic` | A hermetic build is reproducible from declared inputs | build, hermetic, reproducible | medium | 2026-11-25 |
+| `build-incremental` | An incremental build is a cache keyed on inputs | build, incremental, cache | high | 2026-11-25 |
 | `cloud-docker-socket` | A mounted Docker socket is root on the host | cloud, docker, container | medium | 2026-11-24 |
 | `cloud-k8s-hostpath` | A privileged pod with hostPath is a host escape | cloud, kubernetes, container | high | 2026-11-24 |
 | `cloud-secrets` | A secrets manager is only as strong as its policy | cloud, secrets, iam | high | 2026-11-24 |
@@ -80,12 +82,19 @@
 | `comp-ssa` | SSA makes each definition single and explicit | compiler, ssa, dataflow | high | 2026-11-25 |
 | `comp-type-check` | Type checking proves a property before runtime | compiler, types, soundness | medium | 2026-11-25 |
 | `comp-ub` | Undefined behavior lets the optimizer assume | compiler, ub, optimizer | high | 2026-11-25 |
+| `conc-csp` | A channel is a rendezvous with a buffer policy | concurrency, csp, channels | medium | 2026-11-25 |
+| `conc-actor` | An actor owns its state and processes one message at a time | concurrency, actor, supervision | medium | 2026-11-25 |
+| `conc-stm` | STM retries a transaction when a read value changed | concurrency, stm, transaction | low | 2026-11-25 |
+| `conc-memory-model` | The memory model defines which writes a read may see | concurrency, memory-model, atomics | high | 2026-11-25 |
 | `container-escape` | A container escape is a host resource exposed to the container | container, escape, kubernetes | high | 2026-11-24 |
 | `crypto-kdf` | A password hash is a cost parameter | crypto, kdf, password | medium | 2026-11-25 |
 | `key-management` | Key management is where crypto bugs become data bugs | crypto, keys, storage | medium | 2026-11-24 |
 | `crypto-postquantum` | PQC migration is a hybrid, not a flag | crypto, pqc, hybrid | low | 2026-11-24 |
 | `crypto-weak-random` | Predictable randomness is a key recovery bug | crypto, random, predictability | high | 2026-11-24 |
 | `tls-config-review` | TLS is a version, a chain and a policy | crypto, tls, certificate | medium | 2026-11-24 |
+| `stream-watermark` | A watermark is a promise about event time | data, streaming, watermark | high | 2026-11-25 |
+| `stream-window` | A window assigns events and a trigger emits results | data, streaming, window | medium | 2026-11-25 |
+| `stream-exactly-once` | Exactly-once output is a transaction or an idempotent sink | data, streaming, exactly-once | high | 2026-11-25 |
 | `db-checkpoint` | A checkpoint bounds the recovery work | database, checkpoint, recovery | medium | 2026-11-25 |
 | `db-deadlock` | A deadlock is a cycle in the wait-for graph | database, deadlock, retry | medium | 2026-11-25 |
 | `db-lock-manager` | A lock manager has modes, a wait queue and fairness | database, locks, fairness | medium | 2026-11-25 |
@@ -251,6 +260,12 @@
 | `mobile-flutter` | Flutter hides logic in libapp.so and pins in Dart | mobile, flutter, dart | medium | 2026-11-24 |
 | `mobile-swift` | Swift hooks need mangled names or a bridge | mobile, ios, swift | medium | 2026-11-24 |
 | `mobile-swiftui-state` | SwiftUI state is not a security boundary | mobile, ios, swiftui | low | 2026-11-24 |
+| `net-cdn` | A CDN is a cache with a key and a purge | network, cdn, cache | medium | 2026-11-25 |
+| `net-quic` | QUIC moves reliability into user space per stream | network, quic, streams | medium | 2026-11-25 |
+| `num-unicode` | A string is bytes plus an encoding; a character is a grapheme | numerics, unicode, encoding | high | 2026-11-25 |
+| `num-time` | A timestamp is an instant; a local time is a rule | numerics, time, timezone | high | 2026-11-25 |
+| `num-float` | Floating point is exact at powers of two and lossy elsewhere | numerics, float, rounding | high | 2026-11-25 |
+| `num-money` | Money is an integer of minor units with an explicit rounding rule | numerics, money, decimal | high | 2026-11-25 |
 | `org-postmortem-culture` | A blameless postmortem turns incidents into learning | organization, postmortem, postmortems, blameless, culture, learning | high | 2026-11-25 |
 | `org-rotation` | A rotation needs a handoff and shadowing | organization, oncall, rotation | medium | 2026-11-25 |
 | `org-skill-matrix` | A skill matrix makes bus factor visible | organization, skills, bus-factor | medium | 2026-11-25 |
@@ -272,6 +287,8 @@
 | `os-signal` | A signal handler runs on an arbitrary stack point | os, signal, async | medium | 2026-11-25 |
 | `os-syscall` | A syscall is an ABI with an error convention | os, syscall, errno | medium | 2026-11-25 |
 | `os-virtual-memory` | Virtual memory is a translation and permission layer | os, virtual-memory, paging | medium | 2026-11-25 |
+| `perf-latency-percentile` | A percentile hides the shape and coordinated omission | performance, latency, percentile | high | 2026-11-25 |
+| `perf-profiling` | Sampling measures where time goes; instrumentation measures counts | performance, profiling, flamegraph | high | 2026-11-25 |
 | `process-retest` | A fix is not a fix until the same request fails | process, retest, regression | high | 2026-11-24 |
 | `report-impact-chain` | A report is a chain a triager can rerun | process, report, impact | high | 2026-11-24 |
 | `report-cvss-context` | CVSS without business context misranks the bug | process, report, cvss | medium | 2026-11-24 |
@@ -306,7 +323,11 @@
 | `runtime-exception` | Exception tables describe where a throw may land | runtime, exceptions, unwind | medium | 2026-11-25 |
 | `runtime-tls` | Thread-local storage has a model and a destructor order | runtime, tls, threads | medium | 2026-11-25 |
 | `runtime-stack-unwind` | Unwinding runs cleanups between throw and catch | runtime, unwind, exceptions | high | 2026-11-25 |
+| `store-inverted-index` | An inverted index maps a term to postings | search, index, postings | high | 2026-11-25 |
+| `sre-runbook` | A runbook is a tested procedure with a decision point | sre, runbook, toil | medium | 2026-11-25 |
+| `sre-incident-command` | Incident command separates the lead from the fixers | sre, incident, command | high | 2026-11-25 |
 | `storage-checksum` | A checksum detects corruption, it does not repair it | storage, checksum, corruption | medium | 2026-11-25 |
+| `store-time-series` | A time-series store trades resolution for retention | storage, time-series, downsampling | medium | 2026-11-25 |
 | `storage-wal` | A write-ahead log makes the write durable before the page | storage, wal, durability | high | 2026-11-25 |
 | `storage-compaction` | Compaction trades space and read speed for write stalls | storage, compaction, lsm, write, stall, sorted-runs | medium | 2026-11-25 |
 | `storage-replication` | Replication has a lag and a loss window | storage, replication, failover | high | 2026-11-25 |
@@ -324,6 +345,9 @@
 | `team-growth` | Growth needs a hiring bar and a ramp plan | team-scaling, growth, hiring | medium | 2026-11-25 |
 | `team-remote` | Remote work needs explicit overlap and written state | team-scaling, remote, timezone | medium | 2026-11-25 |
 | `team-conflict` | Technical conflict needs a decision rule, not a vote | team-scaling, conflict, escalation | medium | 2026-11-25 |
+| `test-fuzzing` | A fuzzer explores inputs a human would not write | testing, fuzzing, corpus | high | 2026-11-25 |
+| `test-chaos-suite` | Deterministic simulation finds bugs a real cluster hides | testing, simulation, determinism | high | 2026-11-25 |
+| `test-mutation` | Mutation testing measures whether a test would notice a change | testing, mutation, coverage | medium | 2026-11-25 |
 | `web-race-single-packet` | A race is a check and a write without one lock | web, race, logic | high | 2026-11-24 |
 | `race-idempotency` | A unique constraint is the cheapest race fix | web, race, database | medium | 2026-11-24 |
 | `web-cors-null-origin` | CORS reflection is only a bug with credentials | web, cors, browser | high | 2026-11-24 |

@@ -1,6 +1,6 @@
 # Knowledge gaps
 
-290 gaps. A gap is a card that does not exist yet, ranked by priority.
+314 gaps. A gap is a card that does not exist yet, ranked by priority.
 
 | # | Domain | Gap | Priority | Source | Status |
 |---|---|---|---|---|---|
@@ -294,5 +294,29 @@
 | 288 | team-scaling | Technical conflict and decision escalation | medium | `references/engineering-mastery.md` | covered by `team-conflict` |
 | 289 | team-scaling | Layoffs, scope cuts and morale | medium | `references/engineering-mastery.md` | covered by `team-layoff` |
 | 290 | team-scaling | Hiring loop calibration and debrief | medium | `references/engineering-mastery.md` | covered by `team-hiring-loop` |
+| 291 | numerics | IEEE 754, rounding and catastrophic cancellation | high | `references/engineering-mastery.md` | covered by `num-float` |
+| 292 | numerics | Decimal money, rounding modes and currency | high | `references/engineering-mastery.md` | covered by `num-money` |
+| 293 | numerics | Instants, time zones and leap seconds | high | `references/engineering-mastery.md` | covered by `num-time` |
+| 294 | numerics | Unicode, normalization and grapheme clusters | high | `references/engineering-mastery.md` | covered by `num-unicode` |
+| 295 | concurrency | Memory model, atomics and happens-before | high | `references/engineering-mastery.md` | covered by `conc-memory-model` |
+| 296 | concurrency | Actor model, mailboxes and supervision | medium | `references/engineering-mastery.md` | covered by `conc-actor` |
+| 297 | concurrency | CSP channels, blocking and deadlock | medium | `references/engineering-mastery.md` | covered by `conc-csp` |
+| 298 | concurrency | Software transactional memory and retry | low | `references/engineering-mastery.md` | covered by `conc-stm` |
+| 299 | testing | Coverage-guided fuzzing and corpus | high | `references/engineering-mastery.md` | covered by `test-fuzzing` |
+| 300 | testing | Mutation testing and test strength | medium | `references/engineering-mastery.md` | covered by `test-mutation` |
+| 301 | testing | Deterministic simulation and time travel | high | `references/engineering-mastery.md` | covered by `test-chaos-suite` |
+| 302 | build | Incremental builds and correctness of the cache | high | `references/engineering-mastery.md` | covered by `build-incremental` |
+| 303 | build | Hermetic builds and reproducibility | medium | `references/engineering-mastery.md` | covered by `build-hermetic` |
+| 304 | data | Event time, watermarks and late data | high | `references/engineering-mastery.md` | covered by `stream-watermark` |
+| 305 | data | Windowing, triggers and accumulation | medium | `references/engineering-mastery.md` | covered by `stream-window` |
+| 306 | data | Exactly-once sinks and transactional output | high | `references/engineering-mastery.md` | covered by `stream-exactly-once` |
+| 307 | search | Inverted index, postings and ranking | high | `references/engineering-mastery.md` | covered by `store-inverted-index` |
+| 308 | storage | Time-series downsampling and retention | medium | `references/engineering-mastery.md` | covered by `store-time-series` |
+| 309 | network | QUIC streams, head-of-line and 0-RTT | medium | `references/engineering-mastery.md` | covered by `net-quic` |
+| 310 | network | CDN caching, purge and origin shield | medium | `references/engineering-mastery.md` | covered by `net-cdn` |
+| 311 | performance | Sampling vs instrumentation and flame graphs | high | `references/engineering-mastery.md` | covered by `perf-profiling` |
+| 312 | performance | Percentiles, coordinated omission and tail | high | `references/engineering-mastery.md` | covered by `perf-latency-percentile` |
+| 313 | sre | Incident command, roles and comms cadence | high | `references/engineering-mastery.md` | covered by `sre-incident-command` |
+| 314 | sre | Runbooks, automation and toil budget | medium | `references/engineering-mastery.md` | covered by `sre-runbook` |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.

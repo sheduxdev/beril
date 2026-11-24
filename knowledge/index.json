@@ -1082,6 +1082,50 @@
   "failure": "A permission that is never used is not a finding. Content script isolation matters."
  },
  {
+  "path": "knowledge/build-hermetic.md",
+  "body": "# A hermetic build is reproducible from declared inputs\n\n## Claim\n\nNo network, no clock, no absolute path and a pinned toolchain. Two machines produce the same bytes.\n\n## Test\n\nBuild twice in different directories. Compare the hashes.\n\n## Proof\n\nIdentical hashes across environments.\n\n## Failure modes\n\nA fetched dependency at build time is not hermetic. A timestamp in the binary breaks reproducibility.",
+  "id": "build-hermetic",
+  "title": "A hermetic build is reproducible from declared inputs",
+  "tags": [
+   "build",
+   "hermetic",
+   "reproducible"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "No network, no clock, no absolute path and a pinned toolchain. Two machines produce the same bytes.",
+  "test": "Build twice in different directories. Compare the hashes.",
+  "proof": "Identical hashes across environments.",
+  "failure": "A fetched dependency at build time is not hermetic. A timestamp in the binary breaks reproducibility."
+ },
+ {
+  "path": "knowledge/build-incremental.md",
+  "body": "# An incremental build is a cache keyed on inputs\n\n## Claim\n\nThe key is the content of the inputs, not the timestamp. A wrong key gives a stale output.\n\n## Test\n\nTouch a file without changing it. Edit a transitive header. Check what rebuilt.\n\n## Proof\n\nA rebuild that changes only the affected outputs.\n\n## Failure modes\n\nA mtime-based key misses a content change. A cache without the compiler version poisons.",
+  "id": "build-incremental",
+  "title": "An incremental build is a cache keyed on inputs",
+  "tags": [
+   "build",
+   "incremental",
+   "cache"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The key is the content of the inputs, not the timestamp. A wrong key gives a stale output.",
+  "test": "Touch a file without changing it. Edit a transitive header. Check what rebuilt.",
+  "proof": "A rebuild that changes only the affected outputs.",
+  "failure": "A mtime-based key misses a content change. A cache without the compiler version poisons."
+ },
+ {
   "path": "knowledge/cicd-pr-target.md",
   "body": "# pull_request_target can run untrusted code with a write token\n\n## Claim\n\nThe workflow uses pull_request_target, checks out the PR head and runs code with repository secrets or write permissions.\n\n## Test\n\nRead the workflow. Open a PR from a fork. Change a script it runs. Watch the token and secrets.\n\n## Proof\n\nA secret exfiltration or a push from the PR code.\n\n## Failure modes\n\npull_request_target with no checkout of the head is safe. A read-only token limits impact.",
   "id": "cicd-pr-target",
@@ -1699,6 +1743,94 @@
   "test": "Compile at -O2 with UBSAN. Compare the branch with -O0. Trigger the assumption.",
   "proof": "A sanitizer report or a behavior change across optimization levels.",
   "failure": "A test at -O0 can pass while production breaks."
+ },
+ {
+  "path": "knowledge/conc-actor.md",
+  "body": "# An actor owns its state and processes one message at a time\n\n## Claim\n\nMailboxes decouple senders; supervision restarts a failed actor. An unbounded mailbox is a memory leak with backpressure missing.\n\n## Test\n\nSend a burst to one actor. Check the mailbox depth and the restart.\n\n## Proof\n\nA bounded mailbox with a supervision policy.\n\n## Failure modes\n\nA blocking call inside an actor stalls the mailbox. A fire-and-forget send hides failure.",
+  "id": "conc-actor",
+  "title": "An actor owns its state and processes one message at a time",
+  "tags": [
+   "concurrency",
+   "actor",
+   "supervision"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Mailboxes decouple senders; supervision restarts a failed actor. An unbounded mailbox is a memory leak with backpressure missing.",
+  "test": "Send a burst to one actor. Check the mailbox depth and the restart.",
+  "proof": "A bounded mailbox with a supervision policy.",
+  "failure": "A blocking call inside an actor stalls the mailbox. A fire-and-forget send hides failure."
+ },
+ {
+  "path": "knowledge/conc-csp.md",
+  "body": "# A channel is a rendezvous with a buffer policy\n\n## Claim\n\nAn unbuffered channel blocks until both sides meet. A closed channel signals completion; a send on it panics.\n\n## Test\n\nSend on an unbuffered channel with no reader. Close it with a pending sender.\n\n## Proof\n\nA pipeline that drains and exits cleanly.\n\n## Failure modes\n\nA goroutine leak hides a missing reader. A close from the receiver side races with senders.",
+  "id": "conc-csp",
+  "title": "A channel is a rendezvous with a buffer policy",
+  "tags": [
+   "concurrency",
+   "csp",
+   "channels"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "An unbuffered channel blocks until both sides meet. A closed channel signals completion; a send on it panics.",
+  "test": "Send on an unbuffered channel with no reader. Close it with a pending sender.",
+  "proof": "A pipeline that drains and exits cleanly.",
+  "failure": "A goroutine leak hides a missing reader. A close from the receiver side races with senders."
+ },
+ {
+  "path": "knowledge/conc-memory-model.md",
+  "body": "# The memory model defines which writes a read may see\n\n## Claim\n\nWithout synchronization, a compiler and a CPU may reorder. An atomic with the right ordering creates happens-before.\n\n## Test\n\nRun a data race under ThreadSanitizer. Add a release/acquire pair. Check the visibility.\n\n## Proof\n\nA race-free program with a documented ordering.\n\n## Failure modes\n\nA relaxed atomic does not order other accesses. A volatile flag is not a memory barrier in every language.",
+  "id": "conc-memory-model",
+  "title": "The memory model defines which writes a read may see",
+  "tags": [
+   "concurrency",
+   "memory-model",
+   "atomics"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Without synchronization, a compiler and a CPU may reorder. An atomic with the right ordering creates happens-before.",
+  "test": "Run a data race under ThreadSanitizer. Add a release/acquire pair. Check the visibility.",
+  "proof": "A race-free program with a documented ordering.",
+  "failure": "A relaxed atomic does not order other accesses. A volatile flag is not a memory barrier in every language."
+ },
+ {
+  "path": "knowledge/conc-stm.md",
+  "body": "# STM retries a transaction when a read value changed\n\n## Claim\n\nThe runtime logs reads, validates on commit, and retries on conflict. A side effect inside the transaction repeats.\n\n## Test\n\nConflict two transactions on the same variable. Count the retries and the side effects.\n\n## Proof\n\nA commit with side effects applied once.\n\n## Failure modes\n\nAn IO inside a transaction repeats on retry. A long transaction starves under contention.",
+  "id": "conc-stm",
+  "title": "STM retries a transaction when a read value changed",
+  "tags": [
+   "concurrency",
+   "stm",
+   "transaction"
+  ],
+  "confidence": "low",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The runtime logs reads, validates on commit, and retries on conflict. A side effect inside the transaction repeats.",
+  "test": "Conflict two transactions on the same variable. Count the retries and the side effects.",
+  "proof": "A commit with side effects applied once.",
+  "failure": "An IO inside a transaction repeats on retry. A long transaction starves under contention."
  },
  {
   "path": "knowledge/consensus-bft.md",
@@ -5371,6 +5503,138 @@
   "failure": "A hidden button is not a server-side control. Test the API."
  },
  {
+  "path": "knowledge/net-cdn.md",
+  "body": "# A CDN is a cache with a key and a purge\n\n## Claim\n\nThe cache key decides the hit. A purge is eventual; a versioned URL is immediate.\n\n## Test\n\nChange a header that is not in the key. Purge and request. Check the hit ratio.\n\n## Proof\n\nA cache key that separates variants and a purge that works.\n\n## Failure modes\n\nA cookie in the key fragments the cache. A purge across POPs is not instant.",
+  "id": "net-cdn",
+  "title": "A CDN is a cache with a key and a purge",
+  "tags": [
+   "network",
+   "cdn",
+   "cache"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The cache key decides the hit. A purge is eventual; a versioned URL is immediate.",
+  "test": "Change a header that is not in the key. Purge and request. Check the hit ratio.",
+  "proof": "A cache key that separates variants and a purge that works.",
+  "failure": "A cookie in the key fragments the cache. A purge across POPs is not instant."
+ },
+ {
+  "path": "knowledge/net-quic.md",
+  "body": "# QUIC moves reliability into user space per stream\n\n## Claim\n\nStreams are independent so one loss does not block another. 0-RTT reuses a ticket and can replay.\n\n## Test\n\nLose a packet on one stream. Check the other stream and the handshake RTT.\n\n## Proof\n\nA stream that continues while another recovers.\n\n## Failure modes\n\n0-RTT data is replayable, so it must be idempotent. A UDP-blocked network needs a fallback.",
+  "id": "net-quic",
+  "title": "QUIC moves reliability into user space per stream",
+  "tags": [
+   "network",
+   "quic",
+   "streams"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Streams are independent so one loss does not block another. 0-RTT reuses a ticket and can replay.",
+  "test": "Lose a packet on one stream. Check the other stream and the handshake RTT.",
+  "proof": "A stream that continues while another recovers.",
+  "failure": "0-RTT data is replayable, so it must be idempotent. A UDP-blocked network needs a fallback."
+ },
+ {
+  "path": "knowledge/num-float.md",
+  "body": "# Floating point is exact at powers of two and lossy elsewhere\n\n## Claim\n\nBinary floating point cannot represent 0.1. Subtracting close values cancels significant digits.\n\n## Test\n\nSum 0.1 ten times. Compare with 1.0. Subtract 1e16 from 1e16+1.\n\n## Proof\n\nA comparison that uses an epsilon or an exact decimal type.\n\n## Failure modes\n\nAn equality check on a float is a bug. A large sum accumulates error unless compensated.",
+  "id": "num-float",
+  "title": "Floating point is exact at powers of two and lossy elsewhere",
+  "tags": [
+   "numerics",
+   "float",
+   "rounding"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Binary floating point cannot represent 0.1. Subtracting close values cancels significant digits.",
+  "test": "Sum 0.1 ten times. Compare with 1.0. Subtract 1e16 from 1e16+1.",
+  "proof": "A comparison that uses an epsilon or an exact decimal type.",
+  "failure": "An equality check on a float is a bug. A large sum accumulates error unless compensated."
+ },
+ {
+  "path": "knowledge/num-money.md",
+  "body": "# Money is an integer of minor units with an explicit rounding rule\n\n## Claim\n\nBinary floats lose cents. Rounding half-up twice double-rounds. The currency scale is data.\n\n## Test\n\nCompute tax on a price with two rounding steps. Compare float and decimal.\n\n## Proof\n\nA total that matches the invoice to the cent.\n\n## Failure modes\n\nA float cent error compounds at scale. A banker's rounding choice changes the audit.",
+  "id": "num-money",
+  "title": "Money is an integer of minor units with an explicit rounding rule",
+  "tags": [
+   "numerics",
+   "money",
+   "decimal"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Binary floats lose cents. Rounding half-up twice double-rounds. The currency scale is data.",
+  "test": "Compute tax on a price with two rounding steps. Compare float and decimal.",
+  "proof": "A total that matches the invoice to the cent.",
+  "failure": "A float cent error compounds at scale. A banker's rounding choice changes the audit."
+ },
+ {
+  "path": "knowledge/num-time.md",
+  "body": "# A timestamp is an instant; a local time is a rule\n\n## Claim\n\nStore UTC instants, convert at the edge with a zone database. DST and leap seconds are rules, not offsets.\n\n## Test\n\nSchedule across a DST change. Compare the instant and the local label.\n\n## Proof\n\nA schedule that fires once at the intended local time.\n\n## Failure modes\n\nA stored local time without a zone is ambiguous. A fixed offset breaks on DST.",
+  "id": "num-time",
+  "title": "A timestamp is an instant; a local time is a rule",
+  "tags": [
+   "numerics",
+   "time",
+   "timezone"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Store UTC instants, convert at the edge with a zone database. DST and leap seconds are rules, not offsets.",
+  "test": "Schedule across a DST change. Compare the instant and the local label.",
+  "proof": "A schedule that fires once at the intended local time.",
+  "failure": "A stored local time without a zone is ambiguous. A fixed offset breaks on DST."
+ },
+ {
+  "path": "knowledge/num-unicode.md",
+  "body": "# A string is bytes plus an encoding; a character is a grapheme\n\n## Claim\n\nUTF-8 is a byte encoding. Normalization unifies equivalent sequences; a grapheme cluster is what a user sees.\n\n## Test\n\nReverse a string with an emoji and a combining mark. Compare by code point and by grapheme.\n\n## Proof\n\nA length and a reversal that match user perception.\n\n## Failure modes\n\nA byte length is not a character count. Comparing without normalization misses equality.",
+  "id": "num-unicode",
+  "title": "A string is bytes plus an encoding; a character is a grapheme",
+  "tags": [
+   "numerics",
+   "unicode",
+   "encoding"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "UTF-8 is a byte encoding. Normalization unifies equivalent sequences; a grapheme cluster is what a user sees.",
+  "test": "Reverse a string with an emoji and a combining mark. Compare by code point and by grapheme.",
+  "proof": "A length and a reversal that match user perception.",
+  "failure": "A byte length is not a character count. Comparing without normalization misses equality."
+ },
+ {
   "path": "knowledge/org-adr.md",
   "body": "# An ADR records why, not only what\n\n## Claim\n\nThe context, options, decision and consequences survive the people. A stale ADR is superseded, not deleted.\n\n## Test\n\nWrite an ADR for one choice. Link the superseded record.\n\n## Proof\n\nA reader can reconstruct the tradeoff.\n\n## Failure modes\n\nA decision log without consequences is a changelog.",
   "id": "org-adr",
@@ -5771,6 +6035,50 @@
   "test": "Trace a mapping. Check the flags. Touch a read-only page.",
   "proof": "A fault on the protected access.",
   "failure": "A huge page changes the TLB cost. A stale TLB entry hides a permission change."
+ },
+ {
+  "path": "knowledge/perf-latency-percentile.md",
+  "body": "# A percentile hides the shape and coordinated omission\n\n## Claim\n\nA p99 from a closed loop with think time understates the tail. The histogram shape matters more than one number.\n\n## Test\n\nCompare a fixed-rate load with a closed-loop test at the same throughput.\n\n## Proof\n\nA latency histogram from an open-loop load.\n\n## Failure modes\n\nAn average hides the tail. A p99 without a histogram hides bimodality.",
+  "id": "perf-latency-percentile",
+  "title": "A percentile hides the shape and coordinated omission",
+  "tags": [
+   "performance",
+   "latency",
+   "percentile"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A p99 from a closed loop with think time understates the tail. The histogram shape matters more than one number.",
+  "test": "Compare a fixed-rate load with a closed-loop test at the same throughput.",
+  "proof": "A latency histogram from an open-loop load.",
+  "failure": "An average hides the tail. A p99 without a histogram hides bimodality."
+ },
+ {
+  "path": "knowledge/perf-profiling.md",
+  "body": "# Sampling measures where time goes; instrumentation measures counts\n\n## Claim\n\nA sampler interrupts at intervals and aggregates stacks. Instrumentation counts events but distorts the timeline.\n\n## Test\n\nProfile a hot endpoint. Compare a sampling flame graph with an instrumented trace.\n\n## Proof\n\nA flame graph whose widest frame matches the fix.\n\n## Failure modes\n\nA profiler without symbols is noise. An instrumented hot path measures itself.",
+  "id": "perf-profiling",
+  "title": "Sampling measures where time goes; instrumentation measures counts",
+  "tags": [
+   "performance",
+   "profiling",
+   "flamegraph"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A sampler interrupts at intervals and aggregates stacks. Instrumentation counts events but distorts the timeline.",
+  "test": "Profile a hot endpoint. Compare a sampling flame graph with an instrumented trace.",
+  "proof": "A flame graph whose widest frame matches the fix.",
+  "failure": "A profiler without symbols is noise. An instrumented hot path measures itself."
  },
  {
   "path": "knowledge/platform-pricing.md",
@@ -6725,6 +7033,50 @@
   "failure": "A public client key may be intended. A revoked key is a false positive."
  },
  {
+  "path": "knowledge/sre-incident-command.md",
+  "body": "# Incident command separates the lead from the fixers\n\n## Claim\n\nThe incident commander coordinates, the ops lead fixes, the scribe records, the comms lead updates.\n\n## Test\n\nDeclare an incident. Assign roles. Check the update cadence.\n\n## Proof\n\nA timeline with role-based updates.\n\n## Failure modes\n\nEveryone debugging means no one communicates. A silent commander blocks decisions.",
+  "id": "sre-incident-command",
+  "title": "Incident command separates the lead from the fixers",
+  "tags": [
+   "sre",
+   "incident",
+   "command"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The incident commander coordinates, the ops lead fixes, the scribe records, the comms lead updates.",
+  "test": "Declare an incident. Assign roles. Check the update cadence.",
+  "proof": "A timeline with role-based updates.",
+  "failure": "Everyone debugging means no one communicates. A silent commander blocks decisions."
+ },
+ {
+  "path": "knowledge/sre-runbook.md",
+  "body": "# A runbook is a tested procedure with a decision point\n\n## Claim\n\nThe steps name the signal, the action and the expected result. Toil above a budget is automated.\n\n## Test\n\nFollow a runbook on a staging alert. Time it and note the gaps.\n\n## Proof\n\nA procedure completed by someone on call for the first time.\n\n## Failure modes\n\nA runbook that assumes context fails at 3am. Untested automation is a liability.",
+  "id": "sre-runbook",
+  "title": "A runbook is a tested procedure with a decision point",
+  "tags": [
+   "sre",
+   "runbook",
+   "toil"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The steps name the signal, the action and the expected result. Toil above a budget is automated.",
+  "test": "Follow a runbook on a staging alert. Time it and note the gaps.",
+  "proof": "A procedure completed by someone on call for the first time.",
+  "failure": "A runbook that assumes context fails at 3am. Untested automation is a liability."
+ },
+ {
   "path": "knowledge/storage-checksum.md",
   "body": "# A checksum detects corruption, it does not repair it\n\n## Claim\n\nPer-block checksums catch bit rot on read. Repair needs a replica or a parity block.\n\n## Test\n\nCorrupt a block. Read it. Check the checksum and the repair source.\n\n## Proof\n\nA detected corruption and a repaired read.\n\n## Failure modes\n\nA checksum over the wrong range misses the corruption. A scrub finds it before a read.",
   "id": "storage-checksum",
@@ -6814,6 +7166,116 @@
   "test": "Kill the process between log and page. Restart. Check the replay.",
   "proof": "The committed record survives the crash.",
   "failure": "A log without fsync is not durable. A checkpoint that outruns the log loses data."
+ },
+ {
+  "path": "knowledge/store-inverted-index.md",
+  "body": "# An inverted index maps a term to postings\n\n## Claim\n\nThe postings list holds document ids and positions. Ranking combines term frequency, rarity and length.\n\n## Test\n\nIndex three documents. Query a term. Check the postings and the ranking order.\n\n## Proof\n\nA ranked result that matches the term statistics.\n\n## Failure modes\n\nA stop word list changes recall. A position-less index cannot answer a phrase.",
+  "id": "store-inverted-index",
+  "title": "An inverted index maps a term to postings",
+  "tags": [
+   "search",
+   "index",
+   "postings"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The postings list holds document ids and positions. Ranking combines term frequency, rarity and length.",
+  "test": "Index three documents. Query a term. Check the postings and the ranking order.",
+  "proof": "A ranked result that matches the term statistics.",
+  "failure": "A stop word list changes recall. A position-less index cannot answer a phrase."
+ },
+ {
+  "path": "knowledge/store-time-series.md",
+  "body": "# A time-series store trades resolution for retention\n\n## Claim\n\nRaw points age into rollups. The rollup interval sets the query resolution and the storage cost.\n\n## Test\n\nWrite a week of points. Age past the raw window. Query the average.\n\n## Proof\n\nA rollup that answers the query at the promised resolution.\n\n## Failure modes\n\nA rollup without the min/max loses spikes. A retention without a downsampling job deletes history.",
+  "id": "store-time-series",
+  "title": "A time-series store trades resolution for retention",
+  "tags": [
+   "storage",
+   "time-series",
+   "downsampling"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Raw points age into rollups. The rollup interval sets the query resolution and the storage cost.",
+  "test": "Write a week of points. Age past the raw window. Query the average.",
+  "proof": "A rollup that answers the query at the promised resolution.",
+  "failure": "A rollup without the min/max loses spikes. A retention without a downsampling job deletes history."
+ },
+ {
+  "path": "knowledge/stream-exactly-once.md",
+  "body": "# Exactly-once output is a transaction or an idempotent sink\n\n## Claim\n\nThe sink commits with the checkpoint, or the write is keyed and idempotent. The source replays from the checkpoint.\n\n## Test\n\nKill the job after a sink write but before the checkpoint. Restart. Count the outputs.\n\n## Proof\n\nOne output per input event after recovery.\n\n## Failure modes\n\nA non-transactional sink duplicates on replay. A transactional sink needs a two-phase commit.",
+  "id": "stream-exactly-once",
+  "title": "Exactly-once output is a transaction or an idempotent sink",
+  "tags": [
+   "data",
+   "streaming",
+   "exactly-once"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The sink commits with the checkpoint, or the write is keyed and idempotent. The source replays from the checkpoint.",
+  "test": "Kill the job after a sink write but before the checkpoint. Restart. Count the outputs.",
+  "proof": "One output per input event after recovery.",
+  "failure": "A non-transactional sink duplicates on replay. A transactional sink needs a two-phase commit."
+ },
+ {
+  "path": "knowledge/stream-watermark.md",
+  "body": "# A watermark is a promise about event time\n\n## Claim\n\nThe watermark says no event earlier than it will arrive. Late events beyond it are dropped or side-output.\n\n## Test\n\nDelay an event past the watermark. Check the window result and the side output.\n\n## Proof\n\nA window that closes once and reports the late data.\n\n## Failure modes\n\nA watermark based on processing time is wrong after a backlog. A late event silently disappears.",
+  "id": "stream-watermark",
+  "title": "A watermark is a promise about event time",
+  "tags": [
+   "data",
+   "streaming",
+   "watermark"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The watermark says no event earlier than it will arrive. Late events beyond it are dropped or side-output.",
+  "test": "Delay an event past the watermark. Check the window result and the side output.",
+  "proof": "A window that closes once and reports the late data.",
+  "failure": "A watermark based on processing time is wrong after a backlog. A late event silently disappears."
+ },
+ {
+  "path": "knowledge/stream-window.md",
+  "body": "# A window assigns events and a trigger emits results\n\n## Claim\n\nTumbling, sliding and session windows differ in assignment. An early or late trigger changes the output.\n\n## Test\n\nRun a tumbling and a session window on the same stream. Compare the emissions.\n\n## Proof\n\nA window result that matches the expected grouping.\n\n## Failure modes\n\nA sliding window with no state limit grows. A trigger every event floods downstream.",
+  "id": "stream-window",
+  "title": "A window assigns events and a trigger emits results",
+  "tags": [
+   "data",
+   "streaming",
+   "window"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Tumbling, sliding and session windows differ in assignment. An early or late trigger changes the output.",
+  "test": "Run a tumbling and a session window on the same stream. Compare the emissions.",
+  "proof": "A window result that matches the expected grouping.",
+  "failure": "A sliding window with no state limit grows. A trigger every event floods downstream."
  },
  {
   "path": "knowledge/supply-lockfile.md",
@@ -7080,6 +7542,72 @@
   "test": "Write the ownership map. Check every service has one owner.",
   "proof": "A split with no shared ownership.",
   "failure": "A split by layer creates a matrix. A split during an incident is chaos."
+ },
+ {
+  "path": "knowledge/test-chaos-suite.md",
+  "body": "# Deterministic simulation finds bugs a real cluster hides\n\n## Claim\n\nA simulated network with a seeded clock and scheduler replays the same interleaving. Failures become reproducible.\n\n## Test\n\nRun a partition scenario with a seed. Replay the seed. Compare the trace.\n\n## Proof\n\nA reproducible failure trace from one seed.\n\n## Failure modes\n\nA simulation that omits fsync proves a different system. A random seed that is not logged cannot replay.",
+  "id": "test-chaos-suite",
+  "title": "Deterministic simulation finds bugs a real cluster hides",
+  "tags": [
+   "testing",
+   "simulation",
+   "determinism"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A simulated network with a seeded clock and scheduler replays the same interleaving. Failures become reproducible.",
+  "test": "Run a partition scenario with a seed. Replay the seed. Compare the trace.",
+  "proof": "A reproducible failure trace from one seed.",
+  "failure": "A simulation that omits fsync proves a different system. A random seed that is not logged cannot replay."
+ },
+ {
+  "path": "knowledge/test-fuzzing.md",
+  "body": "# A fuzzer explores inputs a human would not write\n\n## Claim\n\nCoverage feedback grows the corpus. A crash is minimized to a reproducer.\n\n## Test\n\nFuzz a parser for an hour. Check the coverage and the saved corpus.\n\n## Proof\n\nA crash with a minimal input saved to the corpus.\n\n## Failure modes\n\nA fuzzer without a dictionary misses magic bytes. A flaky crash without a reproducer wastes time.",
+  "id": "test-fuzzing",
+  "title": "A fuzzer explores inputs a human would not write",
+  "tags": [
+   "testing",
+   "fuzzing",
+   "corpus"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Coverage feedback grows the corpus. A crash is minimized to a reproducer.",
+  "test": "Fuzz a parser for an hour. Check the coverage and the saved corpus.",
+  "proof": "A crash with a minimal input saved to the corpus.",
+  "failure": "A fuzzer without a dictionary misses magic bytes. A flaky crash without a reproducer wastes time."
+ },
+ {
+  "path": "knowledge/test-mutation.md",
+  "body": "# Mutation testing measures whether a test would notice a change\n\n## Claim\n\nThe tool flips an operator and checks a test failure. A surviving mutant is a gap in assertion strength.\n\n## Test\n\nRun mutations on a module. Read the surviving mutants.\n\n## Proof\n\nA mutation score with the survivors explained.\n\n## Failure modes\n\nLine coverage stays high while mutants survive. An equivalent mutant is a false alarm.",
+  "id": "test-mutation",
+  "title": "Mutation testing measures whether a test would notice a change",
+  "tags": [
+   "testing",
+   "mutation",
+   "coverage"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The tool flips an operator and checks a test failure. A surviving mutant is a gap in assertion strength.",
+  "test": "Run mutations on a module. Read the surviving mutants.",
+  "proof": "A mutation score with the survivors explained.",
+  "failure": "Line coverage stays high while mutants survive. An equivalent mutant is a false alarm."
  },
  {
   "path": "knowledge/tls-config-review.md",

@@ -2608,5 +2608,221 @@
   "source": "references/engineering-mastery.md",
   "covered_by": "team-hiring-loop",
   "status": "covered"
+ },
+ {
+  "id": "num-float",
+  "domain": "numerics",
+  "gap": "IEEE 754, rounding and catastrophic cancellation",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "num-float",
+  "status": "covered"
+ },
+ {
+  "id": "num-money",
+  "domain": "numerics",
+  "gap": "Decimal money, rounding modes and currency",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "num-money",
+  "status": "covered"
+ },
+ {
+  "id": "num-time",
+  "domain": "numerics",
+  "gap": "Instants, time zones and leap seconds",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "num-time",
+  "status": "covered"
+ },
+ {
+  "id": "num-unicode",
+  "domain": "numerics",
+  "gap": "Unicode, normalization and grapheme clusters",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "num-unicode",
+  "status": "covered"
+ },
+ {
+  "id": "conc-memory-model",
+  "domain": "concurrency",
+  "gap": "Memory model, atomics and happens-before",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "conc-memory-model",
+  "status": "covered"
+ },
+ {
+  "id": "conc-actor",
+  "domain": "concurrency",
+  "gap": "Actor model, mailboxes and supervision",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "conc-actor",
+  "status": "covered"
+ },
+ {
+  "id": "conc-csp",
+  "domain": "concurrency",
+  "gap": "CSP channels, blocking and deadlock",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "conc-csp",
+  "status": "covered"
+ },
+ {
+  "id": "concat-stm",
+  "domain": "concurrency",
+  "gap": "Software transactional memory and retry",
+  "priority": "low",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "conc-stm",
+  "status": "covered"
+ },
+ {
+  "id": "test-fuzzing",
+  "domain": "testing",
+  "gap": "Coverage-guided fuzzing and corpus",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "test-fuzzing",
+  "status": "covered"
+ },
+ {
+  "id": "test-mutation",
+  "domain": "testing",
+  "gap": "Mutation testing and test strength",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "test-mutation",
+  "status": "covered"
+ },
+ {
+  "id": "test-chaos-suite",
+  "domain": "testing",
+  "gap": "Deterministic simulation and time travel",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "test-chaos-suite",
+  "status": "covered"
+ },
+ {
+  "id": "build-incremental",
+  "domain": "build",
+  "gap": "Incremental builds and correctness of the cache",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "build-incremental",
+  "status": "covered"
+ },
+ {
+  "id": "build-hermetic",
+  "domain": "build",
+  "gap": "Hermetic builds and reproducibility",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "build-hermetic",
+  "status": "covered"
+ },
+ {
+  "id": "stream-watermark",
+  "domain": "data",
+  "gap": "Event time, watermarks and late data",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "stream-watermark",
+  "status": "covered"
+ },
+ {
+  "id": "stream-window",
+  "domain": "data",
+  "gap": "Windowing, triggers and accumulation",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "stream-window",
+  "status": "covered"
+ },
+ {
+  "id": "stream-exactly-once",
+  "domain": "data",
+  "gap": "Exactly-once sinks and transactional output",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "stream-exactly-once",
+  "status": "covered"
+ },
+ {
+  "id": "store-inverted-index",
+  "domain": "search",
+  "gap": "Inverted index, postings and ranking",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "store-inverted-index",
+  "status": "covered"
+ },
+ {
+  "id": "store-time-series",
+  "domain": "storage",
+  "gap": "Time-series downsampling and retention",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "store-time-series",
+  "status": "covered"
+ },
+ {
+  "id": "net-quic",
+  "domain": "network",
+  "gap": "QUIC streams, head-of-line and 0-RTT",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "net-quic",
+  "status": "covered"
+ },
+ {
+  "id": "net-cdn",
+  "domain": "network",
+  "gap": "CDN caching, purge and origin shield",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "net-cdn",
+  "status": "covered"
+ },
+ {
+  "id": "perf-profiling",
+  "domain": "performance",
+  "gap": "Sampling vs instrumentation and flame graphs",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "perf-profiling",
+  "status": "covered"
+ },
+ {
+  "id": "perf-latency-percentile",
+  "domain": "performance",
+  "gap": "Percentiles, coordinated omission and tail",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "perf-latency-percentile",
+  "status": "covered"
+ },
+ {
+  "id": "sre-incident-command",
+  "domain": "sre",
+  "gap": "Incident command, roles and comms cadence",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "sre-incident-command",
+  "status": "covered"
+ },
+ {
+  "id": "sre-runbook",
+  "domain": "sre",
+  "gap": "Runbooks, automation and toil budget",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "sre-runbook",
+  "status": "covered"
  }
 ]
