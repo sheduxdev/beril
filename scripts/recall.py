@@ -17,7 +17,7 @@ from collections import Counter
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INDEX = os.path.join(ROOT, "knowledge", "index.json")
-STOP = set("a an and are as at be by for from has have in is it its of on or that the this to was with without into not no".split())
+STOP = {"a", "an", "and", "are", "as", "at", "be", "by", "for", "from", "has", "have", "in", "is", "it", "its", "of", "on", "or", "that", "the", "this", "to", "was", "with", "without", "into", "not", "no"}
 
 
 def tokens(text: str) -> list[str]:
