@@ -1,9 +1,10 @@
 # Knowledge index
 
-308 durable cards. Read this before a web search; open a card only when it matches.
+319 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
+| `a11y-keyboard` | Keyboard order is the interface for many users | accessibility, keyboard, focus | high | 2026-11-25 |
 | `ad-acl-path` | AD compromise is an edge path, not a single bug | ad, windows, acl | high | 2026-11-24 |
 | `ad-adcs-esc1` | ESC1 is an enrollable SAN on a client-auth template | ad, adcs, certificate | high | 2026-11-24 |
 | `ai-sandbox-escape` | A code interpreter is a process with a filesystem | ai, sandbox, interpreter | high | 2026-11-24 |
@@ -212,7 +213,11 @@
 | `firmware-spi` | SPI flash reads need two matching dumps | firmware, hardware, spi | medium | 2026-11-24 |
 | `firmware-secureboot` | Secure boot is a chain, not a boolean | firmware, secureboot, boot | high | 2026-11-24 |
 | `firmware-uart` | UART is found by idle levels and confirmed by baud | firmware, hardware, uart | high | 2026-11-24 |
+| `formal-invariant` | An invariant is true before and after every step | formal, invariant, proof | high | 2026-11-25 |
+| `formal-model-check` | Model checking enumerates states until a property fails | formal, model-check, states | high | 2026-11-25 |
+| `formal-tla` | TLA+ describes a protocol as state and actions | formal, tla, protocol | high | 2026-11-25 |
 | `hardware-sidechannel` | Side channels leak through power, timing or EM | hardware, sidechannel | low | 2026-11-24 |
+| `hci-error-prevention` | Prevent the error before the confirmation | hci, error-prevention, undo | high | 2026-11-25 |
 | `ir-timeline` | An incident timeline needs three independent clocks | ir, timeline, forensics | medium | 2026-11-24 |
 | `ir-cloud` | Cloud audit logs are the timeline | ir, cloud, logs | medium | 2026-11-24 |
 | `ir-container` | Container triage is image diff plus runtime state | ir, container, docker | medium | 2026-11-25 |
@@ -243,6 +248,8 @@
 | `platform-support` | Support needs a tier, a channel and an SLA | organization, platform, support | medium | 2026-11-25 |
 | `org-conway` | The org chart leaks into the architecture | organization, conway, law, ownership, service, teams | high | 2026-11-25 |
 | `org-docs-culture` | Writing makes decisions visible and reviewable | organization, writing, culture | medium | 2026-11-25 |
+| `os-page-fault` | A page fault is a trap, not always a disk read | os, page-fault, memory | high | 2026-11-25 |
+| `os-scheduler` | A scheduler chooses runnable work under a policy | os, scheduler, priority | high | 2026-11-25 |
 | `process-retest` | A fix is not a fix until the same request fails | process, retest, regression | high | 2026-11-24 |
 | `report-impact-chain` | A report is a chain a triager can rerun | process, report, impact | high | 2026-11-24 |
 | `report-cvss-context` | CVSS without business context misranks the bug | process, report, cvss | medium | 2026-11-24 |
@@ -255,6 +262,10 @@
 | `process-legal` | Safe harbor is written, not assumed | process, legal, authorization | medium | 2026-11-25 |
 | `process-scope-parse` | Scope is a list of rules, not a domain | process, scope, recon | high | 2026-11-24 |
 | `process-duplicate-search` | Search duplicates before writing a report | process, triage, duplicate | high | 2026-11-24 |
+| `proto-framing` | A frame needs a length the parser can trust | protocol, framing, length | high | 2026-11-25 |
+| `proto-security` | A handshake binds the transcript | protocol, handshake, replay | high | 2026-11-25 |
+| `proto-state-machine` | A protocol is a set of legal transitions | protocol, state-machine, transitions | high | 2026-11-25 |
+| `proto-versioning` | Version negotiation needs a downgrade policy | protocol, versioning, downgrade | high | 2026-11-25 |
 | `re-crash-triage-primitive` | A crash is a lead; the primitive is the finding | re, triage, crash | high | 2026-11-24 |
 | `re-arm64` | AArch64 has a calling convention, PAC and MTE | re, arm64, pac | medium | 2026-11-25 |
 | `re-cpp-rtti` | C++ RTTI and vtables reveal the class graph | re, cpp, rtti | medium | 2026-11-25 |

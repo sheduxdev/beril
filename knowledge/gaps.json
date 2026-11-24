@@ -2167,5 +2167,230 @@
   "source": "references/engineering-mastery.md",
   "covered_by": "econ-risk-adjusted",
   "status": "covered"
+ },
+ {
+  "id": "formal-invariant",
+  "domain": "formal",
+  "gap": "Invariants, preconditions and postconditions",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "formal-invariant",
+  "status": "covered"
+ },
+ {
+  "id": "formal-model-check",
+  "domain": "formal",
+  "gap": "Model checking and state explosion",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "formal-model-check",
+  "status": "covered"
+ },
+ {
+  "id": "formal-tla",
+  "domain": "formal",
+  "gap": "TLA+ specs for concurrent protocols",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "formal-tla",
+  "status": "covered"
+ },
+ {
+  "id": "formal-refinement",
+  "domain": "formal",
+  "gap": "Refinement from spec to implementation",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "formal-contract",
+  "domain": "formal",
+  "gap": "Design by contract and runtime checks",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "formal-proof",
+  "domain": "formal",
+  "gap": "Proof assistants and cost",
+  "priority": "low",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "os-scheduler",
+  "domain": "os",
+  "gap": "Scheduler classes, priority and starvation",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "os-scheduler",
+  "status": "covered"
+ },
+ {
+  "id": "os-vm",
+  "domain": "os",
+  "gap": "Virtual memory, page tables and TLB",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "os-page-fault",
+  "domain": "os",
+  "gap": "Page faults, demand paging and minor/major cost",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "os-page-fault",
+  "status": "covered"
+ },
+ {
+  "id": "os-syscall",
+  "domain": "os",
+  "gap": "Syscall ABI, errno and seccomp",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "os-signal",
+  "domain": "os",
+  "gap": "Signals, async safety and restart",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "os-cgroups",
+  "domain": "os",
+  "gap": "cgroups v2, limits and OOM",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "os-namespaces",
+  "domain": "os",
+  "gap": "Namespaces, mounts and isolation",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "proto-framing",
+  "domain": "protocol",
+  "gap": "Framing, length prefixes and desync",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "proto-framing",
+  "status": "covered"
+ },
+ {
+  "id": "proto-state-machine",
+  "domain": "protocol",
+  "gap": "Protocol state machines and illegal transitions",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "proto-state-machine",
+  "status": "covered"
+ },
+ {
+  "id": "proto-versioning",
+  "domain": "protocol",
+  "gap": "Version negotiation and downgrade",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "proto-versioning",
+  "status": "covered"
+ },
+ {
+  "id": "proto-backpressure",
+  "domain": "protocol",
+  "gap": "Flow control and window management",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "proto-idempotency",
+  "domain": "protocol",
+  "gap": "Message ids, retries and duplicate suppression",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "proto-security",
+  "domain": "protocol",
+  "gap": "Handshake, transcript binding and replay",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "proto-security",
+  "status": "covered"
+ },
+ {
+  "id": "hci-fitts",
+  "domain": "hci",
+  "gap": "Fitts's law and target placement",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "hci-error-prevention",
+  "domain": "hci",
+  "gap": "Error prevention, undo and confirmation",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "hci-error-prevention",
+  "status": "covered"
+ },
+ {
+  "id": "a11y-keyboard",
+  "domain": "accessibility",
+  "gap": "Keyboard order, focus and traps",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "a11y-keyboard",
+  "status": "covered"
+ },
+ {
+  "id": "a11y-screenreader",
+  "domain": "accessibility",
+  "gap": "Labels, roles and live regions",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "a11y-contrast",
+  "domain": "accessibility",
+  "gap": "Contrast, non-color cues and zoom",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "a11y-motion",
+  "domain": "accessibility",
+  "gap": "Reduced motion and vestibular safety",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
  }
 ]

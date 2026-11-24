@@ -105,6 +105,17 @@ CASES = [
     ("headcount ramp fully loaded cost", "econ-headcount"),
     ("sunk cost forward value", "econ-sunk-cost"),
     ("risk adjusted expected value downside", "econ-risk-adjusted"),
+    ("invariant preserved transition proof", "formal-invariant"),
+    ("model checking state explosion", "formal-model-check"),
+    ("TLA+ leader election invariant", "formal-tla"),
+    ("scheduler priority starvation", "os-scheduler"),
+    ("page fault major minor", "os-page-fault"),
+    ("protocol framing length desync", "proto-framing"),
+    ("protocol illegal transition state machine", "proto-state-machine"),
+    ("protocol downgrade version negotiation", "proto-versioning"),
+    ("handshake transcript binding replay", "proto-security"),
+    ("error prevention undo confirmation", "hci-error-prevention"),
+    ("keyboard focus order trap", "a11y-keyboard"),
 ]
 
 

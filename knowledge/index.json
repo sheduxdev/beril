@@ -1,5 +1,27 @@
 [
  {
+  "path": "knowledge/a11y-keyboard.md",
+  "body": "# Keyboard order is the interface for many users\n\n## Claim\n\nFocus order follows the visual order; a trap keeps focus in a widget until escape. Skip links avoid the nav.\n\n## Test\n\nTab through the page. Check the order, the focus ring and the trap.\n\n## Proof\n\nA complete task without a mouse.\n\n## Failure modes\n\nA custom widget without key handling is a trap. A hidden focus ring blocks orientation.",
+  "id": "a11y-keyboard",
+  "title": "Keyboard order is the interface for many users",
+  "tags": [
+   "accessibility",
+   "keyboard",
+   "focus"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Focus order follows the visual order; a trap keeps focus in a widget until escape. Skip links avoid the nav.",
+  "test": "Tab through the page. Check the order, the focus ring and the trap.",
+  "proof": "A complete task without a mouse.",
+  "failure": "A custom widget without key handling is a trap. A hidden focus ring blocks orientation."
+ },
+ {
   "path": "knowledge/ad-acl-path.md",
   "body": "# AD compromise is an edge path, not a single bug\n\n## Claim\n\nA user has a right over an object that leads to another right, then to a session on a high-value host.\n\n## Test\n\nCollect with BloodHound. Read the ACL edges. Pick the shortest path to the objective and prove one edge.\n\n## Proof\n\nA password reset, ticket or session that grants the next node, with the path in BloodHound.\n\n## Failure modes\n\nA roastable account with a strong password is not a finding until cracked. A path that needs DA to start is circular.",
   "id": "ad-acl-path",
@@ -4600,6 +4622,72 @@
   "failure": "A signature that covers only the header is bypassable. A version floor may block downgrade."
  },
  {
+  "path": "knowledge/formal-invariant.md",
+  "body": "# An invariant is true before and after every step\n\n## Claim\n\nThe invariant constrains the state; the proof shows each transition preserves it. A broken invariant is the bug.\n\n## Test\n\nWrite the invariant. Try a transition that violates it. Check the proof obligation.\n\n## Proof\n\nA transition that preserves the invariant or a counterexample.\n\n## Failure modes\n\nAn invariant that restates the code proves nothing. A missing precondition hides a case.",
+  "id": "formal-invariant",
+  "title": "An invariant is true before and after every step",
+  "tags": [
+   "formal",
+   "invariant",
+   "proof"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The invariant constrains the state; the proof shows each transition preserves it. A broken invariant is the bug.",
+  "test": "Write the invariant. Try a transition that violates it. Check the proof obligation.",
+  "proof": "A transition that preserves the invariant or a counterexample.",
+  "failure": "An invariant that restates the code proves nothing. A missing precondition hides a case."
+ },
+ {
+  "path": "knowledge/formal-model-check.md",
+  "body": "# Model checking enumerates states until a property fails\n\n## Claim\n\nThe tool explores the transition graph. State explosion is the limit; abstraction and symmetry reduce it.\n\n## Test\n\nModel a two-process lock. Ask for mutual exclusion. Check the counterexample trace.\n\n## Proof\n\nA verified property or a concrete trace to the violation.\n\n## Failure modes\n\nA model that omits a transition proves a smaller system. A state space too large times out.",
+  "id": "formal-model-check",
+  "title": "Model checking enumerates states until a property fails",
+  "tags": [
+   "formal",
+   "model-check",
+   "states"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The tool explores the transition graph. State explosion is the limit; abstraction and symmetry reduce it.",
+  "test": "Model a two-process lock. Ask for mutual exclusion. Check the counterexample trace.",
+  "proof": "A verified property or a concrete trace to the violation.",
+  "failure": "A model that omits a transition proves a smaller system. A state space too large times out."
+ },
+ {
+  "path": "knowledge/formal-tla.md",
+  "body": "# TLA+ describes a protocol as state and actions\n\n## Claim\n\nThe spec is a state machine with invariants and temporal properties. The model checker explores it.\n\n## Test\n\nSpecify a leader election. Check that two leaders never coexist. Run TLC.\n\n## Proof\n\nA checked invariant or a trace.\n\n## Failure modes\n\nA spec with a weak fairness assumption hides a liveness bug. The mapping to code is manual.",
+  "id": "formal-tla",
+  "title": "TLA+ describes a protocol as state and actions",
+  "tags": [
+   "formal",
+   "tla",
+   "protocol"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The spec is a state machine with invariants and temporal properties. The model checker explores it.",
+  "test": "Specify a leader election. Check that two leaders never coexist. Run TLC.",
+  "proof": "A checked invariant or a trace.",
+  "failure": "A spec with a weak fairness assumption hides a liveness bug. The mapping to code is manual."
+ },
+ {
   "path": "knowledge/hardware-sidechannel.md",
   "body": "# Side channels leak through power, timing or EM\n\n## Claim\n\nA secret-dependent branch or memory access produces a measurable difference.\n\n## Test\n\nCollect traces with a known input. Align. Compare the difference between hypotheses.\n\n## Proof\n\nA correlation peak that reveals a key byte.\n\n## Failure modes\n\nNoise and misalignment can hide the signal. A lab bench is required.",
   "id": "hardware-sidechannel",
@@ -4619,6 +4707,28 @@
   "test": "Collect traces with a known input. Align. Compare the difference between hypotheses.",
   "proof": "A correlation peak that reveals a key byte.",
   "failure": "Noise and misalignment can hide the signal. A lab bench is required."
+ },
+ {
+  "path": "knowledge/hci-error-prevention.md",
+  "body": "# Prevent the error before the confirmation\n\n## Claim\n\nA constraint, a default or an undo beats a modal confirmation. A dialog is the last resort.\n\n## Test\n\nTry the destructive action with a near-miss input. Check the guard and the undo.\n\n## Proof\n\nA prevented error or a one-step undo.\n\n## Failure modes\n\nA confirmation every time trains a blind click. An undo that expires is a trap.",
+  "id": "hci-error-prevention",
+  "title": "Prevent the error before the confirmation",
+  "tags": [
+   "hci",
+   "error-prevention",
+   "undo"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A constraint, a default or an undo beats a modal confirmation. A dialog is the last resort.",
+  "test": "Try the destructive action with a near-miss input. Check the guard and the undo.",
+  "proof": "A prevented error or a one-step undo.",
+  "failure": "A confirmation every time trains a blind click. An undo that expires is a trap."
  },
  {
   "path": "knowledge/ir-cloud.md",
@@ -5245,6 +5355,50 @@
   "failure": "A matrix that is stale lies. A backup who never practices is not coverage."
  },
  {
+  "path": "knowledge/os-page-fault.md",
+  "body": "# A page fault is a trap, not always a disk read\n\n## Claim\n\nA minor fault maps an existing page; a major fault reads from disk. Both cost a trap and a TLB change.\n\n## Test\n\nMeasure minor and major faults under a workload. Touch a cold mapping.\n\n## Proof\n\nA fault profile and a lower major rate.\n\n## Failure modes\n\nA major fault in a hot loop destroys latency. Prefaulting helps only a known working set.",
+  "id": "os-page-fault",
+  "title": "A page fault is a trap, not always a disk read",
+  "tags": [
+   "os",
+   "page-fault",
+   "memory"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A minor fault maps an existing page; a major fault reads from disk. Both cost a trap and a TLB change.",
+  "test": "Measure minor and major faults under a workload. Touch a cold mapping.",
+  "proof": "A fault profile and a lower major rate.",
+  "failure": "A major fault in a hot loop destroys latency. Prefaulting helps only a known working set."
+ },
+ {
+  "path": "knowledge/os-scheduler.md",
+  "body": "# A scheduler chooses runnable work under a policy\n\n## Claim\n\nPriority, deadline, fair share and affinity decide the next thread. A busy system exposes starvation.\n\n## Test\n\nRun a CPU hog with a high-priority thread. Measure the low-priority latency.\n\n## Proof\n\nA bounded latency under the policy.\n\n## Failure modes\n\nA priority boost can invert the intent. A real-time class can starve everything else.",
+  "id": "os-scheduler",
+  "title": "A scheduler chooses runnable work under a policy",
+  "tags": [
+   "os",
+   "scheduler",
+   "priority"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Priority, deadline, fair share and affinity decide the next thread. A busy system exposes starvation.",
+  "test": "Run a CPU hog with a high-priority thread. Measure the low-priority latency.",
+  "proof": "A bounded latency under the policy.",
+  "failure": "A priority boost can invert the intent. A real-time class can starve everything else."
+ },
+ {
   "path": "knowledge/platform-pricing.md",
   "body": "# Internal pricing is a signal, not a profit center\n\n## Claim\n\nShowback informs; chargeback transfers budget. A price that hides shared cost distorts demand.\n\n## Test\n\nMap the unit and the allocation rule. Compare a team's usage with the bill.\n\n## Proof\n\nA price the team can act on.\n\n## Failure modes\n\nA per-request price misses idle capacity. A flat share hides the heavy user.",
   "id": "platform-pricing",
@@ -5464,6 +5618,94 @@
   "test": "Parse the program brief into allow and deny rules. Resolve every asset. Check the ownership evidence.",
   "proof": "An asset with a scope citation before the first request.",
   "failure": "A shared CDN or cloud IP belongs to many customers. A parent domain does not imply a sibling."
+ },
+ {
+  "path": "knowledge/proto-framing.md",
+  "body": "# A frame needs a length the parser can trust\n\n## Claim\n\nA length prefix or a delimiter defines the frame. Ambiguity between parsers is a desync.\n\n## Test\n\nSend an oversized, a truncated and a nested frame. Compare the parser boundary.\n\n## Proof\n\nA rejected or correctly bounded frame.\n\n## Failure modes\n\nA delimiter inside the payload splits a frame. A length without a cap allocates too much.",
+  "id": "proto-framing",
+  "title": "A frame needs a length the parser can trust",
+  "tags": [
+   "protocol",
+   "framing",
+   "length"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A length prefix or a delimiter defines the frame. Ambiguity between parsers is a desync.",
+  "test": "Send an oversized, a truncated and a nested frame. Compare the parser boundary.",
+  "proof": "A rejected or correctly bounded frame.",
+  "failure": "A delimiter inside the payload splits a frame. A length without a cap allocates too much."
+ },
+ {
+  "path": "knowledge/proto-security.md",
+  "body": "# A handshake binds the transcript\n\n## Claim\n\nAuthentication must cover the version, the nonce and the key exchange. An unbound field can be rewritten.\n\n## Test\n\nCapture a handshake. Change an unauthenticated field. Replay it.\n\n## Proof\n\nA rejection or a different derived key.\n\n## Failure modes\n\nA signature over only the public key leaves the parameters free. A nonce reuse breaks freshness.",
+  "id": "proto-security",
+  "title": "A handshake binds the transcript",
+  "tags": [
+   "protocol",
+   "handshake",
+   "replay"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Authentication must cover the version, the nonce and the key exchange. An unbound field can be rewritten.",
+  "test": "Capture a handshake. Change an unauthenticated field. Replay it.",
+  "proof": "A rejection or a different derived key.",
+  "failure": "A signature over only the public key leaves the parameters free. A nonce reuse breaks freshness."
+ },
+ {
+  "path": "knowledge/proto-state-machine.md",
+  "body": "# A protocol is a set of legal transitions\n\n## Claim\n\nEach message moves the connection between states. An illegal transition is a bug or a bypass.\n\n## Test\n\nList the states and transitions. Send a message out of order. Check the response.\n\n## Proof\n\nA rejected transition with the expected state.\n\n## Failure modes\n\nA permissive server accepts everything, so the state machine hides in the client.",
+  "id": "proto-state-machine",
+  "title": "A protocol is a set of legal transitions",
+  "tags": [
+   "protocol",
+   "state-machine",
+   "transitions"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Each message moves the connection between states. An illegal transition is a bug or a bypass.",
+  "test": "List the states and transitions. Send a message out of order. Check the response.",
+  "proof": "A rejected transition with the expected state.",
+  "failure": "A permissive server accepts everything, so the state machine hides in the client."
+ },
+ {
+  "path": "knowledge/proto-versioning.md",
+  "body": "# Version negotiation needs a downgrade policy\n\n## Claim\n\nThe version is chosen in the handshake. A downgrade to an old version can drop a security feature.\n\n## Test\n\nOffer only an old version. Check the negotiated version and the protected fields.\n\n## Proof\n\nA downgrade that is explicit and logged.\n\n## Failure modes\n\nA silent fallback hides an attack. A version field outside the transcript can be rewritten.",
+  "id": "proto-versioning",
+  "title": "Version negotiation needs a downgrade policy",
+  "tags": [
+   "protocol",
+   "versioning",
+   "downgrade"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The version is chosen in the handshake. A downgrade to an old version can drop a security feature.",
+  "test": "Offer only an old version. Check the negotiated version and the protected fields.",
+  "proof": "A downgrade that is explicit and logged.",
+  "failure": "A silent fallback hides an attack. A version field outside the transcript can be rewritten."
  },
  {
   "path": "knowledge/race-idempotency.md",
