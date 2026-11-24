@@ -1,6 +1,6 @@
 # Knowledge gaps
 
-266 gaps. A gap is a card that does not exist yet, ranked by priority.
+290 gaps. A gap is a card that does not exist yet, ranked by priority.
 
 | # | Domain | Gap | Priority | Source | Status |
 |---|---|---|---|---|---|
@@ -270,5 +270,29 @@
 | 264 | accessibility | Labels, roles and live regions | medium | `references/engineering-mastery.md` | covered by `a11y-screenreader` |
 | 265 | accessibility | Contrast, non-color cues and zoom | medium | `references/engineering-mastery.md` | covered by `a11y-contrast` |
 | 266 | accessibility | Reduced motion and vestibular safety | medium | `references/engineering-mastery.md` | covered by `a11y-motion` |
+| 267 | distributed-storage | Anti-entropy repair and Merkle trees | high | `references/engineering-mastery.md` | covered by `repair-anti-entropy` |
+| 268 | distributed-storage | Hinted handoff and replay budget | high | `references/engineering-mastery.md` | covered by `repair-hinted-handoff` |
+| 269 | distributed-storage | Read repair and version conflict | medium | `references/engineering-mastery.md` | covered by `repair-read-repair` |
+| 270 | distributed-storage | Block checksums and scrub scheduling | medium | `references/engineering-mastery.md` | covered by `repair-checksum` |
+| 271 | distributed-storage | Repair quorum and degraded mode | medium | `references/engineering-mastery.md` | covered by `repair-quorum` |
+| 272 | database-recovery | Redo, undo and crash recovery order | high | `references/engineering-mastery.md` | covered by `db-recovery-redo` |
+| 273 | database-recovery | Checkpoints and recovery time | medium | `references/engineering-mastery.md` | covered by `db-checkpoint` |
+| 274 | database-recovery | Point-in-time recovery and WAL retention | high | `references/engineering-mastery.md` | covered by `db-pitr` |
+| 275 | database-recovery | Fencing, split brain and promotion | high | `references/engineering-mastery.md` | covered by `db-failover-fencing` |
+| 276 | database-recovery | Page corruption, checksums and repair | medium | `references/engineering-mastery.md` | covered by `db-corruption` |
+| 277 | runtime | Safepoints, stop-the-world and latency | high | `references/engineering-mastery.md` | covered by `runtime-gc-safepoint` |
+| 278 | runtime | Stack unwinding, exceptions and destructors | high | `references/engineering-mastery.md` | covered by `runtime-stack-unwind` |
+| 279 | runtime | Exception tables and landing pads | medium | `references/engineering-mastery.md` | covered by `runtime-exception` |
+| 280 | runtime | Thread-local storage and destructor order | medium | `references/engineering-mastery.md` | covered by `runtime-tls` |
+| 281 | runtime | Dynamic loading, init order and symbol interposition | medium | `references/engineering-mastery.md` | covered by `runtime-dynload` |
+| 282 | team-scaling | Splitting a team without breaking ownership | high | `references/engineering-mastery.md` | covered by `team-split` |
+| 283 | team-scaling | Team charter, mission and boundaries | high | `references/engineering-mastery.md` | covered by `team-charter` |
+| 284 | team-scaling | Ownership handoff and knowledge transfer | high | `references/engineering-mastery.md` | covered by `team-handoff` |
+| 285 | team-scaling | Growing a team without losing the bar | medium | `references/engineering-mastery.md` | covered by `team-growth` |
+| 286 | team-scaling | Manager span, coaching and career | medium | `references/engineering-mastery.md` | covered by `team-manager` |
+| 287 | team-scaling | Remote team rituals and time zones | medium | `references/engineering-mastery.md` | covered by `team-remote` |
+| 288 | team-scaling | Technical conflict and decision escalation | medium | `references/engineering-mastery.md` | covered by `team-conflict` |
+| 289 | team-scaling | Layoffs, scope cuts and morale | medium | `references/engineering-mastery.md` | covered by `team-layoff` |
+| 290 | team-scaling | Hiring loop calibration and debrief | medium | `references/engineering-mastery.md` | covered by `team-hiring-loop` |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.

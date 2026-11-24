@@ -1,6 +1,6 @@
 # Knowledge index
 
-333 durable cards. Read this before a web search; open a card only when it matches.
+357 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -86,14 +86,19 @@
 | `crypto-postquantum` | PQC migration is a hybrid, not a flag | crypto, pqc, hybrid | low | 2026-11-24 |
 | `crypto-weak-random` | Predictable randomness is a key recovery bug | crypto, random, predictability | high | 2026-11-24 |
 | `tls-config-review` | TLS is a version, a chain and a policy | crypto, tls, certificate | medium | 2026-11-24 |
+| `db-checkpoint` | A checkpoint bounds the recovery work | database, checkpoint, recovery | medium | 2026-11-25 |
 | `db-deadlock` | A deadlock is a cycle in the wait-for graph | database, deadlock, retry | medium | 2026-11-25 |
 | `db-lock-manager` | A lock manager has modes, a wait queue and fairness | database, locks, fairness | medium | 2026-11-25 |
 | `db-parallel-query` | A parallel plan needs even work and a worker limit | database, parallel, skew | medium | 2026-11-25 |
+| `db-corruption` | Corruption is detected by checksums and repaired from a copy | database, corruption, checksum | medium | 2026-11-25 |
 | `db-cardinality-estimate` | Estimates decide the plan; bad estimates ruin it | database, cardinality, planner | high | 2026-11-25 |
 | `db-spill-sort` | External sort spills sorted runs and merges them | database, sort, spill | medium | 2026-11-25 |
+| `db-failover-fencing` | Fencing stops the old primary from writing | database, failover, fencing | high | 2026-11-25 |
 | `db-isolation` | Isolation levels allow different anomalies | database, isolation, write-skew | high | 2026-11-25 |
 | `db-join-algorithms` | Join choice is a cost model over sizes and order | database, join, query | high | 2026-11-25 |
 | `db-mvcc` | MVCC keeps versions for concurrent snapshots | database, mvcc, snapshot | high | 2026-11-25 |
+| `db-pitr` | Point-in-time recovery needs a base backup and WAL | database, pitr, wal | high | 2026-11-25 |
+| `db-recovery-redo` | Redo applies committed pages before undo | database, recovery, redo | high | 2026-11-25 |
 | `db-vacuum` | Vacuum reclaims versions and freezes old transaction ids | database, vacuum, bloat | medium | 2026-11-25 |
 | `db-vectorized-exec` | Vectorized execution amortizes per-row cost | database, vectorized, execution | medium | 2026-11-25 |
 | `detection-sigma` | A Sigma rule needs a logsource, a selection and a false-positive note | detection, sigma, log | high | 2026-11-24 |
@@ -121,6 +126,11 @@
 | `dist-clock` | Physical clocks skew; logical clocks order events | distributed, clock, causality | high | 2026-11-25 |
 | `consensus-pre-vote` | Pre-vote stops a rejoining node from disrupting the leader | distributed, raft, election | high | 2026-11-25 |
 | `consensus-crash-recovery` | Recovery replays the log to the commit index, not past it | distributed, consensus, recovery | high | 2026-11-25 |
+| `repair-hinted-handoff` | A hinted handoff parks a write and replays it later | distributed-storage, hinted, handoff, replay, repair | high | 2026-11-25 |
+| `repair-checksum` | A scrub finds bit rot before a read does | distributed-storage, checksum, scrub | medium | 2026-11-25 |
+| `repair-anti-entropy` | Anti-entropy compares digests and repairs the delta | distributed-storage, repair, merkle | high | 2026-11-25 |
+| `repair-quorum` | Degraded mode trades consistency for availability | distributed-storage, quorum, degraded | medium | 2026-11-25 |
+| `repair-read-repair` | Read repair fixes a replica on the read path | distributed-storage, read-repair, version | medium | 2026-11-25 |
 | `econ-make-buy` | Build versus buy compares maintenance, not license | economics, make-buy, maintenance | high | 2026-11-25 |
 | `econ-headcount` | Headcount is a recurring cost with a ramp | economics, headcount, ramp | medium | 2026-11-25 |
 | `econ-vendor-lock` | Lock-in is the exit cost, not the logo | economics, vendor, exit | high | 2026-11-25 |
@@ -291,6 +301,11 @@
 | `re-dotnet-aot` | Native AOT is not IL | re, dotnet, aot | medium | 2026-11-24 |
 | `re-rust-layout` | Rust types are not C types | re, rust, layout | high | 2026-11-24 |
 | `re-swift` | Swift uses witness tables and value types | re, swift, ios | medium | 2026-11-24 |
+| `runtime-gc-safepoint` | A safepoint is where the runtime can move or scan | runtime, gc, safepoint | high | 2026-11-25 |
+| `runtime-dynload` | Dynamic loading runs initializers before main | runtime, dynload, init-order | medium | 2026-11-25 |
+| `runtime-exception` | Exception tables describe where a throw may land | runtime, exceptions, unwind | medium | 2026-11-25 |
+| `runtime-tls` | Thread-local storage has a model and a destructor order | runtime, tls, threads | medium | 2026-11-25 |
+| `runtime-stack-unwind` | Unwinding runs cleanups between throw and catch | runtime, unwind, exceptions | high | 2026-11-25 |
 | `storage-checksum` | A checksum detects corruption, it does not repair it | storage, checksum, corruption | medium | 2026-11-25 |
 | `storage-wal` | A write-ahead log makes the write durable before the page | storage, wal, durability | high | 2026-11-25 |
 | `storage-compaction` | Compaction trades space and read speed for write stalls | storage, compaction, lsm, write, stall, sorted-runs | medium | 2026-11-25 |
@@ -300,6 +315,15 @@
 | `secrets-verified` | A secret is a finding only after a read-only proof | supply-chain, secret, verification | high | 2026-11-24 |
 | `supply-sigstore` | Signatures are only useful when verified | supply-chain, sigstore, provenance | medium | 2026-11-24 |
 | `cicd-pr-target` | pull_request_target can run untrusted code with a write token | supply-chain, ci, github-actions | high | 2026-11-24 |
+| `team-charter` | A charter names the mission, the boundary and the interface | team-scaling, charter, mission | high | 2026-11-25 |
+| `team-handoff` | A handoff needs a written owner, state and next step | team-scaling, handoff, transfer, ownership, shadow | high | 2026-11-25 |
+| `team-hiring-loop` | A hiring loop needs calibration before it decides | team-scaling, hiring, calibration | medium | 2026-11-25 |
+| `team-layoff` | A layoff needs a scope cut and an honest story | team-scaling, layoff, morale | medium | 2026-11-25 |
+| `team-manager` | A manager's span and coaching decide the team's rate | team-scaling, manager, coaching | medium | 2026-11-25 |
+| `team-split` | A split needs an ownership map before the move | team-scaling, split, ownership | high | 2026-11-25 |
+| `team-growth` | Growth needs a hiring bar and a ramp plan | team-scaling, growth, hiring | medium | 2026-11-25 |
+| `team-remote` | Remote work needs explicit overlap and written state | team-scaling, remote, timezone | medium | 2026-11-25 |
+| `team-conflict` | Technical conflict needs a decision rule, not a vote | team-scaling, conflict, escalation | medium | 2026-11-25 |
 | `web-race-single-packet` | A race is a check and a write without one lock | web, race, logic | high | 2026-11-24 |
 | `race-idempotency` | A unique constraint is the cheapest race fix | web, race, database | medium | 2026-11-24 |
 | `web-cors-null-origin` | CORS reflection is only a bug with credentials | web, cors, browser | high | 2026-11-24 |

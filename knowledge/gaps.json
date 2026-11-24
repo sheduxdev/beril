@@ -2392,5 +2392,221 @@
   "source": "references/engineering-mastery.md",
   "covered_by": "a11y-motion",
   "status": "covered"
+ },
+ {
+  "id": "repair-anti-entropy",
+  "domain": "distributed-storage",
+  "gap": "Anti-entropy repair and Merkle trees",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "repair-anti-entropy",
+  "status": "covered"
+ },
+ {
+  "id": "repair-hinted-handoff",
+  "domain": "distributed-storage",
+  "gap": "Hinted handoff and replay budget",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "repair-hinted-handoff",
+  "status": "covered"
+ },
+ {
+  "id": "repair-read-repair",
+  "domain": "distributed-storage",
+  "gap": "Read repair and version conflict",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "repair-read-repair",
+  "status": "covered"
+ },
+ {
+  "id": "repair-checksum",
+  "domain": "distributed-storage",
+  "gap": "Block checksums and scrub scheduling",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "repair-checksum",
+  "status": "covered"
+ },
+ {
+  "id": "repair-quorum",
+  "domain": "distributed-storage",
+  "gap": "Repair quorum and degraded mode",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "repair-quorum",
+  "status": "covered"
+ },
+ {
+  "id": "db-recovery-redo",
+  "domain": "database-recovery",
+  "gap": "Redo, undo and crash recovery order",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "db-recovery-redo",
+  "status": "covered"
+ },
+ {
+  "id": "db-checkpoint",
+  "domain": "database-recovery",
+  "gap": "Checkpoints and recovery time",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "db-checkpoint",
+  "status": "covered"
+ },
+ {
+  "id": "db-pitr",
+  "domain": "database-recovery",
+  "gap": "Point-in-time recovery and WAL retention",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "db-pitr",
+  "status": "covered"
+ },
+ {
+  "id": "db-failover-fencing",
+  "domain": "database-recovery",
+  "gap": "Fencing, split brain and promotion",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "db-failover-fencing",
+  "status": "covered"
+ },
+ {
+  "id": "db-corruption",
+  "domain": "database-recovery",
+  "gap": "Page corruption, checksums and repair",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "db-corruption",
+  "status": "covered"
+ },
+ {
+  "id": "runtime-gc-safepoint",
+  "domain": "runtime",
+  "gap": "Safepoints, stop-the-world and latency",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "runtime-gc-safepoint",
+  "status": "covered"
+ },
+ {
+  "id": "runtime-stack-unwind",
+  "domain": "runtime",
+  "gap": "Stack unwinding, exceptions and destructors",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "runtime-stack-unwind",
+  "status": "covered"
+ },
+ {
+  "id": "runtime-exception",
+  "domain": "runtime",
+  "gap": "Exception tables and landing pads",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "runtime-exception",
+  "status": "covered"
+ },
+ {
+  "id": "runtime-tls",
+  "domain": "runtime",
+  "gap": "Thread-local storage and destructor order",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "runtime-tls",
+  "status": "covered"
+ },
+ {
+  "id": "runtime-dynload",
+  "domain": "runtime",
+  "gap": "Dynamic loading, init order and symbol interposition",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "runtime-dynload",
+  "status": "covered"
+ },
+ {
+  "id": "team-split",
+  "domain": "team-scaling",
+  "gap": "Splitting a team without breaking ownership",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "team-split",
+  "status": "covered"
+ },
+ {
+  "id": "team-charter",
+  "domain": "team-scaling",
+  "gap": "Team charter, mission and boundaries",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "team-charter",
+  "status": "covered"
+ },
+ {
+  "id": "team-handoff",
+  "domain": "team-scaling",
+  "gap": "Ownership handoff and knowledge transfer",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "team-handoff",
+  "status": "covered"
+ },
+ {
+  "id": "team-growth",
+  "domain": "team-scaling",
+  "gap": "Growing a team without losing the bar",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "team-growth",
+  "status": "covered"
+ },
+ {
+  "id": "team-manager",
+  "domain": "team-scaling",
+  "gap": "Manager span, coaching and career",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "team-manager",
+  "status": "covered"
+ },
+ {
+  "id": "team-remote",
+  "domain": "team-scaling",
+  "gap": "Remote team rituals and time zones",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "team-remote",
+  "status": "covered"
+ },
+ {
+  "id": "team-conflict",
+  "domain": "team-scaling",
+  "gap": "Technical conflict and decision escalation",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "team-conflict",
+  "status": "covered"
+ },
+ {
+  "id": "team-layoff",
+  "domain": "team-scaling",
+  "gap": "Layoffs, scope cuts and morale",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "team-layoff",
+  "status": "covered"
+ },
+ {
+  "id": "team-hiring-loop",
+  "domain": "team-scaling",
+  "gap": "Hiring loop calibration and debrief",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "team-hiring-loop",
+  "status": "covered"
  }
 ]

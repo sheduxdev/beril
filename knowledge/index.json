@@ -2032,6 +2032,50 @@
   "failure": "An estimate that is wrong by 1000x picks a nested loop. Sampling helps, correlation does not."
  },
  {
+  "path": "knowledge/db-checkpoint.md",
+  "body": "# A checkpoint bounds the recovery work\n\n## Claim\n\nThe checkpoint flushes dirty pages and records a log position. Recovery starts from there.\n\n## Test\n\nTake checkpoints under load. Kill the process. Measure the replay length.\n\n## Proof\n\nA recovery time inside the target.\n\n## Failure modes\n\nA checkpoint that blocks writes causes a spike. A lazy checkpoint lengthens recovery.",
+  "id": "db-checkpoint",
+  "title": "A checkpoint bounds the recovery work",
+  "tags": [
+   "database",
+   "checkpoint",
+   "recovery"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The checkpoint flushes dirty pages and records a log position. Recovery starts from there.",
+  "test": "Take checkpoints under load. Kill the process. Measure the replay length.",
+  "proof": "A recovery time inside the target.",
+  "failure": "A checkpoint that blocks writes causes a spike. A lazy checkpoint lengthens recovery."
+ },
+ {
+  "path": "knowledge/db-corruption.md",
+  "body": "# Corruption is detected by checksums and repaired from a copy\n\n## Claim\n\nA page checksum failure marks the page. The repair source is a replica, a backup or a WAL replay.\n\n## Test\n\nCorrupt a page file. Read the table. Check the error and the repair.\n\n## Proof\n\nA detected page and a repaired row.\n\n## Failure modes\n\nA full-page write without checksums hides a torn page. A repair from a corrupt replica spreads it.",
+  "id": "db-corruption",
+  "title": "Corruption is detected by checksums and repaired from a copy",
+  "tags": [
+   "database",
+   "corruption",
+   "checksum"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A page checksum failure marks the page. The repair source is a replica, a backup or a WAL replay.",
+  "test": "Corrupt a page file. Read the table. Check the error and the repair.",
+  "proof": "A detected page and a repaired row.",
+  "failure": "A full-page write without checksums hides a torn page. A repair from a corrupt replica spreads it."
+ },
+ {
   "path": "knowledge/db-deadlock.md",
   "body": "# A deadlock is a cycle in the wait-for graph\n\n## Claim\n\nThe detector finds a cycle, picks a victim and aborts it. The client must retry the whole transaction.\n\n## Test\n\nCreate a two-session cycle. Check the victim and the error code.\n\n## Proof\n\nA clear deadlock error and a successful retry.\n\n## Failure modes\n\nA retry inside the same transaction may repeat the partial work.",
   "id": "db-deadlock",
@@ -2052,6 +2096,28 @@
   "test": "Create a two-session cycle. Check the victim and the error code.",
   "proof": "A clear deadlock error and a successful retry.",
   "failure": "A retry inside the same transaction may repeat the partial work."
+ },
+ {
+  "path": "knowledge/db-failover-fencing.md",
+  "body": "# Fencing stops the old primary from writing\n\n## Claim\n\nThe old primary must be fenced or demoted. A split brain writes two histories.\n\n## Test\n\nPause the network. Promote the replica. Resume the old primary.\n\n## Proof\n\nOne writable primary and no divergent commits.\n\n## Failure modes\n\nA fence that depends on the old host is weak. A stale DNS record can route writers.",
+  "id": "db-failover-fencing",
+  "title": "Fencing stops the old primary from writing",
+  "tags": [
+   "database",
+   "failover",
+   "fencing"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The old primary must be fenced or demoted. A split brain writes two histories.",
+  "test": "Pause the network. Promote the replica. Resume the old primary.",
+  "proof": "One writable primary and no divergent commits.",
+  "failure": "A fence that depends on the old host is weak. A stale DNS record can route writers."
  },
  {
   "path": "knowledge/db-isolation.md",
@@ -2162,6 +2228,50 @@
   "test": "Run a plan with a skewed key. Measure the slowest worker.",
   "proof": "A plan with balanced workers and a bounded memory.",
   "failure": "More workers can increase contention. A parallel plan on a tiny table is overhead."
+ },
+ {
+  "path": "knowledge/db-pitr.md",
+  "body": "# Point-in-time recovery needs a base backup and WAL\n\n## Claim\n\nThe base backup plus the WAL segment set restores to a timestamp. Retention is the limit.\n\n## Test\n\nRestore to a timestamp before a bad migration. Check the row.\n\n## Proof\n\nA recovered database at the target timestamp.\n\n## Failure modes\n\nA missing WAL segment breaks the chain. A restore without a test is a guess.",
+  "id": "db-pitr",
+  "title": "Point-in-time recovery needs a base backup and WAL",
+  "tags": [
+   "database",
+   "pitr",
+   "wal"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The base backup plus the WAL segment set restores to a timestamp. Retention is the limit.",
+  "test": "Restore to a timestamp before a bad migration. Check the row.",
+  "proof": "A recovered database at the target timestamp.",
+  "failure": "A missing WAL segment breaks the chain. A restore without a test is a guess."
+ },
+ {
+  "path": "knowledge/db-recovery-redo.md",
+  "body": "# Redo applies committed pages before undo\n\n## Claim\n\nCrash recovery replays the log to a consistent point, then rolls back uncommitted transactions.\n\n## Test\n\nKill the process mid-write. Restart. Check the redo and undo order.\n\n## Proof\n\nA consistent database with the committed row.\n\n## Failure modes\n\nA wrong order resurrects uncommitted data. A torn page needs a checksum.",
+  "id": "db-recovery-redo",
+  "title": "Redo applies committed pages before undo",
+  "tags": [
+   "database",
+   "recovery",
+   "redo"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Crash recovery replays the log to a consistent point, then rolls back uncommitted transactions.",
+  "test": "Kill the process mid-write. Restart. Check the redo and undo order.",
+  "proof": "A consistent database with the committed row.",
+  "failure": "A wrong order resurrects uncommitted data. A torn page needs a checksum."
  },
  {
   "path": "knowledge/db-spill-sort.md",
@@ -6282,6 +6392,118 @@
   "failure": "Objective-C bridging hides some calls. Swift name mangling changes by version."
  },
  {
+  "path": "knowledge/repair-anti-entropy.md",
+  "body": "# Anti-entropy compares digests and repairs the delta\n\n## Claim\n\nMerkle trees summarize ranges. A mismatch descends to the leaf and the missing key is repaired.\n\n## Test\n\nCompare two replica trees. Corrupt one range. Watch the repair scope.\n\n## Proof\n\nA repaired range without a full scan.\n\n## Failure modes\n\nA digest collision hides a mismatch. A full-tree build is expensive.",
+  "id": "repair-anti-entropy",
+  "title": "Anti-entropy compares digests and repairs the delta",
+  "tags": [
+   "distributed-storage",
+   "repair",
+   "merkle"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Merkle trees summarize ranges. A mismatch descends to the leaf and the missing key is repaired.",
+  "test": "Compare two replica trees. Corrupt one range. Watch the repair scope.",
+  "proof": "A repaired range without a full scan.",
+  "failure": "A digest collision hides a mismatch. A full-tree build is expensive."
+ },
+ {
+  "path": "knowledge/repair-checksum.md",
+  "body": "# A scrub finds bit rot before a read does\n\n## Claim\n\nBlock checksums verify on read and on a scheduled scrub. A failing block is rebuilt from a peer.\n\n## Test\n\nCorrupt a block on disk. Wait for the scrub. Read the key.\n\n## Proof\n\nA repaired read and a scrub log entry.\n\n## Failure modes\n\nA checksum stored on the same failing sector is useless. An unscrubbed cold range rots silently.",
+  "id": "repair-checksum",
+  "title": "A scrub finds bit rot before a read does",
+  "tags": [
+   "distributed-storage",
+   "checksum",
+   "scrub"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Block checksums verify on read and on a scheduled scrub. A failing block is rebuilt from a peer.",
+  "test": "Corrupt a block on disk. Wait for the scrub. Read the key.",
+  "proof": "A repaired read and a scrub log entry.",
+  "failure": "A checksum stored on the same failing sector is useless. An unscrubbed cold range rots silently."
+ },
+ {
+  "path": "knowledge/repair-hinted-handoff.md",
+  "body": "# A hinted handoff parks a write and replays it later\n\n## Claim\n\nThe coordinator stores a hint with a TTL. The replay must be bounded and idempotent.\n\n## Test\n\nWrite while a replica is down. Restart it. Check the hint replay and the duplicate handling.\n\n## Proof\n\nOne applied write and a drained hint.\n\n## Failure modes\n\nAn unbounded hint store grows. A replay that is not idempotent doubles the write.",
+  "id": "repair-hinted-handoff",
+  "title": "A hinted handoff parks a write and replays it later",
+  "tags": [
+   "distributed-storage",
+   "hinted",
+   "handoff",
+   "replay",
+   "repair"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The coordinator stores a hint with a TTL. The replay must be bounded and idempotent.",
+  "test": "Write while a replica is down. Restart it. Check the hint replay and the duplicate handling.",
+  "proof": "One applied write and a drained hint.",
+  "failure": "An unbounded hint store grows. A replay that is not idempotent doubles the write."
+ },
+ {
+  "path": "knowledge/repair-quorum.md",
+  "body": "# Degraded mode trades consistency for availability\n\n## Claim\n\nWith fewer than the required replicas the cluster can serve reads, reject writes, or accept weakened durability by policy.\n\n## Test\n\nKill replicas below the write quorum. Read and write. Check the documented behavior.\n\n## Proof\n\nA documented degraded mode with a recovery path.\n\n## Failure modes\n\nA silent weakened write is data loss on the next failure. A read-only mode surprises writers.",
+  "id": "repair-quorum",
+  "title": "Degraded mode trades consistency for availability",
+  "tags": [
+   "distributed-storage",
+   "quorum",
+   "degraded"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "With fewer than the required replicas the cluster can serve reads, reject writes, or accept weakened durability by policy.",
+  "test": "Kill replicas below the write quorum. Read and write. Check the documented behavior.",
+  "proof": "A documented degraded mode with a recovery path.",
+  "failure": "A silent weakened write is data loss on the next failure. A read-only mode surprises writers."
+ },
+ {
+  "path": "knowledge/repair-read-repair.md",
+  "body": "# Read repair fixes a replica on the read path\n\n## Claim\n\nThe coordinator compares versions from the replicas and writes the newest back to the stale ones. A digest mismatch triggers it.\n\n## Test\n\nWrite to one replica only. Read with a quorum. Check the stale replica's version after the read.\n\n## Proof\n\nAll replicas converge after the read without a background job.\n\n## Failure modes\n\nA read repair without a version conflict rule picks a loser. A read from one replica never repairs.",
+  "id": "repair-read-repair",
+  "title": "Read repair fixes a replica on the read path",
+  "tags": [
+   "distributed-storage",
+   "read-repair",
+   "version"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The coordinator compares versions from the replicas and writes the newest back to the stale ones. A digest mismatch triggers it.",
+  "test": "Write to one replica only. Read with a quorum. Check the stale replica's version after the read.",
+  "proof": "All replicas converge after the read without a background job.",
+  "failure": "A read repair without a version conflict rule picks a loser. A read from one replica never repairs."
+ },
+ {
   "path": "knowledge/report-cvss-context.md",
   "body": "# CVSS without business context misranks the bug\n\n## Claim\n\nThe vector scores the mechanism, not the asset value or the attacker position.\n\n## Test\n\nWrite the impact first. Set the vector from the real precondition. Explain the business asset in one sentence.\n\n## Proof\n\nA score a triager accepts because the narrative matches it.\n\n## Failure modes\n\nA high score on a staging host oversells. A low score on production data undersells.",
   "id": "report-cvss-context",
@@ -6369,6 +6591,116 @@
   "test": "Map the finding to the VRT. Cite the impact. Compare similar disclosed reports.",
   "proof": "A severity a triager accepts with the evidence.",
   "failure": "A high CVSS on a low-value asset oversells. A chain without proof does not."
+ },
+ {
+  "path": "knowledge/runtime-dynload.md",
+  "body": "# Dynamic loading runs initializers before main\n\n## Claim\n\nThe loader maps the library, resolves symbols and runs constructors in dependency order. Interposition changes the target.\n\n## Test\n\nLoad a plugin with a constructor. Check the order and the symbol that resolves.\n\n## Proof\n\nA predictable init order and a resolved symbol.\n\n## Failure modes\n\nA constructor that depends on another library's state is fragile. An interposed symbol changes behavior silently.",
+  "id": "runtime-dynload",
+  "title": "Dynamic loading runs initializers before main",
+  "tags": [
+   "runtime",
+   "dynload",
+   "init-order"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The loader maps the library, resolves symbols and runs constructors in dependency order. Interposition changes the target.",
+  "test": "Load a plugin with a constructor. Check the order and the symbol that resolves.",
+  "proof": "A predictable init order and a resolved symbol.",
+  "failure": "A constructor that depends on another library's state is fragile. An interposed symbol changes behavior silently."
+ },
+ {
+  "path": "knowledge/runtime-exception.md",
+  "body": "# Exception tables describe where a throw may land\n\n## Claim\n\nThe compiler emits a table of protected ranges and landing pads. The unwinder walks it without a frame pointer chain.\n\n## Test\n\nThrow inside a protected range and outside it. Check the handler and the termination.\n\n## Proof\n\nThe correct landing pad or a clean terminate.\n\n## Failure modes\n\nA missing table entry skips a handler. A catch of the wrong type terminates.",
+  "id": "runtime-exception",
+  "title": "Exception tables describe where a throw may land",
+  "tags": [
+   "runtime",
+   "exceptions",
+   "unwind"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The compiler emits a table of protected ranges and landing pads. The unwinder walks it without a frame pointer chain.",
+  "test": "Throw inside a protected range and outside it. Check the handler and the termination.",
+  "proof": "The correct landing pad or a clean terminate.",
+  "failure": "A missing table entry skips a handler. A catch of the wrong type terminates."
+ },
+ {
+  "path": "knowledge/runtime-gc-safepoint.md",
+  "body": "# A safepoint is where the runtime can move or scan\n\n## Claim\n\nThreads poll a safepoint so the collector can stop them. A long loop without a poll delays the pause.\n\n## Test\n\nRun a tight loop in a compiled method. Measure the time to safepoint.\n\n## Proof\n\nA bounded safepoint latency.\n\n## Failure modes\n\nA safepoint in a signal can deadlock. A counted loop poll is not free.",
+  "id": "runtime-gc-safepoint",
+  "title": "A safepoint is where the runtime can move or scan",
+  "tags": [
+   "runtime",
+   "gc",
+   "safepoint"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Threads poll a safepoint so the collector can stop them. A long loop without a poll delays the pause.",
+  "test": "Run a tight loop in a compiled method. Measure the time to safepoint.",
+  "proof": "A bounded safepoint latency.",
+  "failure": "A safepoint in a signal can deadlock. A counted loop poll is not free."
+ },
+ {
+  "path": "knowledge/runtime-stack-unwind.md",
+  "body": "# Unwinding runs cleanups between throw and catch\n\n## Claim\n\nThe unwinder uses tables to find landing pads and destructors. A missing table skips cleanup.\n\n## Test\n\nThrow across a frame with a destructor. Check the cleanup and the catch.\n\n## Proof\n\nThe destructor runs once before the handler.\n\n## Failure modes\n\nA foreign exception through C can skip cleanup. A catch-all hides the wrong type.",
+  "id": "runtime-stack-unwind",
+  "title": "Unwinding runs cleanups between throw and catch",
+  "tags": [
+   "runtime",
+   "unwind",
+   "exceptions"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The unwinder uses tables to find landing pads and destructors. A missing table skips cleanup.",
+  "test": "Throw across a frame with a destructor. Check the cleanup and the catch.",
+  "proof": "The destructor runs once before the handler.",
+  "failure": "A foreign exception through C can skip cleanup. A catch-all hides the wrong type."
+ },
+ {
+  "path": "knowledge/runtime-tls.md",
+  "body": "# Thread-local storage has a model and a destructor order\n\n## Claim\n\nThe TLS model decides the lookup cost. The destructor runs at thread exit, and the order is not yours to choose.\n\n## Test\n\nRead the TLS model in the binary. Start and stop a thread. Check the destructor.\n\n## Proof\n\nA correct per-thread value and a clean destructor.\n\n## Failure modes\n\nA dynamic TLS in a dlopen library has a slow path. A destructor that touches freed state crashes.",
+  "id": "runtime-tls",
+  "title": "Thread-local storage has a model and a destructor order",
+  "tags": [
+   "runtime",
+   "tls",
+   "threads"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The TLS model decides the lookup cost. The destructor runs at thread exit, and the order is not yours to choose.",
+  "test": "Read the TLS model in the binary. Start and stop a thread. Check the destructor.",
+  "proof": "A correct per-thread value and a clean destructor.",
+  "failure": "A dynamic TLS in a dlopen library has a slow path. A destructor that touches freed state crashes."
  },
  {
   "path": "knowledge/secrets-verified.md",
@@ -6548,6 +6880,206 @@
   "test": "Compare the name with the popular package. Check the publisher, age, install count and install scripts.",
   "proof": "The resolved tarball differs from the intended package.",
   "failure": "A fork with the same name can be legitimate. Check the lockfile hash."
+ },
+ {
+  "path": "knowledge/team-charter.md",
+  "body": "# A charter names the mission, the boundary and the interface\n\n## Claim\n\nThe team knows what it owns, what it does not and how others request work.\n\n## Test\n\nRead the charter. Ask a neighbor what the team owns.\n\n## Proof\n\nA neighbor answers correctly from the charter.\n\n## Failure modes\n\nA charter that lists everything owns nothing. A missing escalation path creates shadow work.",
+  "id": "team-charter",
+  "title": "A charter names the mission, the boundary and the interface",
+  "tags": [
+   "team-scaling",
+   "charter",
+   "mission"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The team knows what it owns, what it does not and how others request work.",
+  "test": "Read the charter. Ask a neighbor what the team owns.",
+  "proof": "A neighbor answers correctly from the charter.",
+  "failure": "A charter that lists everything owns nothing. A missing escalation path creates shadow work."
+ },
+ {
+  "path": "knowledge/team-conflict.md",
+  "body": "# Technical conflict needs a decision rule, not a vote\n\n## Claim\n\nThe owner decides, the disagreeing party records the objection, and a deadline ends the debate.\n\n## Test\n\nWatch one contested decision. Check the owner and the record.\n\n## Proof\n\nA decision with a recorded dissent and a date.\n\n## Failure modes\n\nA consensus requirement stalls. An escalation without a rule becomes political.",
+  "id": "team-conflict",
+  "title": "Technical conflict needs a decision rule, not a vote",
+  "tags": [
+   "team-scaling",
+   "conflict",
+   "escalation"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The owner decides, the disagreeing party records the objection, and a deadline ends the debate.",
+  "test": "Watch one contested decision. Check the owner and the record.",
+  "proof": "A decision with a recorded dissent and a date.",
+  "failure": "A consensus requirement stalls. An escalation without a rule becomes political."
+ },
+ {
+  "path": "knowledge/team-growth.md",
+  "body": "# Growth needs a hiring bar and a ramp plan\n\n## Claim\n\nEvery hire raises or lowers the bar. The ramp plan names the first deliverable and the reviewer.\n\n## Test\n\nRead the last three hires' ramp plans. Check the first deliverable date.\n\n## Proof\n\nA new hire shipping inside the ramp window.\n\n## Failure modes\n\nA hire without a ramp adds load to the team. A lowered bar is permanent.",
+  "id": "team-growth",
+  "title": "Growth needs a hiring bar and a ramp plan",
+  "tags": [
+   "team-scaling",
+   "growth",
+   "hiring"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Every hire raises or lowers the bar. The ramp plan names the first deliverable and the reviewer.",
+  "test": "Read the last three hires' ramp plans. Check the first deliverable date.",
+  "proof": "A new hire shipping inside the ramp window.",
+  "failure": "A hire without a ramp adds load to the team. A lowered bar is permanent."
+ },
+ {
+  "path": "knowledge/team-handoff.md",
+  "body": "# A handoff needs a written owner, state and next step\n\n## Claim\n\nThe old owner documents the system, the open risks and the contacts, then shadows the new owner.\n\n## Test\n\nRead the handoff. Have the new owner run one change alone.\n\n## Proof\n\nA change by the new owner with the old owner available.\n\n## Failure modes\n\nA handoff that is a meeting is lost context. A shadow with no checklist misses the risks.",
+  "id": "team-handoff",
+  "title": "A handoff needs a written owner, state and next step",
+  "tags": [
+   "team-scaling",
+   "handoff",
+   "transfer",
+   "ownership",
+   "shadow"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The old owner documents the system, the open risks and the contacts, then shadows the new owner.",
+  "test": "Read the handoff. Have the new owner run one change alone.",
+  "proof": "A change by the new owner with the old owner available.",
+  "failure": "A handoff that is a meeting is lost context. A shadow with no checklist misses the risks."
+ },
+ {
+  "path": "knowledge/team-hiring-loop.md",
+  "body": "# A hiring loop needs calibration before it decides\n\n## Claim\n\nInterviewers score independently, the loop calibrates on evidence, and the bar is compared across candidates.\n\n## Test\n\nRead the scorecards before the debrief. Check whether the decision cites evidence.\n\n## Proof\n\nA decision traceable to evidence, not seniority.\n\n## Failure modes\n\nA debrief that anchors on the first speaker. An uncalibrated bar drifts with the market.",
+  "id": "team-hiring-loop",
+  "title": "A hiring loop needs calibration before it decides",
+  "tags": [
+   "team-scaling",
+   "hiring",
+   "calibration"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Interviewers score independently, the loop calibrates on evidence, and the bar is compared across candidates.",
+  "test": "Read the scorecards before the debrief. Check whether the decision cites evidence.",
+  "proof": "A decision traceable to evidence, not seniority.",
+  "failure": "A debrief that anchors on the first speaker. An uncalibrated bar drifts with the market."
+ },
+ {
+  "path": "knowledge/team-layoff.md",
+  "body": "# A layoff needs a scope cut and an honest story\n\n## Claim\n\nCut the roadmap to what the remaining team can own, name the reason, and protect the people who stay.\n\n## Test\n\nRead the post-layoff plan. Check whether the roadmap shrank with the team.\n\n## Proof\n\nA roadmap the remaining team can deliver.\n\n## Failure modes\n\nA layoff with the same roadmap burns the survivors. A silent cut breeds rumor.",
+  "id": "team-layoff",
+  "title": "A layoff needs a scope cut and an honest story",
+  "tags": [
+   "team-scaling",
+   "layoff",
+   "morale"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Cut the roadmap to what the remaining team can own, name the reason, and protect the people who stay.",
+  "test": "Read the post-layoff plan. Check whether the roadmap shrank with the team.",
+  "proof": "A roadmap the remaining team can deliver.",
+  "failure": "A layoff with the same roadmap burns the survivors. A silent cut breeds rumor."
+ },
+ {
+  "path": "knowledge/team-manager.md",
+  "body": "# A manager's span and coaching decide the team's rate\n\n## Claim\n\nToo many reports means no coaching. A career path without a next step loses the senior people.\n\n## Test\n\nCount the reports. Read one career plan. Check the feedback cadence.\n\n## Proof\n\nA report with a next step and a feedback loop.\n\n## Failure modes\n\nA player-coach with ten reports does neither well. A promotion without scope is a title.",
+  "id": "team-manager",
+  "title": "A manager's span and coaching decide the team's rate",
+  "tags": [
+   "team-scaling",
+   "manager",
+   "coaching"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Too many reports means no coaching. A career path without a next step loses the senior people.",
+  "test": "Count the reports. Read one career plan. Check the feedback cadence.",
+  "proof": "A report with a next step and a feedback loop.",
+  "failure": "A player-coach with ten reports does neither well. A promotion without scope is a title."
+ },
+ {
+  "path": "knowledge/team-remote.md",
+  "body": "# Remote work needs explicit overlap and written state\n\n## Claim\n\nThe overlap window, the async default and the written update replace the hallway. Time zones bound the window.\n\n## Test\n\nRead the overlap policy. Check a handoff across time zones.\n\n## Proof\n\nA decision made without a synchronous meeting.\n\n## Failure modes\n\nA meeting-only culture excludes a time zone. A silent chat is not a written decision.",
+  "id": "team-remote",
+  "title": "Remote work needs explicit overlap and written state",
+  "tags": [
+   "team-scaling",
+   "remote",
+   "timezone"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The overlap window, the async default and the written update replace the hallway. Time zones bound the window.",
+  "test": "Read the overlap policy. Check a handoff across time zones.",
+  "proof": "A decision made without a synchronous meeting.",
+  "failure": "A meeting-only culture excludes a time zone. A silent chat is not a written decision."
+ },
+ {
+  "path": "knowledge/team-split.md",
+  "body": "# A split needs an ownership map before the move\n\n## Claim\n\nMove whole services and clear interfaces, not half of a service. The new team starts with a boundary.\n\n## Test\n\nWrite the ownership map. Check every service has one owner.\n\n## Proof\n\nA split with no shared ownership.\n\n## Failure modes\n\nA split by layer creates a matrix. A split during an incident is chaos.",
+  "id": "team-split",
+  "title": "A split needs an ownership map before the move",
+  "tags": [
+   "team-scaling",
+   "split",
+   "ownership"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Move whole services and clear interfaces, not half of a service. The new team starts with a boundary.",
+  "test": "Write the ownership map. Check every service has one owner.",
+  "proof": "A split with no shared ownership.",
+  "failure": "A split by layer creates a matrix. A split during an incident is chaos."
  },
  {
   "path": "knowledge/tls-config-review.md",
