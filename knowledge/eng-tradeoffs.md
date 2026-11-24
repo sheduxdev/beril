@@ -1,7 +1,7 @@
 ---
 id: eng-tradeoffs
 title: A tradeoff without a cost is marketing
-tags: engineering, tradeoffs, design
+tags: engineering, tradeoffs, design, cost, architecture
 confidence: high
 updated: 2026-11-25
 uses: 0

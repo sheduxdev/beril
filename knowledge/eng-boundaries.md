@@ -1,14 +1,14 @@
 ---
 id: eng-boundaries
-title: A boundary hides a decision and owns its data
-tags: engineering, architecture, boundaries
+title: A service boundary owns a decision and its data
+tags: engineering, architecture, boundaries, boundary, ownership, service, data, team
 confidence: high
 updated: 2026-11-25
 uses: 0
 sources: references/engineering-mastery.md
 status: active
 ---
-# A boundary hides a decision and owns its data
+# A service boundary owns a decision and its data
 
 ## Claim
 

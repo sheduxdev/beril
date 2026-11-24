@@ -121,55 +121,55 @@
 | 115 | process | Retest after a fix and regression notes | high | `docs/break-my-app.md` | covered by `process-retest` |
 | 116 | crypto | Password KDF choice, cost and salt handling | medium | `references/vulnerability-research.md` | covered by `crypto-kdf` |
 | 117 | web | Clickjacking, frame-ancestors and UI redress | high | `references/techniques.md` | covered by `web-clickjacking` |
-| 118 | web | CSS injection, attribute selectors and data exfiltration | medium | `references/techniques.md` | open |
-| 119 | web | Dangling markup and CSRF token exfiltration | medium | `references/techniques.md` | open |
+| 118 | web | CSS injection, attribute selectors and data exfiltration | medium | `references/techniques.md` | covered by `web-css-injection` |
+| 119 | web | Dangling markup and CSRF token exfiltration | medium | `references/techniques.md` | covered by `web-dangling-markup` |
 | 120 | web3 | Solidity reentrancy, access control and oracle bugs | high | `references/techniques.md` | covered by `web3-contract` |
 | 121 | api | WebSocket message auth, subscriptions and cross-user channels | high | `references/techniques.md` | covered by `api-websocket-auth` |
-| 122 | api | Batch endpoints, partial failures and authorization per item | medium | `references/techniques.md` | open |
+| 122 | api | Batch endpoints, partial failures and authorization per item | medium | `references/techniques.md` | covered by `api-batch` |
 | 123 | cloud | vCenter SSO, ESXi and appliance chains | high | `references/vulnerability-research.md` | covered by `cloud-vmware` |
-| 124 | cloud | OpenStack keystone, nova metadata and policy | low | `references/vulnerability-research.md` | open |
-| 125 | cloud | Istio and Envoy mTLS, authorization policy and sidecar bypass | medium | `references/vulnerability-research.md` | open |
+| 124 | cloud | OpenStack keystone, nova metadata and policy | low | `references/vulnerability-research.md` | covered by `cloud-openstack` |
+| 125 | cloud | Istio and Envoy mTLS, authorization policy and sidecar bypass | medium | `references/vulnerability-research.md` | covered by `cloud-service-mesh` |
 | 126 | binary | Windows kernel drivers, IOCTL and object manager | high | `references/reverse-engineering.md` | covered by `binary-windows-kernel` |
-| 127 | binary | WebAssembly validation, JIT and sandbox boundaries | medium | `references/reverse-engineering.md` | open |
-| 128 | binary | eBPF verifier, maps and helper abuse | low | `references/reverse-engineering.md` | open |
-| 129 | re | C++ RTTI, vtables and multiple inheritance | medium | `references/reverse-engineering.md` | open |
-| 130 | re | Android JNI, ART and native library analysis | medium | `references/mobile-reverse.md` | open |
+| 127 | binary | WebAssembly validation, JIT and sandbox boundaries | medium | `references/reverse-engineering.md` | covered by `binary-wasm` |
+| 128 | binary | eBPF verifier, maps and helper abuse | low | `references/reverse-engineering.md` | covered by `binary-ebpf` |
+| 129 | re | C++ RTTI, vtables and multiple inheritance | medium | `references/reverse-engineering.md` | covered by `re-cpp-rtti` |
+| 130 | re | Android JNI, ART and native library analysis | medium | `references/mobile-reverse.md` | covered by `re-android-native` |
 | 131 | detection | Identity logs, impossible travel and token anomalies | high | `labs/detection` | covered by `detection-identity` |
 | 132 | detection | Cloud control-plane detections and role assumptions | high | `labs/detection` | covered by `detection-cloud` |
 | 133 | ir | Ransomware triage, note, encryption and backups | high | `references/vulnerability-research.md` | covered by `ir-ransomware` |
-| 134 | ir | Phishing triage, headers, URLs and payloads | medium | `references/vulnerability-research.md` | open |
+| 134 | ir | Phishing triage, headers, URLs and payloads | medium | `references/vulnerability-research.md` | covered by `ir-phishing` |
 | 135 | ai | Multi-agent delegation, shared memory and trust | high | `references/techniques.md` | covered by `ai-multiagent` |
-| 136 | process | Safe harbor, authorization and data handling | medium | `docs/break-my-app.md` | open |
-| 137 | process | Payout expectations, VRT and severity negotiation | medium | `references/scoring.md` | open |
+| 136 | process | Safe harbor, authorization and data handling | medium | `docs/break-my-app.md` | covered by `process-legal` |
+| 137 | process | Payout expectations, VRT and severity negotiation | medium | `references/scoring.md` | covered by `report-pricing` |
 | 138 | engineering | Consensus, quorum and leader election | high | `references/engineering-mastery.md` | covered by `eng-consensus` |
 | 139 | engineering | Consistency models and read-your-writes | high | `references/engineering-mastery.md` | covered by `eng-consistency` |
-| 140 | engineering | B-tree, LSM and write amplification | medium | `references/engineering-mastery.md` | open |
+| 140 | engineering | B-tree, LSM and write amplification | medium | `references/engineering-mastery.md` | covered by `eng-storage` |
 | 141 | engineering | Query planning, indexes and statistics | high | `references/engineering-mastery.md` | covered by `eng-query-planner` |
-| 142 | engineering | Virtual memory, page cache and allocators | medium | `references/engineering-mastery.md` | open |
-| 143 | engineering | Congestion control, queues and bufferbloat | medium | `references/engineering-mastery.md` | open |
-| 144 | engineering | Type systems, variance and exhaustiveness | medium | `references/engineering-mastery.md` | open |
+| 142 | engineering | Virtual memory, page cache and allocators | medium | `references/engineering-mastery.md` | covered by `eng-memory` |
+| 143 | engineering | Congestion control, queues and bufferbloat | medium | `references/engineering-mastery.md` | covered by `eng-congestion` |
+| 144 | engineering | Type systems, variance and exhaustiveness | medium | `references/engineering-mastery.md` | covered by `eng-type-systems` |
 | 145 | engineering | Feature stores, training serving skew and evaluation | high | `references/engineering-mastery.md` | covered by `eng-ml-systems` |
 | 146 | engineering | SLOs, error budgets and alerting | high | `references/engineering-mastery.md` | covered by `eng-slo` |
 | 147 | engineering | Tenant isolation, noisy neighbors and data partitioning | high | `references/engineering-mastery.md` | covered by `eng-multi-tenancy` |
-| 148 | engineering | Event sourcing, replay and projections | medium | `references/engineering-mastery.md` | open |
-| 149 | engineering | CQRS and read model consistency | medium | `references/engineering-mastery.md` | open |
+| 148 | engineering | Event sourcing, replay and projections | medium | `references/engineering-mastery.md` | covered by `eng-event-sourcing` |
+| 149 | engineering | CQRS and read model consistency | medium | `references/engineering-mastery.md` | covered by `eng-cqrs` |
 | 150 | engineering | Sagas, outbox and compensation | high | `references/engineering-mastery.md` | covered by `eng-distributed-tx` |
 | 151 | engineering | At-least-once delivery and idempotent consumers | high | `references/engineering-mastery.md` | covered by `eng-idempotent-consumer` |
-| 152 | engineering | Token bucket, leaky bucket and fairness | medium | `references/engineering-mastery.md` | open |
-| 153 | engineering | Cache-aside, write-through and stampede | medium | `references/engineering-mastery.md` | open |
+| 152 | engineering | Token bucket, leaky bucket and fairness | medium | `references/engineering-mastery.md` | covered by `eng-rate-limit` |
+| 153 | engineering | Cache-aside, write-through and stampede | medium | `references/engineering-mastery.md` | covered by `eng-cache-topology` |
 | 154 | engineering | Backward and forward compatible schema changes | high | `references/engineering-mastery.md` | covered by `eng-schema-evolution` |
-| 155 | engineering | API versioning and deprecation | medium | `references/engineering-mastery.md` | open |
-| 156 | engineering | Platform teams, golden paths and paved roads | medium | `references/engineering-mastery.md` | open |
-| 157 | engineering | Team boundaries and ownership | medium | `references/engineering-mastery.md` | open |
-| 158 | engineering | Roadmaps, bets and kill criteria | medium | `references/engineering-mastery.md` | open |
-| 159 | engineering | Hiring signals and interview design | low | `references/engineering-mastery.md` | open |
+| 155 | engineering | API versioning and deprecation | medium | `references/engineering-mastery.md` | covered by `eng-api-versioning` |
+| 156 | engineering | Platform teams, golden paths and paved roads | medium | `references/engineering-mastery.md` | covered by `eng-platform` |
+| 157 | engineering | Team boundaries and ownership | medium | `references/engineering-mastery.md` | covered by `eng-team-topology` |
+| 158 | engineering | Roadmaps, bets and kill criteria | medium | `references/engineering-mastery.md` | covered by `eng-roadmap` |
+| 159 | engineering | Hiring signals and interview design | low | `references/engineering-mastery.md` | covered by `eng-hiring` |
 | 160 | engineering | Privacy by design and data minimization | high | `references/engineering-mastery.md` | covered by `eng-privacy` |
-| 161 | engineering | SOC2, GDPR and evidence collection | medium | `references/engineering-mastery.md` | open |
-| 162 | engineering | Unit economics and cost allocation | medium | `references/engineering-mastery.md` | open |
-| 163 | engineering | Client state, server state and cache ownership | medium | `references/engineering-mastery.md` | open |
-| 164 | engineering | Offline-first mobile architecture | medium | `references/engineering-mastery.md` | open |
-| 165 | engineering | Lexing, parsing, IR and optimization | low | `references/engineering-mastery.md` | open |
-| 166 | engineering | Garbage collection and allocation pressure | medium | `references/engineering-mastery.md` | open |
-| 167 | engineering | Cardinality, sampling and telemetry cost | medium | `references/engineering-mastery.md` | open |
+| 161 | engineering | SOC2, GDPR and evidence collection | medium | `references/engineering-mastery.md` | covered by `eng-compliance` |
+| 162 | engineering | Unit economics and cost allocation | medium | `references/engineering-mastery.md` | covered by `eng-finops` |
+| 163 | engineering | Client state, server state and cache ownership | medium | `references/engineering-mastery.md` | covered by `eng-frontend-state` |
+| 164 | engineering | Offline-first mobile architecture | medium | `references/engineering-mastery.md` | covered by `eng-mobile-arch` |
+| 165 | engineering | Lexing, parsing, IR and optimization | low | `references/engineering-mastery.md` | covered by `eng-compiler` |
+| 166 | engineering | Garbage collection and allocation pressure | medium | `references/engineering-mastery.md` | covered by `eng-gc` |
+| 167 | engineering | Cardinality, sampling and telemetry cost | medium | `references/engineering-mastery.md` | covered by `eng-observability-cost` |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.

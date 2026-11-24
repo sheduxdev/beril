@@ -1,7 +1,7 @@
 ---
 id: eng-schema-evolution
 title: Schema changes must be compatible in both directions
-tags: engineering, schema, evolution
+tags: engineering, schema, evolution, deploy, migration
 confidence: high
 updated: 2026-11-25
 uses: 0

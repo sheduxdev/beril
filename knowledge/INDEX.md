@@ -1,6 +1,6 @@
 # Knowledge index
 
-202 durable cards. Read this before a web search; open a card only when it matches.
+234 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -21,6 +21,7 @@
 | `ai-data-poison` | Poisoned data changes the model or the retrieval set | ai, data, poisoning | high | 2026-11-24 |
 | `ai-rag-tenant-filter` | RAG leaks when retrieval ignores the tenant | ai, llm, rag | high | 2026-11-24 |
 | `ai-tool-output` | Tool output is untrusted input to the next turn | ai, tool, injection | high | 2026-11-24 |
+| `api-batch` | A batch endpoint checks the envelope, not each item | api, batch, auth | medium | 2026-11-25 |
 | `api-webhook-signature` | A webhook without HMAC is an unauthenticated write | api, webhook, hmac | high | 2026-11-24 |
 | `api-openapi` | An exposed schema is a map, not a finding | api, openapi, schema | high | 2026-11-24 |
 | `api-oauth-device` | Device code flow is phishing with a real code | api, oauth, device-code | medium | 2026-11-24 |
@@ -38,12 +39,15 @@
 | `binary-browser` | Browser exploitation needs a renderer bug and a sandbox path | binary, browser, jit | high | 2026-11-24 |
 | `binary-jit` | JIT bugs are about generated code and stale metadata | binary, jit, exploit | medium | 2026-11-24 |
 | `binary-macos` | Mach-O and dyld define what loads before main | binary, macos, macho | medium | 2026-11-25 |
+| `binary-ebpf` | The eBPF verifier is the security boundary | binary, ebpf, verifier | low | 2026-11-25 |
 | `binary-uefi` | UEFI is an event-driven firmware runtime | binary, uefi, firmware | medium | 2026-11-24 |
+| `binary-wasm` | Wasm modules have validation and a host boundary | binary, wasm, sandbox | medium | 2026-11-25 |
 | `binary-windows-kernel` | Windows kernel bugs are object and IRP lifetime bugs | binary, windows, kernel | high | 2026-11-25 |
 | `browser-extension-permissions` | An extension is a trusted page with broad APIs | browser, extension, permissions | medium | 2026-11-24 |
 | `cloud-docker-socket` | A mounted Docker socket is root on the host | cloud, docker, container | medium | 2026-11-24 |
 | `cloud-k8s-hostpath` | A privileged pod with hostPath is a host escape | cloud, kubernetes, container | high | 2026-11-24 |
 | `cloud-secrets` | A secrets manager is only as strong as its policy | cloud, secrets, iam | high | 2026-11-24 |
+| `cloud-service-mesh` | A sidecar is a second network path | cloud, istio, mtls | medium | 2026-11-25 |
 | `cloud-aks-identity` | AKS mixes Azure RBAC and Kubernetes RBAC | cloud, aks, kubernetes | medium | 2026-11-24 |
 | `cloud-alibaba-ram` | Alibaba RAM roles and STS follow the same trust graph | cloud, alibaba, ram | low | 2026-11-25 |
 | `cloud-azure-role` | Azure identity is a role assignment graph | cloud, azure, iam | high | 2026-11-24 |
@@ -53,6 +57,7 @@
 | `cloud-gcp-iam` | GCP IAM binds a member to a role on a resource | cloud, gcp, iam | high | 2026-11-24 |
 | `cloud-iam-wildcard` | IAM wildcard is administrator access until proven otherwise | cloud, iam, aws | high | 2026-11-24 |
 | `cloud-oci` | OCI policy is compartment and tenancy scoped | cloud, oci, iam | low | 2026-11-24 |
+| `cloud-openstack` | OpenStack policy is a service and project graph | cloud, openstack, keystone | low | 2026-11-25 |
 | `cloud-serverless` | Serverless events are input, not a trusted trigger | cloud, serverless, lambda | medium | 2026-11-24 |
 | `cloud-terraform-state` | Terraform state is a secret store | cloud, terraform, state | medium | 2026-11-24 |
 | `cloud-vmware` | VMware appliances are a chain of SSO and service bugs | cloud, vmware, vcenter | high | 2026-11-25 |
@@ -72,29 +77,41 @@
 | `detection-tls` | TLS fingerprints identify a client stack, not a person | detection, tls, ja3 | medium | 2026-11-25 |
 | `detection-threatintel` | Threat intel ages and IOCs are easy to rotate | detection, intel, ioc | medium | 2026-11-24 |
 | `electron-context-isolation` | Electron is Node with a browser attached | electron, desktop, context-isolation | medium | 2026-11-24 |
-| `eng-boundaries` | A boundary hides a decision and owns its data | engineering, architecture, boundaries | high | 2026-11-25 |
+| `eng-gc` | A GC trades throughput for pause and space | engineering, gc, allocation | medium | 2026-11-25 |
 | `eng-regression` | A bug fix needs a test that failed before it | engineering, testing, regression | high | 2026-11-25 |
 | `eng-repro-build` | A build should be reproducible from a clean checkout | engineering, build, reproducible | high | 2026-11-25 |
 | `eng-cache-invalidation` | A cache needs a key, a TTL and an invalidation path | engineering, cache, invalidation | high | 2026-11-25 |
 | `eng-timeouts` | A call without a deadline can hang a pool | engineering, timeouts, reliability | high | 2026-11-25 |
+| `eng-compiler` | A compiler is a pipeline of representations | engineering, compiler, parsing | low | 2026-11-25 |
 | `eng-communication` | A decision nobody understands is a future incident | engineering, communication, writing | high | 2026-11-25 |
 | `eng-feature-flags` | A feature flag is a temporary branch with an owner | engineering, feature-flag, release | medium | 2026-11-25 |
 | `eng-migrations` | A migration is expand, backfill, switch, contract | engineering, database, migration | high | 2026-11-25 |
+| `eng-platform` | A platform is a paved road, not a gate | engineering, platform, dx | medium | 2026-11-25 |
 | `eng-postmortem` | A postmortem is blameless and actionable | engineering, postmortem, learning | high | 2026-11-25 |
 | `eng-backpressure` | A queue without a limit is a memory leak | engineering, queue, backpressure | high | 2026-11-25 |
+| `eng-rate-limit` | A rate limiter needs a key, a cost and a fairness rule | engineering, rate-limit, fairness | medium | 2026-11-25 |
+| `eng-roadmap` | A roadmap is a set of bets with kill criteria | engineering, roadmap, product | medium | 2026-11-25 |
 | `eng-distributed-tx` | A saga is a sequence with compensation | engineering, distributed, transaction | high | 2026-11-25 |
-| `eng-tradeoffs` | A tradeoff without a cost is marketing | engineering, tradeoffs, design | high | 2026-11-25 |
+| `eng-boundaries` | A service boundary owns a decision and its data | engineering, architecture, boundaries, boundary, ownership, service, data, team | high | 2026-11-25 |
+| `eng-tradeoffs` | A tradeoff without a cost is marketing | engineering, tradeoffs, design, cost, architecture | high | 2026-11-25 |
 | `eng-transactions` | A transaction is a boundary, not a decoration | engineering, database, transactions | high | 2026-11-25 |
+| `eng-api-versioning` | A version is a deprecation clock | engineering, api, versioning | medium | 2026-11-25 |
 | `eng-accessibility` | Accessibility is a correctness requirement | engineering, accessibility, ui | medium | 2026-11-25 |
 | `eng-api-contract` | An API is a promise about errors and time | engineering, api, contract | high | 2026-11-25 |
 | `eng-slo` | An SLO is a budget for unreliability | engineering, sre, slo | high | 2026-11-25 |
 | `eng-errors` | An error is a value with a caller decision | engineering, errors, api | high | 2026-11-25 |
 | `eng-estimation` | An estimate is a range and its assumptions | engineering, estimation, planning | medium | 2026-11-25 |
+| `eng-hiring` | An interview samples the job, not trivia | engineering, hiring, interview | low | 2026-11-25 |
 | `eng-mentoring` | Ask until the blocker is clear | engineering, mentoring, teaching | high | 2026-11-25 |
 | `eng-idempotent-consumer` | At-least-once delivery needs an idempotent consumer | engineering, queue, consumer | high | 2026-11-25 |
 | `eng-debug-bisect` | Bisect the space, not the code | engineering, debugging, bisect | high | 2026-11-25 |
+| `eng-cqrs` | CQRS separates the write model from the read model | engineering, cqrs, read-model | medium | 2026-11-25 |
+| `eng-cache-topology` | Cache placement decides the failure mode | engineering, cache, topology | medium | 2026-11-25 |
+| `eng-frontend-state` | Client state and server state are different caches | engineering, frontend, state | medium | 2026-11-25 |
+| `eng-compliance` | Compliance is evidence of a control | engineering, compliance, soc2 | medium | 2026-11-25 |
 | `eng-concurrency` | Concurrency bugs are about shared state and ordering | engineering, concurrency, locks | high | 2026-11-25 |
 | `eng-config` | Config belongs to the environment, secrets belong to a store | engineering, config, secrets | high | 2026-11-25 |
+| `eng-congestion` | Congestion control is a queue management problem | engineering, network, congestion | medium | 2026-11-25 |
 | `eng-consensus` | Consensus is quorum plus a log | engineering, distributed, consensus | high | 2026-11-25 |
 | `eng-consistency` | Consistency is a contract about reads | engineering, distributed, consistency | high | 2026-11-25 |
 | `eng-cost` | Cost is a design constraint | engineering, cost, cloud | medium | 2026-11-25 |
@@ -103,25 +120,33 @@
 | `eng-legacy-strangler` | Do not rewrite the legacy system; strangle it | engineering, legacy, refactor | high | 2026-11-25 |
 | `eng-docs` | Docs are for the next decision | engineering, docs, writing | medium | 2026-11-25 |
 | `eng-ethics` | Engineering judgment includes who pays | engineering, ethics, product | medium | 2026-11-25 |
+| `eng-event-sourcing` | Events are the source of truth, state is a projection | engineering, event-sourcing, events | medium | 2026-11-25 |
 | `eng-dependencies` | Every dependency is a maintenance contract | engineering, dependencies, supply-chain | medium | 2026-11-25 |
 | `eng-idempotency` | Every retryable write needs a key | engineering, idempotency, retry | high | 2026-11-25 |
 | `eng-logging` | Log the decision, not the whole world | engineering, logging, observability | medium | 2026-11-25 |
+| `eng-memory` | Memory is virtual, cached and allocated in tiers | engineering, os, memory | medium | 2026-11-25 |
 | `eng-multi-tenancy` | Multi-tenancy is isolation plus noisy-neighbor control | engineering, multi-tenant, isolation | high | 2026-11-25 |
 | `eng-observability` | Observability answers the next question | engineering, observability, logs | high | 2026-11-25 |
+| `eng-mobile-arch` | Offline-first is a merge problem | engineering, mobile, offline | medium | 2026-11-25 |
 | `eng-performance-budget` | Performance is a budget before it is an optimization | engineering, performance, budget | high | 2026-11-25 |
 | `eng-privacy` | Privacy is data minimization with a retention clock | engineering, privacy, data | high | 2026-11-25 |
 | `eng-property-tests` | Property tests find the input you did not imagine | engineering, testing, property | medium | 2026-11-25 |
 | `eng-refactor-small` | Refactor in small, behavior-preserving steps | engineering, refactor, testing | high | 2026-11-25 |
 | `eng-requirements` | Requirements are a decision, not a transcript | engineering, requirements, product | high | 2026-11-25 |
 | `eng-code-review` | Review the change, not the author | engineering, review, quality | high | 2026-11-25 |
-| `eng-schema-evolution` | Schema changes must be compatible in both directions | engineering, schema, evolution | high | 2026-11-25 |
+| `eng-schema-evolution` | Schema changes must be compatible in both directions | engineering, schema, evolution, deploy, migration | high | 2026-11-25 |
 | `eng-security-design` | Security is a property of the design | engineering, security, design | high | 2026-11-25 |
 | `eng-simplicity` | Simplicity is removing accidental complexity | engineering, design, simplicity | high | 2026-11-25 |
 | `eng-incident` | Stabilize before you diagnose | engineering, incident, operations | high | 2026-11-25 |
+| `eng-storage` | Storage engines trade read cost for write cost | engineering, database, storage | medium | 2026-11-25 |
+| `eng-team-topology` | Team boundaries shape the architecture | engineering, team, ownership | medium | 2026-11-25 |
+| `eng-observability-cost` | Telemetry is a sampled product | engineering, observability, cost | medium | 2026-11-25 |
 | `eng-testing-pyramid` | Test at the lowest level that can catch the bug | engineering, testing, pyramid | high | 2026-11-25 |
 | `eng-i18n` | Text, time and money are not strings | engineering, i18n, locale | medium | 2026-11-25 |
 | `eng-query-planner` | The planner is the database's brain | engineering, database, query | high | 2026-11-25 |
 | `eng-ml-systems` | Training and serving must share the same features | engineering, ml, features | high | 2026-11-25 |
+| `eng-type-systems` | Types are a proof the compiler can check | engineering, types, compiler | medium | 2026-11-25 |
+| `eng-finops` | Unit economics make cost a design signal | engineering, finops, cost | medium | 2026-11-25 |
 | `exploit-uaf-reallocate` | UAF becomes control when the freed slot is reallocated | exploit, uaf, heap | high | 2026-11-24 |
 | `exploit-rop-argument-registers` | x86_64 ROP needs the argument registers | exploit, rop, linux | high | 2026-11-24 |
 | `firmware-update-sign` | A signed update is useless if verification is off | firmware, update, signature | high | 2026-11-24 |
@@ -138,6 +163,7 @@
 | `ir-disk` | Disk artifacts answer who, what and when | ir, disk, forensics | medium | 2026-11-24 |
 | `ir-memory` | Memory is the most volatile evidence | ir, memory, forensics | medium | 2026-11-24 |
 | `ir-mobile` | Mobile triage starts with the backup and the sysdiagnose | ir, mobile, ios | low | 2026-11-25 |
+| `ir-phishing` | Phishing triage reads headers and detonates the payload | ir, phishing, email | medium | 2026-11-25 |
 | `ir-ransomware` | Ransomware triage is scope, encryption and backups | ir, ransomware, backup | high | 2026-11-25 |
 | `linux-suid` | A SUID binary is a path, not a finding | linux, privesc, suid | high | 2026-11-24 |
 | `linux-cron-systemd` | Scheduled jobs inherit a weak PATH or writable unit | linux, privesc, cron, systemd | medium | 2026-11-24 |
@@ -153,14 +179,18 @@
 | `process-disclosure` | Disclosure is a timeline with a paper trail | process, disclosure, vendor | medium | 2026-11-24 |
 | `cost-job-ledger` | Every job has an actor and a cost | process, cost, jobs | high | 2026-11-24 |
 | `report-evidence` | Evidence must be reproducible and redacted | process, report, evidence | high | 2026-11-24 |
+| `report-pricing` | Payout is a negotiation with evidence | process, pricing, severity | medium | 2026-11-25 |
 | `process-bounty-platform` | Program rules decide what is payable | process, bounty, scope | medium | 2026-11-25 |
 | `process-recall-before-research` | Recall before searching | process, memory, research | high | 2026-11-24 |
+| `process-legal` | Safe harbor is written, not assumed | process, legal, authorization | medium | 2026-11-25 |
 | `process-scope-parse` | Scope is a list of rules, not a domain | process, scope, recon | high | 2026-11-24 |
 | `process-duplicate-search` | Search duplicates before writing a report | process, triage, duplicate | high | 2026-11-24 |
 | `re-crash-triage-primitive` | A crash is a lead; the primitive is the finding | re, triage, crash | high | 2026-11-24 |
 | `re-arm64` | AArch64 has a calling convention, PAC and MTE | re, arm64, pac | medium | 2026-11-25 |
+| `re-cpp-rtti` | C++ RTTI and vtables reveal the class graph | re, cpp, rtti | medium | 2026-11-25 |
 | `re-ghidrust-vs-ghidra` | GhidRust is a paused Ghidra plugin, not Ghidrust | re, ghidra, rust | high | 2026-11-24 |
 | `re-go` | Go binaries carry pclntab and interface metadata | re, go, language | medium | 2026-11-24 |
+| `re-android-native` | JNI is the bridge between Java and native code | re, android, jni | medium | 2026-11-25 |
 | `re-jvm` | JVM bytecode is a stack machine with metadata | re, java, jvm | medium | 2026-11-24 |
 | `re-macho` | Mach-O is a set of load commands, not a PE | re, macho, macos | medium | 2026-11-25 |
 | `re-dotnet-aot` | Native AOT is not IL | re, dotnet, aot | medium | 2026-11-24 |
@@ -176,11 +206,13 @@
 | `web-cors-null-origin` | CORS reflection is only a bug with credentials | web, cors, browser | high | 2026-11-24 |
 | `web-csp-bypass` | CSP is bypassed by a trusted script source, not by a weak directive alone | web, csp, xss | high | 2026-11-24 |
 | `web-csrf-samesite` | CSRF survives when state changes on a safe method | web, csrf, session | high | 2026-11-24 |
+| `web-css-injection` | CSS injection exfiltrates attributes without script | web, css, injection | medium | 2026-11-25 |
 | `web-cache-deception` | Cache deception dresses a private page as a static file | web, cache, deception | medium | 2026-11-24 |
 | `web-cache-key-unkeyed-input` | Cache poisoning is an unkeyed input that changes the response | web, cache, cdn | high | 2026-11-24 |
 | `web-clickjacking` | Clickjacking is a missing frame policy with a valuable action | web, clickjacking, ui | high | 2026-11-25 |
 | `web-client-path-traversal` | Client-side path traversal is a router normalization bug | web, spa, router | medium | 2026-11-24 |
 | `web-dom-clobbering` | DOM clobbering turns an id into a variable | web, dom, clobbering | medium | 2026-11-24 |
+| `web-dangling-markup` | Dangling markup leaks what follows the injection | web, html, csrf | medium | 2026-11-25 |
 | `web-desync-parser-disagreement` | Desync needs two HTTP parsers and an ambiguous length | web, http, smuggling | high | 2026-11-24 |
 | `web-graphql-field-auth` | GraphQL authorization is per field, not per endpoint | web, graphql, api | high | 2026-11-24 |
 | `web-http2-downgrade` | HTTP/2 adds a second parser for the same request | web, http2, smuggling | medium | 2026-11-24 |

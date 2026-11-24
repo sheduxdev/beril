@@ -105,6 +105,9 @@ github:
 dashboard:
 	./beril dashboard
 
+recall-test:
+	$(PY) scripts/recall_test.py
+
 forums:
 	$(PY) scripts/harvest.py forums --limit 20
 

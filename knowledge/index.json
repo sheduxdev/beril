@@ -378,6 +378,28 @@
   "failure": "A shared public corpus is not a leak. A filter without a tenant field is decorative."
  },
  {
+  "path": "knowledge/api-batch.md",
+  "body": "# A batch endpoint checks the envelope, not each item\n\n## Claim\n\nThe batch handler authenticates once and applies items by id without per-item authorization or partial-failure reporting.\n\n## Test\n\nSend a batch with one allowed and one forbidden item. Check the response and the side effects.\n\n## Proof\n\nA forbidden item succeeds, or the error hides which item failed.\n\n## Failure modes\n\nA batch that stops on the first error is safer. Check idempotency too.",
+  "id": "api-batch",
+  "title": "A batch endpoint checks the envelope, not each item",
+  "tags": [
+   "api",
+   "batch",
+   "auth"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "The batch handler authenticates once and applies items by id without per-item authorization or partial-failure reporting.",
+  "test": "Send a batch with one allowed and one forbidden item. Check the response and the side effects.",
+  "proof": "A forbidden item succeeds, or the error hides which item failed.",
+  "failure": "A batch that stops on the first error is safer. Check idempotency too."
+ },
+ {
   "path": "knowledge/api-grpc-reflection.md",
   "body": "# gRPC reflection is a map, per-method auth is the bug\n\n## Claim\n\nThe server exposes reflection and descriptors, but individual methods lack authorization or validate only the transport.\n\n## Test\n\nCall reflection, list services, call every method with and without a token. Compare a low-privilege caller.\n\n## Proof\n\nA method returns data or performs an action for the wrong role.\n\n## Failure modes\n\nReflection enabled is not a finding. A method that is public by design is not either.",
   "id": "api-grpc-reflection",
@@ -664,6 +686,28 @@
   "failure": "A renderer crash is not a full chain. The sandbox is a separate boundary."
  },
  {
+  "path": "knowledge/binary-ebpf.md",
+  "body": "# The eBPF verifier is the security boundary\n\n## Claim\n\nPrograms run in kernel context after verification. Helper calls, maps and pointer arithmetic are the surface.\n\n## Test\n\nMap the program type and helpers. Test map bounds. Check the verifier log.\n\n## Proof\n\nA verifier confusion or an out-of-bounds map access.\n\n## Failure modes\n\nA privileged loader can bypass some checks. CO-RE versions matter.",
+  "id": "binary-ebpf",
+  "title": "The eBPF verifier is the security boundary",
+  "tags": [
+   "binary",
+   "ebpf",
+   "verifier"
+  ],
+  "confidence": "low",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/reverse-engineering.md"
+  ],
+  "status": "active",
+  "claim": "Programs run in kernel context after verification. Helper calls, maps and pointer arithmetic are the surface.",
+  "test": "Map the program type and helpers. Test map bounds. Check the verifier log.",
+  "proof": "A verifier confusion or an out-of-bounds map access.",
+  "failure": "A privileged loader can bypass some checks. CO-RE versions matter."
+ },
+ {
   "path": "knowledge/binary-hypervisor.md",
   "body": "# A hypervisor exposes synthetic MSRs and VTL boundaries\n\n## Claim\n\nHyper-V interfaces, synthetic MSRs and VTL1 calls parse structures from a less privileged partition.\n\n## Test\n\nMap the hypercall and MSR surface. Check VTL and partition trust. Test a malformed input in a VM.\n\n## Proof\n\nA host crash or a VTL boundary bypass.\n\n## Failure modes\n\nA hypervisor crash can be a DoS only. VBS must be enabled for VTL1.",
   "id": "binary-hypervisor",
@@ -772,6 +816,28 @@
   "test": "Extract the firmware. Map DXE and SMM. Check variable parsing and capsule updates. Emulate with QEMU or a lab.",
   "proof": "A controlled write or a secure boot bypass.",
   "failure": "A DXE driver that never runs is dead code. SMM needs a special entry."
+ },
+ {
+  "path": "knowledge/binary-wasm.md",
+  "body": "# Wasm modules have validation and a host boundary\n\n## Claim\n\nThe validator enforces types and stack rules; imports are the host surface. A JIT bug or a broad import breaks the sandbox.\n\n## Test\n\nInspect the imports and memory. Try a malformed module. Check the host calls and the JIT flags.\n\n## Proof\n\nA host call or memory access outside the module's grant.\n\n## Failure modes\n\nA pure compute module with no imports is low risk. The host wrapper matters.",
+  "id": "binary-wasm",
+  "title": "Wasm modules have validation and a host boundary",
+  "tags": [
+   "binary",
+   "wasm",
+   "sandbox"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/reverse-engineering.md"
+  ],
+  "status": "active",
+  "claim": "The validator enforces types and stack rules; imports are the host surface. A JIT bug or a broad import breaks the sandbox.",
+  "test": "Inspect the imports and memory. Try a malformed module. Check the host calls and the JIT flags.",
+  "proof": "A host call or memory access outside the module's grant.",
+  "failure": "A pure compute module with no imports is low risk. The host wrapper matters."
  },
  {
   "path": "knowledge/binary-windows-kernel.md",
@@ -1083,6 +1149,28 @@
   "failure": "A claim on repo:ref:refs/heads/main is narrow. A wildcard on repo:* is not."
  },
  {
+  "path": "knowledge/cloud-openstack.md",
+  "body": "# OpenStack policy is a service and project graph\n\n## Claim\n\nKeystone issues a scoped token; policy.json decides the action. A role at the wrong scope crosses projects.\n\n## Test\n\nRead the token scope. Check the policy. Test a read in another project.\n\n## Proof\n\nA token that works outside its project.\n\n## Failure modes\n\nA default policy is often permissive. Admin tokens hide scope bugs.",
+  "id": "cloud-openstack",
+  "title": "OpenStack policy is a service and project graph",
+  "tags": [
+   "cloud",
+   "openstack",
+   "keystone"
+  ],
+  "confidence": "low",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "Keystone issues a scoped token; policy.json decides the action. A role at the wrong scope crosses projects.",
+  "test": "Read the token scope. Check the policy. Test a read in another project.",
+  "proof": "A token that works outside its project.",
+  "failure": "A default policy is often permissive. Admin tokens hide scope bugs."
+ },
+ {
   "path": "knowledge/cloud-secrets.md",
   "body": "# A secrets manager is only as strong as its policy\n\n## Claim\n\nThe secret policy allows a broad principal, cross-account trust, or a role the workload does not need.\n\n## Test\n\nRead the resource policy. Test with the workload role and a second role. Check rotation.\n\n## Proof\n\nA read by a principal outside the intended workload.\n\n## Failure modes\n\nA secret encrypted with a default key is still readable by a policy mistake. Rotation alone is not access control.",
   "id": "cloud-secrets",
@@ -1125,6 +1213,28 @@
   "test": "Invoke with a modified event. Test the authorizer. Check the execution role.",
   "proof": "A function action or read beyond the intended event.",
   "failure": "A function URL with IAM auth is different from an open one. Check the trigger."
+ },
+ {
+  "path": "knowledge/cloud-service-mesh.md",
+  "body": "# A sidecar is a second network path\n\n## Claim\n\nmTLS proves the workload, but AuthorizationPolicy decides the call. A permissive policy or a direct pod path bypasses the mesh.\n\n## Test\n\nRead the policy. Call through the mesh and directly to the pod IP. Check the identity header.\n\n## Proof\n\nA direct call that should have been denied.\n\n## Failure modes\n\nA deny-all default is the safe base. A port-forward is not a bypass.",
+  "id": "cloud-service-mesh",
+  "title": "A sidecar is a second network path",
+  "tags": [
+   "cloud",
+   "istio",
+   "mtls"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "mTLS proves the workload, but AuthorizationPolicy decides the call. A permissive policy or a direct pod path bypasses the mesh.",
+  "test": "Read the policy. Call through the mesh and directly to the pod IP. Check the identity header.",
+  "proof": "A direct call that should have been denied.",
+  "failure": "A deny-all default is the safe base. A port-forward is not a bypass."
  },
  {
   "path": "knowledge/cloud-terraform-state.md",
@@ -1546,6 +1656,28 @@
   "failure": "A 200 with an error body breaks the promise."
  },
  {
+  "path": "knowledge/eng-api-versioning.md",
+  "body": "# A version is a deprecation clock\n\n## Claim\n\nBreaking changes need a new version and a sunset date. Additive changes stay in the current version.\n\n## Test\n\nDiff the contract. Classify breaking. Set the sunset and the telemetry.\n\n## Proof\n\nA version with a migration guide and a usage metric.\n\n## Failure modes\n\nA version nobody calls is dead weight. A breaking change in place is a surprise.",
+  "id": "eng-api-versioning",
+  "title": "A version is a deprecation clock",
+  "tags": [
+   "engineering",
+   "api",
+   "versioning"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Breaking changes need a new version and a sunset date. Additive changes stay in the current version.",
+  "test": "Diff the contract. Classify breaking. Set the sunset and the telemetry.",
+  "proof": "A version with a migration guide and a usage metric.",
+  "failure": "A version nobody calls is dead weight. A breaking change in place is a surprise."
+ },
+ {
   "path": "knowledge/eng-backpressure.md",
   "body": "# A queue without a limit is a memory leak\n\n## Claim\n\nProducers can outrun consumers. A bounded queue, a timeout and a load-shedding rule keep the system alive.\n\n## Test\n\nMeasure arrival and service rate. Fill the queue. Check latency and drop behavior.\n\n## Proof\n\nA bounded latency and an explicit drop or slow-down.\n\n## Failure modes\n\nAn unbounded queue hides the problem until OOM.",
   "id": "eng-backpressure",
@@ -1569,13 +1701,18 @@
  },
  {
   "path": "knowledge/eng-boundaries.md",
-  "body": "# A boundary hides a decision and owns its data\n\n## Claim\n\nA good boundary has a contract, a data owner and a failure mode. A layer that calls through is not a boundary.\n\n## Test\n\nList the decisions each module owns. Find a change that crosses three modules. Move one decision behind the boundary.\n\n## Proof\n\nA change local to one module with a stable contract.\n\n## Failure modes\n\nA shared database makes two services one boundary.",
+  "body": "# A service boundary owns a decision and its data\n\n## Claim\n\nA good boundary has a contract, a data owner and a failure mode. A layer that calls through is not a boundary.\n\n## Test\n\nList the decisions each module owns. Find a change that crosses three modules. Move one decision behind the boundary.\n\n## Proof\n\nA change local to one module with a stable contract.\n\n## Failure modes\n\nA shared database makes two services one boundary.",
   "id": "eng-boundaries",
-  "title": "A boundary hides a decision and owns its data",
+  "title": "A service boundary owns a decision and its data",
   "tags": [
    "engineering",
    "architecture",
-   "boundaries"
+   "boundaries",
+   "boundary",
+   "ownership",
+   "service",
+   "data",
+   "team"
   ],
   "confidence": "high",
   "updated": "2026-11-25",
@@ -1610,6 +1747,28 @@
   "test": "Write a value, update the source, read again. Check the TTL and the invalidation.",
   "proof": "A read after a write returns the new value.",
   "failure": "A short TTL hides a missing invalidation until the write path is slow."
+ },
+ {
+  "path": "knowledge/eng-cache-topology.md",
+  "body": "# Cache placement decides the failure mode\n\n## Claim\n\nCache-aside is simple but stampedes. Write-through is consistent but slower. A local cache diverges per node.\n\n## Test\n\nName the placement. Test a miss storm and a write.\n\n## Proof\n\nA stampede guard and a clear invalidation.\n\n## Failure modes\n\nA local cache without pub/sub is stale by design.",
+  "id": "eng-cache-topology",
+  "title": "Cache placement decides the failure mode",
+  "tags": [
+   "engineering",
+   "cache",
+   "topology"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Cache-aside is simple but stampedes. Write-through is consistent but slower. A local cache diverges per node.",
+  "test": "Name the placement. Test a miss storm and a write.",
+  "proof": "A stampede guard and a clear invalidation.",
+  "failure": "A local cache without pub/sub is stale by design."
  },
  {
   "path": "knowledge/eng-code-review.md",
@@ -1656,6 +1815,50 @@
   "failure": "A status update without a decision is noise."
  },
  {
+  "path": "knowledge/eng-compiler.md",
+  "body": "# A compiler is a pipeline of representations\n\n## Claim\n\nLex, parse, lower to IR, optimize, emit. Each stage has an invariant and a test.\n\n## Test\n\nWrite the AST and the invariant. Test one stage at a time.\n\n## Proof\n\nA minimal program through every stage.\n\n## Failure modes\n\nAn optimizer without a semantics test changes behavior.",
+  "id": "eng-compiler",
+  "title": "A compiler is a pipeline of representations",
+  "tags": [
+   "engineering",
+   "compiler",
+   "parsing"
+  ],
+  "confidence": "low",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Lex, parse, lower to IR, optimize, emit. Each stage has an invariant and a test.",
+  "test": "Write the AST and the invariant. Test one stage at a time.",
+  "proof": "A minimal program through every stage.",
+  "failure": "An optimizer without a semantics test changes behavior."
+ },
+ {
+  "path": "knowledge/eng-compliance.md",
+  "body": "# Compliance is evidence of a control\n\n## Claim\n\nThe control exists, runs and leaves an artifact. A policy document is not the control.\n\n## Test\n\nMap the control to the evidence. Sample the period. Check the owner.\n\n## Proof\n\nAn evidence trail for the sampled period.\n\n## Failure modes\n\nA tool that logs nothing proves nothing. A control without an owner decays.",
+  "id": "eng-compliance",
+  "title": "Compliance is evidence of a control",
+  "tags": [
+   "engineering",
+   "compliance",
+   "soc2"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The control exists, runs and leaves an artifact. A policy document is not the control.",
+  "test": "Map the control to the evidence. Sample the period. Check the owner.",
+  "proof": "An evidence trail for the sampled period.",
+  "failure": "A tool that logs nothing proves nothing. A control without an owner decays."
+ },
+ {
   "path": "knowledge/eng-concurrency.md",
   "body": "# Concurrency bugs are about shared state and ordering\n\n## Claim\n\nA lock, an atomic or a queue protects a shared invariant. A check outside the lock is not protected.\n\n## Test\n\nFind the invariant. Draw the interleaving. Test with many workers.\n\n## Proof\n\nThe invariant holds under parallel load.\n\n## Failure modes\n\nA lock that is too broad hides a design problem. A lock that is too narrow races.",
   "id": "eng-concurrency",
@@ -1698,6 +1901,28 @@
   "test": "List every config key. Check the default, the validation and the secret source.",
   "proof": "A deploy that fails fast on a missing or invalid value.",
   "failure": "A secret in a config file in git is a leak."
+ },
+ {
+  "path": "knowledge/eng-congestion.md",
+  "body": "# Congestion control is a queue management problem\n\n## Claim\n\nLoss, delay and buffer size decide throughput. A deep buffer adds latency before it drops.\n\n## Test\n\nMeasure RTT under load. Check the queue and the congestion algorithm.\n\n## Proof\n\nA latency curve that stays flat until the link is full.\n\n## Failure modes\n\nA bandwidth test alone hides bufferbloat. AQM changes the curve.",
+  "id": "eng-congestion",
+  "title": "Congestion control is a queue management problem",
+  "tags": [
+   "engineering",
+   "network",
+   "congestion"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Loss, delay and buffer size decide throughput. A deep buffer adds latency before it drops.",
+  "test": "Measure RTT under load. Check the queue and the congestion algorithm.",
+  "proof": "A latency curve that stays flat until the link is full.",
+  "failure": "A bandwidth test alone hides bufferbloat. AQM changes the curve."
  },
  {
   "path": "knowledge/eng-consensus.md",
@@ -1764,6 +1989,28 @@
   "test": "Measure cost per request. Find the dominant term. Set a budget.",
   "proof": "A unit cost under the budget.",
   "failure": "A free tier is not an architecture."
+ },
+ {
+  "path": "knowledge/eng-cqrs.md",
+  "body": "# CQRS separates the write model from the read model\n\n## Claim\n\nThe write side enforces invariants; the read side is denormalized for queries. The gap is eventual consistency.\n\n## Test\n\nMeasure the projection lag. Read after a write. Test the UI with the lag.\n\n## Proof\n\nA read model that converges and a UI that handles the gap.\n\n## Failure modes\n\nA shared table with two names is not CQRS. A lag without a UI story is a bug.",
+  "id": "eng-cqrs",
+  "title": "CQRS separates the write model from the read model",
+  "tags": [
+   "engineering",
+   "cqrs",
+   "read-model"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The write side enforces invariants; the read side is denormalized for queries. The gap is eventual consistency.",
+  "test": "Measure the projection lag. Read after a write. Test the UI with the lag.",
+  "proof": "A read model that converges and a UI that handles the gap.",
+  "failure": "A shared table with two names is not CQRS. A lag without a UI story is a bug."
  },
  {
   "path": "knowledge/eng-data-model.md",
@@ -1964,6 +2211,28 @@
   "failure": "A privacy policy is not a design."
  },
  {
+  "path": "knowledge/eng-event-sourcing.md",
+  "body": "# Events are the source of truth, state is a projection\n\n## Claim\n\nAppend-only events rebuild state. Schema evolution and replay are the hard parts.\n\n## Test\n\nReplay a stream into a new projection. Compare it with the current state.\n\n## Proof\n\nA rebuilt projection that matches.\n\n## Failure modes\n\nAn event schema change breaks old replays. A snapshot hides the cost.",
+  "id": "eng-event-sourcing",
+  "title": "Events are the source of truth, state is a projection",
+  "tags": [
+   "engineering",
+   "event-sourcing",
+   "events"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Append-only events rebuild state. Schema evolution and replay are the hard parts.",
+  "test": "Replay a stream into a new projection. Compare it with the current state.",
+  "proof": "A rebuilt projection that matches.",
+  "failure": "An event schema change breaks old replays. A snapshot hides the cost."
+ },
+ {
   "path": "knowledge/eng-feature-flags.md",
   "body": "# A feature flag is a temporary branch with an owner\n\n## Claim\n\nA flag lets code ship before it is on. A flag without an expiry becomes permanent complexity.\n\n## Test\n\nName the owner, the default and the removal date. Test both states.\n\n## Proof\n\nA flag with a removal ticket.\n\n## Failure modes\n\nA flag that controls a schema or a security check is a liability.",
   "id": "eng-feature-flags",
@@ -1984,6 +2253,94 @@
   "test": "Name the owner, the default and the removal date. Test both states.",
   "proof": "A flag with a removal ticket.",
   "failure": "A flag that controls a schema or a security check is a liability."
+ },
+ {
+  "path": "knowledge/eng-finops.md",
+  "body": "# Unit economics make cost a design signal\n\n## Claim\n\nCost per request, per tenant and per feature shows which design choice pays.\n\n## Test\n\nAllocate cost to a unit. Compare with the price. Find the dominant term.\n\n## Proof\n\nA unit cost and a target.\n\n## Failure modes\n\nA monthly bill hides the unit. Shared cost needs an allocation rule.",
+  "id": "eng-finops",
+  "title": "Unit economics make cost a design signal",
+  "tags": [
+   "engineering",
+   "finops",
+   "cost"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Cost per request, per tenant and per feature shows which design choice pays.",
+  "test": "Allocate cost to a unit. Compare with the price. Find the dominant term.",
+  "proof": "A unit cost and a target.",
+  "failure": "A monthly bill hides the unit. Shared cost needs an allocation rule."
+ },
+ {
+  "path": "knowledge/eng-frontend-state.md",
+  "body": "# Client state and server state are different caches\n\n## Claim\n\nServer data has a source of truth and a staleness policy. UI state is local and ephemeral.\n\n## Test\n\nName each state. Put server data in a query cache with invalidation. Keep UI state local.\n\n## Proof\n\nA refetch after mutation and a local toggle.\n\n## Failure modes\n\nCopying server data into a global store creates two truths.",
+  "id": "eng-frontend-state",
+  "title": "Client state and server state are different caches",
+  "tags": [
+   "engineering",
+   "frontend",
+   "state"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Server data has a source of truth and a staleness policy. UI state is local and ephemeral.",
+  "test": "Name each state. Put server data in a query cache with invalidation. Keep UI state local.",
+  "proof": "A refetch after mutation and a local toggle.",
+  "failure": "Copying server data into a global store creates two truths."
+ },
+ {
+  "path": "knowledge/eng-gc.md",
+  "body": "# A GC trades throughput for pause and space\n\n## Claim\n\nGenerational, concurrent and compacting collectors change pause and CPU. Allocation rate is the input.\n\n## Test\n\nMeasure allocation rate and pause. Reduce churn. Check the collector flags.\n\n## Proof\n\nA lower allocation rate and a shorter p99 pause.\n\n## Failure modes\n\nA GC language can still leak through references. A bigger heap hides a leak.",
+  "id": "eng-gc",
+  "title": "A GC trades throughput for pause and space",
+  "tags": [
+   "engineering",
+   "gc",
+   "allocation"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Generational, concurrent and compacting collectors change pause and CPU. Allocation rate is the input.",
+  "test": "Measure allocation rate and pause. Reduce churn. Check the collector flags.",
+  "proof": "A lower allocation rate and a shorter p99 pause.",
+  "failure": "A GC language can still leak through references. A bigger heap hides a leak."
+ },
+ {
+  "path": "knowledge/eng-hiring.md",
+  "body": "# An interview samples the job, not trivia\n\n## Claim\n\nA work sample, a review exercise and a system design probe predict the job better than puzzles.\n\n## Test\n\nDefine the signal per interview. Score independently before the debrief.\n\n## Proof\n\nA scorecard tied to a job behavior.\n\n## Failure modes\n\nA puzzle measures puzzle practice. A debrief anchors on the loudest voice.",
+  "id": "eng-hiring",
+  "title": "An interview samples the job, not trivia",
+  "tags": [
+   "engineering",
+   "hiring",
+   "interview"
+  ],
+  "confidence": "low",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A work sample, a review exercise and a system design probe predict the job better than puzzles.",
+  "test": "Define the signal per interview. Score independently before the debrief.",
+  "proof": "A scorecard tied to a job behavior.",
+  "failure": "A puzzle measures puzzle practice. A debrief anchors on the loudest voice."
  },
  {
   "path": "knowledge/eng-i18n.md",
@@ -2118,6 +2475,28 @@
   "failure": "PII in logs is a liability. Unstructured logs are hard to query."
  },
  {
+  "path": "knowledge/eng-memory.md",
+  "body": "# Memory is virtual, cached and allocated in tiers\n\n## Claim\n\nPage tables, the page cache and the allocator decide cost. A leak is a retention graph, not a missing free.\n\n## Test\n\nMeasure RSS, page faults and allocation rate. Take a heap profile.\n\n## Proof\n\nA profile that names the retaining path.\n\n## Failure modes\n\nRSS includes shared pages. A GC language can still leak through references.",
+  "id": "eng-memory",
+  "title": "Memory is virtual, cached and allocated in tiers",
+  "tags": [
+   "engineering",
+   "os",
+   "memory"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Page tables, the page cache and the allocator decide cost. A leak is a retention graph, not a missing free.",
+  "test": "Measure RSS, page faults and allocation rate. Take a heap profile.",
+  "proof": "A profile that names the retaining path.",
+  "failure": "RSS includes shared pages. A GC language can still leak through references."
+ },
+ {
   "path": "knowledge/eng-mentoring.md",
   "body": "# Ask until the blocker is clear\n\n## Claim\n\nA hint at the right level unblocks. A lecture hides the gap.\n\n## Test\n\nAsk what they expect. Ask what happened. Give one hint. Ask for the next step.\n\n## Proof\n\nThe learner produces the evidence.\n\n## Failure modes\n\nSolving it for them removes the practice.",
   "id": "eng-mentoring",
@@ -2184,6 +2563,28 @@
   "failure": "A model metric without a pipeline check is a demo."
  },
  {
+  "path": "knowledge/eng-mobile-arch.md",
+  "body": "# Offline-first is a merge problem\n\n## Claim\n\nLocal writes need a queue, conflict resolution and a sync boundary. A spinner is not a strategy.\n\n## Test\n\nWrite offline. Reconnect. Check the merge and the conflict UI.\n\n## Proof\n\nA deterministic merge with a conflict path.\n\n## Failure modes\n\nLast-write-wins loses data. A queue without a limit grows.",
+  "id": "eng-mobile-arch",
+  "title": "Offline-first is a merge problem",
+  "tags": [
+   "engineering",
+   "mobile",
+   "offline"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Local writes need a queue, conflict resolution and a sync boundary. A spinner is not a strategy.",
+  "test": "Write offline. Reconnect. Check the merge and the conflict UI.",
+  "proof": "A deterministic merge with a conflict path.",
+  "failure": "Last-write-wins loses data. A queue without a limit grows."
+ },
+ {
   "path": "knowledge/eng-multi-tenancy.md",
   "body": "# Multi-tenancy is isolation plus noisy-neighbor control\n\n## Claim\n\nTenant id must be enforced at the data boundary, and a single tenant must not starve the rest.\n\n## Test\n\nQuery as tenant A with a tenant B id. Load one tenant and measure another.\n\n## Proof\n\nA cross-tenant read fails and a noisy tenant is rate-limited.\n\n## Failure modes\n\nA tenant filter in the UI is not a data boundary.",
   "id": "eng-multi-tenancy",
@@ -2204,6 +2605,28 @@
   "test": "Query as tenant A with a tenant B id. Load one tenant and measure another.",
   "proof": "A cross-tenant read fails and a noisy tenant is rate-limited.",
   "failure": "A tenant filter in the UI is not a data boundary."
+ },
+ {
+  "path": "knowledge/eng-observability-cost.md",
+  "body": "# Telemetry is a sampled product\n\n## Claim\n\nCardinality and volume drive cost. Sample traces, aggregate metrics and keep logs structured.\n\n## Test\n\nMeasure ingest by label. Drop a high-cardinality label. Compare the bill and the answers.\n\n## Proof\n\nA lower cost with the incident questions still answerable.\n\n## Failure modes\n\nA metric with a user id is a log. A sampled error can disappear.",
+  "id": "eng-observability-cost",
+  "title": "Telemetry is a sampled product",
+  "tags": [
+   "engineering",
+   "observability",
+   "cost"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Cardinality and volume drive cost. Sample traces, aggregate metrics and keep logs structured.",
+  "test": "Measure ingest by label. Drop a high-cardinality label. Compare the bill and the answers.",
+  "proof": "A lower cost with the incident questions still answerable.",
+  "failure": "A metric with a user id is a log. A sampled error can disappear."
  },
  {
   "path": "knowledge/eng-observability.md",
@@ -2248,6 +2671,28 @@
   "test": "Set the budget. Profile. Find the dominant term. Re-measure.",
   "proof": "A benchmark that fits the budget and runs in CI.",
   "failure": "A micro-optimization of a cold path is waste."
+ },
+ {
+  "path": "knowledge/eng-platform.md",
+  "body": "# A platform is a paved road, not a gate\n\n## Claim\n\nGolden paths make the right thing easy and observable. A gate without a path pushes teams around it.\n\n## Test\n\nFollow the path as a new team. Measure the time to first deploy.\n\n## Proof\n\nA service created and deployed without a ticket.\n\n## Failure modes\n\nA platform that only enforces policy is a tax.",
+  "id": "eng-platform",
+  "title": "A platform is a paved road, not a gate",
+  "tags": [
+   "engineering",
+   "platform",
+   "dx"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Golden paths make the right thing easy and observable. A gate without a path pushes teams around it.",
+  "test": "Follow the path as a new team. Measure the time to first deploy.",
+  "proof": "A service created and deployed without a ticket.",
+  "failure": "A platform that only enforces policy is a tax."
  },
  {
   "path": "knowledge/eng-postmortem.md",
@@ -2338,6 +2783,28 @@
   "failure": "An index on a low-selectivity column can be ignored."
  },
  {
+  "path": "knowledge/eng-rate-limit.md",
+  "body": "# A rate limiter needs a key, a cost and a fairness rule\n\n## Claim\n\nToken bucket allows bursts; leaky bucket smooths. The key decides who shares the budget.\n\n## Test\n\nDefine the key and the burst. Test one noisy client against a quiet one.\n\n## Proof\n\nA noisy tenant throttled while the quiet one passes.\n\n## Failure modes\n\nA global limiter lets one client starve all. A per-IP key misses NAT.",
+  "id": "eng-rate-limit",
+  "title": "A rate limiter needs a key, a cost and a fairness rule",
+  "tags": [
+   "engineering",
+   "rate-limit",
+   "fairness"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Token bucket allows bursts; leaky bucket smooths. The key decides who shares the budget.",
+  "test": "Define the key and the burst. Test one noisy client against a quiet one.",
+  "proof": "A noisy tenant throttled while the quiet one passes.",
+  "failure": "A global limiter lets one client starve all. A per-IP key misses NAT."
+ },
+ {
   "path": "knowledge/eng-refactor-small.md",
   "body": "# Refactor in small, behavior-preserving steps\n\n## Claim\n\nA refactor changes structure without changing behavior. A test suite proves the behavior stayed.\n\n## Test\n\nName the behavior. Make one structural change. Run tests. Repeat.\n\n## Proof\n\nA sequence of green commits.\n\n## Failure modes\n\nA refactor mixed with a feature hides both.",
   "id": "eng-refactor-small",
@@ -2426,6 +2893,28 @@
   "failure": "A requirement that cannot fail is a slogan."
  },
  {
+  "path": "knowledge/eng-roadmap.md",
+  "body": "# A roadmap is a set of bets with kill criteria\n\n## Claim\n\nEach bet names the outcome, the leading indicator and the condition to stop.\n\n## Test\n\nWrite the bet and the kill signal. Review the signal on a date.\n\n## Proof\n\nA bet stopped or doubled on evidence.\n\n## Failure modes\n\nA list of features is not a roadmap. A bet without a kill signal runs forever.",
+  "id": "eng-roadmap",
+  "title": "A roadmap is a set of bets with kill criteria",
+  "tags": [
+   "engineering",
+   "roadmap",
+   "product"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Each bet names the outcome, the leading indicator and the condition to stop.",
+  "test": "Write the bet and the kill signal. Review the signal on a date.",
+  "proof": "A bet stopped or doubled on evidence.",
+  "failure": "A list of features is not a roadmap. A bet without a kill signal runs forever."
+ },
+ {
   "path": "knowledge/eng-schema-evolution.md",
   "body": "# Schema changes must be compatible in both directions\n\n## Claim\n\nOld readers and new writers coexist during a deploy. Add fields as optional, never rename in one step.\n\n## Test\n\nDeploy old and new together. Read and write with both.\n\n## Proof\n\nA rolling deploy with no error.\n\n## Failure modes\n\nA required field added in one step breaks old readers.",
   "id": "eng-schema-evolution",
@@ -2433,7 +2922,9 @@
   "tags": [
    "engineering",
    "schema",
-   "evolution"
+   "evolution",
+   "deploy",
+   "migration"
   ],
   "confidence": "high",
   "updated": "2026-11-25",
@@ -2514,6 +3005,50 @@
   "failure": "A 100% target leaves no room to deploy."
  },
  {
+  "path": "knowledge/eng-storage.md",
+  "body": "# Storage engines trade read cost for write cost\n\n## Claim\n\nB-trees optimize reads with in-place pages. LSM trees optimize writes with sorted runs and compaction.\n\n## Test\n\nRead the engine docs. Measure write amplification and read latency under load.\n\n## Proof\n\nA workload fit that names the amplification.\n\n## Failure modes\n\nAn LSM with heavy compaction can stall reads. A B-tree random write can fragment.",
+  "id": "eng-storage",
+  "title": "Storage engines trade read cost for write cost",
+  "tags": [
+   "engineering",
+   "database",
+   "storage"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "B-trees optimize reads with in-place pages. LSM trees optimize writes with sorted runs and compaction.",
+  "test": "Read the engine docs. Measure write amplification and read latency under load.",
+  "proof": "A workload fit that names the amplification.",
+  "failure": "An LSM with heavy compaction can stall reads. A B-tree random write can fragment."
+ },
+ {
+  "path": "knowledge/eng-team-topology.md",
+  "body": "# Team boundaries shape the architecture\n\n## Claim\n\nA service owned by three teams has three priorities. Ownership follows the boundary, not the org chart.\n\n## Test\n\nMap services to owners. Find a service with more than one owner.\n\n## Proof\n\nOne owner and one on-call rotation per boundary.\n\n## Failure modes\n\nA shared database blurs ownership. A platform team can own a shared capability.",
+  "id": "eng-team-topology",
+  "title": "Team boundaries shape the architecture",
+  "tags": [
+   "engineering",
+   "team",
+   "ownership"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A service owned by three teams has three priorities. Ownership follows the boundary, not the org chart.",
+  "test": "Map services to owners. Find a service with more than one owner.",
+  "proof": "One owner and one on-call rotation per boundary.",
+  "failure": "A shared database blurs ownership. A platform team can own a shared capability."
+ },
+ {
   "path": "knowledge/eng-testing-pyramid.md",
   "body": "# Test at the lowest level that can catch the bug\n\n## Claim\n\nMany unit tests, fewer integration tests, a small number of end-to-end tests. The pyramid is about feedback speed.\n\n## Test\n\nClassify the suite. Move a slow test down a level. Keep one end-to-end happy path.\n\n## Proof\n\nA faster suite with the same defect detection.\n\n## Failure modes\n\nA test that mocks the thing under test proves little.",
   "id": "eng-testing-pyramid",
@@ -2565,7 +3100,9 @@
   "tags": [
    "engineering",
    "tradeoffs",
-   "design"
+   "design",
+   "cost",
+   "architecture"
   ],
   "confidence": "high",
   "updated": "2026-11-25",
@@ -2600,6 +3137,28 @@
   "test": "List the writes and the external calls. Move the external call out or add compensation.",
   "proof": "A failure leaves the system in one consistent state.",
   "failure": "A distributed transaction without a protocol is a hope."
+ },
+ {
+  "path": "knowledge/eng-type-systems.md",
+  "body": "# Types are a proof the compiler can check\n\n## Claim\n\nSum types, variance and exhaustiveness remove whole classes of invalid state.\n\n## Test\n\nModel the state as a sum type. Make illegal states unrepresentable. Add an exhaustive match.\n\n## Proof\n\nA compiler error on the missing case.\n\n## Failure modes\n\nA cast or any type can erase the proof. Runtime data still needs validation.",
+  "id": "eng-type-systems",
+  "title": "Types are a proof the compiler can check",
+  "tags": [
+   "engineering",
+   "types",
+   "compiler"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Sum types, variance and exhaustiveness remove whole classes of invalid state.",
+  "test": "Model the state as a sum type. Make illegal states unrepresentable. Add an exhaustive match.",
+  "proof": "A compiler error on the missing case.",
+  "failure": "A cast or any type can erase the proof. Runtime data still needs validation."
  },
  {
   "path": "knowledge/exploit-rop-argument-registers.md",
@@ -2934,6 +3493,28 @@
   "failure": "A backup may exclude protected files. A rooted device changes the picture."
  },
  {
+  "path": "knowledge/ir-phishing.md",
+  "body": "# Phishing triage reads headers and detonates the payload\n\n## Claim\n\nThe header chain, URL redirects and attachment type tell the story. The user action and the credential entry decide impact.\n\n## Test\n\nRead the Received chain and authentication results. Expand the URL. Detonate in a sandbox.\n\n## Proof\n\nA payload and a credential capture proof.\n\n## Failure modes\n\nA lookalike domain without a payload is lower. A QR code needs a mobile detonation.",
+  "id": "ir-phishing",
+  "title": "Phishing triage reads headers and detonates the payload",
+  "tags": [
+   "ir",
+   "phishing",
+   "email"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "The header chain, URL redirects and attachment type tell the story. The user action and the credential entry decide impact.",
+  "test": "Read the Received chain and authentication results. Expand the URL. Detonate in a sandbox.",
+  "proof": "A payload and a credential capture proof.",
+  "failure": "A lookalike domain without a payload is lower. A QR code needs a mobile detonation."
+ },
+ {
   "path": "knowledge/ir-ransomware.md",
   "body": "# Ransomware triage is scope, encryption and backups\n\n## Claim\n\nThe note names a family, but the real questions are which hosts, which accounts, and whether backups are intact.\n\n## Test\n\nCollect the note and extension. Map the encrypted share. Check backups and shadow copies. Find the entry vector.\n\n## Proof\n\nA scope list and a recovery path with evidence.\n\n## Failure modes\n\nA note can be a decoy. A backup that was mounted can be encrypted too.",
   "id": "ir-ransomware",
@@ -3244,6 +3825,28 @@
   "failure": "A closed report can still be a new variant. A different endpoint can be the same root cause."
  },
  {
+  "path": "knowledge/process-legal.md",
+  "body": "# Safe harbor is written, not assumed\n\n## Claim\n\nThe program terms, the engagement letter and the data handling rules define what you may touch and keep.\n\n## Test\n\nRead the terms. Check the safe harbor and the data clause. Keep the authorization with the report.\n\n## Proof\n\nA scope citation and an authorization path.\n\n## Failure modes\n\nA public bug bounty page is not a contract for every asset. A client letter beats a blog post.",
+  "id": "process-legal",
+  "title": "Safe harbor is written, not assumed",
+  "tags": [
+   "process",
+   "legal",
+   "authorization"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "docs/break-my-app.md"
+  ],
+  "status": "active",
+  "claim": "The program terms, the engagement letter and the data handling rules define what you may touch and keep.",
+  "test": "Read the terms. Check the safe harbor and the data clause. Keep the authorization with the report.",
+  "proof": "A scope citation and an authorization path.",
+  "failure": "A public bug bounty page is not a contract for every asset. A client letter beats a blog post."
+ },
+ {
   "path": "knowledge/process-recall-before-research.md",
   "body": "# Recall before searching\n\n## Claim\n\nRepeated research is waste. Check the knowledge index first, then refresh only a stale or low-confidence card.\n\n## Test\n\nRun recall with the target and class. If the decision is USE, answer from the card and test it. If REFRESH, verify one claim. If RESEARCH, collect.\n\n## Proof\n\nA card id and its proof, or a deliberate gap.\n\n## Failure modes\n\nA card can be stale. Check the date and the source before trusting it.",
   "id": "process-recall-before-research",
@@ -3333,6 +3936,28 @@
   "failure": "A transaction without a unique constraint can still race at a higher isolation level. Test the real DB."
  },
  {
+  "path": "knowledge/re-android-native.md",
+  "body": "# JNI is the bridge between Java and native code\n\n## Claim\n\nNative methods are registered by name or JNI_OnLoad. The signature ties a Java method to a C function.\n\n## Test\n\nFind RegisterNatives and JNI exports. Map the signatures. Hook the native side.\n\n## Proof\n\nA recovered native function and a working hook.\n\n## Failure modes\n\nA stripped library hides names. Static registration still leaves exports.",
+  "id": "re-android-native",
+  "title": "JNI is the bridge between Java and native code",
+  "tags": [
+   "re",
+   "android",
+   "jni"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/mobile-reverse.md"
+  ],
+  "status": "active",
+  "claim": "Native methods are registered by name or JNI_OnLoad. The signature ties a Java method to a C function.",
+  "test": "Find RegisterNatives and JNI exports. Map the signatures. Hook the native side.",
+  "proof": "A recovered native function and a working hook.",
+  "failure": "A stripped library hides names. Static registration still leaves exports."
+ },
+ {
   "path": "knowledge/re-arm64.md",
   "body": "# AArch64 has a calling convention, PAC and MTE\n\n## Claim\n\nArguments go in x0-x7, returns in x0. Pointer authentication signs pointers; MTE tags memory.\n\n## Test\n\nMap registers and stack. Check PAC instructions and MTE settings. Test a return address overwrite.\n\n## Proof\n\nA recovered prototype or a controlled return path.\n\n## Failure modes\n\nAn emulator may not enforce PAC. MTE is optional per allocation.",
   "id": "re-arm64",
@@ -3353,6 +3978,28 @@
   "test": "Map registers and stack. Check PAC instructions and MTE settings. Test a return address overwrite.",
   "proof": "A recovered prototype or a controlled return path.",
   "failure": "An emulator may not enforce PAC. MTE is optional per allocation."
+ },
+ {
+  "path": "knowledge/re-cpp-rtti.md",
+  "body": "# C++ RTTI and vtables reveal the class graph\n\n## Claim\n\nRTTI descriptors, vtables and multiple inheritance encode types. A cast and a vtable slot explain dispatch.\n\n## Test\n\nFind the vtable xrefs. Map the RTTI names. Rebuild the class layout before reading methods.\n\n## Proof\n\nA recovered class and a correct vtable index.\n\n## Failure modes\n\nRTTI can be disabled. An obfuscated vtable needs manual mapping.",
+  "id": "re-cpp-rtti",
+  "title": "C++ RTTI and vtables reveal the class graph",
+  "tags": [
+   "re",
+   "cpp",
+   "rtti"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/reverse-engineering.md"
+  ],
+  "status": "active",
+  "claim": "RTTI descriptors, vtables and multiple inheritance encode types. A cast and a vtable slot explain dispatch.",
+  "test": "Find the vtable xrefs. Map the RTTI names. Rebuild the class layout before reading methods.",
+  "proof": "A recovered class and a correct vtable index.",
+  "failure": "RTTI can be disabled. An obfuscated vtable needs manual mapping."
  },
  {
   "path": "knowledge/re-crash-triage-primitive.md",
@@ -3598,6 +4245,28 @@
   "test": "Write the chain before CVSS. Use the smallest request. Separate confirmed from inferred. List what was not tested.",
   "proof": "A report another tester can reproduce in five minutes.",
   "failure": "A scanner hit is not a finding. A theoretical chain is not impact."
+ },
+ {
+  "path": "knowledge/report-pricing.md",
+  "body": "# Payout is a negotiation with evidence\n\n## Claim\n\nThe VRT and the program table set the range. The impact narrative and the chain decide where in the range it lands.\n\n## Test\n\nMap the finding to the VRT. Cite the impact. Compare similar disclosed reports.\n\n## Proof\n\nA severity a triager accepts with the evidence.\n\n## Failure modes\n\nA high CVSS on a low-value asset oversells. A chain without proof does not.",
+  "id": "report-pricing",
+  "title": "Payout is a negotiation with evidence",
+  "tags": [
+   "process",
+   "pricing",
+   "severity"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/scoring.md"
+  ],
+  "status": "active",
+  "claim": "The VRT and the program table set the range. The impact narrative and the chain decide where in the range it lands.",
+  "test": "Map the finding to the VRT. Cite the impact. Compare similar disclosed reports.",
+  "proof": "A severity a triager accepts with the evidence.",
+  "failure": "A high CVSS on a low-value asset oversells. A chain without proof does not."
  },
  {
   "path": "knowledge/secrets-verified.md",
@@ -3862,6 +4531,50 @@
   "test": "Map state-changing GETs. Check SameSite, Origin and Referer checks. Replay the request from a cross-site page.",
   "proof": "A victim session performs the change without seeing the response.",
   "failure": "A missing token with SameSite=Lax can still be safe for POST. Login CSRF is a separate impact."
+ },
+ {
+  "path": "knowledge/web-css-injection.md",
+  "body": "# CSS injection exfiltrates attributes without script\n\n## Claim\n\nA style sink accepts user CSS. Attribute selectors plus background requests leak token characters one at a time.\n\n## Test\n\nInject a selector for an input value prefix. Point the background at a listener. Brute the next character.\n\n## Proof\n\nA request whose path contains the guessed value.\n\n## Failure modes\n\nCSS cannot read arbitrary DOM text. It needs an attribute selector and a stable prefix.",
+  "id": "web-css-injection",
+  "title": "CSS injection exfiltrates attributes without script",
+  "tags": [
+   "web",
+   "css",
+   "injection"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "A style sink accepts user CSS. Attribute selectors plus background requests leak token characters one at a time.",
+  "test": "Inject a selector for an input value prefix. Point the background at a listener. Brute the next character.",
+  "proof": "A request whose path contains the guessed value.",
+  "failure": "CSS cannot read arbitrary DOM text. It needs an attribute selector and a stable prefix."
+ },
+ {
+  "path": "knowledge/web-dangling-markup.md",
+  "body": "# Dangling markup leaks what follows the injection\n\n## Claim\n\nAn unclosed attribute or tag makes the parser swallow later markup, including a CSRF token, into a URL.\n\n## Test\n\nInject an unterminated img or form tag. Watch the listener for the swallowed page content.\n\n## Proof\n\nA request that carries the token from later in the page.\n\n## Failure modes\n\nA page with no secret after the sink gives little. CSP can block the request.",
+  "id": "web-dangling-markup",
+  "title": "Dangling markup leaks what follows the injection",
+  "tags": [
+   "web",
+   "html",
+   "csrf"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "An unclosed attribute or tag makes the parser swallow later markup, including a CSRF token, into a URL.",
+  "test": "Inject an unterminated img or form tag. Watch the listener for the swallowed page content.",
+  "proof": "A request that carries the token from later in the page.",
+  "failure": "A page with no secret after the sink gives little. CSP can block the request."
  },
  {
   "path": "knowledge/web-deserialization-gadget.md",

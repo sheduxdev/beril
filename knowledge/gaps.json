@@ -1058,8 +1058,8 @@
   "gap": "CSS injection, attribute selectors and data exfiltration",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "web-css-injection",
+  "status": "covered"
  },
  {
   "id": "web-dangling-markup",
@@ -1067,8 +1067,8 @@
   "gap": "Dangling markup and CSRF token exfiltration",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "web-dangling-markup",
+  "status": "covered"
  },
  {
   "id": "web3-contract",
@@ -1094,8 +1094,8 @@
   "gap": "Batch endpoints, partial failures and authorization per item",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "api-batch",
+  "status": "covered"
  },
  {
   "id": "cloud-vmware",
@@ -1112,8 +1112,8 @@
   "gap": "OpenStack keystone, nova metadata and policy",
   "priority": "low",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "cloud-openstack",
+  "status": "covered"
  },
  {
   "id": "cloud-service-mesh",
@@ -1121,8 +1121,8 @@
   "gap": "Istio and Envoy mTLS, authorization policy and sidecar bypass",
   "priority": "medium",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "cloud-service-mesh",
+  "status": "covered"
  },
  {
   "id": "binary-windows-kernel",
@@ -1139,8 +1139,8 @@
   "gap": "WebAssembly validation, JIT and sandbox boundaries",
   "priority": "medium",
   "source": "references/reverse-engineering.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "binary-wasm",
+  "status": "covered"
  },
  {
   "id": "binary-ebpf",
@@ -1148,8 +1148,8 @@
   "gap": "eBPF verifier, maps and helper abuse",
   "priority": "low",
   "source": "references/reverse-engineering.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "binary-ebpf",
+  "status": "covered"
  },
  {
   "id": "re-cpp-rtti",
@@ -1157,8 +1157,8 @@
   "gap": "C++ RTTI, vtables and multiple inheritance",
   "priority": "medium",
   "source": "references/reverse-engineering.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "re-cpp-rtti",
+  "status": "covered"
  },
  {
   "id": "re-android-native",
@@ -1166,8 +1166,8 @@
   "gap": "Android JNI, ART and native library analysis",
   "priority": "medium",
   "source": "references/mobile-reverse.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "re-android-native",
+  "status": "covered"
  },
  {
   "id": "detection-identity",
@@ -1202,8 +1202,8 @@
   "gap": "Phishing triage, headers, URLs and payloads",
   "priority": "medium",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "ir-phishing",
+  "status": "covered"
  },
  {
   "id": "ai-multiagent",
@@ -1220,8 +1220,8 @@
   "gap": "Safe harbor, authorization and data handling",
   "priority": "medium",
   "source": "docs/break-my-app.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "process-legal",
+  "status": "covered"
  },
  {
   "id": "report-pricing",
@@ -1229,8 +1229,8 @@
   "gap": "Payout expectations, VRT and severity negotiation",
   "priority": "medium",
   "source": "references/scoring.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "report-pricing",
+  "status": "covered"
  },
  {
   "id": "eng-consensus",
@@ -1256,8 +1256,8 @@
   "gap": "B-tree, LSM and write amplification",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-storage",
+  "status": "covered"
  },
  {
   "id": "eng-query-planner",
@@ -1274,8 +1274,8 @@
   "gap": "Virtual memory, page cache and allocators",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-memory",
+  "status": "covered"
  },
  {
   "id": "eng-congestion",
@@ -1283,8 +1283,8 @@
   "gap": "Congestion control, queues and bufferbloat",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-congestion",
+  "status": "covered"
  },
  {
   "id": "eng-type-systems",
@@ -1292,8 +1292,8 @@
   "gap": "Type systems, variance and exhaustiveness",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-type-systems",
+  "status": "covered"
  },
  {
   "id": "eng-ml-systems",
@@ -1328,8 +1328,8 @@
   "gap": "Event sourcing, replay and projections",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-event-sourcing",
+  "status": "covered"
  },
  {
   "id": "eng-cqrs",
@@ -1337,8 +1337,8 @@
   "gap": "CQRS and read model consistency",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-cqrs",
+  "status": "covered"
  },
  {
   "id": "eng-distributed-tx",
@@ -1364,8 +1364,8 @@
   "gap": "Token bucket, leaky bucket and fairness",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-rate-limit",
+  "status": "covered"
  },
  {
   "id": "eng-cache-topology",
@@ -1373,8 +1373,8 @@
   "gap": "Cache-aside, write-through and stampede",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-cache-topology",
+  "status": "covered"
  },
  {
   "id": "eng-schema-evolution",
@@ -1391,8 +1391,8 @@
   "gap": "API versioning and deprecation",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-api-versioning",
+  "status": "covered"
  },
  {
   "id": "eng-platform",
@@ -1400,8 +1400,8 @@
   "gap": "Platform teams, golden paths and paved roads",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-platform",
+  "status": "covered"
  },
  {
   "id": "eng-team-topology",
@@ -1409,8 +1409,8 @@
   "gap": "Team boundaries and ownership",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-team-topology",
+  "status": "covered"
  },
  {
   "id": "eng-roadmap",
@@ -1418,8 +1418,8 @@
   "gap": "Roadmaps, bets and kill criteria",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-roadmap",
+  "status": "covered"
  },
  {
   "id": "eng-hiring",
@@ -1427,8 +1427,8 @@
   "gap": "Hiring signals and interview design",
   "priority": "low",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-hiring",
+  "status": "covered"
  },
  {
   "id": "eng-privacy",
@@ -1445,8 +1445,8 @@
   "gap": "SOC2, GDPR and evidence collection",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-compliance",
+  "status": "covered"
  },
  {
   "id": "eng-finops",
@@ -1454,8 +1454,8 @@
   "gap": "Unit economics and cost allocation",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-finops",
+  "status": "covered"
  },
  {
   "id": "eng-frontend-state",
@@ -1463,8 +1463,8 @@
   "gap": "Client state, server state and cache ownership",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-frontend-state",
+  "status": "covered"
  },
  {
   "id": "eng-mobile-arch",
@@ -1472,8 +1472,8 @@
   "gap": "Offline-first mobile architecture",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-mobile-arch",
+  "status": "covered"
  },
  {
   "id": "eng-compiler",
@@ -1481,8 +1481,8 @@
   "gap": "Lexing, parsing, IR and optimization",
   "priority": "low",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-compiler",
+  "status": "covered"
  },
  {
   "id": "eng-gc",
@@ -1490,8 +1490,8 @@
   "gap": "Garbage collection and allocation pressure",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-gc",
+  "status": "covered"
  },
  {
   "id": "eng-observability-cost",
@@ -1499,7 +1499,7 @@
   "gap": "Cardinality, sampling and telemetry cost",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-observability-cost",
+  "status": "covered"
  }
 ]

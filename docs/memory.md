@@ -73,7 +73,7 @@ Do not store secrets, customer data, or private report text in a card. Link the 
 
 ## Gaps
 
-`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. 167 gaps exist: 135 covered, 32 open at medium or low priority, no high gaps. Do not pretend a gap is covered.
+`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. 167 gaps exist and all are covered. The recall regression set is `scripts/recall_test.py`. Do not pretend a gap is covered.
 
 ```bash
 ./beril gaps --next
@@ -102,6 +102,14 @@ What does not:
 
 The entry files in the repo root tell Claude, Codex, Cursor and Gemini to recall first. The router has the same rule. The dashboard shows jobs and costs so research waste is visible.
 
+## Recall test
+
+```bash
+make recall-test
+```
+
+Twenty queries, expected top hit. Run it after a batch of edits.
+
 ## Current seed
 
-202 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
+234 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
