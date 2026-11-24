@@ -1,12 +1,13 @@
 # Knowledge index
 
-118 durable cards. Read this before a web search; open a card only when it matches.
+131 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
 | `ad-acl-path` | AD compromise is an edge path, not a single bug | ad, windows, acl | high | 2026-11-24 |
 | `ad-adcs-esc1` | ESC1 is an enrollable SAN on a client-auth template | ad, adcs, certificate | high | 2026-11-24 |
 | `ai-sandbox-escape` | A code interpreter is a process with a filesystem | ai, sandbox, interpreter | high | 2026-11-24 |
+| `ai-vector-auth` | A vector query still needs an ACL | ai, rag, vector | medium | 2026-11-24 |
 | `ai-memory-poison` | Agent memory is a write target | ai, agent, memory | high | 2026-11-24 |
 | `ai-agent-tool` | Agent tool abuse is argument control, not prompt text | ai, agent, tool | high | 2026-11-24 |
 | `ai-cost-control` | An agent loop is a budget bug | ai, cost, agent | medium | 2026-11-24 |
@@ -17,13 +18,18 @@
 | `ai-model-extraction` | Model extraction is a query budget problem | ai, model, extraction | medium | 2026-11-24 |
 | `ai-data-poison` | Poisoned data changes the model or the retrieval set | ai, data, poisoning | high | 2026-11-24 |
 | `ai-rag-tenant-filter` | RAG leaks when retrieval ignores the tenant | ai, llm, rag | high | 2026-11-24 |
+| `ai-tool-output` | Tool output is untrusted input to the next turn | ai, tool, injection | high | 2026-11-24 |
 | `api-webhook-signature` | A webhook without HMAC is an unauthenticated write | api, webhook, hmac | high | 2026-11-24 |
+| `api-openapi` | An exposed schema is a map, not a finding | api, openapi, schema | high | 2026-11-24 |
 | `api-oauth-device` | Device code flow is phishing with a real code | api, oauth, device-code | medium | 2026-11-24 |
+| `api-jwt-rotation` | Key rotation is a cache and trust problem | api, jwt, jwks | high | 2026-11-24 |
 | `api-mass-assignment` | Mass assignment is a binder trusting extra fields | api, json, mass-assignment | high | 2026-11-24 |
+| `api-versioning` | Old API versions keep old authorization | api, versioning, shadow | high | 2026-11-24 |
 | `api-rate-limit-bypass` | Rate limits are only as strong as the key | api, rate-limit, bypass | high | 2026-11-24 |
 | `api-idempotency` | Retries need an idempotency key at the write | api, idempotency, retry | high | 2026-11-24 |
 | `api-sse` | Server-sent events need per-connection auth | api, sse, stream | medium | 2026-11-24 |
 | `api-grpc-reflection` | gRPC reflection is a map, per-method auth is the bug | api, grpc, reflection | medium | 2026-11-24 |
+| `binary-hypervisor` | A hypervisor exposes synthetic MSRs and VTL boundaries | binary, hypervisor, virtualization | low | 2026-11-24 |
 | `binary-kernel` | A kernel bug is an object lifetime bug with a user buffer | binary, kernel, driver | high | 2026-11-24 |
 | `binary-browser` | Browser exploitation needs a renderer bug and a sandbox path | binary, browser, jit | high | 2026-11-24 |
 | `binary-jit` | JIT bugs are about generated code and stale metadata | binary, jit, exploit | medium | 2026-11-24 |
@@ -31,21 +37,26 @@
 | `browser-extension-permissions` | An extension is a trusted page with broad APIs | browser, extension, permissions | medium | 2026-11-24 |
 | `cloud-docker-socket` | A mounted Docker socket is root on the host | cloud, docker, container | medium | 2026-11-24 |
 | `cloud-k8s-hostpath` | A privileged pod with hostPath is a host escape | cloud, kubernetes, container | high | 2026-11-24 |
+| `cloud-secrets` | A secrets manager is only as strong as its policy | cloud, secrets, iam | high | 2026-11-24 |
 | `cloud-aks-identity` | AKS mixes Azure RBAC and Kubernetes RBAC | cloud, aks, kubernetes | medium | 2026-11-24 |
 | `cloud-azure-role` | Azure identity is a role assignment graph | cloud, azure, iam | high | 2026-11-24 |
+| `cloud-oidc-ci` | CI OIDC trust is a subject claim match | cloud, oidc, ci | high | 2026-11-24 |
 | `cloud-metadata-role` | Cloud metadata is a credential endpoint | cloud, ssrf, iam | high | 2026-11-24 |
 | `cloud-eks` | EKS has two identity planes: IAM and Kubernetes | cloud, eks, kubernetes | medium | 2026-11-24 |
 | `cloud-gcp-iam` | GCP IAM binds a member to a role on a resource | cloud, gcp, iam | high | 2026-11-24 |
 | `cloud-iam-wildcard` | IAM wildcard is administrator access until proven otherwise | cloud, iam, aws | high | 2026-11-24 |
+| `cloud-oci` | OCI policy is compartment and tenancy scoped | cloud, oci, iam | low | 2026-11-24 |
 | `cloud-serverless` | Serverless events are input, not a trusted trigger | cloud, serverless, lambda | medium | 2026-11-24 |
 | `cloud-terraform-state` | Terraform state is a secret store | cloud, terraform, state | medium | 2026-11-24 |
 | `container-escape` | A container escape is a host resource exposed to the container | container, escape, kubernetes | high | 2026-11-24 |
 | `key-management` | Key management is where crypto bugs become data bugs | crypto, keys, storage | medium | 2026-11-24 |
+| `crypto-postquantum` | PQC migration is a hybrid, not a flag | crypto, pqc, hybrid | low | 2026-11-24 |
 | `crypto-weak-random` | Predictable randomness is a key recovery bug | crypto, random, predictability | high | 2026-11-24 |
 | `tls-config-review` | TLS is a version, a chain and a policy | crypto, tls, certificate | medium | 2026-11-24 |
 | `detection-sigma` | A Sigma rule needs a logsource, a selection and a false-positive note | detection, sigma, log | high | 2026-11-24 |
 | `detection-beacon` | A beacon is a timing pattern, not a single request | detection, beacon, network | medium | 2026-11-24 |
 | `detection-edr` | EDR detection is a process tree and a sequence | detection, edr, process | medium | 2026-11-24 |
+| `detection-lolbins` | LOLBins hide in parent-child and arguments | detection, lolbins, process | high | 2026-11-24 |
 | `detection-threatintel` | Threat intel ages and IOCs are easy to rotate | detection, intel, ioc | medium | 2026-11-24 |
 | `electron-context-isolation` | Electron is Node with a browser attached | electron, desktop, context-isolation | medium | 2026-11-24 |
 | `exploit-uaf-reallocate` | UAF becomes control when the freed slot is reallocated | exploit, uaf, heap | high | 2026-11-24 |
@@ -59,6 +70,7 @@
 | `firmware-uart` | UART is found by idle levels and confirmed by baud | firmware, hardware, uart | high | 2026-11-24 |
 | `hardware-sidechannel` | Side channels leak through power, timing or EM | hardware, sidechannel | low | 2026-11-24 |
 | `ir-timeline` | An incident timeline needs three independent clocks | ir, timeline, forensics | medium | 2026-11-24 |
+| `ir-cloud` | Cloud audit logs are the timeline | ir, cloud, logs | medium | 2026-11-24 |
 | `ir-disk` | Disk artifacts answer who, what and when | ir, disk, forensics | medium | 2026-11-24 |
 | `ir-memory` | Memory is the most volatile evidence | ir, memory, forensics | medium | 2026-11-24 |
 | `linux-suid` | A SUID binary is a path, not a finding | linux, privesc, suid | high | 2026-11-24 |
@@ -69,6 +81,7 @@
 | `mobile-flutter` | Flutter hides logic in libapp.so and pins in Dart | mobile, flutter, dart | medium | 2026-11-24 |
 | `mobile-swift` | Swift hooks need mangled names or a bridge | mobile, ios, swift | medium | 2026-11-24 |
 | `mobile-swiftui-state` | SwiftUI state is not a security boundary | mobile, ios, swiftui | low | 2026-11-24 |
+| `process-retest` | A fix is not a fix until the same request fails | process, retest, regression | high | 2026-11-24 |
 | `report-impact-chain` | A report is a chain a triager can rerun | process, report, impact | high | 2026-11-24 |
 | `report-cvss-context` | CVSS without business context misranks the bug | process, report, cvss | medium | 2026-11-24 |
 | `process-disclosure` | Disclosure is a timeline with a paper trail | process, disclosure, vendor | medium | 2026-11-24 |

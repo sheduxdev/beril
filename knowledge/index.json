@@ -290,6 +290,50 @@
   "failure": "A restricted sandbox with no network is still a risk if it reads secrets. Check the mount."
  },
  {
+  "path": "knowledge/ai-tool-output.md",
+  "body": "# Tool output is untrusted input to the next turn\n\n## Claim\n\nA tool returns a page, file or email containing instructions. The model treats it as context and follows it.\n\n## Test\n\nPlant an instruction in a tool result. Ask a follow-up. Watch the next tool call.\n\n## Proof\n\nA second-order action from the tool content.\n\n## Failure modes\n\nA single-turn prompt is not second-order. The content must come from a tool.",
+  "id": "ai-tool-output",
+  "title": "Tool output is untrusted input to the next turn",
+  "tags": [
+   "ai",
+   "tool",
+   "injection"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "A tool returns a page, file or email containing instructions. The model treats it as context and follows it.",
+  "test": "Plant an instruction in a tool result. Ask a follow-up. Watch the next tool call.",
+  "proof": "A second-order action from the tool content.",
+  "failure": "A single-turn prompt is not second-order. The content must come from a tool."
+ },
+ {
+  "path": "knowledge/ai-vector-auth.md",
+  "body": "# A vector query still needs an ACL\n\n## Claim\n\nEmbedding search returns nearest chunks, not authorized chunks. Metadata filtering is the authorization layer.\n\n## Test\n\nCreate two users with separate documents. Query as A. Inspect source ids and metadata. Test a filter bypass with a crafted query.\n\n## Proof\n\nA chunk from user B appears in A's sources.\n\n## Failure modes\n\nA shared public corpus is not a leak. A filter without a tenant field is decorative.",
+  "id": "ai-vector-auth",
+  "title": "A vector query still needs an ACL",
+  "tags": [
+   "ai",
+   "rag",
+   "vector"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "Embedding search returns nearest chunks, not authorized chunks. Metadata filtering is the authorization layer.",
+  "test": "Create two users with separate documents. Query as A. Inspect source ids and metadata. Test a filter bypass with a crafted query.",
+  "proof": "A chunk from user B appears in A's sources.",
+  "failure": "A shared public corpus is not a leak. A filter without a tenant field is decorative."
+ },
+ {
   "path": "knowledge/api-grpc-reflection.md",
   "body": "# gRPC reflection is a map, per-method auth is the bug\n\n## Claim\n\nThe server exposes reflection and descriptors, but individual methods lack authorization or validate only the transport.\n\n## Test\n\nCall reflection, list services, call every method with and without a token. Compare a low-privilege caller.\n\n## Proof\n\nA method returns data or performs an action for the wrong role.\n\n## Failure modes\n\nReflection enabled is not a finding. A method that is public by design is not either.",
   "id": "api-grpc-reflection",
@@ -332,6 +376,28 @@
   "test": "Send the same request twice with and without the key. Compare row counts and side effects.",
   "proof": "One effect with the key, two without it.",
   "failure": "A GET retry is harmless. A key that is not scoped to the user can collide."
+ },
+ {
+  "path": "knowledge/api-jwt-rotation.md",
+  "body": "# Key rotation is a cache and trust problem\n\n## Claim\n\nA verifier caches a JWKS, trusts a kid without lookup, or accepts a key from the token itself.\n\n## Test\n\nRead the header. Try an unknown kid, a remote jku, a stale key and a key removed from JWKS.\n\n## Proof\n\nA token signed with an attacker or retired key is accepted.\n\n## Failure modes\n\nA cache with a short TTL is safer. A jku fetch needs an allowlist.",
+  "id": "api-jwt-rotation",
+  "title": "Key rotation is a cache and trust problem",
+  "tags": [
+   "api",
+   "jwt",
+   "jwks"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "A verifier caches a JWKS, trusts a kid without lookup, or accepts a key from the token itself.",
+  "test": "Read the header. Try an unknown kid, a remote jku, a stale key and a key removed from JWKS.",
+  "proof": "A token signed with an attacker or retired key is accepted.",
+  "failure": "A cache with a short TTL is safer. A jku fetch needs an allowlist."
  },
  {
   "path": "knowledge/api-mass-assignment.md",
@@ -378,6 +444,28 @@
   "failure": "A code that expires quickly is lower risk. The consent screen must be read."
  },
  {
+  "path": "knowledge/api-openapi.md",
+  "body": "# An exposed schema is a map, not a finding\n\n## Claim\n\nSwagger or OpenAPI exposes paths, parameters and models that the UI never calls. The finding is a reachable operation with weak auth.\n\n## Test\n\nFetch /openapi.json and the docs UI. Diff the schema against the UI. Call undocumented methods with two roles.\n\n## Proof\n\nAn undocumented operation returns data or performs an action.\n\n## Failure modes\n\nA public read-only schema is intended. A 401 on every path is not a finding.",
+  "id": "api-openapi",
+  "title": "An exposed schema is a map, not a finding",
+  "tags": [
+   "api",
+   "openapi",
+   "schema"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "Swagger or OpenAPI exposes paths, parameters and models that the UI never calls. The finding is a reachable operation with weak auth.",
+  "test": "Fetch /openapi.json and the docs UI. Diff the schema against the UI. Call undocumented methods with two roles.",
+  "proof": "An undocumented operation returns data or performs an action.",
+  "failure": "A public read-only schema is intended. A 401 on every path is not a finding."
+ },
+ {
   "path": "knowledge/api-rate-limit-bypass.md",
   "body": "# Rate limits are only as strong as the key\n\n## Claim\n\nThe limiter keys on IP, header or route, and the attacker can change that key or hit an unlisted sibling route.\n\n## Test\n\nIdentify the key. Rotate IP, user agent, account and path case. Test a trailing slash, version prefix and a batched body.\n\n## Proof\n\nMore requests than the policy allows with the same account.\n\n## Failure modes\n\nA limit that is intentionally per-IP is not a bug. Distributed sources change the test.",
   "id": "api-rate-limit-bypass",
@@ -422,6 +510,28 @@
   "failure": "A public stream is not a leak. A reconnect that reauths is safer."
  },
  {
+  "path": "knowledge/api-versioning.md",
+  "body": "# Old API versions keep old authorization\n\n## Claim\n\nA deprecated path is still routed, with weaker auth or no schema. Clients keep it alive.\n\n## Test\n\nCompare v1 with v2 on the same object. Call v1 with a low-privilege token. Check the changelog.\n\n## Proof\n\nA v1 path returns data that v2 protects.\n\n## Failure modes\n\nA version that returns 410 is retired. A redirect to v2 is not a bypass.",
+  "id": "api-versioning",
+  "title": "Old API versions keep old authorization",
+  "tags": [
+   "api",
+   "versioning",
+   "shadow"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "A deprecated path is still routed, with weaker auth or no schema. Clients keep it alive.",
+  "test": "Compare v1 with v2 on the same object. Call v1 with a low-privilege token. Check the changelog.",
+  "proof": "A v1 path returns data that v2 protects.",
+  "failure": "A version that returns 410 is retired. A redirect to v2 is not a bypass."
+ },
+ {
   "path": "knowledge/api-webhook-signature.md",
   "body": "# A webhook without HMAC is an unauthenticated write\n\n## Claim\n\nThe receiver trusts the body or a static token, or verifies HMAC without a timestamp and replay window.\n\n## Test\n\nCapture a delivery. Replay it. Change the body. Test a stale timestamp.\n\n## Proof\n\nA replayed or modified event changes state.\n\n## Failure modes\n\nAn HMAC that covers only part of the body may still be bypassable. Timing-safe comparison matters.",
   "id": "api-webhook-signature",
@@ -464,6 +574,28 @@
   "test": "Map the bug to a primitive. Build addrof/fakeobj. Chain to a write. Then look for a sandbox escape.",
   "proof": "A controlled read/write in the renderer and a host action outside it.",
   "failure": "A renderer crash is not a full chain. The sandbox is a separate boundary."
+ },
+ {
+  "path": "knowledge/binary-hypervisor.md",
+  "body": "# A hypervisor exposes synthetic MSRs and VTL boundaries\n\n## Claim\n\nHyper-V interfaces, synthetic MSRs and VTL1 calls parse structures from a less privileged partition.\n\n## Test\n\nMap the hypercall and MSR surface. Check VTL and partition trust. Test a malformed input in a VM.\n\n## Proof\n\nA host crash or a VTL boundary bypass.\n\n## Failure modes\n\nA hypervisor crash can be a DoS only. VBS must be enabled for VTL1.",
+  "id": "binary-hypervisor",
+  "title": "A hypervisor exposes synthetic MSRs and VTL boundaries",
+  "tags": [
+   "binary",
+   "hypervisor",
+   "virtualization"
+  ],
+  "confidence": "low",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/reverse-engineering.md"
+  ],
+  "status": "active",
+  "claim": "Hyper-V interfaces, synthetic MSRs and VTL1 calls parse structures from a less privileged partition.",
+  "test": "Map the hypercall and MSR surface. Check VTL and partition trust. Test a malformed input in a VM.",
+  "proof": "A host crash or a VTL boundary bypass.",
+  "failure": "A hypervisor crash can be a DoS only. VBS must be enabled for VTL1."
  },
  {
   "path": "knowledge/binary-jit.md",
@@ -753,6 +885,72 @@
   "failure": "A role name is not a permission. IMDSv2 blocks naive requests."
  },
  {
+  "path": "knowledge/cloud-oci.md",
+  "body": "# OCI policy is compartment and tenancy scoped\n\n## Claim\n\nInstance principals and dynamic groups grant rights through policy statements at a compartment or tenancy scope.\n\n## Test\n\nRead the dynamic group and policy. Check the compartment path. Test a read at the highest scope.\n\n## Proof\n\nA read or token mint outside the intended compartment.\n\n## Failure modes\n\nA policy on a single compartment is narrow. A tenancy-wide manage statement is not.",
+  "id": "cloud-oci",
+  "title": "OCI policy is compartment and tenancy scoped",
+  "tags": [
+   "cloud",
+   "oci",
+   "iam"
+  ],
+  "confidence": "low",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "Instance principals and dynamic groups grant rights through policy statements at a compartment or tenancy scope.",
+  "test": "Read the dynamic group and policy. Check the compartment path. Test a read at the highest scope.",
+  "proof": "A read or token mint outside the intended compartment.",
+  "failure": "A policy on a single compartment is narrow. A tenancy-wide manage statement is not."
+ },
+ {
+  "path": "knowledge/cloud-oidc-ci.md",
+  "body": "# CI OIDC trust is a subject claim match\n\n## Claim\n\nThe cloud role trusts a repository or branch by a string match. A wildcard, a fork or a tag can satisfy it.\n\n## Test\n\nRead the trust policy. Compare the sub and aud claims. Run a workflow from a fork or another ref.\n\n## Proof\n\nToken exchange from a ref the role should not trust.\n\n## Failure modes\n\nA claim on repo:ref:refs/heads/main is narrow. A wildcard on repo:* is not.",
+  "id": "cloud-oidc-ci",
+  "title": "CI OIDC trust is a subject claim match",
+  "tags": [
+   "cloud",
+   "oidc",
+   "ci"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "The cloud role trusts a repository or branch by a string match. A wildcard, a fork or a tag can satisfy it.",
+  "test": "Read the trust policy. Compare the sub and aud claims. Run a workflow from a fork or another ref.",
+  "proof": "Token exchange from a ref the role should not trust.",
+  "failure": "A claim on repo:ref:refs/heads/main is narrow. A wildcard on repo:* is not."
+ },
+ {
+  "path": "knowledge/cloud-secrets.md",
+  "body": "# A secrets manager is only as strong as its policy\n\n## Claim\n\nThe secret policy allows a broad principal, cross-account trust, or a role the workload does not need.\n\n## Test\n\nRead the resource policy. Test with the workload role and a second role. Check rotation.\n\n## Proof\n\nA read by a principal outside the intended workload.\n\n## Failure modes\n\nA secret encrypted with a default key is still readable by a policy mistake. Rotation alone is not access control.",
+  "id": "cloud-secrets",
+  "title": "A secrets manager is only as strong as its policy",
+  "tags": [
+   "cloud",
+   "secrets",
+   "iam"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "The secret policy allows a broad principal, cross-account trust, or a role the workload does not need.",
+  "test": "Read the resource policy. Test with the workload role and a second role. Check rotation.",
+  "proof": "A read by a principal outside the intended workload.",
+  "failure": "A secret encrypted with a default key is still readable by a policy mistake. Rotation alone is not access control."
+ },
+ {
   "path": "knowledge/cloud-serverless.md",
   "body": "# Serverless events are input, not a trusted trigger\n\n## Claim\n\nA function trusts the event shape, the source ARN or the authorizer, and passes fields into a shell or SDK call.\n\n## Test\n\nInvoke with a modified event. Test the authorizer. Check the execution role.\n\n## Proof\n\nA function action or read beyond the intended event.\n\n## Failure modes\n\nA function URL with IAM auth is different from an open one. Check the trigger.",
   "id": "cloud-serverless",
@@ -842,6 +1040,28 @@
   "failure": "A model without a price is zero. Add the rate before trusting the total."
  },
  {
+  "path": "knowledge/crypto-postquantum.md",
+  "body": "# PQC migration is a hybrid, not a flag\n\n## Claim\n\nA hybrid handshake combines a classical and a post-quantum exchange. A stored transcript can be broken later if only classical is used.\n\n## Test\n\nRead the TLS groups. Check the library and version. Test whether a hybrid group is offered.\n\n## Proof\n\nA negotiated hybrid group in the handshake.\n\n## Failure modes\n\nA PQ-only deployment can break old clients. A signature algorithm is a separate migration.",
+  "id": "crypto-postquantum",
+  "title": "PQC migration is a hybrid, not a flag",
+  "tags": [
+   "crypto",
+   "pqc",
+   "hybrid"
+  ],
+  "confidence": "low",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "A hybrid handshake combines a classical and a post-quantum exchange. A stored transcript can be broken later if only classical is used.",
+  "test": "Read the TLS groups. Check the library and version. Test whether a hybrid group is offered.",
+  "proof": "A negotiated hybrid group in the handshake.",
+  "failure": "A PQ-only deployment can break old clients. A signature algorithm is a separate migration."
+ },
+ {
   "path": "knowledge/crypto-weak-random.md",
   "body": "# Predictable randomness is a key recovery bug\n\n## Claim\n\nA token, nonce or key comes from time, a weak PRNG, or a seed reused across processes.\n\n## Test\n\nCollect many outputs. Check the seed source. Try to predict the next value from the timestamp or PID.\n\n## Proof\n\nA predicted token accepted by the server.\n\n## Failure modes\n\nA random-looking string is not proof. Check the generator and the seed.",
   "id": "crypto-weak-random",
@@ -906,6 +1126,28 @@
   "test": "Map the process tree. Add command-line and network fields. Test against a normal baseline.",
   "proof": "A rule that catches the technique and not the baseline.",
   "failure": "A signature on a binary name is easy to evade. Behavior is stronger."
+ },
+ {
+  "path": "knowledge/detection-lolbins.md",
+  "body": "# LOLBins hide in parent-child and arguments\n\n## Claim\n\nA signed system binary runs with unusual arguments or an unusual parent, avoiding a malware signature.\n\n## Test\n\nMap binaries, parents and arguments. Baseline the environment. Alert on the combination, not the name.\n\n## Proof\n\nA rule that catches the chain and not normal admin use.\n\n## Failure modes\n\nA binary name rule is weak. An argument-only rule is noisy.",
+  "id": "detection-lolbins",
+  "title": "LOLBins hide in parent-child and arguments",
+  "tags": [
+   "detection",
+   "lolbins",
+   "process"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "labs/detection"
+  ],
+  "status": "active",
+  "claim": "A signed system binary runs with unusual arguments or an unusual parent, avoiding a malware signature.",
+  "test": "Map binaries, parents and arguments. Baseline the environment. Alert on the combination, not the name.",
+  "proof": "A rule that catches the chain and not normal admin use.",
+  "failure": "A binary name rule is weak. An argument-only rule is noisy."
  },
  {
   "path": "knowledge/detection-sigma.md",
@@ -1194,6 +1436,28 @@
   "test": "Collect traces with a known input. Align. Compare the difference between hypotheses.",
   "proof": "A correlation peak that reveals a key byte.",
   "failure": "Noise and misalignment can hide the signal. A lab bench is required."
+ },
+ {
+  "path": "knowledge/ir-cloud.md",
+  "body": "# Cloud audit logs are the timeline\n\n## Claim\n\nCloudTrail, Activity Log or audit logs record the control plane. Data plane and identity events need separate sources.\n\n## Test\n\nCollect control plane, identity and network logs. Normalize to UTC. Correlate role assumption with resource access.\n\n## Proof\n\nA sequence from credential to action with source ids.\n\n## Failure modes\n\nA disabled or short-retention log leaves a gap. A resource event can have no control-plane event.",
+  "id": "ir-cloud",
+  "title": "Cloud audit logs are the timeline",
+  "tags": [
+   "ir",
+   "cloud",
+   "logs"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "labs/detection"
+  ],
+  "status": "active",
+  "claim": "CloudTrail, Activity Log or audit logs record the control plane. Data plane and identity events need separate sources.",
+  "test": "Collect control plane, identity and network logs. Normalize to UTC. Correlate role assumption with resource access.",
+  "proof": "A sequence from credential to action with source ids.",
+  "failure": "A disabled or short-retention log leaves a gap. A resource event can have no control-plane event."
  },
  {
   "path": "knowledge/ir-disk.md",
@@ -1527,6 +1791,28 @@
   "test": "Run recall with the target and class. If the decision is USE, answer from the card and test it. If REFRESH, verify one claim. If RESEARCH, collect.",
   "proof": "A card id and its proof, or a deliberate gap.",
   "failure": "A card can be stale. Check the date and the source before trusting it."
+ },
+ {
+  "path": "knowledge/process-retest.md",
+  "body": "# A fix is not a fix until the same request fails\n\n## Claim\n\nThe vendor reports a patch. The original request may still work on another path or version.\n\n## Test\n\nReplay the exact request. Test the sibling path and the old version. Record the response and the date.\n\n## Proof\n\nThe original proof now fails for the right reason.\n\n## Failure modes\n\nA 200 with an error body is not a fix. A WAF block is not a code fix.",
+  "id": "process-retest",
+  "title": "A fix is not a fix until the same request fails",
+  "tags": [
+   "process",
+   "retest",
+   "regression"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "docs/break-my-app.md"
+  ],
+  "status": "active",
+  "claim": "The vendor reports a patch. The original request may still work on another path or version.",
+  "test": "Replay the exact request. Test the sibling path and the old version. Record the response and the date.",
+  "proof": "The original proof now fails for the right reason.",
+  "failure": "A 200 with an error body is not a fix. A WAF block is not a code fix."
  },
  {
   "path": "knowledge/process-scope-parse.md",

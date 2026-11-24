@@ -6886,7 +6886,7 @@ Before sending:
 
 ![dashboard](../assets/dashboard.png)
 
-A local dashboard for every catalog in Beril. Orbit-style: monochrome, thin rules, one spacing scale, flat panels, light and dark.
+A local dashboard for every catalog in Beril. Orbit roles, Apple HIG values, Material 3 state layers. Light and dark follow the system.
 
 ```bash
 ./beril dashboard
@@ -6896,13 +6896,24 @@ It binds `127.0.0.1:8788` and opens the browser. Use `--port` to change and `--n
 
 ## Pages
 
+Five sidebar sections. Work, Intel and Lab hold tabs, so the sidebar never grows past five items.
+
+| Section | Tabs |
+|---|---|
+| Overview | Spend, running work, training, recent activity |
+| Work | Jobs, Activity, Costs |
+| Memory | One list of cards |
+| Intel | Threads, Experts, Tools, Methods, GitHub atlas, Sources |
+| Lab | Labs, Training, Posture, Scans |
+
+
 | Page | What it shows | Action |
 |---|---|---|
 | Overview | Spend, ledger, counts, training queue, scans | Mark a task done |
 | Activity | Jobs, labs, scans and journal in one stream | Open context |
 | Jobs | Every job with actor, model, tokens and cost | Create, finish, inspect |
 | Costs | Spend today/week/month, by model and type | Set the budget |
-| Memory | 118 durable cards, confidence and freshness | Open a card |
+| Memory | 53 durable cards, confidence and freshness | Open a card |
 | Threads | Every harvested thread with source filter and search | Open the source |
 | Experts | Profiles, focus, work count | Open the profile |
 | Tools | Core shelf and RE/offense shelf, search | Open the repo |
@@ -6914,7 +6925,7 @@ It binds `127.0.0.1:8788` and opens the browser. Use `--port` to change and `--n
 | Scans | Passive scan and report viewer | Scan a URL or artifact |
 | Sources | Row counts per source | Find coverage gaps |
 
-Keyboard: `/` focuses search. Theme is stored in localStorage.
+Keyboard: `/` filters the page, `Ctrl K` opens the go-to palette, `Ctrl \` hides the sidebar (remembered in localStorage). Click a table header to sort; click again to reverse.
 
 ## Cost tracking
 
@@ -6928,31 +6939,42 @@ Jobs store `tokens_in`, `tokens_out`, a model and `cost_usd`. The price table is
 
 Scans and labs create jobs automatically with zero cost. The budget is a soft bar, not a hard stop.
 
-## Design tokens and motion
-
-The page uses a token layer, one skeleton (`shell`) for each page and system
-fonts. Numbers use `tabular-nums`, buttons say the action ("Run scan", "Run
-test"), and the table markup keeps `thead` and `tbody`.
-
-Modern CSS in use:
-
-- `@view-transition` and `startViewTransition` for page changes.
-- `animation-timeline: view()` for a restrained reveal on cards.
-- `grid-template-rows: subgrid` for aligned posture cards.
-- `<details name="faq">` so only one help item is open.
-- `theme-color` and `color-scheme` meta.
-
-Reduced motion disables the reveal and the transition.
-
 ## Design
 
-Inspired by the Polar Orbit system:
+Three references, one system. Tokens are plain CSS custom properties at the top of `scripts/dashboard_page.py`.
 
-- Design by subtraction. One accent, one radius scale, no gradients.
-- Derived, not decorated. Spacing and type come from a single scale.
-- Precision as respect. Numbers use a mono stack, columns align.
-- Card borders instead of shadows. Hover is a soft background, not a lift.
-- One near-black surface scale, no theme toggle.
+- **Orbit (Polar).** Design by subtraction: one spacing scale, three radii, one accent. Colour by role: `background-*`, `text-*`, `border-*`.
+- **Apple HIG.** System colours (`#0a84ff`, `#30d158`, `#ff9f0a`, `#ff453a`), 13 px base text, capsule buttons, a segmented control for the job filter, sortable columns, a hideable sidebar, blur only on the floating bars. Corners are continuous (`corner-shape: squircle`) where the browser supports it and fall back to a normal radius.
+- **Material 3.** The active sidebar item is a capsule indicator on a tinted container. Hover and pressed states are 8% and 12% layers of the text colour. Modals use the extra-large 28 px corner.
+- **Light and dark** follow `prefers-color-scheme`.
+- No page-change animation: the sidebar and top bar stay still while the content swaps. `prefers-reduced-motion` removes the rest.
+- Brand: the round avatar is `assets/avatar-round.png`, inlined as the favicon and the sidebar mark.
+
+### Live
+
+Motion lives in the content, never in the sidebar or top bar.
+
+- Overview, Jobs, Activity, Costs and Labs refresh every 6 seconds while the tab is visible. A refresh is skipped while you type, while a drawer is open and while a lab or scan runs. The green dot and clock in the top bar show the last refresh.
+- Pages load behind a shimmer skeleton, then rise in with a short stagger. Numbers count up, bars and rings fill, charts grow.
+- Running jobs and labs pulse. A lab card shows an indeterminate bar while it runs.
+- Actions answer with a toast: lab result, scan finished, job created, task done, budget saved.
+- Scan output types into a terminal panel. Reports open in place.
+- Training shows a progress ring, the curriculum by week, tick-to-complete tasks and a journal timeline. Posture shows severity bars per target, a findings-by-day chart and coverage rings.
+- `prefers-reduced-motion` turns every animation off.
+
+### Responsive
+
+The layout reacts to the content width (container queries), not the window, so it holds inside a narrow browser pane.
+
+| Content width | Change |
+|---|---|
+| under 900 px | Side panels and forms stack under the main list |
+| under 700 px | KPI cards stack |
+| under 640 px | Table rows become cards with labelled values |
+| under 800 px window | Sidebar becomes a top strip; filter field hides |
+| touch screens | 44 px targets and 16 px inputs, so iOS does not zoom |
+
+Reference repositories used while designing (not copied): axiaoge2/apple-hig-designer (MIT), dickwu/apple-design-skill, raintree-technology/hig-doctor, and the Material Web tokens. Apple's guideline text stays Apple's.
 
 No framework and no build step. One Python file, one HTML string, standard library only.
 
@@ -7066,7 +7088,7 @@ Do not store secrets, customer data, or private report text in a card. Link the 
 
 ## Gaps
 
-`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. 96 gaps exist: 91 covered, 5 open at medium or low priority, no high gaps. Do not pretend a gap is covered.
+`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. 116 gaps exist: 104 covered, 12 open at medium or low priority, no high gaps. Do not pretend a gap is covered.
 
 ```bash
 ./beril gaps --next
@@ -7097,20 +7119,21 @@ The entry files in the repo root tell Claude, Codex, Cursor and Gemini to recall
 
 ## Current seed
 
-118 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
+131 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
 
 
 <!-- ===== knowledge/INDEX.md ===== -->
 
 # Knowledge index
 
-118 durable cards. Read this before a web search; open a card only when it matches.
+131 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
 | `ad-acl-path` | AD compromise is an edge path, not a single bug | ad, windows, acl | high | 2026-11-24 |
 | `ad-adcs-esc1` | ESC1 is an enrollable SAN on a client-auth template | ad, adcs, certificate | high | 2026-11-24 |
 | `ai-sandbox-escape` | A code interpreter is a process with a filesystem | ai, sandbox, interpreter | high | 2026-11-24 |
+| `ai-vector-auth` | A vector query still needs an ACL | ai, rag, vector | medium | 2026-11-24 |
 | `ai-memory-poison` | Agent memory is a write target | ai, agent, memory | high | 2026-11-24 |
 | `ai-agent-tool` | Agent tool abuse is argument control, not prompt text | ai, agent, tool | high | 2026-11-24 |
 | `ai-cost-control` | An agent loop is a budget bug | ai, cost, agent | medium | 2026-11-24 |
@@ -7121,13 +7144,18 @@ The entry files in the repo root tell Claude, Codex, Cursor and Gemini to recall
 | `ai-model-extraction` | Model extraction is a query budget problem | ai, model, extraction | medium | 2026-11-24 |
 | `ai-data-poison` | Poisoned data changes the model or the retrieval set | ai, data, poisoning | high | 2026-11-24 |
 | `ai-rag-tenant-filter` | RAG leaks when retrieval ignores the tenant | ai, llm, rag | high | 2026-11-24 |
+| `ai-tool-output` | Tool output is untrusted input to the next turn | ai, tool, injection | high | 2026-11-24 |
 | `api-webhook-signature` | A webhook without HMAC is an unauthenticated write | api, webhook, hmac | high | 2026-11-24 |
+| `api-openapi` | An exposed schema is a map, not a finding | api, openapi, schema | high | 2026-11-24 |
 | `api-oauth-device` | Device code flow is phishing with a real code | api, oauth, device-code | medium | 2026-11-24 |
+| `api-jwt-rotation` | Key rotation is a cache and trust problem | api, jwt, jwks | high | 2026-11-24 |
 | `api-mass-assignment` | Mass assignment is a binder trusting extra fields | api, json, mass-assignment | high | 2026-11-24 |
+| `api-versioning` | Old API versions keep old authorization | api, versioning, shadow | high | 2026-11-24 |
 | `api-rate-limit-bypass` | Rate limits are only as strong as the key | api, rate-limit, bypass | high | 2026-11-24 |
 | `api-idempotency` | Retries need an idempotency key at the write | api, idempotency, retry | high | 2026-11-24 |
 | `api-sse` | Server-sent events need per-connection auth | api, sse, stream | medium | 2026-11-24 |
 | `api-grpc-reflection` | gRPC reflection is a map, per-method auth is the bug | api, grpc, reflection | medium | 2026-11-24 |
+| `binary-hypervisor` | A hypervisor exposes synthetic MSRs and VTL boundaries | binary, hypervisor, virtualization | low | 2026-11-24 |
 | `binary-kernel` | A kernel bug is an object lifetime bug with a user buffer | binary, kernel, driver | high | 2026-11-24 |
 | `binary-browser` | Browser exploitation needs a renderer bug and a sandbox path | binary, browser, jit | high | 2026-11-24 |
 | `binary-jit` | JIT bugs are about generated code and stale metadata | binary, jit, exploit | medium | 2026-11-24 |
@@ -7135,21 +7163,26 @@ The entry files in the repo root tell Claude, Codex, Cursor and Gemini to recall
 | `browser-extension-permissions` | An extension is a trusted page with broad APIs | browser, extension, permissions | medium | 2026-11-24 |
 | `cloud-docker-socket` | A mounted Docker socket is root on the host | cloud, docker, container | medium | 2026-11-24 |
 | `cloud-k8s-hostpath` | A privileged pod with hostPath is a host escape | cloud, kubernetes, container | high | 2026-11-24 |
+| `cloud-secrets` | A secrets manager is only as strong as its policy | cloud, secrets, iam | high | 2026-11-24 |
 | `cloud-aks-identity` | AKS mixes Azure RBAC and Kubernetes RBAC | cloud, aks, kubernetes | medium | 2026-11-24 |
 | `cloud-azure-role` | Azure identity is a role assignment graph | cloud, azure, iam | high | 2026-11-24 |
+| `cloud-oidc-ci` | CI OIDC trust is a subject claim match | cloud, oidc, ci | high | 2026-11-24 |
 | `cloud-metadata-role` | Cloud metadata is a credential endpoint | cloud, ssrf, iam | high | 2026-11-24 |
 | `cloud-eks` | EKS has two identity planes: IAM and Kubernetes | cloud, eks, kubernetes | medium | 2026-11-24 |
 | `cloud-gcp-iam` | GCP IAM binds a member to a role on a resource | cloud, gcp, iam | high | 2026-11-24 |
 | `cloud-iam-wildcard` | IAM wildcard is administrator access until proven otherwise | cloud, iam, aws | high | 2026-11-24 |
+| `cloud-oci` | OCI policy is compartment and tenancy scoped | cloud, oci, iam | low | 2026-11-24 |
 | `cloud-serverless` | Serverless events are input, not a trusted trigger | cloud, serverless, lambda | medium | 2026-11-24 |
 | `cloud-terraform-state` | Terraform state is a secret store | cloud, terraform, state | medium | 2026-11-24 |
 | `container-escape` | A container escape is a host resource exposed to the container | container, escape, kubernetes | high | 2026-11-24 |
 | `key-management` | Key management is where crypto bugs become data bugs | crypto, keys, storage | medium | 2026-11-24 |
+| `crypto-postquantum` | PQC migration is a hybrid, not a flag | crypto, pqc, hybrid | low | 2026-11-24 |
 | `crypto-weak-random` | Predictable randomness is a key recovery bug | crypto, random, predictability | high | 2026-11-24 |
 | `tls-config-review` | TLS is a version, a chain and a policy | crypto, tls, certificate | medium | 2026-11-24 |
 | `detection-sigma` | A Sigma rule needs a logsource, a selection and a false-positive note | detection, sigma, log | high | 2026-11-24 |
 | `detection-beacon` | A beacon is a timing pattern, not a single request | detection, beacon, network | medium | 2026-11-24 |
 | `detection-edr` | EDR detection is a process tree and a sequence | detection, edr, process | medium | 2026-11-24 |
+| `detection-lolbins` | LOLBins hide in parent-child and arguments | detection, lolbins, process | high | 2026-11-24 |
 | `detection-threatintel` | Threat intel ages and IOCs are easy to rotate | detection, intel, ioc | medium | 2026-11-24 |
 | `electron-context-isolation` | Electron is Node with a browser attached | electron, desktop, context-isolation | medium | 2026-11-24 |
 | `exploit-uaf-reallocate` | UAF becomes control when the freed slot is reallocated | exploit, uaf, heap | high | 2026-11-24 |
@@ -7163,6 +7196,7 @@ The entry files in the repo root tell Claude, Codex, Cursor and Gemini to recall
 | `firmware-uart` | UART is found by idle levels and confirmed by baud | firmware, hardware, uart | high | 2026-11-24 |
 | `hardware-sidechannel` | Side channels leak through power, timing or EM | hardware, sidechannel | low | 2026-11-24 |
 | `ir-timeline` | An incident timeline needs three independent clocks | ir, timeline, forensics | medium | 2026-11-24 |
+| `ir-cloud` | Cloud audit logs are the timeline | ir, cloud, logs | medium | 2026-11-24 |
 | `ir-disk` | Disk artifacts answer who, what and when | ir, disk, forensics | medium | 2026-11-24 |
 | `ir-memory` | Memory is the most volatile evidence | ir, memory, forensics | medium | 2026-11-24 |
 | `linux-suid` | A SUID binary is a path, not a finding | linux, privesc, suid | high | 2026-11-24 |
@@ -7173,6 +7207,7 @@ The entry files in the repo root tell Claude, Codex, Cursor and Gemini to recall
 | `mobile-flutter` | Flutter hides logic in libapp.so and pins in Dart | mobile, flutter, dart | medium | 2026-11-24 |
 | `mobile-swift` | Swift hooks need mangled names or a bridge | mobile, ios, swift | medium | 2026-11-24 |
 | `mobile-swiftui-state` | SwiftUI state is not a security boundary | mobile, ios, swiftui | low | 2026-11-24 |
+| `process-retest` | A fix is not a fix until the same request fails | process, retest, regression | high | 2026-11-24 |
 | `report-impact-chain` | A report is a chain a triager can rerun | process, report, impact | high | 2026-11-24 |
 | `report-cvss-context` | CVSS without business context misranks the bug | process, report, cvss | medium | 2026-11-24 |
 | `process-disclosure` | Disclosure is a timeline with a paper trail | process, disclosure, vendor | medium | 2026-11-24 |
@@ -7232,7 +7267,7 @@ The entry files in the repo root tell Claude, Codex, Cursor and Gemini to recall
 
 # Knowledge gaps
 
-96 gaps. A gap is a card that does not exist yet, ranked by priority.
+116 gaps. A gap is a card that does not exist yet, ranked by priority.
 
 | # | Domain | Gap | Priority | Source | Status |
 |---|---|---|---|---|---|
@@ -7319,19 +7354,39 @@ The entry files in the repo root tell Claude, Codex, Cursor and Gemini to recall
 | 81 | hardware | Power, timing and EM side channels | low | `references/firmware-iot.md` | covered by `hardware-sidechannel` |
 | 82 | ai | Agent goal drift, subagent permissions and plan hijack | high | `references/techniques.md` | covered by `ai-agent-planning` |
 | 83 | ai | Code interpreter and tool sandbox escape | high | `labs/llm` | covered by `ai-sandbox-escape` |
-| 84 | ai | Vector store authorization and metadata filtering | medium | `references/techniques.md` | open |
+| 84 | ai | Vector store authorization and metadata filtering | medium | `references/techniques.md` | covered by `ai-vector-auth` |
 | 85 | api | Idempotency keys, retries and duplicate side effects | high | `references/techniques.md` | covered by `api-idempotency` |
 | 86 | cloud | AKS workload identity and Azure RBAC | medium | `references/vulnerability-research.md` | covered by `cloud-aks` |
-| 87 | cloud | OCI compartments, instance principals and policy | low | `references/vulnerability-research.md` | open |
+| 87 | cloud | OCI compartments, instance principals and policy | low | `references/vulnerability-research.md` | covered by `cloud-oci` |
 | 88 | binary | UEFI DXE drivers, SMM and secure boot | medium | `references/reverse-engineering.md` | covered by `binary-uefi` |
-| 89 | binary | Hypervisor interfaces, VTL and synthetic MSRs | low | `references/reverse-engineering.md` | open |
+| 89 | binary | Hypervisor interfaces, VTL and synthetic MSRs | low | `references/reverse-engineering.md` | covered by `binary-hypervisor` |
 | 90 | re | JVM bytecode, JIT and deserialization gadgets | medium | `references/reverse-engineering.md` | covered by `re-jvm` |
 | 91 | mobile | SwiftUI state, deep links and scene lifecycle | low | `references/mobile-reverse.md` | covered by `mobile-swiftui` |
 | 92 | firmware | Secure boot chain, key enrollment and rollback | high | `references/firmware-iot.md` | covered by `firmware-secureboot` |
 | 93 | detection | IOC versus behavior, intel aging and false positives | medium | `labs/detection` | covered by `detection-threatintel` |
-| 94 | ir | CloudTrail and audit log timeline reconstruction | medium | `references/vulnerability-research.md` | open |
+| 94 | ir | CloudTrail and audit log timeline reconstruction | medium | `references/vulnerability-research.md` | covered by `ir-cloud` |
 | 95 | process | Coordinated disclosure, timelines and vendor silence | medium | `references/claude-bughunter.md` | covered by `process-disclosure` |
-| 96 | crypto | Post-quantum migration and hybrid key exchange | low | `references/vulnerability-research.md` | open |
+| 96 | crypto | Post-quantum migration and hybrid key exchange | low | `references/vulnerability-research.md` | covered by `crypto-postquantum` |
+| 97 | api | OpenAPI and Swagger exposure and schema abuse | high | `references/techniques.md` | covered by `api-openapi` |
+| 98 | api | JWT key rotation, kid and JWKS cache poisoning | high | `references/techniques.md` | covered by `api-jwt-rotation` |
+| 99 | api | Cursor and offset pagination leaks and total-count oracles | medium | `references/techniques.md` | open |
+| 100 | api | Shadow and deprecated API versions | high | `references/techniques.md` | covered by `api-versioning` |
+| 101 | cloud | Secrets manager policy, rotation and cross-account access | high | `references/vulnerability-research.md` | covered by `cloud-secrets` |
+| 102 | cloud | CI OIDC trust policy and subject claim confusion | high | `references/vulnerability-research.md` | covered by `cloud-oidc-ci` |
+| 103 | cloud | Alibaba Cloud RAM roles and STS | low | `references/vulnerability-research.md` | open |
+| 104 | binary | Mach-O, dyld and code signing on macOS | medium | `references/reverse-engineering.md` | open |
+| 105 | re | Mach-O load commands, entitlements and universal binaries | medium | `references/reverse-engineering.md` | open |
+| 106 | re | AArch64 calling convention, PAC and MTE | medium | `references/reverse-engineering.md` | open |
+| 107 | detection | DNS tunneling and unusual query patterns | medium | `labs/detection` | open |
+| 108 | detection | Living-off-the-land binaries and parent-child anomalies | high | `labs/detection` | covered by `detection-lolbins` |
+| 109 | detection | JA3/JA4 and TLS fingerprint anomalies | medium | `references/techniques.md` | open |
+| 110 | ir | Mobile incident triage: backups, sysdiagnose and Frida | low | `references/mobile-reverse.md` | open |
+| 111 | ir | Container incident triage and image diffing | medium | `references/vulnerability-research.md` | open |
+| 112 | ai | Tool output trust and second-order injection | high | `references/techniques.md` | covered by `ai-tool-output` |
+| 113 | ai | Guardrail bypass through encoding, length and language | medium | `references/techniques.md` | open |
+| 114 | process | Program rules, payout terms and disclosure policy | medium | `references/claude-bughunter.md` | open |
+| 115 | process | Retest after a fix and regression notes | high | `docs/break-my-app.md` | covered by `process-retest` |
+| 116 | crypto | Password KDF choice, cost and salt handling | medium | `references/vulnerability-research.md` | open |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.
 

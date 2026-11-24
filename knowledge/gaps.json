@@ -752,8 +752,8 @@
   "gap": "Vector store authorization and metadata filtering",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "ai-vector-auth",
+  "status": "covered"
  },
  {
   "id": "api-idempotency",
@@ -779,8 +779,8 @@
   "gap": "OCI compartments, instance principals and policy",
   "priority": "low",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "cloud-oci",
+  "status": "covered"
  },
  {
   "id": "binary-uefi",
@@ -797,8 +797,8 @@
   "gap": "Hypervisor interfaces, VTL and synthetic MSRs",
   "priority": "low",
   "source": "references/reverse-engineering.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "binary-hypervisor",
+  "status": "covered"
  },
  {
   "id": "re-jvm",
@@ -842,8 +842,8 @@
   "gap": "CloudTrail and audit log timeline reconstruction",
   "priority": "medium",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "ir-cloud",
+  "status": "covered"
  },
  {
   "id": "process-disclosure",
@@ -859,6 +859,186 @@
   "domain": "crypto",
   "gap": "Post-quantum migration and hybrid key exchange",
   "priority": "low",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "crypto-postquantum",
+  "status": "covered"
+ },
+ {
+  "id": "api-openapi",
+  "domain": "api",
+  "gap": "OpenAPI and Swagger exposure and schema abuse",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "api-openapi",
+  "status": "covered"
+ },
+ {
+  "id": "api-jwt-rotation",
+  "domain": "api",
+  "gap": "JWT key rotation, kid and JWKS cache poisoning",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "api-jwt-rotation",
+  "status": "covered"
+ },
+ {
+  "id": "api-pagination",
+  "domain": "api",
+  "gap": "Cursor and offset pagination leaks and total-count oracles",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "api-versioning",
+  "domain": "api",
+  "gap": "Shadow and deprecated API versions",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "api-versioning",
+  "status": "covered"
+ },
+ {
+  "id": "cloud-secrets",
+  "domain": "cloud",
+  "gap": "Secrets manager policy, rotation and cross-account access",
+  "priority": "high",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "cloud-secrets",
+  "status": "covered"
+ },
+ {
+  "id": "cloud-oidc-ci",
+  "domain": "cloud",
+  "gap": "CI OIDC trust policy and subject claim confusion",
+  "priority": "high",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "cloud-oidc-ci",
+  "status": "covered"
+ },
+ {
+  "id": "cloud-alibaba",
+  "domain": "cloud",
+  "gap": "Alibaba Cloud RAM roles and STS",
+  "priority": "low",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "binary-macos",
+  "domain": "binary",
+  "gap": "Mach-O, dyld and code signing on macOS",
+  "priority": "medium",
+  "source": "references/reverse-engineering.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "re-macho",
+  "domain": "re",
+  "gap": "Mach-O load commands, entitlements and universal binaries",
+  "priority": "medium",
+  "source": "references/reverse-engineering.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "re-arm64",
+  "domain": "re",
+  "gap": "AArch64 calling convention, PAC and MTE",
+  "priority": "medium",
+  "source": "references/reverse-engineering.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "detection-dns",
+  "domain": "detection",
+  "gap": "DNS tunneling and unusual query patterns",
+  "priority": "medium",
+  "source": "labs/detection",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "detection-lolbins",
+  "domain": "detection",
+  "gap": "Living-off-the-land binaries and parent-child anomalies",
+  "priority": "high",
+  "source": "labs/detection",
+  "covered_by": "detection-lolbins",
+  "status": "covered"
+ },
+ {
+  "id": "detection-tls",
+  "domain": "detection",
+  "gap": "JA3/JA4 and TLS fingerprint anomalies",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "ir-mobile",
+  "domain": "ir",
+  "gap": "Mobile incident triage: backups, sysdiagnose and Frida",
+  "priority": "low",
+  "source": "references/mobile-reverse.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "ir-container",
+  "domain": "ir",
+  "gap": "Container incident triage and image diffing",
+  "priority": "medium",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "ai-tool-output",
+  "domain": "ai",
+  "gap": "Tool output trust and second-order injection",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "ai-tool-output",
+  "status": "covered"
+ },
+ {
+  "id": "ai-guardrail",
+  "domain": "ai",
+  "gap": "Guardrail bypass through encoding, length and language",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "process-bounty-platform",
+  "domain": "process",
+  "gap": "Program rules, payout terms and disclosure policy",
+  "priority": "medium",
+  "source": "references/claude-bughunter.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "process-retest",
+  "domain": "process",
+  "gap": "Retest after a fix and regression notes",
+  "priority": "high",
+  "source": "docs/break-my-app.md",
+  "covered_by": "process-retest",
+  "status": "covered"
+ },
+ {
+  "id": "crypto-kdf",
+  "domain": "crypto",
+  "gap": "Password KDF choice, cost and salt handling",
+  "priority": "medium",
   "source": "references/vulnerability-research.md",
   "covered_by": "",
   "status": "open"

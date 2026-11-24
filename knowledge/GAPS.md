@@ -1,6 +1,6 @@
 # Knowledge gaps
 
-96 gaps. A gap is a card that does not exist yet, ranked by priority.
+116 gaps. A gap is a card that does not exist yet, ranked by priority.
 
 | # | Domain | Gap | Priority | Source | Status |
 |---|---|---|---|---|---|
@@ -87,18 +87,38 @@
 | 81 | hardware | Power, timing and EM side channels | low | `references/firmware-iot.md` | covered by `hardware-sidechannel` |
 | 82 | ai | Agent goal drift, subagent permissions and plan hijack | high | `references/techniques.md` | covered by `ai-agent-planning` |
 | 83 | ai | Code interpreter and tool sandbox escape | high | `labs/llm` | covered by `ai-sandbox-escape` |
-| 84 | ai | Vector store authorization and metadata filtering | medium | `references/techniques.md` | open |
+| 84 | ai | Vector store authorization and metadata filtering | medium | `references/techniques.md` | covered by `ai-vector-auth` |
 | 85 | api | Idempotency keys, retries and duplicate side effects | high | `references/techniques.md` | covered by `api-idempotency` |
 | 86 | cloud | AKS workload identity and Azure RBAC | medium | `references/vulnerability-research.md` | covered by `cloud-aks` |
-| 87 | cloud | OCI compartments, instance principals and policy | low | `references/vulnerability-research.md` | open |
+| 87 | cloud | OCI compartments, instance principals and policy | low | `references/vulnerability-research.md` | covered by `cloud-oci` |
 | 88 | binary | UEFI DXE drivers, SMM and secure boot | medium | `references/reverse-engineering.md` | covered by `binary-uefi` |
-| 89 | binary | Hypervisor interfaces, VTL and synthetic MSRs | low | `references/reverse-engineering.md` | open |
+| 89 | binary | Hypervisor interfaces, VTL and synthetic MSRs | low | `references/reverse-engineering.md` | covered by `binary-hypervisor` |
 | 90 | re | JVM bytecode, JIT and deserialization gadgets | medium | `references/reverse-engineering.md` | covered by `re-jvm` |
 | 91 | mobile | SwiftUI state, deep links and scene lifecycle | low | `references/mobile-reverse.md` | covered by `mobile-swiftui` |
 | 92 | firmware | Secure boot chain, key enrollment and rollback | high | `references/firmware-iot.md` | covered by `firmware-secureboot` |
 | 93 | detection | IOC versus behavior, intel aging and false positives | medium | `labs/detection` | covered by `detection-threatintel` |
-| 94 | ir | CloudTrail and audit log timeline reconstruction | medium | `references/vulnerability-research.md` | open |
+| 94 | ir | CloudTrail and audit log timeline reconstruction | medium | `references/vulnerability-research.md` | covered by `ir-cloud` |
 | 95 | process | Coordinated disclosure, timelines and vendor silence | medium | `references/claude-bughunter.md` | covered by `process-disclosure` |
-| 96 | crypto | Post-quantum migration and hybrid key exchange | low | `references/vulnerability-research.md` | open |
+| 96 | crypto | Post-quantum migration and hybrid key exchange | low | `references/vulnerability-research.md` | covered by `crypto-postquantum` |
+| 97 | api | OpenAPI and Swagger exposure and schema abuse | high | `references/techniques.md` | covered by `api-openapi` |
+| 98 | api | JWT key rotation, kid and JWKS cache poisoning | high | `references/techniques.md` | covered by `api-jwt-rotation` |
+| 99 | api | Cursor and offset pagination leaks and total-count oracles | medium | `references/techniques.md` | open |
+| 100 | api | Shadow and deprecated API versions | high | `references/techniques.md` | covered by `api-versioning` |
+| 101 | cloud | Secrets manager policy, rotation and cross-account access | high | `references/vulnerability-research.md` | covered by `cloud-secrets` |
+| 102 | cloud | CI OIDC trust policy and subject claim confusion | high | `references/vulnerability-research.md` | covered by `cloud-oidc-ci` |
+| 103 | cloud | Alibaba Cloud RAM roles and STS | low | `references/vulnerability-research.md` | open |
+| 104 | binary | Mach-O, dyld and code signing on macOS | medium | `references/reverse-engineering.md` | open |
+| 105 | re | Mach-O load commands, entitlements and universal binaries | medium | `references/reverse-engineering.md` | open |
+| 106 | re | AArch64 calling convention, PAC and MTE | medium | `references/reverse-engineering.md` | open |
+| 107 | detection | DNS tunneling and unusual query patterns | medium | `labs/detection` | open |
+| 108 | detection | Living-off-the-land binaries and parent-child anomalies | high | `labs/detection` | covered by `detection-lolbins` |
+| 109 | detection | JA3/JA4 and TLS fingerprint anomalies | medium | `references/techniques.md` | open |
+| 110 | ir | Mobile incident triage: backups, sysdiagnose and Frida | low | `references/mobile-reverse.md` | open |
+| 111 | ir | Container incident triage and image diffing | medium | `references/vulnerability-research.md` | open |
+| 112 | ai | Tool output trust and second-order injection | high | `references/techniques.md` | covered by `ai-tool-output` |
+| 113 | ai | Guardrail bypass through encoding, length and language | medium | `references/techniques.md` | open |
+| 114 | process | Program rules, payout terms and disclosure policy | medium | `references/claude-bughunter.md` | open |
+| 115 | process | Retest after a fix and regression notes | high | `docs/break-my-app.md` | covered by `process-retest` |
+| 116 | crypto | Password KDF choice, cost and salt handling | medium | `references/vulnerability-research.md` | open |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.
