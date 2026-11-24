@@ -1,6 +1,6 @@
 # Knowledge gaps
 
-314 gaps. A gap is a card that does not exist yet, ranked by priority.
+337 gaps. A gap is a card that does not exist yet, ranked by priority.
 
 | # | Domain | Gap | Priority | Source | Status |
 |---|---|---|---|---|---|
@@ -318,5 +318,28 @@
 | 312 | performance | Percentiles, coordinated omission and tail | high | `references/engineering-mastery.md` | covered by `perf-latency-percentile` |
 | 313 | sre | Incident command, roles and comms cadence | high | `references/engineering-mastery.md` | covered by `sre-incident-command` |
 | 314 | sre | Runbooks, automation and toil budget | medium | `references/engineering-mastery.md` | covered by `sre-runbook` |
+| 315 | cryptography | AEAD, nonce reuse and associated data | high | `references/engineering-mastery.md` | covered by `crypto-aead` |
+| 316 | cryptography | Nonce construction and random collision bounds | high | `references/engineering-mastery.md` | covered by `crypto-nonce` |
+| 317 | cryptography | HKDF, domain separation and key derivation | high | `references/engineering-mastery.md` | covered by `crypto-kdf-derive` |
+| 318 | cryptography | Key rotation, versioning and re-encryption | high | `references/engineering-mastery.md` | covered by `crypto-key-rotation` |
+| 319 | cryptography | Constant-time code and side channels | medium | `references/engineering-mastery.md` | covered by `crypto-constant-time` |
+| 320 | observability | Trace context propagation across services | high | `references/engineering-mastery.md` | covered by `trace-context` |
+| 321 | observability | Consistent sampling and tail-based decisions | high | `references/engineering-mastery.md` | covered by `trace-sampling` |
+| 322 | observability | Clock skew in traces and span duration | medium | `references/engineering-mastery.md` | covered by `trace-clock` |
+| 323 | observability | Span attributes, cardinality and cost | medium | `references/engineering-mastery.md` | covered by `trace-cardinality` |
+| 324 | api-design | Error taxonomy, retryability and problem details | high | `references/engineering-mastery.md` | covered by `api-error-taxonomy` |
+| 325 | api-design | Cursor pagination and snapshot stability | high | `references/engineering-mastery.md` | covered by `api-cursor` |
+| 326 | api-design | PATCH semantics, JSON merge and null | medium | `references/engineering-mastery.md` | covered by `api-partial-update` |
+| 327 | api-design | Consumer-driven contract tests | medium | `references/engineering-mastery.md` | covered by `api-contract-test` |
+| 328 | data-modeling | Normalization, denormalization and read models | high | `references/engineering-mastery.md` | covered by `data-normalization` |
+| 329 | data-modeling | Soft delete, uniqueness and audit trail | high | `references/engineering-mastery.md` | covered by `data-soft-delete` |
+| 330 | data-modeling | Polymorphic associations and exclusive arcs | medium | `references/engineering-mastery.md` | covered by `data-polymorphic` |
+| 331 | data-modeling | Temporal tables and bitemporal history | high | `references/engineering-mastery.md` | covered by `data-temporal` |
+| 332 | data-modeling | Field ownership and single source of truth | high | `references/engineering-mastery.md` | covered by `data-ownership` |
+| 333 | hardware | Memory-mapped IO, barriers and volatile | high | `references/engineering-mastery.md` | covered by `hw-mmio` |
+| 334 | hardware | DMA, cache coherency and bounce buffers | high | `references/engineering-mastery.md` | covered by `hw-dma` |
+| 335 | hardware | Endianness, packing and struct layout | medium | `references/engineering-mastery.md` | covered by `hw-endian` |
+| 336 | hardware | Interrupt latency, top/bottom half and softirq | medium | `references/engineering-mastery.md` | covered by `hw-irq` |
+| 337 | hardware | A/B firmware update and rollback safety | medium | `references/engineering-mastery.md` | covered by `hw-firmware-update` |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.

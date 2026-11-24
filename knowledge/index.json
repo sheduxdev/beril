@@ -598,6 +598,74 @@
   "failure": "A batch that stops on the first error is safer. Check idempotency too."
  },
  {
+  "path": "knowledge/api-contract-test.md",
+  "body": "# A consumer contract catches a break before deploy\n\n## Claim\n\nThe consumer records the requests it makes; the provider verifies them in its pipeline.\n\n## Test\n\nChange a response field. Run the provider verification.\n\n## Proof\n\nA failing contract test before the deploy.\n\n## Failure modes\n\nA contract that pins every field blocks evolution. A contract with no provider run is a document.",
+  "id": "api-contract-test",
+  "title": "A consumer contract catches a break before deploy",
+  "tags": [
+   "api-design",
+   "contract",
+   "testing"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The consumer records the requests it makes; the provider verifies them in its pipeline.",
+  "test": "Change a response field. Run the provider verification.",
+  "proof": "A failing contract test before the deploy.",
+  "failure": "A contract that pins every field blocks evolution. A contract with no provider run is a document."
+ },
+ {
+  "path": "knowledge/api-cursor.md",
+  "body": "# Cursor pagination keys on the last seen tuple, not an offset\n\n## Claim\n\nAn offset shifts when rows are inserted; a cursor keys on the last seen tuple. The snapshot must be consistent.\n\n## Test\n\nInsert a row while paging with an offset and with a cursor. Compare duplicates.\n\n## Proof\n\nA cursor page with no duplicate and no gap.\n\n## Failure modes\n\nA cursor on a mutable column skips rows. A signed cursor prevents tampering but not drift.",
+  "id": "api-cursor",
+  "title": "Cursor pagination keys on the last seen tuple, not an offset",
+  "tags": [
+   "api-design",
+   "pagination",
+   "paging",
+   "cursor",
+   "stability"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "An offset shifts when rows are inserted; a cursor keys on the last seen tuple. The snapshot must be consistent.",
+  "test": "Insert a row while paging with an offset and with a cursor. Compare duplicates.",
+  "proof": "A cursor page with no duplicate and no gap.",
+  "failure": "A cursor on a mutable column skips rows. A signed cursor prevents tampering but not drift."
+ },
+ {
+  "path": "knowledge/api-error-taxonomy.md",
+  "body": "# An error names whether the caller may retry\n\n## Claim\n\nA stable code, a retryable flag and a machine-readable body let the client decide without parsing prose.\n\n## Test\n\nTrigger a validation error, a conflict and a rate limit. Check the codes and the retry hint.\n\n## Proof\n\nA client that retries only the retryable classes.\n\n## Failure modes\n\nA 500 for a validation error retries forever. A prose message cannot be branched on.",
+  "id": "api-error-taxonomy",
+  "title": "An error names whether the caller may retry",
+  "tags": [
+   "api-design",
+   "errors",
+   "retry"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A stable code, a retryable flag and a machine-readable body let the client decide without parsing prose.",
+  "test": "Trigger a validation error, a conflict and a rate limit. Check the codes and the retry hint.",
+  "proof": "A client that retries only the retryable classes.",
+  "failure": "A 500 for a validation error retries forever. A prose message cannot be branched on."
+ },
+ {
   "path": "knowledge/api-grpc-reflection.md",
   "body": "# gRPC reflection is a map, per-method auth is the bug\n\n## Claim\n\nThe server exposes reflection and descriptors, but individual methods lack authorization or validate only the transport.\n\n## Test\n\nCall reflection, list services, call every method with and without a token. Compare a low-privilege caller.\n\n## Proof\n\nA method returns data or performs an action for the wrong role.\n\n## Failure modes\n\nReflection enabled is not a finding. A method that is public by design is not either.",
   "id": "api-grpc-reflection",
@@ -750,6 +818,28 @@
   "test": "Compare total fields across queries. Walk pages with a changed filter. Try a negative or huge offset.",
   "proof": "A full dataset or a count the user should not see.",
   "failure": "A capped total is not a leak. A cursor that is opaque but stable is still enumerable."
+ },
+ {
+  "path": "knowledge/api-partial-update.md",
+  "body": "# PATCH needs a rule for absent, null and empty\n\n## Claim\n\nAbsent means unchanged, null means clear, empty means set empty. A merge patch cannot express all three.\n\n## Test\n\nSend the three cases. Check the stored value.\n\n## Proof\n\nA documented and tested semantic for each case.\n\n## Failure modes\n\nA merge patch that cannot clear a field. A full replace that wipes an omitted field.",
+  "id": "api-partial-update",
+  "title": "PATCH needs a rule for absent, null and empty",
+  "tags": [
+   "api-design",
+   "patch",
+   "merge"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Absent means unchanged, null means clear, empty means set empty. A merge patch cannot express all three.",
+  "test": "Send the three cases. Check the stored value.",
+  "proof": "A documented and tested semantic for each case.",
+  "failure": "A merge patch that cannot clear a field. A full replace that wipes an omitted field."
  },
  {
   "path": "knowledge/api-rate-limit-bypass.md",
@@ -2076,6 +2166,72 @@
   "failure": "A model without a price is zero. Add the rate before trusting the total."
  },
  {
+  "path": "knowledge/crypto-aead.md",
+  "body": "# AEAD authenticates ciphertext and associated data together\n\n## Claim\n\nThe tag binds the ciphertext and the AAD. Reusing a nonce with the same key breaks confidentiality and the tag.\n\n## Test\n\nEncrypt two messages with the same nonce. Compare the keystream and verify the tag.\n\n## Proof\n\nA unique nonce per key and an AAD that names the context.\n\n## Failure modes\n\nA random nonce without collision analysis is a risk. A missing AAD lets a field be swapped between messages.",
+  "id": "crypto-aead",
+  "title": "AEAD authenticates ciphertext and associated data together",
+  "tags": [
+   "cryptography",
+   "aead",
+   "nonce"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The tag binds the ciphertext and the AAD. Reusing a nonce with the same key breaks confidentiality and the tag.",
+  "test": "Encrypt two messages with the same nonce. Compare the keystream and verify the tag.",
+  "proof": "A unique nonce per key and an AAD that names the context.",
+  "failure": "A random nonce without collision analysis is a risk. A missing AAD lets a field be swapped between messages."
+ },
+ {
+  "path": "knowledge/crypto-constant-time.md",
+  "body": "# Secret-dependent branches leak through timing\n\n## Claim\n\nA compare that returns on the first mismatch leaks the prefix. Constant-time code touches every byte.\n\n## Test\n\nTime a byte comparison over many inputs. Compare early-exit and constant-time.\n\n## Proof\n\nA flat timing distribution for the secret-dependent path.\n\n## Failure modes\n\nA compiler can reintroduce a branch. A table lookup indexed by a secret leaks the cache.",
+  "id": "crypto-constant-time",
+  "title": "Secret-dependent branches leak through timing",
+  "tags": [
+   "cryptography",
+   "constant-time",
+   "timing"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A compare that returns on the first mismatch leaks the prefix. Constant-time code touches every byte.",
+  "test": "Time a byte comparison over many inputs. Compare early-exit and constant-time.",
+  "proof": "A flat timing distribution for the secret-dependent path.",
+  "failure": "A compiler can reintroduce a branch. A table lookup indexed by a secret leaks the cache."
+ },
+ {
+  "path": "knowledge/crypto-kdf-derive.md",
+  "body": "# A KDF separates keys by label and context\n\n## Claim\n\nHKDF extracts entropy then expands with an info string. Distinct info gives independent keys.\n\n## Test\n\nDerive two keys with different info. Check that they differ and that the same inputs reproduce.\n\n## Proof\n\nA derived key per purpose with a documented info string.\n\n## Failure modes\n\nReusing one key for encryption and MAC couples the proofs. A missing salt weakens extraction.",
+  "id": "crypto-kdf-derive",
+  "title": "A KDF separates keys by label and context",
+  "tags": [
+   "cryptography",
+   "kdf",
+   "hkdf"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "HKDF extracts entropy then expands with an info string. Distinct info gives independent keys.",
+  "test": "Derive two keys with different info. Check that they differ and that the same inputs reproduce.",
+  "proof": "A derived key per purpose with a documented info string.",
+  "failure": "Reusing one key for encryption and MAC couples the proofs. A missing salt weakens extraction."
+ },
+ {
   "path": "knowledge/crypto-kdf.md",
   "body": "# A password hash is a cost parameter\n\n## Claim\n\nArgon2, scrypt, bcrypt or PBKDF2 with a low cost or a shared salt makes cracking cheaper.\n\n## Test\n\nRead the algorithm and parameters. Check the salt uniqueness. Estimate the crack cost.\n\n## Proof\n\nA parameter set below current guidance or a reused salt.\n\n## Failure modes\n\nA fast hash can be acceptable for a high-entropy token. A password needs a slow KDF.",
   "id": "crypto-kdf",
@@ -2096,6 +2252,50 @@
   "test": "Read the algorithm and parameters. Check the salt uniqueness. Estimate the crack cost.",
   "proof": "A parameter set below current guidance or a reused salt.",
   "failure": "A fast hash can be acceptable for a high-entropy token. A password needs a slow KDF."
+ },
+ {
+  "path": "knowledge/crypto-key-rotation.md",
+  "body": "# Rotation needs a key id in the ciphertext\n\n## Claim\n\nThe header carries the key version. New writes use the new key; old data decrypts until re-encrypted.\n\n## Test\n\nRotate the key. Read old and new rows. Check the header and the re-encryption job.\n\n## Proof\n\nA decrypt across two key versions and a drained backfill.\n\n## Failure modes\n\nA rotation without a key id cannot decrypt old data. A retired key with live data loses it.",
+  "id": "crypto-key-rotation",
+  "title": "Rotation needs a key id in the ciphertext",
+  "tags": [
+   "cryptography",
+   "rotation",
+   "key-id"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The header carries the key version. New writes use the new key; old data decrypts until re-encrypted.",
+  "test": "Rotate the key. Read old and new rows. Check the header and the re-encryption job.",
+  "proof": "A decrypt across two key versions and a drained backfill.",
+  "failure": "A rotation without a key id cannot decrypt old data. A retired key with live data loses it."
+ },
+ {
+  "path": "knowledge/crypto-nonce.md",
+  "body": "# A nonce is unique per key by construction or by count\n\n## Claim\n\nA counter is exact; random has a birthday bound. The nonce width bounds the safe message count.\n\n## Test\n\nGenerate random 96-bit nonces for a workload. Compute the collision probability at the message count.\n\n## Proof\n\nA nonce scheme with a stated bound or an exact counter.\n\n## Failure modes\n\nA 64-bit random nonce collides far earlier than expected. A counter that resets on restart repeats.",
+  "id": "crypto-nonce",
+  "title": "A nonce is unique per key by construction or by count",
+  "tags": [
+   "cryptography",
+   "nonce",
+   "collision"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A counter is exact; random has a birthday bound. The nonce width bounds the safe message count.",
+  "test": "Generate random 96-bit nonces for a workload. Compute the collision probability at the message count.",
+  "proof": "A nonce scheme with a stated bound or an exact counter.",
+  "failure": "A 64-bit random nonce collides far earlier than expected. A counter that resets on restart repeats."
  },
  {
   "path": "knowledge/crypto-postquantum.md",
@@ -2140,6 +2340,116 @@
   "test": "Collect many outputs. Check the seed source. Try to predict the next value from the timestamp or PID.",
   "proof": "A predicted token accepted by the server.",
   "failure": "A random-looking string is not proof. Check the generator and the seed."
+ },
+ {
+  "path": "knowledge/data-normalization.md",
+  "body": "# Normalize for writes, denormalize for reads, and name the owner\n\n## Claim\n\nNormal form removes update anomalies. A read model duplicates data with a rebuild path.\n\n## Test\n\nUpdate a duplicated field. Check the source and the read model.\n\n## Proof\n\nA read model rebuilt from the source without drift.\n\n## Failure modes\n\nA denormalized field without a rebuild job drifts. A join-heavy schema at scale stalls.",
+  "id": "data-normalization",
+  "title": "Normalize for writes, denormalize for reads, and name the owner",
+  "tags": [
+   "data-modeling",
+   "normalization",
+   "read-model"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Normal form removes update anomalies. A read model duplicates data with a rebuild path.",
+  "test": "Update a duplicated field. Check the source and the read model.",
+  "proof": "A read model rebuilt from the source without drift.",
+  "failure": "A denormalized field without a rebuild job drifts. A join-heavy schema at scale stalls."
+ },
+ {
+  "path": "knowledge/data-ownership.md",
+  "body": "# Every field has one writer\n\n## Claim\n\nTwo writers to one field create a last-write-wins race. The owner is the service that validates it.\n\n## Test\n\nFind a field written by two services. Check the conflict.\n\n## Proof\n\nOne writer and a documented read path for others.\n\n## Failure modes\n\nA shared table with two writers drifts. A derived field without a rebuild is a second truth.",
+  "id": "data-ownership",
+  "title": "Every field has one writer",
+  "tags": [
+   "data-modeling",
+   "ownership",
+   "source-of-truth"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Two writers to one field create a last-write-wins race. The owner is the service that validates it.",
+  "test": "Find a field written by two services. Check the conflict.",
+  "proof": "One writer and a documented read path for others.",
+  "failure": "A shared table with two writers drifts. A derived field without a rebuild is a second truth."
+ },
+ {
+  "path": "knowledge/data-polymorphic.md",
+  "body": "# A polymorphic reference trades integrity for flexibility\n\n## Claim\n\nA type column plus an id cannot be a foreign key. An exclusive arc or a join table restores it.\n\n## Test\n\nInsert a reference with a wrong type. Check whether the database rejects it.\n\n## Proof\n\nA constraint that rejects an orphan reference.\n\n## Failure modes\n\nA type column without a check drifts. An exclusive arc adds nullable columns.",
+  "id": "data-polymorphic",
+  "title": "A polymorphic reference trades integrity for flexibility",
+  "tags": [
+   "data-modeling",
+   "polymorphic",
+   "constraints"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A type column plus an id cannot be a foreign key. An exclusive arc or a join table restores it.",
+  "test": "Insert a reference with a wrong type. Check whether the database rejects it.",
+  "proof": "A constraint that rejects an orphan reference.",
+  "failure": "A type column without a check drifts. An exclusive arc adds nullable columns."
+ },
+ {
+  "path": "knowledge/data-soft-delete.md",
+  "body": "# A soft delete must not break uniqueness or joins\n\n## Claim\n\nA deleted flag keeps the row; a partial unique index admits a new row with the same key.\n\n## Test\n\nDelete a row and insert the same key. Check the constraint and the queries.\n\n## Proof\n\nA new row allowed while the deleted one stays for audit.\n\n## Failure modes\n\nA global unique index blocks re-creation. A query without the flag shows deleted rows.",
+  "id": "data-soft-delete",
+  "title": "A soft delete must not break uniqueness or joins",
+  "tags": [
+   "data-modeling",
+   "soft-delete",
+   "uniqueness"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A deleted flag keeps the row; a partial unique index admits a new row with the same key.",
+  "test": "Delete a row and insert the same key. Check the constraint and the queries.",
+  "proof": "A new row allowed while the deleted one stays for audit.",
+  "failure": "A global unique index blocks re-creation. A query without the flag shows deleted rows."
+ },
+ {
+  "path": "knowledge/data-temporal.md",
+  "body": "# Bitemporal data separates valid time from recorded time\n\n## Claim\n\nValid time is when the fact is true; transaction time is when it was stored. A correction changes transaction time only.\n\n## Test\n\nCorrect a past record. Query as-of the old transaction time and the new one.\n\n## Proof\n\nTwo answers that match the two timelines.\n\n## Failure modes\n\nA single timestamp conflates the two. An update in place erases the correction.",
+  "id": "data-temporal",
+  "title": "Bitemporal data separates valid time from recorded time",
+  "tags": [
+   "data-modeling",
+   "temporal",
+   "history"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Valid time is when the fact is true; transaction time is when it was stored. A correction changes transaction time only.",
+  "test": "Correct a past record. Query as-of the old transaction time and the new one.",
+  "proof": "Two answers that match the two timelines.",
+  "failure": "A single timestamp conflates the two. An update in place erases the correction."
  },
  {
   "path": "knowledge/db-cardinality-estimate.md",
@@ -5127,6 +5437,116 @@
   "failure": "A huge button in the center is not always right. A destructive button next to a safe one needs separation."
  },
  {
+  "path": "knowledge/hw-dma.md",
+  "body": "# DMA bypasses the CPU cache and needs ownership rules\n\n## Claim\n\nThe device writes memory the CPU may have cached. A coherent mapping or an explicit flush keeps them in sync.\n\n## Test\n\nStart a DMA transfer. Read the buffer immediately. Check for stale data.\n\n## Proof\n\nA buffer with a correct flush or a coherent mapping.\n\n## Failure modes\n\nA non-coherent platform returns stale cache lines. A buffer freed during DMA corrupts memory.",
+  "id": "hw-dma",
+  "title": "DMA bypasses the CPU cache and needs ownership rules",
+  "tags": [
+   "hardware",
+   "dma",
+   "coherency"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The device writes memory the CPU may have cached. A coherent mapping or an explicit flush keeps them in sync.",
+  "test": "Start a DMA transfer. Read the buffer immediately. Check for stale data.",
+  "proof": "A buffer with a correct flush or a coherent mapping.",
+  "failure": "A non-coherent platform returns stale cache lines. A buffer freed during DMA corrupts memory."
+ },
+ {
+  "path": "knowledge/hw-endian.md",
+  "body": "# Byte order is part of the wire format\n\n## Claim\n\nThe protocol fixes an order; the host may differ. A struct written raw depends on padding and endianness.\n\n## Test\n\nSerialize a struct on both endians. Compare the bytes and the size.\n\n## Proof\n\nA byte-identical encoding across hosts.\n\n## Failure modes\n\nA raw struct write includes padding. A missing byteswap corrupts a field.",
+  "id": "hw-endian",
+  "title": "Byte order is part of the wire format",
+  "tags": [
+   "hardware",
+   "endian",
+   "layout"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The protocol fixes an order; the host may differ. A struct written raw depends on padding and endianness.",
+  "test": "Serialize a struct on both endians. Compare the bytes and the size.",
+  "proof": "A byte-identical encoding across hosts.",
+  "failure": "A raw struct write includes padding. A missing byteswap corrupts a field."
+ },
+ {
+  "path": "knowledge/hw-firmware-update.md",
+  "body": "# A firmware update needs A/B slots and a rollback\n\n## Claim\n\nThe new image boots in a trial slot; a watchdog or a health check confirms it. A failed boot reverts.\n\n## Test\n\nCut power during the update. Boot. Check the slot and the version.\n\n## Proof\n\nA device that recovers to a working image from any interruption.\n\n## Failure modes\n\nAn in-place update that loses power bricks the device. A trial without a revert keeps a bad image.",
+  "id": "hw-firmware-update",
+  "title": "A firmware update needs A/B slots and a rollback",
+  "tags": [
+   "hardware",
+   "firmware",
+   "rollback"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The new image boots in a trial slot; a watchdog or a health check confirms it. A failed boot reverts.",
+  "test": "Cut power during the update. Boot. Check the slot and the version.",
+  "proof": "A device that recovers to a working image from any interruption.",
+  "failure": "An in-place update that loses power bricks the device. A trial without a revert keeps a bad image."
+ },
+ {
+  "path": "knowledge/hw-irq.md",
+  "body": "# An interrupt handler must be short and defer the rest\n\n## Claim\n\nThe top half masks the line and acknowledges; the bottom half does the work. A long top half adds latency.\n\n## Test\n\nMeasure interrupt latency under load. Move work to the bottom half.\n\n## Proof\n\nA bounded latency with the work deferred.\n\n## Failure modes\n\nA blocking call in the handler stalls the system. A missed acknowledgement floods interrupts.",
+  "id": "hw-irq",
+  "title": "An interrupt handler must be short and defer the rest",
+  "tags": [
+   "hardware",
+   "interrupt",
+   "latency"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The top half masks the line and acknowledges; the bottom half does the work. A long top half adds latency.",
+  "test": "Measure interrupt latency under load. Move work to the bottom half.",
+  "proof": "A bounded latency with the work deferred.",
+  "failure": "A blocking call in the handler stalls the system. A missed acknowledgement floods interrupts."
+ },
+ {
+  "path": "knowledge/hw-mmio.md",
+  "body": "# MMIO needs volatile access and barriers\n\n## Claim\n\nA register read can be cached or reordered. A volatile access plus a barrier enforces the order the device expects.\n\n## Test\n\nWrite a register then read the status. Check the generated instructions and the barrier.\n\n## Proof\n\nAn access order that matches the datasheet.\n\n## Failure modes\n\nA plain pointer read is optimized away. A missing barrier lets the write arrive late.",
+  "id": "hw-mmio",
+  "title": "MMIO needs volatile access and barriers",
+  "tags": [
+   "hardware",
+   "mmio",
+   "barriers"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A register read can be cached or reordered. A volatile access plus a barrier enforces the order the device expects.",
+  "test": "Write a register then read the status. Check the generated instructions and the barrier.",
+  "proof": "An access order that matches the datasheet.",
+  "failure": "A plain pointer read is optimized away. A missing barrier lets the write arrive late."
+ },
+ {
   "path": "knowledge/ir-cloud.md",
   "body": "# Cloud audit logs are the timeline\n\n## Claim\n\nCloudTrail, Activity Log or audit logs record the control plane. Data plane and identity events need separate sources.\n\n## Test\n\nCollect control plane, identity and network logs. Normalize to UTC. Correlate role assumption with resource access.\n\n## Proof\n\nA sequence from credential to action with source ids.\n\n## Failure modes\n\nA disabled or short-retention log leaves a gap. A resource event can have no control-plane event.",
   "id": "ir-cloud",
@@ -7630,6 +8050,94 @@
   "test": "Use openssl s_client with each version. Check the chain, SAN and expiry. Test a wrong hostname.",
   "proof": "A protocol or chain failure with a clear client impact.",
   "failure": "A modern browser may hide the chain issue. A self-signed cert in a lab is expected."
+ },
+ {
+  "path": "knowledge/trace-cardinality.md",
+  "body": "# A span attribute multiplies the index size\n\n## Claim\n\nA user id or a raw URL as an attribute explodes the distinct values. A bounded set stays queryable.\n\n## Test\n\nCount distinct values per attribute. Drop the worst offender.\n\n## Proof\n\nAn attribute set with a bounded cardinality.\n\n## Failure modes\n\nA high-cardinality attribute makes the backend expensive and slow. A missing attribute loses the join.",
+  "id": "trace-cardinality",
+  "title": "A span attribute multiplies the index size",
+  "tags": [
+   "observability",
+   "cardinality",
+   "tracing"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A user id or a raw URL as an attribute explodes the distinct values. A bounded set stays queryable.",
+  "test": "Count distinct values per attribute. Drop the worst offender.",
+  "proof": "An attribute set with a bounded cardinality.",
+  "failure": "A high-cardinality attribute makes the backend expensive and slow. A missing attribute loses the join."
+ },
+ {
+  "path": "knowledge/trace-clock.md",
+  "body": "# Span duration needs a monotonic clock, not wall time\n\n## Claim\n\nWall clocks skew between hosts; durations from wall timestamps can be negative. A monotonic source fixes duration.\n\n## Test\n\nCompare a parent duration with the sum of children across hosts.\n\n## Proof\n\nA duration that is positive and consistent with the children.\n\n## Failure modes\n\nA negative span duration is a clock bug. A wall-clock ordering of spans misleads.",
+  "id": "trace-clock",
+  "title": "Span duration needs a monotonic clock, not wall time",
+  "tags": [
+   "observability",
+   "clock",
+   "tracing"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Wall clocks skew between hosts; durations from wall timestamps can be negative. A monotonic source fixes duration.",
+  "test": "Compare a parent duration with the sum of children across hosts.",
+  "proof": "A duration that is positive and consistent with the children.",
+  "failure": "A negative span duration is a clock bug. A wall-clock ordering of spans misleads."
+ },
+ {
+  "path": "knowledge/trace-context.md",
+  "body": "# Trace context is a header carried across every hop\n\n## Claim\n\nThe trace id and span id travel with the request. A boundary that drops them breaks the tree.\n\n## Test\n\nSend a request through the queue and the worker. Check the trace tree.\n\n## Proof\n\nA single trace that spans the async hop.\n\n## Failure modes\n\nA thread-local context lost at a thread pool starts a new trace. A header not forwarded splits the trace.",
+  "id": "trace-context",
+  "title": "Trace context is a header carried across every hop",
+  "tags": [
+   "observability",
+   "tracing",
+   "context"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The trace id and span id travel with the request. A boundary that drops them breaks the tree.",
+  "test": "Send a request through the queue and the worker. Check the trace tree.",
+  "proof": "A single trace that spans the async hop.",
+  "failure": "A thread-local context lost at a thread pool starts a new trace. A header not forwarded splits the trace."
+ },
+ {
+  "path": "knowledge/trace-sampling.md",
+  "body": "# Sampling must be consistent or the trace is partial\n\n## Claim\n\nHead sampling decides at the root and propagates the flag. Tail sampling buffers and decides on the whole trace.\n\n## Test\n\nSample at 1%. Check that all spans of a sampled trace appear.\n\n## Proof\n\nA complete or absent trace, never a partial one.\n\n## Failure modes\n\nIndependent per-service sampling produces orphan spans. Tail sampling costs memory.",
+  "id": "trace-sampling",
+  "title": "Sampling must be consistent or the trace is partial",
+  "tags": [
+   "observability",
+   "sampling",
+   "tracing"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Head sampling decides at the root and propagates the flag. Tail sampling buffers and decides on the whole trace.",
+  "test": "Sample at 1%. Check that all spans of a sampled trace appear.",
+  "proof": "A complete or absent trace, never a partial one.",
+  "failure": "Independent per-service sampling produces orphan spans. Tail sampling costs memory."
  },
  {
   "path": "knowledge/web-cache-deception.md",

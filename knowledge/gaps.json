@@ -2824,5 +2824,212 @@
   "source": "references/engineering-mastery.md",
   "covered_by": "sre-runbook",
   "status": "covered"
+ },
+ {
+  "id": "crypto-aead",
+  "domain": "cryptography",
+  "gap": "AEAD, nonce reuse and associated data",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "crypto-aead",
+  "status": "covered"
+ },
+ {
+  "id": "crypto-nonce",
+  "domain": "cryptography",
+  "gap": "Nonce construction and random collision bounds",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "crypto-nonce",
+  "status": "covered"
+ },
+ {
+  "id": "crypto-kdf-derive",
+  "domain": "cryptography",
+  "gap": "HKDF, domain separation and key derivation",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "crypto-kdf-derive",
+  "status": "covered"
+ },
+ {
+  "id": "crypto-key-rotation",
+  "domain": "cryptography",
+  "gap": "Key rotation, versioning and re-encryption",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "crypto-key-rotation",
+  "status": "covered"
+ },
+ {
+  "id": "crypto-constant-time",
+  "domain": "cryptography",
+  "gap": "Constant-time code and side channels",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "crypto-constant-time",
+  "status": "covered"
+ },
+ {
+  "id": "trace-context",
+  "domain": "observability",
+  "gap": "Trace context propagation across services",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "trace-context",
+  "status": "covered"
+ },
+ {
+  "id": "trace-sampling",
+  "domain": "observability",
+  "gap": "Consistent sampling and tail-based decisions",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "trace-sampling",
+  "status": "covered"
+ },
+ {
+  "id": "trace-clock",
+  "domain": "observability",
+  "gap": "Clock skew in traces and span duration",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "trace-clock",
+  "status": "covered"
+ },
+ {
+  "id": "trace-cardinality",
+  "domain": "observability",
+  "gap": "Span attributes, cardinality and cost",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "trace-cardinality",
+  "status": "covered"
+ },
+ {
+  "id": "api-error-taxonomy",
+  "domain": "api-design",
+  "gap": "Error taxonomy, retryability and problem details",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "api-error-taxonomy",
+  "status": "covered"
+ },
+ {
+  "id": "api-cursor",
+  "domain": "api-design",
+  "gap": "Cursor pagination and snapshot stability",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "api-cursor",
+  "status": "covered"
+ },
+ {
+  "id": "api-partial-update",
+  "domain": "api-design",
+  "gap": "PATCH semantics, JSON merge and null",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "api-partial-update",
+  "status": "covered"
+ },
+ {
+  "id": "api-contract-test",
+  "domain": "api-design",
+  "gap": "Consumer-driven contract tests",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "api-contract-test",
+  "status": "covered"
+ },
+ {
+  "id": "data-normalization",
+  "domain": "data-modeling",
+  "gap": "Normalization, denormalization and read models",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "data-normalization",
+  "status": "covered"
+ },
+ {
+  "id": "data-soft-delete",
+  "domain": "data-modeling",
+  "gap": "Soft delete, uniqueness and audit trail",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "data-soft-delete",
+  "status": "covered"
+ },
+ {
+  "id": "data-polymorphic",
+  "domain": "data-modeling",
+  "gap": "Polymorphic associations and exclusive arcs",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "data-polymorphic",
+  "status": "covered"
+ },
+ {
+  "id": "data-temporal",
+  "domain": "data-modeling",
+  "gap": "Temporal tables and bitemporal history",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "data-temporal",
+  "status": "covered"
+ },
+ {
+  "id": "data-ownership",
+  "domain": "data-modeling",
+  "gap": "Field ownership and single source of truth",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "data-ownership",
+  "status": "covered"
+ },
+ {
+  "id": "hw-mmio",
+  "domain": "hardware",
+  "gap": "Memory-mapped IO, barriers and volatile",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "hw-mmio",
+  "status": "covered"
+ },
+ {
+  "id": "hw-dma",
+  "domain": "hardware",
+  "gap": "DMA, cache coherency and bounce buffers",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "hw-dma",
+  "status": "covered"
+ },
+ {
+  "id": "hw-endian",
+  "domain": "hardware",
+  "gap": "Endianness, packing and struct layout",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "hw-endian",
+  "status": "covered"
+ },
+ {
+  "id": "hw-irq",
+  "domain": "hardware",
+  "gap": "Interrupt latency, top/bottom half and softirq",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "hw-irq",
+  "status": "covered"
+ },
+ {
+  "id": "hw-firmware-update",
+  "domain": "hardware",
+  "gap": "A/B firmware update and rollback safety",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "hw-firmware-update",
+  "status": "covered"
  }
 ]

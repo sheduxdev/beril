@@ -1,6 +1,6 @@
 # Knowledge index
 
-381 durable cards. Read this before a web search; open a card only when it matches.
+404 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -43,6 +43,10 @@
 | `api-sse` | Server-sent events need per-connection auth | api, sse, stream | medium | 2026-11-24 |
 | `api-websocket-auth` | WebSocket authorization is per message and per channel | api, websocket, auth | high | 2026-11-25 |
 | `api-grpc-reflection` | gRPC reflection is a map, per-method auth is the bug | api, grpc, reflection | medium | 2026-11-24 |
+| `api-contract-test` | A consumer contract catches a break before deploy | api-design, contract, testing | medium | 2026-11-25 |
+| `api-error-taxonomy` | An error names whether the caller may retry | api-design, errors, retry | high | 2026-11-25 |
+| `api-cursor` | Cursor pagination keys on the last seen tuple, not an offset | api-design, pagination, paging, cursor, stability | high | 2026-11-25 |
+| `api-partial-update` | PATCH needs a rule for absent, null and empty | api-design, patch, merge | medium | 2026-11-25 |
 | `binary-hypervisor` | A hypervisor exposes synthetic MSRs and VTL boundaries | binary, hypervisor, virtualization | low | 2026-11-24 |
 | `binary-kernel` | A kernel bug is an object lifetime bug with a user buffer | binary, kernel, driver | high | 2026-11-24 |
 | `binary-browser` | Browser exploitation needs a renderer bug and a sandbox path | binary, browser, jit | high | 2026-11-24 |
@@ -92,9 +96,19 @@
 | `crypto-postquantum` | PQC migration is a hybrid, not a flag | crypto, pqc, hybrid | low | 2026-11-24 |
 | `crypto-weak-random` | Predictable randomness is a key recovery bug | crypto, random, predictability | high | 2026-11-24 |
 | `tls-config-review` | TLS is a version, a chain and a policy | crypto, tls, certificate | medium | 2026-11-24 |
+| `crypto-kdf-derive` | A KDF separates keys by label and context | cryptography, kdf, hkdf | high | 2026-11-25 |
+| `crypto-nonce` | A nonce is unique per key by construction or by count | cryptography, nonce, collision | high | 2026-11-25 |
+| `crypto-aead` | AEAD authenticates ciphertext and associated data together | cryptography, aead, nonce | high | 2026-11-25 |
+| `crypto-key-rotation` | Rotation needs a key id in the ciphertext | cryptography, rotation, key-id | high | 2026-11-25 |
+| `crypto-constant-time` | Secret-dependent branches leak through timing | cryptography, constant-time, timing | medium | 2026-11-25 |
 | `stream-watermark` | A watermark is a promise about event time | data, streaming, watermark | high | 2026-11-25 |
 | `stream-window` | A window assigns events and a trigger emits results | data, streaming, window | medium | 2026-11-25 |
 | `stream-exactly-once` | Exactly-once output is a transaction or an idempotent sink | data, streaming, exactly-once | high | 2026-11-25 |
+| `data-polymorphic` | A polymorphic reference trades integrity for flexibility | data-modeling, polymorphic, constraints | medium | 2026-11-25 |
+| `data-soft-delete` | A soft delete must not break uniqueness or joins | data-modeling, soft-delete, uniqueness | high | 2026-11-25 |
+| `data-temporal` | Bitemporal data separates valid time from recorded time | data-modeling, temporal, history | high | 2026-11-25 |
+| `data-ownership` | Every field has one writer | data-modeling, ownership, source-of-truth | high | 2026-11-25 |
+| `data-normalization` | Normalize for writes, denormalize for reads, and name the owner | data-modeling, normalization, read-model | high | 2026-11-25 |
 | `db-checkpoint` | A checkpoint bounds the recovery work | database, checkpoint, recovery | medium | 2026-11-25 |
 | `db-deadlock` | A deadlock is a cycle in the wait-for graph | database, deadlock, retry | medium | 2026-11-25 |
 | `db-lock-manager` | A lock manager has modes, a wait queue and fairness | database, locks, fairness | medium | 2026-11-25 |
@@ -241,6 +255,11 @@
 | `formal-model-check` | Model checking enumerates states until a property fails | formal, model-check, states | high | 2026-11-25 |
 | `formal-refinement` | Refinement maps an abstract spec to concrete steps | formal, refinement, spec | medium | 2026-11-25 |
 | `formal-tla` | TLA+ describes a protocol as state and actions | formal, tla, protocol | high | 2026-11-25 |
+| `hw-firmware-update` | A firmware update needs A/B slots and a rollback | hardware, firmware, rollback | medium | 2026-11-25 |
+| `hw-irq` | An interrupt handler must be short and defer the rest | hardware, interrupt, latency | medium | 2026-11-25 |
+| `hw-endian` | Byte order is part of the wire format | hardware, endian, layout | medium | 2026-11-25 |
+| `hw-dma` | DMA bypasses the CPU cache and needs ownership rules | hardware, dma, coherency | high | 2026-11-25 |
+| `hw-mmio` | MMIO needs volatile access and barriers | hardware, mmio, barriers | high | 2026-11-25 |
 | `hardware-sidechannel` | Side channels leak through power, timing or EM | hardware, sidechannel | low | 2026-11-24 |
 | `hci-fitts` | Fitts's law sizes a target by distance and width | hci, fitts, target | medium | 2026-11-25 |
 | `hci-error-prevention` | Prevent the error before the confirmation | hci, error-prevention, undo | high | 2026-11-25 |
@@ -266,6 +285,10 @@
 | `num-time` | A timestamp is an instant; a local time is a rule | numerics, time, timezone | high | 2026-11-25 |
 | `num-float` | Floating point is exact at powers of two and lossy elsewhere | numerics, float, rounding | high | 2026-11-25 |
 | `num-money` | Money is an integer of minor units with an explicit rounding rule | numerics, money, decimal | high | 2026-11-25 |
+| `trace-cardinality` | A span attribute multiplies the index size | observability, cardinality, tracing | medium | 2026-11-25 |
+| `trace-sampling` | Sampling must be consistent or the trace is partial | observability, sampling, tracing | high | 2026-11-25 |
+| `trace-clock` | Span duration needs a monotonic clock, not wall time | observability, clock, tracing | medium | 2026-11-25 |
+| `trace-context` | Trace context is a header carried across every hop | observability, tracing, context | high | 2026-11-25 |
 | `org-postmortem-culture` | A blameless postmortem turns incidents into learning | organization, postmortem, postmortems, blameless, culture, learning | high | 2026-11-25 |
 | `org-rotation` | A rotation needs a handoff and shadowing | organization, oncall, rotation | medium | 2026-11-25 |
 | `org-skill-matrix` | A skill matrix makes bus factor visible | organization, skills, bus-factor | medium | 2026-11-25 |

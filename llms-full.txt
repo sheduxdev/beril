@@ -7088,7 +7088,7 @@ Do not store secrets, customer data, or private report text in a card. Link the 
 
 ## Gaps
 
-`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. 314 gaps exist and all are covered. The recall regression set is now 166 cases. The recall regression set is `scripts/recall_test.py`. Do not pretend a gap is covered.
+`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. 337 gaps exist and all are covered. The recall regression set is now 189 cases. The recall regression set is `scripts/recall_test.py`. Do not pretend a gap is covered.
 
 ```bash
 ./beril gaps --next
@@ -7127,14 +7127,14 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 
 ## Current seed
 
-381 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
+404 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
 
 
 <!-- ===== knowledge/INDEX.md ===== -->
 
 # Knowledge index
 
-381 durable cards. Read this before a web search; open a card only when it matches.
+404 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -7177,6 +7177,10 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `api-sse` | Server-sent events need per-connection auth | api, sse, stream | medium | 2026-11-24 |
 | `api-websocket-auth` | WebSocket authorization is per message and per channel | api, websocket, auth | high | 2026-11-25 |
 | `api-grpc-reflection` | gRPC reflection is a map, per-method auth is the bug | api, grpc, reflection | medium | 2026-11-24 |
+| `api-contract-test` | A consumer contract catches a break before deploy | api-design, contract, testing | medium | 2026-11-25 |
+| `api-error-taxonomy` | An error names whether the caller may retry | api-design, errors, retry | high | 2026-11-25 |
+| `api-cursor` | Cursor pagination keys on the last seen tuple, not an offset | api-design, pagination, paging, cursor, stability | high | 2026-11-25 |
+| `api-partial-update` | PATCH needs a rule for absent, null and empty | api-design, patch, merge | medium | 2026-11-25 |
 | `binary-hypervisor` | A hypervisor exposes synthetic MSRs and VTL boundaries | binary, hypervisor, virtualization | low | 2026-11-24 |
 | `binary-kernel` | A kernel bug is an object lifetime bug with a user buffer | binary, kernel, driver | high | 2026-11-24 |
 | `binary-browser` | Browser exploitation needs a renderer bug and a sandbox path | binary, browser, jit | high | 2026-11-24 |
@@ -7226,9 +7230,19 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `crypto-postquantum` | PQC migration is a hybrid, not a flag | crypto, pqc, hybrid | low | 2026-11-24 |
 | `crypto-weak-random` | Predictable randomness is a key recovery bug | crypto, random, predictability | high | 2026-11-24 |
 | `tls-config-review` | TLS is a version, a chain and a policy | crypto, tls, certificate | medium | 2026-11-24 |
+| `crypto-kdf-derive` | A KDF separates keys by label and context | cryptography, kdf, hkdf | high | 2026-11-25 |
+| `crypto-nonce` | A nonce is unique per key by construction or by count | cryptography, nonce, collision | high | 2026-11-25 |
+| `crypto-aead` | AEAD authenticates ciphertext and associated data together | cryptography, aead, nonce | high | 2026-11-25 |
+| `crypto-key-rotation` | Rotation needs a key id in the ciphertext | cryptography, rotation, key-id | high | 2026-11-25 |
+| `crypto-constant-time` | Secret-dependent branches leak through timing | cryptography, constant-time, timing | medium | 2026-11-25 |
 | `stream-watermark` | A watermark is a promise about event time | data, streaming, watermark | high | 2026-11-25 |
 | `stream-window` | A window assigns events and a trigger emits results | data, streaming, window | medium | 2026-11-25 |
 | `stream-exactly-once` | Exactly-once output is a transaction or an idempotent sink | data, streaming, exactly-once | high | 2026-11-25 |
+| `data-polymorphic` | A polymorphic reference trades integrity for flexibility | data-modeling, polymorphic, constraints | medium | 2026-11-25 |
+| `data-soft-delete` | A soft delete must not break uniqueness or joins | data-modeling, soft-delete, uniqueness | high | 2026-11-25 |
+| `data-temporal` | Bitemporal data separates valid time from recorded time | data-modeling, temporal, history | high | 2026-11-25 |
+| `data-ownership` | Every field has one writer | data-modeling, ownership, source-of-truth | high | 2026-11-25 |
+| `data-normalization` | Normalize for writes, denormalize for reads, and name the owner | data-modeling, normalization, read-model | high | 2026-11-25 |
 | `db-checkpoint` | A checkpoint bounds the recovery work | database, checkpoint, recovery | medium | 2026-11-25 |
 | `db-deadlock` | A deadlock is a cycle in the wait-for graph | database, deadlock, retry | medium | 2026-11-25 |
 | `db-lock-manager` | A lock manager has modes, a wait queue and fairness | database, locks, fairness | medium | 2026-11-25 |
@@ -7375,6 +7389,11 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `formal-model-check` | Model checking enumerates states until a property fails | formal, model-check, states | high | 2026-11-25 |
 | `formal-refinement` | Refinement maps an abstract spec to concrete steps | formal, refinement, spec | medium | 2026-11-25 |
 | `formal-tla` | TLA+ describes a protocol as state and actions | formal, tla, protocol | high | 2026-11-25 |
+| `hw-firmware-update` | A firmware update needs A/B slots and a rollback | hardware, firmware, rollback | medium | 2026-11-25 |
+| `hw-irq` | An interrupt handler must be short and defer the rest | hardware, interrupt, latency | medium | 2026-11-25 |
+| `hw-endian` | Byte order is part of the wire format | hardware, endian, layout | medium | 2026-11-25 |
+| `hw-dma` | DMA bypasses the CPU cache and needs ownership rules | hardware, dma, coherency | high | 2026-11-25 |
+| `hw-mmio` | MMIO needs volatile access and barriers | hardware, mmio, barriers | high | 2026-11-25 |
 | `hardware-sidechannel` | Side channels leak through power, timing or EM | hardware, sidechannel | low | 2026-11-24 |
 | `hci-fitts` | Fitts's law sizes a target by distance and width | hci, fitts, target | medium | 2026-11-25 |
 | `hci-error-prevention` | Prevent the error before the confirmation | hci, error-prevention, undo | high | 2026-11-25 |
@@ -7400,6 +7419,10 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `num-time` | A timestamp is an instant; a local time is a rule | numerics, time, timezone | high | 2026-11-25 |
 | `num-float` | Floating point is exact at powers of two and lossy elsewhere | numerics, float, rounding | high | 2026-11-25 |
 | `num-money` | Money is an integer of minor units with an explicit rounding rule | numerics, money, decimal | high | 2026-11-25 |
+| `trace-cardinality` | A span attribute multiplies the index size | observability, cardinality, tracing | medium | 2026-11-25 |
+| `trace-sampling` | Sampling must be consistent or the trace is partial | observability, sampling, tracing | high | 2026-11-25 |
+| `trace-clock` | Span duration needs a monotonic clock, not wall time | observability, clock, tracing | medium | 2026-11-25 |
+| `trace-context` | Trace context is a header carried across every hop | observability, tracing, context | high | 2026-11-25 |
 | `org-postmortem-culture` | A blameless postmortem turns incidents into learning | organization, postmortem, postmortems, blameless, culture, learning | high | 2026-11-25 |
 | `org-rotation` | A rotation needs a handoff and shadowing | organization, oncall, rotation | medium | 2026-11-25 |
 | `org-skill-matrix` | A skill matrix makes bus factor visible | organization, skills, bus-factor | medium | 2026-11-25 |
@@ -7525,7 +7548,7 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 
 # Knowledge gaps
 
-314 gaps. A gap is a card that does not exist yet, ranked by priority.
+337 gaps. A gap is a card that does not exist yet, ranked by priority.
 
 | # | Domain | Gap | Priority | Source | Status |
 |---|---|---|---|---|---|
@@ -7843,6 +7866,29 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | 312 | performance | Percentiles, coordinated omission and tail | high | `references/engineering-mastery.md` | covered by `perf-latency-percentile` |
 | 313 | sre | Incident command, roles and comms cadence | high | `references/engineering-mastery.md` | covered by `sre-incident-command` |
 | 314 | sre | Runbooks, automation and toil budget | medium | `references/engineering-mastery.md` | covered by `sre-runbook` |
+| 315 | cryptography | AEAD, nonce reuse and associated data | high | `references/engineering-mastery.md` | covered by `crypto-aead` |
+| 316 | cryptography | Nonce construction and random collision bounds | high | `references/engineering-mastery.md` | covered by `crypto-nonce` |
+| 317 | cryptography | HKDF, domain separation and key derivation | high | `references/engineering-mastery.md` | covered by `crypto-kdf-derive` |
+| 318 | cryptography | Key rotation, versioning and re-encryption | high | `references/engineering-mastery.md` | covered by `crypto-key-rotation` |
+| 319 | cryptography | Constant-time code and side channels | medium | `references/engineering-mastery.md` | covered by `crypto-constant-time` |
+| 320 | observability | Trace context propagation across services | high | `references/engineering-mastery.md` | covered by `trace-context` |
+| 321 | observability | Consistent sampling and tail-based decisions | high | `references/engineering-mastery.md` | covered by `trace-sampling` |
+| 322 | observability | Clock skew in traces and span duration | medium | `references/engineering-mastery.md` | covered by `trace-clock` |
+| 323 | observability | Span attributes, cardinality and cost | medium | `references/engineering-mastery.md` | covered by `trace-cardinality` |
+| 324 | api-design | Error taxonomy, retryability and problem details | high | `references/engineering-mastery.md` | covered by `api-error-taxonomy` |
+| 325 | api-design | Cursor pagination and snapshot stability | high | `references/engineering-mastery.md` | covered by `api-cursor` |
+| 326 | api-design | PATCH semantics, JSON merge and null | medium | `references/engineering-mastery.md` | covered by `api-partial-update` |
+| 327 | api-design | Consumer-driven contract tests | medium | `references/engineering-mastery.md` | covered by `api-contract-test` |
+| 328 | data-modeling | Normalization, denormalization and read models | high | `references/engineering-mastery.md` | covered by `data-normalization` |
+| 329 | data-modeling | Soft delete, uniqueness and audit trail | high | `references/engineering-mastery.md` | covered by `data-soft-delete` |
+| 330 | data-modeling | Polymorphic associations and exclusive arcs | medium | `references/engineering-mastery.md` | covered by `data-polymorphic` |
+| 331 | data-modeling | Temporal tables and bitemporal history | high | `references/engineering-mastery.md` | covered by `data-temporal` |
+| 332 | data-modeling | Field ownership and single source of truth | high | `references/engineering-mastery.md` | covered by `data-ownership` |
+| 333 | hardware | Memory-mapped IO, barriers and volatile | high | `references/engineering-mastery.md` | covered by `hw-mmio` |
+| 334 | hardware | DMA, cache coherency and bounce buffers | high | `references/engineering-mastery.md` | covered by `hw-dma` |
+| 335 | hardware | Endianness, packing and struct layout | medium | `references/engineering-mastery.md` | covered by `hw-endian` |
+| 336 | hardware | Interrupt latency, top/bottom half and softirq | medium | `references/engineering-mastery.md` | covered by `hw-irq` |
+| 337 | hardware | A/B firmware update and rollback safety | medium | `references/engineering-mastery.md` | covered by `hw-firmware-update` |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.
 
