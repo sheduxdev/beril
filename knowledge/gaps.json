@@ -887,8 +887,8 @@
   "gap": "Cursor and offset pagination leaks and total-count oracles",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "api-pagination",
+  "status": "covered"
  },
  {
   "id": "api-versioning",
@@ -923,8 +923,8 @@
   "gap": "Alibaba Cloud RAM roles and STS",
   "priority": "low",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "cloud-alibaba",
+  "status": "covered"
  },
  {
   "id": "binary-macos",
@@ -932,8 +932,8 @@
   "gap": "Mach-O, dyld and code signing on macOS",
   "priority": "medium",
   "source": "references/reverse-engineering.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "binary-macos",
+  "status": "covered"
  },
  {
   "id": "re-macho",
@@ -941,8 +941,8 @@
   "gap": "Mach-O load commands, entitlements and universal binaries",
   "priority": "medium",
   "source": "references/reverse-engineering.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "re-macho",
+  "status": "covered"
  },
  {
   "id": "re-arm64",
@@ -950,8 +950,8 @@
   "gap": "AArch64 calling convention, PAC and MTE",
   "priority": "medium",
   "source": "references/reverse-engineering.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "re-arm64",
+  "status": "covered"
  },
  {
   "id": "detection-dns",
@@ -959,8 +959,8 @@
   "gap": "DNS tunneling and unusual query patterns",
   "priority": "medium",
   "source": "labs/detection",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "detection-dns",
+  "status": "covered"
  },
  {
   "id": "detection-lolbins",
@@ -977,8 +977,8 @@
   "gap": "JA3/JA4 and TLS fingerprint anomalies",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "detection-tls",
+  "status": "covered"
  },
  {
   "id": "ir-mobile",
@@ -986,8 +986,8 @@
   "gap": "Mobile incident triage: backups, sysdiagnose and Frida",
   "priority": "low",
   "source": "references/mobile-reverse.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "ir-mobile",
+  "status": "covered"
  },
  {
   "id": "ir-container",
@@ -995,8 +995,8 @@
   "gap": "Container incident triage and image diffing",
   "priority": "medium",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "ir-container",
+  "status": "covered"
  },
  {
   "id": "ai-tool-output",
@@ -1013,8 +1013,8 @@
   "gap": "Guardrail bypass through encoding, length and language",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "ai-guardrail",
+  "status": "covered"
  },
  {
   "id": "process-bounty-platform",
@@ -1022,8 +1022,8 @@
   "gap": "Program rules, payout terms and disclosure policy",
   "priority": "medium",
   "source": "references/claude-bughunter.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "process-bounty-platform",
+  "status": "covered"
  },
  {
   "id": "process-retest",
@@ -1040,6 +1040,195 @@
   "gap": "Password KDF choice, cost and salt handling",
   "priority": "medium",
   "source": "references/vulnerability-research.md",
+  "covered_by": "crypto-kdf",
+  "status": "covered"
+ },
+ {
+  "id": "web-clickjacking",
+  "domain": "web",
+  "gap": "Clickjacking, frame-ancestors and UI redress",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "web-clickjacking",
+  "status": "covered"
+ },
+ {
+  "id": "web-css-injection",
+  "domain": "web",
+  "gap": "CSS injection, attribute selectors and data exfiltration",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "web-dangling-markup",
+  "domain": "web",
+  "gap": "Dangling markup and CSRF token exfiltration",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "web3-contract",
+  "domain": "web3",
+  "gap": "Solidity reentrancy, access control and oracle bugs",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "web3-contract",
+  "status": "covered"
+ },
+ {
+  "id": "api-websocket-auth",
+  "domain": "api",
+  "gap": "WebSocket message auth, subscriptions and cross-user channels",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "api-websocket-auth",
+  "status": "covered"
+ },
+ {
+  "id": "api-batch",
+  "domain": "api",
+  "gap": "Batch endpoints, partial failures and authorization per item",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "cloud-vmware",
+  "domain": "cloud",
+  "gap": "vCenter SSO, ESXi and appliance chains",
+  "priority": "high",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "cloud-vmware",
+  "status": "covered"
+ },
+ {
+  "id": "cloud-openstack",
+  "domain": "cloud",
+  "gap": "OpenStack keystone, nova metadata and policy",
+  "priority": "low",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "cloud-service-mesh",
+  "domain": "cloud",
+  "gap": "Istio and Envoy mTLS, authorization policy and sidecar bypass",
+  "priority": "medium",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "binary-windows-kernel",
+  "domain": "binary",
+  "gap": "Windows kernel drivers, IOCTL and object manager",
+  "priority": "high",
+  "source": "references/reverse-engineering.md",
+  "covered_by": "binary-windows-kernel",
+  "status": "covered"
+ },
+ {
+  "id": "binary-wasm",
+  "domain": "binary",
+  "gap": "WebAssembly validation, JIT and sandbox boundaries",
+  "priority": "medium",
+  "source": "references/reverse-engineering.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "binary-ebpf",
+  "domain": "binary",
+  "gap": "eBPF verifier, maps and helper abuse",
+  "priority": "low",
+  "source": "references/reverse-engineering.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "re-cpp-rtti",
+  "domain": "re",
+  "gap": "C++ RTTI, vtables and multiple inheritance",
+  "priority": "medium",
+  "source": "references/reverse-engineering.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "re-android-native",
+  "domain": "re",
+  "gap": "Android JNI, ART and native library analysis",
+  "priority": "medium",
+  "source": "references/mobile-reverse.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "detection-identity",
+  "domain": "detection",
+  "gap": "Identity logs, impossible travel and token anomalies",
+  "priority": "high",
+  "source": "labs/detection",
+  "covered_by": "detection-identity",
+  "status": "covered"
+ },
+ {
+  "id": "detection-cloud",
+  "domain": "detection",
+  "gap": "Cloud control-plane detections and role assumptions",
+  "priority": "high",
+  "source": "labs/detection",
+  "covered_by": "detection-cloud",
+  "status": "covered"
+ },
+ {
+  "id": "ir-ransomware",
+  "domain": "ir",
+  "gap": "Ransomware triage, note, encryption and backups",
+  "priority": "high",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "ir-ransomware",
+  "status": "covered"
+ },
+ {
+  "id": "ir-phishing",
+  "domain": "ir",
+  "gap": "Phishing triage, headers, URLs and payloads",
+  "priority": "medium",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "ai-multiagent",
+  "domain": "ai",
+  "gap": "Multi-agent delegation, shared memory and trust",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "ai-multiagent",
+  "status": "covered"
+ },
+ {
+  "id": "process-legal",
+  "domain": "process",
+  "gap": "Safe harbor, authorization and data handling",
+  "priority": "medium",
+  "source": "docs/break-my-app.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "report-pricing",
+  "domain": "process",
+  "gap": "Payout expectations, VRT and severity negotiation",
+  "priority": "medium",
+  "source": "references/scoring.md",
   "covered_by": "",
   "status": "open"
  }

@@ -156,6 +156,28 @@
   "failure": "A low-dimensional vector may lose detail. A public corpus match is not private."
  },
  {
+  "path": "knowledge/ai-guardrail.md",
+  "body": "# A guardrail is a classifier with an input distribution\n\n## Claim\n\nEncoding, length, language or context shifts the input outside the classifier's training distribution.\n\n## Test\n\nTest base64, leetspeak, another language, long context and a benign wrapper. Compare the model output.\n\n## Proof\n\nA policy violation with the guardrail still enabled.\n\n## Failure modes\n\nA refusal is not a bypass. A safe completion is not a violation.",
+  "id": "ai-guardrail",
+  "title": "A guardrail is a classifier with an input distribution",
+  "tags": [
+   "ai",
+   "guardrail",
+   "bypass"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "Encoding, length, language or context shifts the input outside the classifier's training distribution.",
+  "test": "Test base64, leetspeak, another language, long context and a benign wrapper. Compare the model output.",
+  "proof": "A policy violation with the guardrail still enabled.",
+  "failure": "A refusal is not a bypass. A safe completion is not a violation."
+ },
+ {
   "path": "knowledge/ai-indirect-injection-tool.md",
   "body": "# Indirect injection turns a document into an instruction\n\n## Claim\n\nA retrieved chunk contains instructions that the model follows, especially when a tool can send data out.\n\n## Test\n\nPlant an instruction in a document. Ask a normal question. Watch for a tool call with attacker arguments.\n\n## Proof\n\nA tool call or output that crosses the boundary without a user instruction.\n\n## Failure modes\n\nA prompt that says ignore previous instructions is not impact until the tool acts.",
   "id": "ai-indirect-injection-tool",
@@ -243,6 +265,28 @@
   "test": "Query a grid of inputs. Measure the output detail. Train a small surrogate and compare.",
   "proof": "A surrogate that matches the target on held-out inputs.",
   "failure": "Top-1 labels alone are weak. Rate limits change the cost."
+ },
+ {
+  "path": "knowledge/ai-multiagent.md",
+  "body": "# Multi-agent trust is a delegation graph\n\n## Claim\n\nA planner delegates to a worker with broader tools or memory. A compromised worker can poison the shared state.\n\n## Test\n\nMap agents, tools and shared memory. Plant an instruction in a worker input. Observe the planner's next task.\n\n## Proof\n\nA planner action outside the original goal.\n\n## Failure modes\n\nA worker that only reads is lower risk. Shared memory makes the effect persistent.",
+  "id": "ai-multiagent",
+  "title": "Multi-agent trust is a delegation graph",
+  "tags": [
+   "ai",
+   "multiagent",
+   "delegation"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "A planner delegates to a worker with broader tools or memory. A compromised worker can poison the shared state.",
+  "test": "Map agents, tools and shared memory. Plant an instruction in a worker input. Observe the planner's next task.",
+  "proof": "A planner action outside the original goal.",
+  "failure": "A worker that only reads is lower risk. Shared memory makes the effect persistent."
  },
  {
   "path": "knowledge/ai-rag-tenant-filter.md",
@@ -466,6 +510,28 @@
   "failure": "A public read-only schema is intended. A 401 on every path is not a finding."
  },
  {
+  "path": "knowledge/api-pagination.md",
+  "body": "# Pagination is an enumeration and counting oracle\n\n## Claim\n\nOffset pagination leaks total counts and allows skipping; cursor pagination leaks stable ids and can be replayed.\n\n## Test\n\nCompare total fields across queries. Walk pages with a changed filter. Try a negative or huge offset.\n\n## Proof\n\nA full dataset or a count the user should not see.\n\n## Failure modes\n\nA capped total is not a leak. A cursor that is opaque but stable is still enumerable.",
+  "id": "api-pagination",
+  "title": "Pagination is an enumeration and counting oracle",
+  "tags": [
+   "api",
+   "pagination",
+   "enumeration"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "Offset pagination leaks total counts and allows skipping; cursor pagination leaks stable ids and can be replayed.",
+  "test": "Compare total fields across queries. Walk pages with a changed filter. Try a negative or huge offset.",
+  "proof": "A full dataset or a count the user should not see.",
+  "failure": "A capped total is not a leak. A cursor that is opaque but stable is still enumerable."
+ },
+ {
   "path": "knowledge/api-rate-limit-bypass.md",
   "body": "# Rate limits are only as strong as the key\n\n## Claim\n\nThe limiter keys on IP, header or route, and the attacker can change that key or hit an unlisted sibling route.\n\n## Test\n\nIdentify the key. Rotate IP, user agent, account and path case. Test a trailing slash, version prefix and a batched body.\n\n## Proof\n\nMore requests than the policy allows with the same account.\n\n## Failure modes\n\nA limit that is intentionally per-IP is not a bug. Distributed sources change the test.",
   "id": "api-rate-limit-bypass",
@@ -552,6 +618,28 @@
   "test": "Capture a delivery. Replay it. Change the body. Test a stale timestamp.",
   "proof": "A replayed or modified event changes state.",
   "failure": "An HMAC that covers only part of the body may still be bypassable. Timing-safe comparison matters."
+ },
+ {
+  "path": "knowledge/api-websocket-auth.md",
+  "body": "# WebSocket authorization is per message and per channel\n\n## Claim\n\nThe handshake checks a token, but a subscribe or join message trusts a channel id from the client.\n\n## Test\n\nOpen two sockets with different users. Join the other channel. Send a privileged message.\n\n## Proof\n\nA message or event from another user's channel.\n\n## Failure modes\n\nA public channel is not a leak. A reconnect may reauth.",
+  "id": "api-websocket-auth",
+  "title": "WebSocket authorization is per message and per channel",
+  "tags": [
+   "api",
+   "websocket",
+   "auth"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "The handshake checks a token, but a subscribe or join message trusts a channel id from the client.",
+  "test": "Open two sockets with different users. Join the other channel. Send a privileged message.",
+  "proof": "A message or event from another user's channel.",
+  "failure": "A public channel is not a leak. A reconnect may reauth."
  },
  {
   "path": "knowledge/binary-browser.md",
@@ -642,6 +730,28 @@
   "failure": "A crash in a driver can be a bug but not exploitable. Check the pool and the IRQL."
  },
  {
+  "path": "knowledge/binary-macos.md",
+  "body": "# Mach-O and dyld define what loads before main\n\n## Claim\n\nLoad commands, LC_LOAD_DYLIB, rpaths and entitlements decide which code runs and what it may do.\n\n## Test\n\nList load commands, libraries and rpaths. Check the signature and entitlements. Try a dylib hijack in a lab.\n\n## Proof\n\nA loaded library or entitlement that changes behavior.\n\n## Failure modes\n\nHardened runtime and library validation block some hijacks. A signed app is not automatically safe.",
+  "id": "binary-macos",
+  "title": "Mach-O and dyld define what loads before main",
+  "tags": [
+   "binary",
+   "macos",
+   "macho"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/reverse-engineering.md"
+  ],
+  "status": "active",
+  "claim": "Load commands, LC_LOAD_DYLIB, rpaths and entitlements decide which code runs and what it may do.",
+  "test": "List load commands, libraries and rpaths. Check the signature and entitlements. Try a dylib hijack in a lab.",
+  "proof": "A loaded library or entitlement that changes behavior.",
+  "failure": "Hardened runtime and library validation block some hijacks. A signed app is not automatically safe."
+ },
+ {
   "path": "knowledge/binary-uefi.md",
   "body": "# UEFI is an event-driven firmware runtime\n\n## Claim\n\nDXE drivers, protocols and SMM handlers parse variables and capsules with limited validation.\n\n## Test\n\nExtract the firmware. Map DXE and SMM. Check variable parsing and capsule updates. Emulate with QEMU or a lab.\n\n## Proof\n\nA controlled write or a secure boot bypass.\n\n## Failure modes\n\nA DXE driver that never runs is dead code. SMM needs a special entry.",
   "id": "binary-uefi",
@@ -662,6 +772,28 @@
   "test": "Extract the firmware. Map DXE and SMM. Check variable parsing and capsule updates. Emulate with QEMU or a lab.",
   "proof": "A controlled write or a secure boot bypass.",
   "failure": "A DXE driver that never runs is dead code. SMM needs a special entry."
+ },
+ {
+  "path": "knowledge/binary-windows-kernel.md",
+  "body": "# Windows kernel bugs are object and IRP lifetime bugs\n\n## Claim\n\nDrivers parse IOCTL buffers, user pointers and object references. A wrong probe or a stale object is the primitive.\n\n## Test\n\nMap IOCTLs and methods. Check probe and capture. Fuzz the buffer. Inspect pool and IRQL.\n\n## Proof\n\nA controlled write or a privilege escalation in a VM.\n\n## Failure modes\n\nA crash can be a DoS only. Check the session and the integrity level.",
+  "id": "binary-windows-kernel",
+  "title": "Windows kernel bugs are object and IRP lifetime bugs",
+  "tags": [
+   "binary",
+   "windows",
+   "kernel"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/reverse-engineering.md"
+  ],
+  "status": "active",
+  "claim": "Drivers parse IOCTL buffers, user pointers and object references. A wrong probe or a stale object is the primitive.",
+  "test": "Map IOCTLs and methods. Check probe and capture. Fuzz the buffer. Inspect pool and IRQL.",
+  "proof": "A controlled write or a privilege escalation in a VM.",
+  "failure": "A crash can be a DoS only. Check the session and the integrity level."
  },
  {
   "path": "knowledge/browser-extension-permissions.md",
@@ -728,6 +860,28 @@
   "test": "Read the federated credential and role assignment. Test the pod token against Azure and the K8s API.",
   "proof": "An Azure or K8s action outside the intended scope.",
   "failure": "A cluster-admin binding is obvious. A custom role with wildcard verbs is not."
+ },
+ {
+  "path": "knowledge/cloud-alibaba-ram.md",
+  "body": "# Alibaba RAM roles and STS follow the same trust graph\n\n## Claim\n\nA RAM role trusts an account or service, and STS issues temporary credentials. A wildcard policy crosses the boundary.\n\n## Test\n\nRead the role trust policy. Assume the role. Test a read outside the intended resource.\n\n## Proof\n\nAn STS token with access beyond the role's purpose.\n\n## Failure modes\n\nA role name is not a permission. A policy condition can narrow it.",
+  "id": "cloud-alibaba-ram",
+  "title": "Alibaba RAM roles and STS follow the same trust graph",
+  "tags": [
+   "cloud",
+   "alibaba",
+   "ram"
+  ],
+  "confidence": "low",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "A RAM role trusts an account or service, and STS issues temporary credentials. A wildcard policy crosses the boundary.",
+  "test": "Read the role trust policy. Assume the role. Test a read outside the intended resource.",
+  "proof": "An STS token with access beyond the role's purpose.",
+  "failure": "A role name is not a permission. A policy condition can narrow it."
  },
  {
   "path": "knowledge/cloud-azure-role.md",
@@ -995,6 +1149,28 @@
   "failure": "An encrypted remote backend with narrow access is safer. Lock files matter for integrity."
  },
  {
+  "path": "knowledge/cloud-vmware.md",
+  "body": "# VMware appliances are a chain of SSO and service bugs\n\n## Claim\n\nvCenter SSO, the reverse proxy and the appliance services have separate parsers and trust boundaries.\n\n## Test\n\nMap the versions and services. Test SSO redirects, the vSphere client and the appliance API. Check known CVEs.\n\n## Proof\n\nAn authenticated or pre-auth action beyond the intended role.\n\n## Failure modes\n\nA console UI bug may not affect the API. Version mapping matters.",
+  "id": "cloud-vmware",
+  "title": "VMware appliances are a chain of SSO and service bugs",
+  "tags": [
+   "cloud",
+   "vmware",
+   "vcenter"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "vCenter SSO, the reverse proxy and the appliance services have separate parsers and trust boundaries.",
+  "test": "Map the versions and services. Test SSO redirects, the vSphere client and the appliance API. Check known CVEs.",
+  "proof": "An authenticated or pre-auth action beyond the intended role.",
+  "failure": "A console UI bug may not affect the API. Version mapping matters."
+ },
+ {
   "path": "knowledge/container-escape.md",
   "body": "# A container escape is a host resource exposed to the container\n\n## Claim\n\nThe container has a host mount, the runtime socket, privileged devices or a kernel bug surface.\n\n## Test\n\nList mounts, capabilities, devices and namespaces. Try a host read through each. Check the kernel version.\n\n## Proof\n\nA host file read, a host process signal, or a new container with host mounts.\n\n## Failure modes\n\nRoot inside a container is not root on the host by itself. User namespaces change the mapping.",
   "id": "container-escape",
@@ -1038,6 +1214,28 @@
   "test": "Start a job, do the work, finish it with tokens or a cost. Review the monthly total against the budget.",
   "proof": "A job row with a cost and a finished timestamp.",
   "failure": "A model without a price is zero. Add the rate before trusting the total."
+ },
+ {
+  "path": "knowledge/crypto-kdf.md",
+  "body": "# A password hash is a cost parameter\n\n## Claim\n\nArgon2, scrypt, bcrypt or PBKDF2 with a low cost or a shared salt makes cracking cheaper.\n\n## Test\n\nRead the algorithm and parameters. Check the salt uniqueness. Estimate the crack cost.\n\n## Proof\n\nA parameter set below current guidance or a reused salt.\n\n## Failure modes\n\nA fast hash can be acceptable for a high-entropy token. A password needs a slow KDF.",
+  "id": "crypto-kdf",
+  "title": "A password hash is a cost parameter",
+  "tags": [
+   "crypto",
+   "kdf",
+   "password"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "Argon2, scrypt, bcrypt or PBKDF2 with a low cost or a shared salt makes cracking cheaper.",
+  "test": "Read the algorithm and parameters. Check the salt uniqueness. Estimate the crack cost.",
+  "proof": "A parameter set below current guidance or a reused salt.",
+  "failure": "A fast hash can be acceptable for a high-entropy token. A password needs a slow KDF."
  },
  {
   "path": "knowledge/crypto-postquantum.md",
@@ -1106,6 +1304,50 @@
   "failure": "A CDN or update check is periodic too. Exclude known services."
  },
  {
+  "path": "knowledge/detection-cloud.md",
+  "body": "# Cloud detection is control-plane and role-assumption first\n\n## Claim\n\nCreateUser, AssumeRole, policy changes and key creation are high-signal control-plane events.\n\n## Test\n\nMap the audit log. Baseline normal roles. Alert on new principals and permission changes.\n\n## Proof\n\nA sequence from a new principal to a resource action.\n\n## Failure modes\n\nA provider default event is noisy. A data-plane read may not appear in the control log.",
+  "id": "detection-cloud",
+  "title": "Cloud detection is control-plane and role-assumption first",
+  "tags": [
+   "detection",
+   "cloud",
+   "audit"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "labs/detection"
+  ],
+  "status": "active",
+  "claim": "CreateUser, AssumeRole, policy changes and key creation are high-signal control-plane events.",
+  "test": "Map the audit log. Baseline normal roles. Alert on new principals and permission changes.",
+  "proof": "A sequence from a new principal to a resource action.",
+  "failure": "A provider default event is noisy. A data-plane read may not appear in the control log."
+ },
+ {
+  "path": "knowledge/detection-dns.md",
+  "body": "# DNS tunneling is a length and entropy pattern\n\n## Claim\n\nLong, random subdomains to one domain, high query volume, or TXT-heavy responses.\n\n## Test\n\nGroup queries by parent domain. Measure label length, entropy and response size. Compare with a baseline.\n\n## Proof\n\nA domain with a repeatable anomalous pattern.\n\n## Failure modes\n\nA CDN or analytics domain is also long. Check the destination reputation.",
+  "id": "detection-dns",
+  "title": "DNS tunneling is a length and entropy pattern",
+  "tags": [
+   "detection",
+   "dns",
+   "tunnel"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "labs/detection"
+  ],
+  "status": "active",
+  "claim": "Long, random subdomains to one domain, high query volume, or TXT-heavy responses.",
+  "test": "Group queries by parent domain. Measure label length, entropy and response size. Compare with a baseline.",
+  "proof": "A domain with a repeatable anomalous pattern.",
+  "failure": "A CDN or analytics domain is also long. Check the destination reputation."
+ },
+ {
   "path": "knowledge/detection-edr.md",
   "body": "# EDR detection is a process tree and a sequence\n\n## Claim\n\nA single event is weak; parent-child, command line, token and network together are strong.\n\n## Test\n\nMap the process tree. Add command-line and network fields. Test against a normal baseline.\n\n## Proof\n\nA rule that catches the technique and not the baseline.\n\n## Failure modes\n\nA signature on a binary name is easy to evade. Behavior is stronger.",
   "id": "detection-edr",
@@ -1126,6 +1368,28 @@
   "test": "Map the process tree. Add command-line and network fields. Test against a normal baseline.",
   "proof": "A rule that catches the technique and not the baseline.",
   "failure": "A signature on a binary name is easy to evade. Behavior is stronger."
+ },
+ {
+  "path": "knowledge/detection-identity.md",
+  "body": "# Identity detections need a baseline and a token context\n\n## Claim\n\nImpossible travel, a new device, a token replay or a role change is only meaningful against the user's normal pattern.\n\n## Test\n\nCollect sign-in and audit logs. Baseline the user. Alert on a new ASN, device or scope.\n\n## Proof\n\nA rule that catches the anomaly and not a VPN user.\n\n## Failure modes\n\nA travel rule without a baseline is noise. MFA changes the picture.",
+  "id": "detection-identity",
+  "title": "Identity detections need a baseline and a token context",
+  "tags": [
+   "detection",
+   "identity",
+   "logs"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "labs/detection"
+  ],
+  "status": "active",
+  "claim": "Impossible travel, a new device, a token replay or a role change is only meaningful against the user's normal pattern.",
+  "test": "Collect sign-in and audit logs. Baseline the user. Alert on a new ASN, device or scope.",
+  "proof": "A rule that catches the anomaly and not a VPN user.",
+  "failure": "A travel rule without a baseline is noise. MFA changes the picture."
  },
  {
   "path": "knowledge/detection-lolbins.md",
@@ -1192,6 +1456,28 @@
   "test": "Compare an IOC rule with a behavior rule on the same sample. Age the intel and retest.",
   "proof": "A behavior rule that still catches a rotated sample.",
   "failure": "A public IOC can be a false positive. Check the intel source."
+ },
+ {
+  "path": "knowledge/detection-tls.md",
+  "body": "# TLS fingerprints identify a client stack, not a person\n\n## Claim\n\nJA3/JA4 hashes group clients by version, ciphers and extensions. A mismatch with the claimed user agent is a signal.\n\n## Test\n\nExtract JA3/JA4 from flows. Compare with the User-Agent. Baseline the top clients.\n\n## Proof\n\nA client fingerprint that does not match the expected stack.\n\n## Failure modes\n\nA proxy or library changes the fingerprint. A match is not proof of malware.",
+  "id": "detection-tls",
+  "title": "TLS fingerprints identify a client stack, not a person",
+  "tags": [
+   "detection",
+   "tls",
+   "ja3"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "JA3/JA4 hashes group clients by version, ciphers and extensions. A mismatch with the claimed user agent is a signal.",
+  "test": "Extract JA3/JA4 from flows. Compare with the User-Agent. Baseline the top clients.",
+  "proof": "A client fingerprint that does not match the expected stack.",
+  "failure": "A proxy or library changes the fingerprint. A match is not proof of malware."
  },
  {
   "path": "knowledge/electron-context-isolation.md",
@@ -1460,6 +1746,28 @@
   "failure": "A disabled or short-retention log leaves a gap. A resource event can have no control-plane event."
  },
  {
+  "path": "knowledge/ir-container.md",
+  "body": "# Container triage is image diff plus runtime state\n\n## Claim\n\nThe running container may differ from the image, and the host sees the process and mounts.\n\n## Test\n\nDiff the container filesystem against the image. Check processes, mounts and network. Inspect the host.\n\n## Proof\n\nA file or process not present in the image.\n\n## Failure modes\n\nA writable layer is expected for logs. A changed binary is not.",
+  "id": "ir-container",
+  "title": "Container triage is image diff plus runtime state",
+  "tags": [
+   "ir",
+   "container",
+   "docker"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "The running container may differ from the image, and the host sees the process and mounts.",
+  "test": "Diff the container filesystem against the image. Check processes, mounts and network. Inspect the host.",
+  "proof": "A file or process not present in the image.",
+  "failure": "A writable layer is expected for logs. A changed binary is not."
+ },
+ {
   "path": "knowledge/ir-disk.md",
   "body": "# Disk artifacts answer who, what and when\n\n## Claim\n\nMFT, USN, registry, prefetch and event logs reconstruct execution and persistence.\n\n## Test\n\nCollect the artifacts. Normalize timestamps. Correlate a binary path with execution and network.\n\n## Proof\n\nA timeline with a binary, a user and a connection.\n\n## Failure modes\n\nA timestamp can be modified. Prefetch can be disabled.",
   "id": "ir-disk",
@@ -1502,6 +1810,50 @@
   "test": "Record the order. Capture memory with a known tool. Hash it. Capture disk after.",
   "proof": "A memory image with a hash and a process list that matches the host.",
   "failure": "A memory image from a different build is hard to symbolize. Do not reboot first."
+ },
+ {
+  "path": "knowledge/ir-mobile.md",
+  "body": "# Mobile triage starts with the backup and the sysdiagnose\n\n## Claim\n\niOS sysdiagnose and Android bug reports hold logs, databases and app state. A backup exposes app data.\n\n## Test\n\nCollect the sysdiagnose or bug report. Check the backup and shared containers. Correlate with the account.\n\n## Proof\n\nAn app event or file with a timestamp.\n\n## Failure modes\n\nA backup may exclude protected files. A rooted device changes the picture.",
+  "id": "ir-mobile",
+  "title": "Mobile triage starts with the backup and the sysdiagnose",
+  "tags": [
+   "ir",
+   "mobile",
+   "ios"
+  ],
+  "confidence": "low",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/mobile-reverse.md"
+  ],
+  "status": "active",
+  "claim": "iOS sysdiagnose and Android bug reports hold logs, databases and app state. A backup exposes app data.",
+  "test": "Collect the sysdiagnose or bug report. Check the backup and shared containers. Correlate with the account.",
+  "proof": "An app event or file with a timestamp.",
+  "failure": "A backup may exclude protected files. A rooted device changes the picture."
+ },
+ {
+  "path": "knowledge/ir-ransomware.md",
+  "body": "# Ransomware triage is scope, encryption and backups\n\n## Claim\n\nThe note names a family, but the real questions are which hosts, which accounts, and whether backups are intact.\n\n## Test\n\nCollect the note and extension. Map the encrypted share. Check backups and shadow copies. Find the entry vector.\n\n## Proof\n\nA scope list and a recovery path with evidence.\n\n## Failure modes\n\nA note can be a decoy. A backup that was mounted can be encrypted too.",
+  "id": "ir-ransomware",
+  "title": "Ransomware triage is scope, encryption and backups",
+  "tags": [
+   "ir",
+   "ransomware",
+   "backup"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "The note names a family, but the real questions are which hosts, which accounts, and whether backups are intact.",
+  "test": "Collect the note and extension. Map the encrypted share. Check backups and shadow copies. Find the entry vector.",
+  "proof": "A scope list and a recovery path with evidence.",
+  "failure": "A note can be a decoy. A backup that was mounted can be encrypted too."
  },
  {
   "path": "knowledge/ir-timeline.md",
@@ -1726,6 +2078,28 @@
   "failure": "A hidden button is not a server-side control. Test the API."
  },
  {
+  "path": "knowledge/process-bounty-platform.md",
+  "body": "# Program rules decide what is payable\n\n## Claim\n\nThe brief defines assets, exclusions, severity, payout and disclosure. A valid bug can still be out of scope.\n\n## Test\n\nParse the brief into allow and deny rules. Check the VRT mapping, the payout table and the disclosure terms.\n\n## Proof\n\nA finding with a scope citation and a payout line.\n\n## Failure modes\n\nA platform default can be overridden by the program. A closed report can still be a valid bug.",
+  "id": "process-bounty-platform",
+  "title": "Program rules decide what is payable",
+  "tags": [
+   "process",
+   "bounty",
+   "scope"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/claude-bughunter.md"
+  ],
+  "status": "active",
+  "claim": "The brief defines assets, exclusions, severity, payout and disclosure. A valid bug can still be out of scope.",
+  "test": "Parse the brief into allow and deny rules. Check the VRT mapping, the payout table and the disclosure terms.",
+  "proof": "A finding with a scope citation and a payout line.",
+  "failure": "A platform default can be overridden by the program. A closed report can still be a valid bug."
+ },
+ {
   "path": "knowledge/process-disclosure.md",
   "body": "# Disclosure is a timeline with a paper trail\n\n## Claim\n\nA vendor may stay silent, patch quietly, or dispute. The timeline and the evidence decide the outcome.\n\n## Test\n\nRecord the first report, the acknowledgement, the fix and the public date. Keep every message.\n\n## Proof\n\nA disclosure timeline a third party can verify.\n\n## Failure modes\n\nA public dump before a fix can burn the reporter. A vendor silence is not acceptance.",
   "id": "process-disclosure",
@@ -1859,6 +2233,28 @@
   "failure": "A transaction without a unique constraint can still race at a higher isolation level. Test the real DB."
  },
  {
+  "path": "knowledge/re-arm64.md",
+  "body": "# AArch64 has a calling convention, PAC and MTE\n\n## Claim\n\nArguments go in x0-x7, returns in x0. Pointer authentication signs pointers; MTE tags memory.\n\n## Test\n\nMap registers and stack. Check PAC instructions and MTE settings. Test a return address overwrite.\n\n## Proof\n\nA recovered prototype or a controlled return path.\n\n## Failure modes\n\nAn emulator may not enforce PAC. MTE is optional per allocation.",
+  "id": "re-arm64",
+  "title": "AArch64 has a calling convention, PAC and MTE",
+  "tags": [
+   "re",
+   "arm64",
+   "pac"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/reverse-engineering.md"
+  ],
+  "status": "active",
+  "claim": "Arguments go in x0-x7, returns in x0. Pointer authentication signs pointers; MTE tags memory.",
+  "test": "Map registers and stack. Check PAC instructions and MTE settings. Test a return address overwrite.",
+  "proof": "A recovered prototype or a controlled return path.",
+  "failure": "An emulator may not enforce PAC. MTE is optional per allocation."
+ },
+ {
   "path": "knowledge/re-crash-triage-primitive.md",
   "body": "# A crash is a lead; the primitive is the finding\n\n## Claim\n\nA crash becomes a finding when you can name the controlled bytes, the fault address, the instruction pointer and the blocking mitigation.\n\n## Test\n\nReproduce outside the fuzzer. Read registers and stack. Classify the fault. Minimize. Check mitigations.\n\n## Proof\n\nA controlled address or RIP, or a bounded leak, with a repeatable input.\n\n## Failure modes\n\nA null dereference is low. A crash under ASAN only can still be real but needs reachability.",
   "id": "re-crash-triage-primitive",
@@ -1969,6 +2365,28 @@
   "test": "Decompile with jadx/CFR. Map the stack and descriptors. Check gadget libraries and readObject.",
   "proof": "A recovered class and a gadget path.",
   "failure": "An obfuscated jar hides names. A JIT crash is not a language bug."
+ },
+ {
+  "path": "knowledge/re-macho.md",
+  "body": "# Mach-O is a set of load commands, not a PE\n\n## Claim\n\nSections, segments, fat slices and entitlements carry the structure. Objective-C metadata is in dedicated sections.\n\n## Test\n\nParse load commands and slices. Map __TEXT, __DATA and Objective-C sections. Check the entitlements.\n\n## Proof\n\nA recovered class or method and a correct segment map.\n\n## Failure modes\n\nA fat binary needs the right slice. Stripping symbols keeps Objective-C metadata.",
+  "id": "re-macho",
+  "title": "Mach-O is a set of load commands, not a PE",
+  "tags": [
+   "re",
+   "macho",
+   "macos"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/reverse-engineering.md"
+  ],
+  "status": "active",
+  "claim": "Sections, segments, fat slices and entitlements carry the structure. Objective-C metadata is in dedicated sections.",
+  "test": "Parse load commands and slices. Map __TEXT, __DATA and Objective-C sections. Check the entitlements.",
+  "proof": "A recovered class or method and a correct segment map.",
+  "failure": "A fat binary needs the right slice. Stripping symbols keeps Objective-C metadata."
  },
  {
   "path": "knowledge/re-rust-layout.md",
@@ -2234,6 +2652,28 @@
   "test": "Map the key. Change one unkeyed input. Poison with a unique value and request from a clean session.",
   "proof": "A clean request returns the attacker value, with cache headers showing a hit.",
   "failure": "A hit for your own cookie is not global. Vary and normalization can invalidate the result."
+ },
+ {
+  "path": "knowledge/web-clickjacking.md",
+  "body": "# Clickjacking is a missing frame policy with a valuable action\n\n## Claim\n\nThe page can be framed and a sensitive action sits at a predictable position. frame-ancestors or X-Frame-Options is missing.\n\n## Test\n\nLoad the page in an iframe from another origin. Overlay a decoy. Click the action as a logged-in user.\n\n## Proof\n\nA state change from a click the user thought was for the decoy.\n\n## Failure modes\n\nA page that cannot be framed is safe. A low-value action is low impact.",
+  "id": "web-clickjacking",
+  "title": "Clickjacking is a missing frame policy with a valuable action",
+  "tags": [
+   "web",
+   "clickjacking",
+   "ui"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "The page can be framed and a sensitive action sits at a predictable position. frame-ancestors or X-Frame-Options is missing.",
+  "test": "Load the page in an iframe from another origin. Overlay a decoy. Click the action as a logged-in user.",
+  "proof": "A state change from a click the user thought was for the decoy.",
+  "failure": "A page that cannot be framed is safe. A low-value action is low impact."
  },
  {
   "path": "knowledge/web-client-path-traversal.md",
@@ -2840,6 +3280,28 @@
   "test": "Send a DOCTYPE with a file entity. Try parameter entities and OOB when the response hides the value.",
   "proof": "A local file or a callback from the parser.",
   "failure": "An XML parser with entities disabled is not vulnerable. JSON endpoints are out of scope."
+ },
+ {
+  "path": "knowledge/web3-contract.md",
+  "body": "# Smart contracts fail on external calls and access control\n\n## Claim\n\nReentrancy, missing modifiers, unsafe delegatecall, oracle trust or integer issues move funds.\n\n## Test\n\nRead the contract and the call graph. Test a reentrancy path in a fork. Check owner functions and price feeds.\n\n## Proof\n\nA state change or fund movement an attacker can repeat.\n\n## Failure modes\n\nA testnet-only issue may not matter. Check the deployed bytecode and proxy.",
+  "id": "web3-contract",
+  "title": "Smart contracts fail on external calls and access control",
+  "tags": [
+   "web3",
+   "solidity",
+   "contract"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "Reentrancy, missing modifiers, unsafe delegatecall, oracle trust or integer issues move funds.",
+  "test": "Read the contract and the call graph. Test a reentrancy path in a fork. Check owner functions and price feeds.",
+  "proof": "A state change or fund movement an attacker can repeat.",
+  "failure": "A testnet-only issue may not matter. Check the deployed bytecode and proxy."
  },
  {
   "path": "knowledge/win-credential-stores.md",

@@ -1,12 +1,13 @@
 # Knowledge index
 
-131 durable cards. Read this before a web search; open a card only when it matches.
+152 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
 | `ad-acl-path` | AD compromise is an edge path, not a single bug | ad, windows, acl | high | 2026-11-24 |
 | `ad-adcs-esc1` | ESC1 is an enrollable SAN on a client-auth template | ad, adcs, certificate | high | 2026-11-24 |
 | `ai-sandbox-escape` | A code interpreter is a process with a filesystem | ai, sandbox, interpreter | high | 2026-11-24 |
+| `ai-guardrail` | A guardrail is a classifier with an input distribution | ai, guardrail, bypass | medium | 2026-11-25 |
 | `ai-vector-auth` | A vector query still needs an ACL | ai, rag, vector | medium | 2026-11-24 |
 | `ai-memory-poison` | Agent memory is a write target | ai, agent, memory | high | 2026-11-24 |
 | `ai-agent-tool` | Agent tool abuse is argument control, not prompt text | ai, agent, tool | high | 2026-11-24 |
@@ -16,6 +17,7 @@
 | `ai-indirect-injection-tool` | Indirect injection turns a document into an instruction | ai, llm, prompt-injection | high | 2026-11-24 |
 | `ai-mcp` | MCP config is a trust boundary with filesystem and network rights | ai, mcp, config | high | 2026-11-24 |
 | `ai-model-extraction` | Model extraction is a query budget problem | ai, model, extraction | medium | 2026-11-24 |
+| `ai-multiagent` | Multi-agent trust is a delegation graph | ai, multiagent, delegation | high | 2026-11-25 |
 | `ai-data-poison` | Poisoned data changes the model or the retrieval set | ai, data, poisoning | high | 2026-11-24 |
 | `ai-rag-tenant-filter` | RAG leaks when retrieval ignores the tenant | ai, llm, rag | high | 2026-11-24 |
 | `ai-tool-output` | Tool output is untrusted input to the next turn | ai, tool, injection | high | 2026-11-24 |
@@ -25,20 +27,25 @@
 | `api-jwt-rotation` | Key rotation is a cache and trust problem | api, jwt, jwks | high | 2026-11-24 |
 | `api-mass-assignment` | Mass assignment is a binder trusting extra fields | api, json, mass-assignment | high | 2026-11-24 |
 | `api-versioning` | Old API versions keep old authorization | api, versioning, shadow | high | 2026-11-24 |
+| `api-pagination` | Pagination is an enumeration and counting oracle | api, pagination, enumeration | medium | 2026-11-25 |
 | `api-rate-limit-bypass` | Rate limits are only as strong as the key | api, rate-limit, bypass | high | 2026-11-24 |
 | `api-idempotency` | Retries need an idempotency key at the write | api, idempotency, retry | high | 2026-11-24 |
 | `api-sse` | Server-sent events need per-connection auth | api, sse, stream | medium | 2026-11-24 |
+| `api-websocket-auth` | WebSocket authorization is per message and per channel | api, websocket, auth | high | 2026-11-25 |
 | `api-grpc-reflection` | gRPC reflection is a map, per-method auth is the bug | api, grpc, reflection | medium | 2026-11-24 |
 | `binary-hypervisor` | A hypervisor exposes synthetic MSRs and VTL boundaries | binary, hypervisor, virtualization | low | 2026-11-24 |
 | `binary-kernel` | A kernel bug is an object lifetime bug with a user buffer | binary, kernel, driver | high | 2026-11-24 |
 | `binary-browser` | Browser exploitation needs a renderer bug and a sandbox path | binary, browser, jit | high | 2026-11-24 |
 | `binary-jit` | JIT bugs are about generated code and stale metadata | binary, jit, exploit | medium | 2026-11-24 |
+| `binary-macos` | Mach-O and dyld define what loads before main | binary, macos, macho | medium | 2026-11-25 |
 | `binary-uefi` | UEFI is an event-driven firmware runtime | binary, uefi, firmware | medium | 2026-11-24 |
+| `binary-windows-kernel` | Windows kernel bugs are object and IRP lifetime bugs | binary, windows, kernel | high | 2026-11-25 |
 | `browser-extension-permissions` | An extension is a trusted page with broad APIs | browser, extension, permissions | medium | 2026-11-24 |
 | `cloud-docker-socket` | A mounted Docker socket is root on the host | cloud, docker, container | medium | 2026-11-24 |
 | `cloud-k8s-hostpath` | A privileged pod with hostPath is a host escape | cloud, kubernetes, container | high | 2026-11-24 |
 | `cloud-secrets` | A secrets manager is only as strong as its policy | cloud, secrets, iam | high | 2026-11-24 |
 | `cloud-aks-identity` | AKS mixes Azure RBAC and Kubernetes RBAC | cloud, aks, kubernetes | medium | 2026-11-24 |
+| `cloud-alibaba-ram` | Alibaba RAM roles and STS follow the same trust graph | cloud, alibaba, ram | low | 2026-11-25 |
 | `cloud-azure-role` | Azure identity is a role assignment graph | cloud, azure, iam | high | 2026-11-24 |
 | `cloud-oidc-ci` | CI OIDC trust is a subject claim match | cloud, oidc, ci | high | 2026-11-24 |
 | `cloud-metadata-role` | Cloud metadata is a credential endpoint | cloud, ssrf, iam | high | 2026-11-24 |
@@ -48,15 +55,21 @@
 | `cloud-oci` | OCI policy is compartment and tenancy scoped | cloud, oci, iam | low | 2026-11-24 |
 | `cloud-serverless` | Serverless events are input, not a trusted trigger | cloud, serverless, lambda | medium | 2026-11-24 |
 | `cloud-terraform-state` | Terraform state is a secret store | cloud, terraform, state | medium | 2026-11-24 |
+| `cloud-vmware` | VMware appliances are a chain of SSO and service bugs | cloud, vmware, vcenter | high | 2026-11-25 |
 | `container-escape` | A container escape is a host resource exposed to the container | container, escape, kubernetes | high | 2026-11-24 |
+| `crypto-kdf` | A password hash is a cost parameter | crypto, kdf, password | medium | 2026-11-25 |
 | `key-management` | Key management is where crypto bugs become data bugs | crypto, keys, storage | medium | 2026-11-24 |
 | `crypto-postquantum` | PQC migration is a hybrid, not a flag | crypto, pqc, hybrid | low | 2026-11-24 |
 | `crypto-weak-random` | Predictable randomness is a key recovery bug | crypto, random, predictability | high | 2026-11-24 |
 | `tls-config-review` | TLS is a version, a chain and a policy | crypto, tls, certificate | medium | 2026-11-24 |
 | `detection-sigma` | A Sigma rule needs a logsource, a selection and a false-positive note | detection, sigma, log | high | 2026-11-24 |
 | `detection-beacon` | A beacon is a timing pattern, not a single request | detection, beacon, network | medium | 2026-11-24 |
+| `detection-cloud` | Cloud detection is control-plane and role-assumption first | detection, cloud, audit | high | 2026-11-25 |
+| `detection-dns` | DNS tunneling is a length and entropy pattern | detection, dns, tunnel | medium | 2026-11-25 |
 | `detection-edr` | EDR detection is a process tree and a sequence | detection, edr, process | medium | 2026-11-24 |
+| `detection-identity` | Identity detections need a baseline and a token context | detection, identity, logs | high | 2026-11-25 |
 | `detection-lolbins` | LOLBins hide in parent-child and arguments | detection, lolbins, process | high | 2026-11-24 |
+| `detection-tls` | TLS fingerprints identify a client stack, not a person | detection, tls, ja3 | medium | 2026-11-25 |
 | `detection-threatintel` | Threat intel ages and IOCs are easy to rotate | detection, intel, ioc | medium | 2026-11-24 |
 | `electron-context-isolation` | Electron is Node with a browser attached | electron, desktop, context-isolation | medium | 2026-11-24 |
 | `exploit-uaf-reallocate` | UAF becomes control when the freed slot is reallocated | exploit, uaf, heap | high | 2026-11-24 |
@@ -71,8 +84,11 @@
 | `hardware-sidechannel` | Side channels leak through power, timing or EM | hardware, sidechannel | low | 2026-11-24 |
 | `ir-timeline` | An incident timeline needs three independent clocks | ir, timeline, forensics | medium | 2026-11-24 |
 | `ir-cloud` | Cloud audit logs are the timeline | ir, cloud, logs | medium | 2026-11-24 |
+| `ir-container` | Container triage is image diff plus runtime state | ir, container, docker | medium | 2026-11-25 |
 | `ir-disk` | Disk artifacts answer who, what and when | ir, disk, forensics | medium | 2026-11-24 |
 | `ir-memory` | Memory is the most volatile evidence | ir, memory, forensics | medium | 2026-11-24 |
+| `ir-mobile` | Mobile triage starts with the backup and the sysdiagnose | ir, mobile, ios | low | 2026-11-25 |
+| `ir-ransomware` | Ransomware triage is scope, encryption and backups | ir, ransomware, backup | high | 2026-11-25 |
 | `linux-suid` | A SUID binary is a path, not a finding | linux, privesc, suid | high | 2026-11-24 |
 | `linux-cron-systemd` | Scheduled jobs inherit a weak PATH or writable unit | linux, privesc, cron, systemd | medium | 2026-11-24 |
 | `mobile-deep-link-bridge` | A deep link plus a JS bridge is a chain | mobile, android, deep-link | high | 2026-11-24 |
@@ -87,13 +103,16 @@
 | `process-disclosure` | Disclosure is a timeline with a paper trail | process, disclosure, vendor | medium | 2026-11-24 |
 | `cost-job-ledger` | Every job has an actor and a cost | process, cost, jobs | high | 2026-11-24 |
 | `report-evidence` | Evidence must be reproducible and redacted | process, report, evidence | high | 2026-11-24 |
+| `process-bounty-platform` | Program rules decide what is payable | process, bounty, scope | medium | 2026-11-25 |
 | `process-recall-before-research` | Recall before searching | process, memory, research | high | 2026-11-24 |
 | `process-scope-parse` | Scope is a list of rules, not a domain | process, scope, recon | high | 2026-11-24 |
 | `process-duplicate-search` | Search duplicates before writing a report | process, triage, duplicate | high | 2026-11-24 |
 | `re-crash-triage-primitive` | A crash is a lead; the primitive is the finding | re, triage, crash | high | 2026-11-24 |
+| `re-arm64` | AArch64 has a calling convention, PAC and MTE | re, arm64, pac | medium | 2026-11-25 |
 | `re-ghidrust-vs-ghidra` | GhidRust is a paused Ghidra plugin, not Ghidrust | re, ghidra, rust | high | 2026-11-24 |
 | `re-go` | Go binaries carry pclntab and interface metadata | re, go, language | medium | 2026-11-24 |
 | `re-jvm` | JVM bytecode is a stack machine with metadata | re, java, jvm | medium | 2026-11-24 |
+| `re-macho` | Mach-O is a set of load commands, not a PE | re, macho, macos | medium | 2026-11-25 |
 | `re-dotnet-aot` | Native AOT is not IL | re, dotnet, aot | medium | 2026-11-24 |
 | `re-rust-layout` | Rust types are not C types | re, rust, layout | high | 2026-11-24 |
 | `re-swift` | Swift uses witness tables and value types | re, swift, ios | medium | 2026-11-24 |
@@ -109,6 +128,7 @@
 | `web-csrf-samesite` | CSRF survives when state changes on a safe method | web, csrf, session | high | 2026-11-24 |
 | `web-cache-deception` | Cache deception dresses a private page as a static file | web, cache, deception | medium | 2026-11-24 |
 | `web-cache-key-unkeyed-input` | Cache poisoning is an unkeyed input that changes the response | web, cache, cdn | high | 2026-11-24 |
+| `web-clickjacking` | Clickjacking is a missing frame policy with a valuable action | web, clickjacking, ui | high | 2026-11-25 |
 | `web-client-path-traversal` | Client-side path traversal is a router normalization bug | web, spa, router | medium | 2026-11-24 |
 | `web-dom-clobbering` | DOM clobbering turns an id into a variable | web, dom, clobbering | medium | 2026-11-24 |
 | `web-desync-parser-disagreement` | Desync needs two HTTP parsers and an ambiguous length | web, http, smuggling | high | 2026-11-24 |
@@ -132,6 +152,7 @@
 | `web-xss-parser-differential` | XSS survives when two parsers disagree | web, xss, parser | high | 2026-11-24 |
 | `web-xxe-parser` | XXE depends on entity expansion and the parser feature set | web, xxe, xml | medium | 2026-11-24 |
 | `web-postmessage` | postMessage is a bug when the receiver trusts any origin or sends to any origin | web, postmessage, client-side | high | 2026-11-24 |
+| `web3-contract` | Smart contracts fail on external calls and access control | web3, solidity, contract | high | 2026-11-25 |
 | `win-service-acl` | A weak service ACL is local privilege escalation | windows, privesc, service | high | 2026-11-24 |
 | `win-credential-stores` | Windows keeps credentials in more than one place | windows, credentials, dpapi | medium | 2026-11-24 |
 | `win-token-privileges` | Windows token privileges are the privesc surface | windows, token, privesc | high | 2026-11-24 |

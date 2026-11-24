@@ -1,6 +1,6 @@
 # Knowledge gaps
 
-116 gaps. A gap is a card that does not exist yet, ranked by priority.
+137 gaps. A gap is a card that does not exist yet, ranked by priority.
 
 | # | Domain | Gap | Priority | Source | Status |
 |---|---|---|---|---|---|
@@ -102,23 +102,44 @@
 | 96 | crypto | Post-quantum migration and hybrid key exchange | low | `references/vulnerability-research.md` | covered by `crypto-postquantum` |
 | 97 | api | OpenAPI and Swagger exposure and schema abuse | high | `references/techniques.md` | covered by `api-openapi` |
 | 98 | api | JWT key rotation, kid and JWKS cache poisoning | high | `references/techniques.md` | covered by `api-jwt-rotation` |
-| 99 | api | Cursor and offset pagination leaks and total-count oracles | medium | `references/techniques.md` | open |
+| 99 | api | Cursor and offset pagination leaks and total-count oracles | medium | `references/techniques.md` | covered by `api-pagination` |
 | 100 | api | Shadow and deprecated API versions | high | `references/techniques.md` | covered by `api-versioning` |
 | 101 | cloud | Secrets manager policy, rotation and cross-account access | high | `references/vulnerability-research.md` | covered by `cloud-secrets` |
 | 102 | cloud | CI OIDC trust policy and subject claim confusion | high | `references/vulnerability-research.md` | covered by `cloud-oidc-ci` |
-| 103 | cloud | Alibaba Cloud RAM roles and STS | low | `references/vulnerability-research.md` | open |
-| 104 | binary | Mach-O, dyld and code signing on macOS | medium | `references/reverse-engineering.md` | open |
-| 105 | re | Mach-O load commands, entitlements and universal binaries | medium | `references/reverse-engineering.md` | open |
-| 106 | re | AArch64 calling convention, PAC and MTE | medium | `references/reverse-engineering.md` | open |
-| 107 | detection | DNS tunneling and unusual query patterns | medium | `labs/detection` | open |
+| 103 | cloud | Alibaba Cloud RAM roles and STS | low | `references/vulnerability-research.md` | covered by `cloud-alibaba` |
+| 104 | binary | Mach-O, dyld and code signing on macOS | medium | `references/reverse-engineering.md` | covered by `binary-macos` |
+| 105 | re | Mach-O load commands, entitlements and universal binaries | medium | `references/reverse-engineering.md` | covered by `re-macho` |
+| 106 | re | AArch64 calling convention, PAC and MTE | medium | `references/reverse-engineering.md` | covered by `re-arm64` |
+| 107 | detection | DNS tunneling and unusual query patterns | medium | `labs/detection` | covered by `detection-dns` |
 | 108 | detection | Living-off-the-land binaries and parent-child anomalies | high | `labs/detection` | covered by `detection-lolbins` |
-| 109 | detection | JA3/JA4 and TLS fingerprint anomalies | medium | `references/techniques.md` | open |
-| 110 | ir | Mobile incident triage: backups, sysdiagnose and Frida | low | `references/mobile-reverse.md` | open |
-| 111 | ir | Container incident triage and image diffing | medium | `references/vulnerability-research.md` | open |
+| 109 | detection | JA3/JA4 and TLS fingerprint anomalies | medium | `references/techniques.md` | covered by `detection-tls` |
+| 110 | ir | Mobile incident triage: backups, sysdiagnose and Frida | low | `references/mobile-reverse.md` | covered by `ir-mobile` |
+| 111 | ir | Container incident triage and image diffing | medium | `references/vulnerability-research.md` | covered by `ir-container` |
 | 112 | ai | Tool output trust and second-order injection | high | `references/techniques.md` | covered by `ai-tool-output` |
-| 113 | ai | Guardrail bypass through encoding, length and language | medium | `references/techniques.md` | open |
-| 114 | process | Program rules, payout terms and disclosure policy | medium | `references/claude-bughunter.md` | open |
+| 113 | ai | Guardrail bypass through encoding, length and language | medium | `references/techniques.md` | covered by `ai-guardrail` |
+| 114 | process | Program rules, payout terms and disclosure policy | medium | `references/claude-bughunter.md` | covered by `process-bounty-platform` |
 | 115 | process | Retest after a fix and regression notes | high | `docs/break-my-app.md` | covered by `process-retest` |
-| 116 | crypto | Password KDF choice, cost and salt handling | medium | `references/vulnerability-research.md` | open |
+| 116 | crypto | Password KDF choice, cost and salt handling | medium | `references/vulnerability-research.md` | covered by `crypto-kdf` |
+| 117 | web | Clickjacking, frame-ancestors and UI redress | high | `references/techniques.md` | covered by `web-clickjacking` |
+| 118 | web | CSS injection, attribute selectors and data exfiltration | medium | `references/techniques.md` | open |
+| 119 | web | Dangling markup and CSRF token exfiltration | medium | `references/techniques.md` | open |
+| 120 | web3 | Solidity reentrancy, access control and oracle bugs | high | `references/techniques.md` | covered by `web3-contract` |
+| 121 | api | WebSocket message auth, subscriptions and cross-user channels | high | `references/techniques.md` | covered by `api-websocket-auth` |
+| 122 | api | Batch endpoints, partial failures and authorization per item | medium | `references/techniques.md` | open |
+| 123 | cloud | vCenter SSO, ESXi and appliance chains | high | `references/vulnerability-research.md` | covered by `cloud-vmware` |
+| 124 | cloud | OpenStack keystone, nova metadata and policy | low | `references/vulnerability-research.md` | open |
+| 125 | cloud | Istio and Envoy mTLS, authorization policy and sidecar bypass | medium | `references/vulnerability-research.md` | open |
+| 126 | binary | Windows kernel drivers, IOCTL and object manager | high | `references/reverse-engineering.md` | covered by `binary-windows-kernel` |
+| 127 | binary | WebAssembly validation, JIT and sandbox boundaries | medium | `references/reverse-engineering.md` | open |
+| 128 | binary | eBPF verifier, maps and helper abuse | low | `references/reverse-engineering.md` | open |
+| 129 | re | C++ RTTI, vtables and multiple inheritance | medium | `references/reverse-engineering.md` | open |
+| 130 | re | Android JNI, ART and native library analysis | medium | `references/mobile-reverse.md` | open |
+| 131 | detection | Identity logs, impossible travel and token anomalies | high | `labs/detection` | covered by `detection-identity` |
+| 132 | detection | Cloud control-plane detections and role assumptions | high | `labs/detection` | covered by `detection-cloud` |
+| 133 | ir | Ransomware triage, note, encryption and backups | high | `references/vulnerability-research.md` | covered by `ir-ransomware` |
+| 134 | ir | Phishing triage, headers, URLs and payloads | medium | `references/vulnerability-research.md` | open |
+| 135 | ai | Multi-agent delegation, shared memory and trust | high | `references/techniques.md` | covered by `ai-multiagent` |
+| 136 | process | Safe harbor, authorization and data handling | medium | `docs/break-my-app.md` | open |
+| 137 | process | Payout expectations, VRT and severity negotiation | medium | `references/scoring.md` | open |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.
