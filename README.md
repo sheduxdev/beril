@@ -14,6 +14,8 @@ Beril also reads the security sites that block plain HTTP clients, keeps every l
 
 Current release: **1.4.0**. Snapshot date: **2026-11-23**.
 
+Documentation: **https://sheduxdev.github.io/beril/**. The source pages live in `wiki/`, `docs/`, `references/` and `knowledge/`. Build the site locally with `python3 scripts/build_docs.py`.
+
 Beril was built from 44 public security skill repositories and a live collection pass over forums, disclosed reports, researcher blogs and GitHub tool shelves. Every catalog row links to its origin. The snapshot is a sample with a date, not a census.
 
 ## What it is

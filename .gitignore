@@ -28,3 +28,4 @@ zap-report.json
 build/
 dist/
 *.egg-info/
+site/
