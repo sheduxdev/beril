@@ -32,6 +32,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 THEME = os.path.join(ROOT, "scripts", "docs_theme")
 REPO = "https://github.com/sheduxdev/beril"
 BRANCH = "main"
+DOCS_URL = "https://sheduxdev.github.io/beril/"
 
 # (label, blurb, entries). An entry is a repo path or a glob like "references/*.md".
 NAV = [
@@ -734,11 +735,116 @@ def build(out_dir: str, check: bool) -> int:
     return 1 if (check and site.warnings) else 0
 
 
+# -- GitHub wiki export ---------------------------------------------------------
+RAW = f"https://raw.githubusercontent.com/sheduxdev/beril/{BRANCH}"
+WIKI_LINK = re.compile(r"(?<!!)\[((?:[^\[\]])+)\]\(([^)\s]+)\)")
+WIKI_IMG = re.compile(r"!\[([^\]]*)\]\(([^)\s]+)\)")
+
+
+def wiki_name(title: str, used: set[str]) -> str:
+    base = re.sub(r"[^\w]+", "-", title).strip("-") or "Page"
+    name, k = base, 2
+    while name.lower() in used:
+        name = f"{base}-{k}"
+        k += 1
+    used.add(name.lower())
+    return name
+
+
+def wiki_rewrite(text: str, page: Page, names: dict[str, str]) -> str:
+    """Point relative links at wiki pages or GitHub, and images at raw files."""
+
+    def target(href: str) -> tuple[str, str]:
+        path, _, frag = href.partition("#")
+        full = os.path.normpath(os.path.join(os.path.dirname(page.src), path)).replace(os.sep, "/")
+        return full, ("#" + frag) if frag else ""
+
+    def img(m: re.Match) -> str:
+        href = m.group(2)
+        if re.match(r"^(https?:|data:)", href):
+            return m.group(0)
+        full, _ = target(href)
+        return f"![{m.group(1)}]({RAW}/{full})"
+
+    def link(m: re.Match) -> str:
+        href = m.group(2)
+        if re.match(r"^(https?:|mailto:|tel:|#)", href):
+            return m.group(0)
+        full, frag = target(href)
+        if full in names:
+            return f"[{m.group(1)}]({names[full]}{frag})"
+        if os.path.isdir(os.path.join(ROOT, full)):
+            return f"[{m.group(1)}]({REPO}/tree/{BRANCH}/{full})"
+        return f"[{m.group(1)}]({REPO}/blob/{BRANCH}/{full}{frag})"
+
+    out, fenced = [], False
+    for line in text.split("\n"):
+        if FENCE_RE.match(line):
+            fenced = not fenced
+        elif not fenced:
+            line = WIKI_LINK.sub(link, WIKI_IMG.sub(img, line))
+        out.append(line)
+    return "\n".join(out)
+
+
+def export_wiki(out_dir: str) -> int:
+    site = Site()
+    groups = collect(site)
+    for pg in site.pages:
+        render_page(site, pg)
+    used: set[str] = {"home", "_sidebar", "_footer"}
+    names = {pg.src: wiki_name(pg.title, used) for pg in site.pages}
+    if os.path.isdir(out_dir):
+        shutil.rmtree(out_dir)
+    os.makedirs(out_dir)
+    for pg in site.pages:
+        _, text = parse_front(read_text(os.path.join(ROOT, pg.src)))
+        text = re.sub(r"^# .*\n+", "", text, count=1)
+        body = f"> Source: [`{pg.src}`]({REPO}/blob/{BRANCH}/{pg.src}). Rendered docs: {DOCS_URL}\n\n"
+        write_text(
+            os.path.join(out_dir, names[pg.src] + ".md"), f"# {pg.title}\n\n" + body + wiki_rewrite(text, pg, names)
+        )
+    side = [f"**[Home](Home)** · [Docs site]({DOCS_URL})", ""]
+    home = [
+        "# Beril wiki",
+        "",
+        "A local-first cybersecurity skill for agents and people. Scan what you own, hunt bugs in open source behind an ownership gate, and report with evidence.",
+        "",
+        f"Prefer a searchable reader? Use the [docs site]({DOCS_URL}). The pages below mirror it.",
+        "",
+    ]
+    for label, blurb, pages in groups:
+        links = [f"- [{p.title}]({names[p.src]})" for p in pages]
+        big = len(pages) > 12
+        side += (
+            [f"<details><summary><b>{label}</b> ({len(pages)})</summary>", "", *links, "", "</details>"]
+            if big
+            else [f"**{label}**", "", *links]
+        )
+        side.append("")
+        home += (
+            [f"## {label}", "", blurb, ""]
+            + ([f"{len(pages)} pages. Start with [{pages[0].title}]({names[pages[0].src]})."] if big else links)
+            + [""]
+        )
+    write_text(os.path.join(out_dir, "Home.md"), "\n".join(home))
+    write_text(os.path.join(out_dir, "_Sidebar.md"), "\n".join(side))
+    write_text(
+        os.path.join(out_dir, "_Footer.md"),
+        f"Generated from the repository by `scripts/build_docs.py --wiki`. Edit the source pages, not this wiki. [Docs site]({DOCS_URL}) · [Repository]({REPO})",
+    )
+    print(f"exported {len(site.pages)} wiki pages into {os.path.relpath(out_dir, ROOT)}")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out", default=os.path.join(ROOT, "site"))
     ap.add_argument("--check", action="store_true", help="exit 1 on broken internal links")
+    ap.add_argument("--wiki", metavar="DIR", help="export GitHub wiki pages into DIR instead of building the site")
     a = ap.parse_args()
+    if a.wiki:
+        return export_wiki(os.path.abspath(a.wiki))
     return build(os.path.abspath(a.out), a.check)
 
 
