@@ -11,7 +11,12 @@ All notable changes. Beril uses semantic versioning.
   recursion, polynomial descendant combinator DoS) are only fixed from 3.0.2 and
   4.0.0, and every fixed release needs Python 3.11.5 or newer.
 - Record the synthetic Google and OpenAI keys in `benchmarks/secrets` as used in
-  tests, so secret scanning carries a reason instead of a standing alert.
+  tests, so secret scanning carries a reason instead of a standing alert, and
+  exclude that directory from scanning in `.github/secret_scanning.yml`.
+- Track `uv.lock` with Dependabot instead of the pip files it cannot sync, and
+  add a CI job that keeps the lock in step with `pyproject.toml` and audits it
+  with `uv audit`.
+- Add Python 3.14 to the test matrix and classifiers.
 
 ## 1.4.0 - 2026-11-23
 
