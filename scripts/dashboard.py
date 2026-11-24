@@ -466,7 +466,11 @@ class Handler(BaseHTTPRequestHandler):
             )
         if path == "/api/memory":
             mp = os.path.join(ROOT, "knowledge", "index.json")
-            items = json.load(open(mp)) if os.path.exists(mp) else []
+            if os.path.exists(mp):
+                with open(mp, encoding="utf-8") as fh:
+                    items = json.load(fh)
+            else:
+                items = []
             return self.json(filter_rows(items, q.get("q", [""])[0], 200, 0))
         if path == "/api/memory/card":
             cid = q.get("id", [""])[0]

@@ -16,7 +16,6 @@ import datetime as dt
 import json
 import os
 import re
-import shutil
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIR = os.path.join(ROOT, "knowledge")
@@ -29,7 +28,8 @@ def slug(text: str) -> str:
 
 
 def parse(path: str) -> dict:
-    text = open(path, encoding="utf-8").read()
+    with open(path, encoding="utf-8") as fh:
+        text = fh.read()
     m = CARD_RE.match(text)
     if not m:
         return {}
@@ -38,9 +38,7 @@ def parse(path: str) -> dict:
     for line in meta.splitlines():
         key, _, value = line.partition(":")
         key, value = key.strip(), value.strip()
-        if key == "tags":
-            card[key] = [t.strip() for t in value.split(",") if t.strip()]
-        elif key in ("sources",):
+        if key in ("tags", "sources"):
             card[key] = [t.strip() for t in value.split(",") if t.strip()]
         else:
             card[key] = value
@@ -59,13 +57,15 @@ def load() -> list[dict]:
 def rebuild() -> list[dict]:
     cards = load()
     os.makedirs(DIR, exist_ok=True)
-    json.dump(cards, open(INDEX, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    with open(INDEX, "w", encoding="utf-8") as fh:
+        json.dump(cards, fh, ensure_ascii=False, indent=1)
     lines = ["# Knowledge index", "",
              f"{len(cards)} durable cards. Read this before a web search; open a card only when it matches.",
              "", "| id | title | tags | confidence | updated |", "|---|---|---|---|---|"]
     for c in sorted(cards, key=lambda x: (x.get("tags", [""])[0], x["title"])):
         lines.append(f"| `{c['id']}` | {c['title']} | {', '.join(c.get('tags', []))} | {c.get('confidence', '?')} | {c.get('updated', '')} |")
-    open(os.path.join(DIR, "INDEX.md"), "w", encoding="utf-8").write("\n".join(lines) + "\n")
+    with open(os.path.join(DIR, "INDEX.md"), "w", encoding="utf-8") as fh:
+        fh.write("\n".join(lines) + "\n")
     return cards
 
 
@@ -100,7 +100,8 @@ status: {data.get("status", "active")}
 
 {data.get("failure", "")}
 '''
-    open(path, "w", encoding="utf-8").write(text)
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write(text)
     return path
 
 
