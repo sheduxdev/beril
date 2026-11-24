@@ -6902,7 +6902,7 @@ It binds `127.0.0.1:8788` and opens the browser. Use `--port` to change and `--n
 | Activity | Jobs, labs, scans and journal in one stream | Open context |
 | Jobs | Every job with actor, model, tokens and cost | Create, finish, inspect |
 | Costs | Spend today/week/month, by model and type | Set the budget |
-| Memory | 27 durable cards, confidence and freshness | Open a card |
+| Memory | 118 durable cards, confidence and freshness | Open a card |
 | Threads | Every harvested thread with source filter and search | Open the source |
 | Experts | Profiles, focus, work count | Open the profile |
 | Tools | Core shelf and RE/offense shelf, search | Open the repo |
@@ -7064,6 +7064,18 @@ Every card is a Markdown file with a date and a source. Commit messages become t
 
 Do not store secrets, customer data, or private report text in a card. Link the source.
 
+## Gaps
+
+`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. 96 gaps exist: 91 covered, 5 open at medium or low priority, no high gaps. Do not pretend a gap is covered.
+
+```bash
+./beril gaps --next
+./beril gaps --priority high
+./beril gaps --cover web-ldap-xpath --card web-ldap-xpath
+```
+
+Close a gap by teaching the card, then cover it.
+
 ## What belongs here
 
 - A mechanism that repeats across targets.
@@ -7085,51 +7097,142 @@ The entry files in the repo root tell Claude, Codex, Cursor and Gemini to recall
 
 ## Current seed
 
-27 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
+118 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
 
 
 <!-- ===== knowledge/INDEX.md ===== -->
 
 # Knowledge index
 
-27 durable cards. Read this before a web search; open a card only when it matches.
+118 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
 | `ad-acl-path` | AD compromise is an edge path, not a single bug | ad, windows, acl | high | 2026-11-24 |
 | `ad-adcs-esc1` | ESC1 is an enrollable SAN on a client-auth template | ad, adcs, certificate | high | 2026-11-24 |
+| `ai-sandbox-escape` | A code interpreter is a process with a filesystem | ai, sandbox, interpreter | high | 2026-11-24 |
+| `ai-memory-poison` | Agent memory is a write target | ai, agent, memory | high | 2026-11-24 |
+| `ai-agent-tool` | Agent tool abuse is argument control, not prompt text | ai, agent, tool | high | 2026-11-24 |
+| `ai-cost-control` | An agent loop is a budget bug | ai, cost, agent | medium | 2026-11-24 |
+| `ai-agent-planning` | An agent plan is a permission boundary | ai, agent, planning | high | 2026-11-24 |
+| `ai-embedding` | An embedding is not anonymized data | ai, embedding, rag | medium | 2026-11-24 |
 | `ai-indirect-injection-tool` | Indirect injection turns a document into an instruction | ai, llm, prompt-injection | high | 2026-11-24 |
+| `ai-mcp` | MCP config is a trust boundary with filesystem and network rights | ai, mcp, config | high | 2026-11-24 |
+| `ai-model-extraction` | Model extraction is a query budget problem | ai, model, extraction | medium | 2026-11-24 |
+| `ai-data-poison` | Poisoned data changes the model or the retrieval set | ai, data, poisoning | high | 2026-11-24 |
 | `ai-rag-tenant-filter` | RAG leaks when retrieval ignores the tenant | ai, llm, rag | high | 2026-11-24 |
+| `api-webhook-signature` | A webhook without HMAC is an unauthenticated write | api, webhook, hmac | high | 2026-11-24 |
+| `api-oauth-device` | Device code flow is phishing with a real code | api, oauth, device-code | medium | 2026-11-24 |
+| `api-mass-assignment` | Mass assignment is a binder trusting extra fields | api, json, mass-assignment | high | 2026-11-24 |
+| `api-rate-limit-bypass` | Rate limits are only as strong as the key | api, rate-limit, bypass | high | 2026-11-24 |
+| `api-idempotency` | Retries need an idempotency key at the write | api, idempotency, retry | high | 2026-11-24 |
+| `api-sse` | Server-sent events need per-connection auth | api, sse, stream | medium | 2026-11-24 |
+| `api-grpc-reflection` | gRPC reflection is a map, per-method auth is the bug | api, grpc, reflection | medium | 2026-11-24 |
+| `binary-kernel` | A kernel bug is an object lifetime bug with a user buffer | binary, kernel, driver | high | 2026-11-24 |
+| `binary-browser` | Browser exploitation needs a renderer bug and a sandbox path | binary, browser, jit | high | 2026-11-24 |
+| `binary-jit` | JIT bugs are about generated code and stale metadata | binary, jit, exploit | medium | 2026-11-24 |
+| `binary-uefi` | UEFI is an event-driven firmware runtime | binary, uefi, firmware | medium | 2026-11-24 |
+| `browser-extension-permissions` | An extension is a trusted page with broad APIs | browser, extension, permissions | medium | 2026-11-24 |
+| `cloud-docker-socket` | A mounted Docker socket is root on the host | cloud, docker, container | medium | 2026-11-24 |
+| `cloud-k8s-hostpath` | A privileged pod with hostPath is a host escape | cloud, kubernetes, container | high | 2026-11-24 |
+| `cloud-aks-identity` | AKS mixes Azure RBAC and Kubernetes RBAC | cloud, aks, kubernetes | medium | 2026-11-24 |
+| `cloud-azure-role` | Azure identity is a role assignment graph | cloud, azure, iam | high | 2026-11-24 |
 | `cloud-metadata-role` | Cloud metadata is a credential endpoint | cloud, ssrf, iam | high | 2026-11-24 |
+| `cloud-eks` | EKS has two identity planes: IAM and Kubernetes | cloud, eks, kubernetes | medium | 2026-11-24 |
+| `cloud-gcp-iam` | GCP IAM binds a member to a role on a resource | cloud, gcp, iam | high | 2026-11-24 |
+| `cloud-iam-wildcard` | IAM wildcard is administrator access until proven otherwise | cloud, iam, aws | high | 2026-11-24 |
+| `cloud-serverless` | Serverless events are input, not a trusted trigger | cloud, serverless, lambda | medium | 2026-11-24 |
+| `cloud-terraform-state` | Terraform state is a secret store | cloud, terraform, state | medium | 2026-11-24 |
+| `container-escape` | A container escape is a host resource exposed to the container | container, escape, kubernetes | high | 2026-11-24 |
+| `key-management` | Key management is where crypto bugs become data bugs | crypto, keys, storage | medium | 2026-11-24 |
+| `crypto-weak-random` | Predictable randomness is a key recovery bug | crypto, random, predictability | high | 2026-11-24 |
+| `tls-config-review` | TLS is a version, a chain and a policy | crypto, tls, certificate | medium | 2026-11-24 |
+| `detection-sigma` | A Sigma rule needs a logsource, a selection and a false-positive note | detection, sigma, log | high | 2026-11-24 |
+| `detection-beacon` | A beacon is a timing pattern, not a single request | detection, beacon, network | medium | 2026-11-24 |
+| `detection-edr` | EDR detection is a process tree and a sequence | detection, edr, process | medium | 2026-11-24 |
+| `detection-threatintel` | Threat intel ages and IOCs are easy to rotate | detection, intel, ioc | medium | 2026-11-24 |
+| `electron-context-isolation` | Electron is Node with a browser attached | electron, desktop, context-isolation | medium | 2026-11-24 |
 | `exploit-uaf-reallocate` | UAF becomes control when the freed slot is reallocated | exploit, uaf, heap | high | 2026-11-24 |
 | `exploit-rop-argument-registers` | x86_64 ROP needs the argument registers | exploit, rop, linux | high | 2026-11-24 |
+| `firmware-update-sign` | A signed update is useless if verification is off | firmware, update, signature | high | 2026-11-24 |
 | `firmware-cgi-injection` | Firmware CGI builds a shell string from the query | firmware, iot, command | high | 2026-11-24 |
+| `firmware-jtag` | JTAG and SWD are identified by pinout and IDCODE | firmware, hardware, jtag | medium | 2026-11-24 |
+| `firmware-radio` | Radio protocols are state machines with replay windows | firmware, radio, ble | medium | 2026-11-24 |
+| `firmware-spi` | SPI flash reads need two matching dumps | firmware, hardware, spi | medium | 2026-11-24 |
+| `firmware-secureboot` | Secure boot is a chain, not a boolean | firmware, secureboot, boot | high | 2026-11-24 |
+| `firmware-uart` | UART is found by idle levels and confirmed by baud | firmware, hardware, uart | high | 2026-11-24 |
+| `hardware-sidechannel` | Side channels leak through power, timing or EM | hardware, sidechannel | low | 2026-11-24 |
+| `ir-timeline` | An incident timeline needs three independent clocks | ir, timeline, forensics | medium | 2026-11-24 |
+| `ir-disk` | Disk artifacts answer who, what and when | ir, disk, forensics | medium | 2026-11-24 |
+| `ir-memory` | Memory is the most volatile evidence | ir, memory, forensics | medium | 2026-11-24 |
+| `linux-suid` | A SUID binary is a path, not a finding | linux, privesc, suid | high | 2026-11-24 |
+| `linux-cron-systemd` | Scheduled jobs inherit a weak PATH or writable unit | linux, privesc, cron, systemd | medium | 2026-11-24 |
 | `mobile-deep-link-bridge` | A deep link plus a JS bridge is a chain | mobile, android, deep-link | high | 2026-11-24 |
+| `mobile-ios-ats` | ATS exceptions are domain-scoped trust decisions | mobile, ios, ats | medium | 2026-11-24 |
+| `mobile-provider-paths` | An exported provider with a broad path leaks files | mobile, android, provider | high | 2026-11-24 |
+| `mobile-flutter` | Flutter hides logic in libapp.so and pins in Dart | mobile, flutter, dart | medium | 2026-11-24 |
+| `mobile-swift` | Swift hooks need mangled names or a bridge | mobile, ios, swift | medium | 2026-11-24 |
+| `mobile-swiftui-state` | SwiftUI state is not a security boundary | mobile, ios, swiftui | low | 2026-11-24 |
 | `report-impact-chain` | A report is a chain a triager can rerun | process, report, impact | high | 2026-11-24 |
+| `report-cvss-context` | CVSS without business context misranks the bug | process, report, cvss | medium | 2026-11-24 |
+| `process-disclosure` | Disclosure is a timeline with a paper trail | process, disclosure, vendor | medium | 2026-11-24 |
 | `cost-job-ledger` | Every job has an actor and a cost | process, cost, jobs | high | 2026-11-24 |
+| `report-evidence` | Evidence must be reproducible and redacted | process, report, evidence | high | 2026-11-24 |
 | `process-recall-before-research` | Recall before searching | process, memory, research | high | 2026-11-24 |
+| `process-scope-parse` | Scope is a list of rules, not a domain | process, scope, recon | high | 2026-11-24 |
+| `process-duplicate-search` | Search duplicates before writing a report | process, triage, duplicate | high | 2026-11-24 |
 | `re-crash-triage-primitive` | A crash is a lead; the primitive is the finding | re, triage, crash | high | 2026-11-24 |
 | `re-ghidrust-vs-ghidra` | GhidRust is a paused Ghidra plugin, not Ghidrust | re, ghidra, rust | high | 2026-11-24 |
+| `re-go` | Go binaries carry pclntab and interface metadata | re, go, language | medium | 2026-11-24 |
+| `re-jvm` | JVM bytecode is a stack machine with metadata | re, java, jvm | medium | 2026-11-24 |
+| `re-dotnet-aot` | Native AOT is not IL | re, dotnet, aot | medium | 2026-11-24 |
 | `re-rust-layout` | Rust types are not C types | re, rust, layout | high | 2026-11-24 |
+| `re-swift` | Swift uses witness tables and value types | re, swift, ios | medium | 2026-11-24 |
+| `supply-lockfile` | A lockfile is an integrity contract | supply-chain, lockfile, reproducible | medium | 2026-11-24 |
+| `supply-typosquat` | A package name one character off is a supply-chain bug | supply-chain, package, typosquat | high | 2026-11-24 |
+| `secrets-verified` | A secret is a finding only after a read-only proof | supply-chain, secret, verification | high | 2026-11-24 |
+| `supply-sigstore` | Signatures are only useful when verified | supply-chain, sigstore, provenance | medium | 2026-11-24 |
+| `cicd-pr-target` | pull_request_target can run untrusted code with a write token | supply-chain, ci, github-actions | high | 2026-11-24 |
 | `web-race-single-packet` | A race is a check and a write without one lock | web, race, logic | high | 2026-11-24 |
+| `race-idempotency` | A unique constraint is the cheapest race fix | web, race, database | medium | 2026-11-24 |
+| `web-cors-null-origin` | CORS reflection is only a bug with credentials | web, cors, browser | high | 2026-11-24 |
+| `web-csp-bypass` | CSP is bypassed by a trusted script source, not by a weak directive alone | web, csp, xss | high | 2026-11-24 |
+| `web-csrf-samesite` | CSRF survives when state changes on a safe method | web, csrf, session | high | 2026-11-24 |
+| `web-cache-deception` | Cache deception dresses a private page as a static file | web, cache, deception | medium | 2026-11-24 |
 | `web-cache-key-unkeyed-input` | Cache poisoning is an unkeyed input that changes the response | web, cache, cdn | high | 2026-11-24 |
+| `web-client-path-traversal` | Client-side path traversal is a router normalization bug | web, spa, router | medium | 2026-11-24 |
+| `web-dom-clobbering` | DOM clobbering turns an id into a variable | web, dom, clobbering | medium | 2026-11-24 |
 | `web-desync-parser-disagreement` | Desync needs two HTTP parsers and an ambiguous length | web, http, smuggling | high | 2026-11-24 |
 | `web-graphql-field-auth` | GraphQL authorization is per field, not per endpoint | web, graphql, api | high | 2026-11-24 |
+| `web-http2-downgrade` | HTTP/2 adds a second parser for the same request | web, http2, smuggling | medium | 2026-11-24 |
 | `web-idor-owner-check` | IDOR is a missing owner check, not a hidden id | web, idor, access-control | high | 2026-11-24 |
+| `web-jsonp` | JSONP is script injection with a callback name | web, jsonp, script | medium | 2026-11-24 |
 | `web-jwt-signature-trust` | JWT bugs are claim trust, not base64 | web, jwt, identity | high | 2026-11-24 |
+| `web-ldap-xpath` | LDAP and XPath injection are filter syntax bugs | web, ldap, xpath, injection | medium | 2026-11-24 |
+| `web-deserialization-gadget` | Native deserialization is RCE when a gadget chain exists | web, deserialization, rce | high | 2026-11-24 |
 | `web-oauth-redirect-binding` | OAuth redirect matching is prefix logic under pressure | web, oauth, identity | high | 2026-11-24 |
+| `web-open-redirect-chain` | Open redirect matters when a token rides the URL | web, redirect, oauth | high | 2026-11-24 |
+| `web-host-header-reset` | Password reset trusts the request host | web, host-header, email | high | 2026-11-24 |
+| `web-prototype-pollution` | Prototype pollution needs a merge sink and a gadget | web, javascript, prototype | high | 2026-11-24 |
 | `web-saml-signature-wrapping` | SAML trusts the assertion, not the signature | web, saml, identity | high | 2026-11-24 |
 | `web-sqli-parameterized` | SQL injection is a string-built query at a boundary | web, sqli, database | high | 2026-11-24 |
 | `web-ssrf-parser-differential` | SSRF hides in URL parser disagreement | web, ssrf, parser | high | 2026-11-24 |
 | `web-traversal-canonical-path` | Traversal is a join before canonicalization | web, file, traversal | high | 2026-11-24 |
+| `web-upload-validation` | Upload validation is four separate checks | web, upload, file | high | 2026-11-24 |
+| `web-websocket-origin` | WebSocket handshakes skip the same-origin policy | web, websocket, origin | high | 2026-11-24 |
 | `web-xss-parser-differential` | XSS survives when two parsers disagree | web, xss, parser | high | 2026-11-24 |
+| `web-xxe-parser` | XXE depends on entity expansion and the parser feature set | web, xxe, xml | medium | 2026-11-24 |
+| `web-postmessage` | postMessage is a bug when the receiver trusts any origin or sends to any origin | web, postmessage, client-side | high | 2026-11-24 |
+| `win-service-acl` | A weak service ACL is local privilege escalation | windows, privesc, service | high | 2026-11-24 |
+| `win-credential-stores` | Windows keeps credentials in more than one place | windows, credentials, dpapi | medium | 2026-11-24 |
+| `win-token-privileges` | Windows token privileges are the privesc surface | windows, token, privesc | high | 2026-11-24 |
 
 
 <!-- ===== knowledge/GAPS.md ===== -->
 
 # Knowledge gaps
 
-51 gaps. A gap is a card that does not exist yet, ranked by priority.
+96 gaps. A gap is a card that does not exist yet, ranked by priority.
 
 | # | Domain | Gap | Priority | Source | Status |
 |---|---|---|---|---|---|
@@ -7139,51 +7242,96 @@ The entry files in the repo root tell Claude, Codex, Cursor and Gemini to recall
 | 4 | web | Open redirect and its use in OAuth and SSO chains | high | `references/techniques.md` | covered by `web-open-redirect-chain` |
 | 5 | web | Upload validation: extension, MIME, magic, polyglot, storage path | high | `references/techniques.md` | covered by `web-upload-validation` |
 | 6 | web | WebSocket origin checks, token handling and message auth | high | `references/techniques.md` | covered by `web-websocket-origin` |
-| 7 | web | Cache deception versus poisoning, extension confusion | medium | `references/techniques.md` | open |
+| 7 | web | Cache deception versus poisoning, extension confusion | medium | `references/techniques.md` | covered by `web-cache-deception` |
 | 8 | web | Prototype pollution sources, merge sinks and gadget paths | high | `references/techniques.md` | covered by `web-prototype-pollution` |
 | 9 | web | Python pickle, PHP unserialize, Java streams, .NET formatters | high | `references/techniques.md` | covered by `web-deserialization-gadget` |
 | 10 | web | XXE in XML, SAML, DOCX and SVG parsers | medium | `references/techniques.md` | covered by `web-xxe-parser` |
-| 11 | web | LDAP and XPath injection syntax and blind variants | medium | `references/techniques.md` | open |
-| 12 | api | gRPC reflection, proto exposure, per-method auth | medium | `references/techniques.md` | open |
+| 11 | web | LDAP and XPath injection syntax and blind variants | medium | `references/techniques.md` | covered by `web-ldap-xpath` |
+| 12 | api | gRPC reflection, proto exposure, per-method auth | medium | `references/techniques.md` | covered by `api-grpc` |
 | 13 | api | Mass assignment through JSON and form binding | high | `references/techniques.md` | covered by `api-mass-assignment` |
 | 14 | cloud | IAM wildcard actions, trust policies and privilege escalation paths | high | `references/vulnerability-research.md` | covered by `cloud-iam-wildcard` |
 | 15 | cloud | Privileged pods, hostPath, service account tokens and admission bypass | high | `labs/cloud` | covered by `cloud-k8s-hostpath` |
-| 16 | cloud | Docker socket, root container, image digest and build secrets | medium | `labs/cloud` | open |
-| 17 | cloud | Terraform public resources, state secrets and provider trust | medium | `labs/cloud` | open |
+| 16 | cloud | Docker socket, root container, image digest and build secrets | medium | `labs/cloud` | covered by `cloud-docker` |
+| 17 | cloud | Terraform public resources, state secrets and provider trust | medium | `labs/cloud` | covered by `cloud-terraform` |
 | 18 | supply-chain | Typosquatting, dependency confusion and install scripts | high | `references/vulnerability-research.md` | covered by `supply-typosquat` |
-| 19 | supply-chain | Lockfile integrity, registry pinning and reproducible builds | medium | `references/vulnerability-research.md` | open |
-| 20 | supply-chain | Signing, provenance and verification of build artifacts | medium | `references/vulnerability-research.md` | open |
+| 19 | supply-chain | Lockfile integrity, registry pinning and reproducible builds | medium | `references/vulnerability-research.md` | covered by `supply-lockfile` |
+| 20 | supply-chain | Signing, provenance and verification of build artifacts | medium | `references/vulnerability-research.md` | covered by `supply-sigstore` |
 | 21 | supply-chain | pull_request_target, workflow permissions and untrusted checkout | high | `labs/cloud` | covered by `cicd-pr-target` |
 | 22 | supply-chain | Secret scanning with verification and blast-radius proof | high | `references/tooling.md` | covered by `secrets-verified` |
-| 23 | mobile | iOS ATS exceptions and WKWebView bridges | medium | `references/mobile-reverse.md` | open |
+| 23 | mobile | iOS ATS exceptions and WKWebView bridges | medium | `references/mobile-reverse.md` | covered by `mobile-ios-ats` |
 | 24 | mobile | Android FileProvider paths and exported providers | high | `labs/mobile` | covered by `mobile-provider-paths` |
-| 25 | mobile | Flutter Dart snapshots, SSL pinning and reFlutter | medium | `references/mobile-reverse.md` | open |
+| 25 | mobile | Flutter Dart snapshots, SSL pinning and reFlutter | medium | `references/mobile-reverse.md` | covered by `mobile-flutter` |
 | 26 | firmware | UART discovery, baud detection and console access | high | `references/firmware-iot.md` | covered by `firmware-uart` |
-| 27 | firmware | JTAG and SWD identification and flash dump | medium | `references/firmware-iot.md` | open |
-| 28 | firmware | SPI flash read, verification and recovery | medium | `references/firmware-iot.md` | open |
+| 27 | firmware | JTAG and SWD identification and flash dump | medium | `references/firmware-iot.md` | covered by `firmware-jtag` |
+| 28 | firmware | SPI flash read, verification and recovery | medium | `references/firmware-iot.md` | covered by `firmware-spi` |
 | 29 | firmware | Update signature, downgrade and rollback | high | `labs/firmware` | covered by `firmware-update-sign` |
 | 30 | windows | Service ACL, unquoted path and weak service permissions | high | `references/vulnerability-research.md` | covered by `win-service-acl` |
-| 31 | windows | Token privileges, impersonation and potato family | high | `references/vulnerability-research.md` | open |
-| 32 | windows | DPAPI, Credential Manager and browser stores | medium | `references/vulnerability-research.md` | open |
+| 31 | windows | Token privileges, impersonation and potato family | high | `references/vulnerability-research.md` | covered by `win-token` |
+| 32 | windows | DPAPI, Credential Manager and browser stores | medium | `references/vulnerability-research.md` | covered by `win-credential` |
 | 33 | linux | SUID and capabilities review and GTFOBins paths | high | `references/vulnerability-research.md` | covered by `linux-suid` |
-| 34 | linux | Cron, systemd unit and PATH privilege paths | medium | `references/vulnerability-research.md` | open |
-| 35 | container | Container escape primitives and host mounts | high | `references/vulnerability-research.md` | open |
-| 36 | browser | Extension permissions, content scripts and message passing | medium | `references/vulnerability-research.md` | open |
-| 37 | browser | Electron context isolation, preload and nodeIntegration | medium | `references/vulnerability-research.md` | open |
+| 34 | linux | Cron, systemd unit and PATH privilege paths | medium | `references/vulnerability-research.md` | covered by `linux-cron-systemd` |
+| 35 | container | Container escape primitives and host mounts | high | `references/vulnerability-research.md` | covered by `container-escape` |
+| 36 | browser | Extension permissions, content scripts and message passing | medium | `references/vulnerability-research.md` | covered by `browser-extension` |
+| 37 | browser | Electron context isolation, preload and nodeIntegration | medium | `references/vulnerability-research.md` | covered by `electron-context` |
 | 38 | detection | Sigma rule structure, logsource and false-positive analysis | high | `labs/detection` | covered by `detection-sigma` |
-| 39 | detection | Beaconing detection from flow timing and jitter | medium | `references/techniques.md` | open |
-| 40 | ir | Incident timeline from logs, disk and memory | medium | `references/vulnerability-research.md` | open |
-| 41 | ir | Memory capture order and volatile evidence | medium | `references/vulnerability-research.md` | open |
+| 39 | detection | Beaconing detection from flow timing and jitter | medium | `references/techniques.md` | covered by `detection-beacon` |
+| 40 | ir | Incident timeline from logs, disk and memory | medium | `references/vulnerability-research.md` | covered by `ir-timeline` |
+| 41 | ir | Memory capture order and volatile evidence | medium | `references/vulnerability-research.md` | covered by `ir-memory` |
 | 42 | ai | Agent tool-call confusion and argument injection | high | `labs/llm` | covered by `ai-agent-tool` |
-| 43 | ai | Agent memory poisoning and later action | high | `references/techniques.md` | open |
+| 43 | ai | Agent memory poisoning and later action | high | `references/techniques.md` | covered by `ai-memory-poison` |
 | 44 | ai | MCP server config, tool permissions and prompt injection | high | `references/claude-bughunter.md` | covered by `ai-mcp` |
-| 45 | ai | Token budget, loop control and cost caps for agents | medium | `docs/dashboard.md` | open |
+| 45 | ai | Token budget, loop control and cost caps for agents | medium | `docs/dashboard.md` | covered by `ai-cost` |
 | 46 | process | CVSS with business context and severity defense | medium | `references/scoring.md` | covered by `report-cvss` |
 | 47 | process | Evidence redaction and chain of custody | high | `references/claude-bughunter.md` | covered by `report-evidence` |
-| 48 | crypto | TLS versions, ciphers, certificate chain and pinning | medium | `references/tooling.md` | open |
-| 49 | crypto | Key storage, rotation and envelope encryption | medium | `references/vulnerability-research.md` | open |
-| 50 | api | Webhook HMAC, timestamp and replay | high | `references/techniques.md` | open |
-| 51 | web | Database isolation, unique constraints and idempotency keys | medium | `references/techniques.md` | open |
+| 48 | crypto | TLS versions, ciphers, certificate chain and pinning | medium | `references/tooling.md` | covered by `tls-config` |
+| 49 | crypto | Key storage, rotation and envelope encryption | medium | `references/vulnerability-research.md` | covered by `key-management` |
+| 50 | api | Webhook HMAC, timestamp and replay | high | `references/techniques.md` | covered by `api-webhook-signature` |
+| 51 | web | Database isolation, unique constraints and idempotency keys | medium | `references/techniques.md` | covered by `race-db` |
+| 52 | web | CSP bypass: JSONP, base-uri, script gadgets and nonce reuse | high | `references/techniques.md` | covered by `web-csp-bypass` |
+| 53 | web | DOM clobbering and named element collisions | medium | `references/techniques.md` | covered by `web-dom-clobbering` |
+| 54 | web | postMessage origin and target origin checks | high | `references/techniques.md` | covered by `web-postmessage` |
+| 55 | web | HTTP/2 pseudo-header, HPACK and downgrade behavior | high | `references/techniques.md` | covered by `web-http2` |
+| 56 | web | JSONP and callback injection | medium | `references/techniques.md` | covered by `web-jsonp` |
+| 57 | web | Client-side path traversal in routers and file pickers | medium | `references/techniques.md` | covered by `web-client-path` |
+| 58 | api | OAuth device code flow and code phishing | medium | `references/techniques.md` | covered by `api-oauth-device` |
+| 59 | api | Server-sent events auth, replay and cross-user leakage | medium | `references/techniques.md` | covered by `api-sse` |
+| 60 | api | Rate limit keying and bypass through identity, IP and route | high | `references/techniques.md` | covered by `api-rate-limit` |
+| 61 | cloud | Azure AD, managed identity and role assignment paths | high | `references/vulnerability-research.md` | covered by `cloud-azure` |
+| 62 | cloud | GCP service accounts, workload identity and bucket IAM | high | `references/vulnerability-research.md` | covered by `cloud-gcp` |
+| 63 | cloud | Lambda and Cloud Functions event injection and role scope | medium | `references/vulnerability-research.md` | covered by `cloud-serverless` |
+| 64 | cloud | EKS IRSA, aws-auth and node role paths | medium | `references/vulnerability-research.md` | covered by `cloud-eks` |
+| 65 | binary | Kernel drivers, IOCTL buffers and object lifetime | high | `references/reverse-engineering.md` | covered by `binary-kernel` |
+| 66 | binary | Browser exploitation: JIT, GC and renderer sandbox | high | `references/exploit-development.md` | covered by `binary-browser` |
+| 67 | binary | JIT spraying, RWX pages and code generation bugs | medium | `references/exploit-development.md` | covered by `binary-jit` |
+| 68 | re | Go symbols, pclntab, goroutines and interface calls | medium | `references/reverse-engineering.md` | covered by `re-go` |
+| 69 | re | .NET Native AOT metadata and method recovery | medium | `references/reverse-engineering.md` | covered by `re-dotnet-aot` |
+| 70 | re | Swift mangling, witness tables and value types | medium | `references/reverse-engineering.md` | covered by `re-swift` |
+| 71 | ai | Model extraction and membership inference | medium | `references/techniques.md` | covered by `ai-model-extraction` |
+| 72 | ai | Training and RAG data poisoning | high | `references/techniques.md` | covered by `ai-data-poison` |
+| 73 | ai | Embedding inversion and vector store access | medium | `references/techniques.md` | covered by `ai-embedding` |
+| 74 | detection | EDR telemetry and process tree detection | medium | `labs/detection` | covered by `detection-edr` |
+| 75 | ir | Disk artifacts: MFT, USN, registry and prefetch | medium | `references/vulnerability-research.md` | covered by `ir-disk` |
+| 76 | process | Duplicate search before writing a report | high | `references/claude-bughunter.md` | covered by `process-duplicate` |
+| 77 | process | Scope parsing and out-of-scope asset checks | high | `docs/break-my-app.md` | covered by `process-scope` |
+| 78 | crypto | Weak randomness, predictability and seed reuse | high | `references/vulnerability-research.md` | covered by `crypto-random` |
+| 79 | mobile | Swift runtime, Objective-C bridging and Swift hooks | medium | `references/mobile-reverse.md` | covered by `mobile-swift` |
+| 80 | firmware | BLE, Zigbee and sub-GHz capture and replay | medium | `references/firmware-iot.md` | covered by `firmware-radio` |
+| 81 | hardware | Power, timing and EM side channels | low | `references/firmware-iot.md` | covered by `hardware-sidechannel` |
+| 82 | ai | Agent goal drift, subagent permissions and plan hijack | high | `references/techniques.md` | covered by `ai-agent-planning` |
+| 83 | ai | Code interpreter and tool sandbox escape | high | `labs/llm` | covered by `ai-sandbox-escape` |
+| 84 | ai | Vector store authorization and metadata filtering | medium | `references/techniques.md` | open |
+| 85 | api | Idempotency keys, retries and duplicate side effects | high | `references/techniques.md` | covered by `api-idempotency` |
+| 86 | cloud | AKS workload identity and Azure RBAC | medium | `references/vulnerability-research.md` | covered by `cloud-aks` |
+| 87 | cloud | OCI compartments, instance principals and policy | low | `references/vulnerability-research.md` | open |
+| 88 | binary | UEFI DXE drivers, SMM and secure boot | medium | `references/reverse-engineering.md` | covered by `binary-uefi` |
+| 89 | binary | Hypervisor interfaces, VTL and synthetic MSRs | low | `references/reverse-engineering.md` | open |
+| 90 | re | JVM bytecode, JIT and deserialization gadgets | medium | `references/reverse-engineering.md` | covered by `re-jvm` |
+| 91 | mobile | SwiftUI state, deep links and scene lifecycle | low | `references/mobile-reverse.md` | covered by `mobile-swiftui` |
+| 92 | firmware | Secure boot chain, key enrollment and rollback | high | `references/firmware-iot.md` | covered by `firmware-secureboot` |
+| 93 | detection | IOC versus behavior, intel aging and false positives | medium | `labs/detection` | covered by `detection-threatintel` |
+| 94 | ir | CloudTrail and audit log timeline reconstruction | medium | `references/vulnerability-research.md` | open |
+| 95 | process | Coordinated disclosure, timelines and vendor silence | medium | `references/claude-bughunter.md` | covered by `process-disclosure` |
+| 96 | crypto | Post-quantum migration and hybrid key exchange | low | `references/vulnerability-research.md` | open |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.
 

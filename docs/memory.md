@@ -73,7 +73,7 @@ Do not store secrets, customer data, or private report text in a card. Link the 
 
 ## Gaps
 
-`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. 81 gaps exist: 63 covered, 18 open at medium or low priority, no high gaps. Do not pretend a gap is covered.
+`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. 96 gaps exist: 91 covered, 5 open at medium or low priority, no high gaps. Do not pretend a gap is covered.
 
 ```bash
 ./beril gaps --next
@@ -104,4 +104,4 @@ The entry files in the repo root tell Claude, Codex, Cursor and Gemini to recall
 
 ## Current seed
 
-90 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
+118 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.

@@ -1,6 +1,6 @@
 # Knowledge gaps
 
-81 gaps. A gap is a card that does not exist yet, ranked by priority.
+96 gaps. A gap is a card that does not exist yet, ranked by priority.
 
 | # | Domain | Gap | Priority | Source | Status |
 |---|---|---|---|---|---|
@@ -56,34 +56,49 @@
 | 50 | api | Webhook HMAC, timestamp and replay | high | `references/techniques.md` | covered by `api-webhook-signature` |
 | 51 | web | Database isolation, unique constraints and idempotency keys | medium | `references/techniques.md` | covered by `race-db` |
 | 52 | web | CSP bypass: JSONP, base-uri, script gadgets and nonce reuse | high | `references/techniques.md` | covered by `web-csp-bypass` |
-| 53 | web | DOM clobbering and named element collisions | medium | `references/techniques.md` | open |
+| 53 | web | DOM clobbering and named element collisions | medium | `references/techniques.md` | covered by `web-dom-clobbering` |
 | 54 | web | postMessage origin and target origin checks | high | `references/techniques.md` | covered by `web-postmessage` |
 | 55 | web | HTTP/2 pseudo-header, HPACK and downgrade behavior | high | `references/techniques.md` | covered by `web-http2` |
-| 56 | web | JSONP and callback injection | medium | `references/techniques.md` | open |
-| 57 | web | Client-side path traversal in routers and file pickers | medium | `references/techniques.md` | open |
-| 58 | api | OAuth device code flow and code phishing | medium | `references/techniques.md` | open |
-| 59 | api | Server-sent events auth, replay and cross-user leakage | medium | `references/techniques.md` | open |
+| 56 | web | JSONP and callback injection | medium | `references/techniques.md` | covered by `web-jsonp` |
+| 57 | web | Client-side path traversal in routers and file pickers | medium | `references/techniques.md` | covered by `web-client-path` |
+| 58 | api | OAuth device code flow and code phishing | medium | `references/techniques.md` | covered by `api-oauth-device` |
+| 59 | api | Server-sent events auth, replay and cross-user leakage | medium | `references/techniques.md` | covered by `api-sse` |
 | 60 | api | Rate limit keying and bypass through identity, IP and route | high | `references/techniques.md` | covered by `api-rate-limit` |
 | 61 | cloud | Azure AD, managed identity and role assignment paths | high | `references/vulnerability-research.md` | covered by `cloud-azure` |
 | 62 | cloud | GCP service accounts, workload identity and bucket IAM | high | `references/vulnerability-research.md` | covered by `cloud-gcp` |
-| 63 | cloud | Lambda and Cloud Functions event injection and role scope | medium | `references/vulnerability-research.md` | open |
-| 64 | cloud | EKS IRSA, aws-auth and node role paths | medium | `references/vulnerability-research.md` | open |
+| 63 | cloud | Lambda and Cloud Functions event injection and role scope | medium | `references/vulnerability-research.md` | covered by `cloud-serverless` |
+| 64 | cloud | EKS IRSA, aws-auth and node role paths | medium | `references/vulnerability-research.md` | covered by `cloud-eks` |
 | 65 | binary | Kernel drivers, IOCTL buffers and object lifetime | high | `references/reverse-engineering.md` | covered by `binary-kernel` |
 | 66 | binary | Browser exploitation: JIT, GC and renderer sandbox | high | `references/exploit-development.md` | covered by `binary-browser` |
-| 67 | binary | JIT spraying, RWX pages and code generation bugs | medium | `references/exploit-development.md` | open |
-| 68 | re | Go symbols, pclntab, goroutines and interface calls | medium | `references/reverse-engineering.md` | open |
-| 69 | re | .NET Native AOT metadata and method recovery | medium | `references/reverse-engineering.md` | open |
-| 70 | re | Swift mangling, witness tables and value types | medium | `references/reverse-engineering.md` | open |
-| 71 | ai | Model extraction and membership inference | medium | `references/techniques.md` | open |
+| 67 | binary | JIT spraying, RWX pages and code generation bugs | medium | `references/exploit-development.md` | covered by `binary-jit` |
+| 68 | re | Go symbols, pclntab, goroutines and interface calls | medium | `references/reverse-engineering.md` | covered by `re-go` |
+| 69 | re | .NET Native AOT metadata and method recovery | medium | `references/reverse-engineering.md` | covered by `re-dotnet-aot` |
+| 70 | re | Swift mangling, witness tables and value types | medium | `references/reverse-engineering.md` | covered by `re-swift` |
+| 71 | ai | Model extraction and membership inference | medium | `references/techniques.md` | covered by `ai-model-extraction` |
 | 72 | ai | Training and RAG data poisoning | high | `references/techniques.md` | covered by `ai-data-poison` |
-| 73 | ai | Embedding inversion and vector store access | medium | `references/techniques.md` | open |
-| 74 | detection | EDR telemetry and process tree detection | medium | `labs/detection` | open |
-| 75 | ir | Disk artifacts: MFT, USN, registry and prefetch | medium | `references/vulnerability-research.md` | open |
+| 73 | ai | Embedding inversion and vector store access | medium | `references/techniques.md` | covered by `ai-embedding` |
+| 74 | detection | EDR telemetry and process tree detection | medium | `labs/detection` | covered by `detection-edr` |
+| 75 | ir | Disk artifacts: MFT, USN, registry and prefetch | medium | `references/vulnerability-research.md` | covered by `ir-disk` |
 | 76 | process | Duplicate search before writing a report | high | `references/claude-bughunter.md` | covered by `process-duplicate` |
 | 77 | process | Scope parsing and out-of-scope asset checks | high | `docs/break-my-app.md` | covered by `process-scope` |
 | 78 | crypto | Weak randomness, predictability and seed reuse | high | `references/vulnerability-research.md` | covered by `crypto-random` |
-| 79 | mobile | Swift runtime, Objective-C bridging and Swift hooks | medium | `references/mobile-reverse.md` | open |
-| 80 | firmware | BLE, Zigbee and sub-GHz capture and replay | medium | `references/firmware-iot.md` | open |
-| 81 | hardware | Power, timing and EM side channels | low | `references/firmware-iot.md` | open |
+| 79 | mobile | Swift runtime, Objective-C bridging and Swift hooks | medium | `references/mobile-reverse.md` | covered by `mobile-swift` |
+| 80 | firmware | BLE, Zigbee and sub-GHz capture and replay | medium | `references/firmware-iot.md` | covered by `firmware-radio` |
+| 81 | hardware | Power, timing and EM side channels | low | `references/firmware-iot.md` | covered by `hardware-sidechannel` |
+| 82 | ai | Agent goal drift, subagent permissions and plan hijack | high | `references/techniques.md` | covered by `ai-agent-planning` |
+| 83 | ai | Code interpreter and tool sandbox escape | high | `labs/llm` | covered by `ai-sandbox-escape` |
+| 84 | ai | Vector store authorization and metadata filtering | medium | `references/techniques.md` | open |
+| 85 | api | Idempotency keys, retries and duplicate side effects | high | `references/techniques.md` | covered by `api-idempotency` |
+| 86 | cloud | AKS workload identity and Azure RBAC | medium | `references/vulnerability-research.md` | covered by `cloud-aks` |
+| 87 | cloud | OCI compartments, instance principals and policy | low | `references/vulnerability-research.md` | open |
+| 88 | binary | UEFI DXE drivers, SMM and secure boot | medium | `references/reverse-engineering.md` | covered by `binary-uefi` |
+| 89 | binary | Hypervisor interfaces, VTL and synthetic MSRs | low | `references/reverse-engineering.md` | open |
+| 90 | re | JVM bytecode, JIT and deserialization gadgets | medium | `references/reverse-engineering.md` | covered by `re-jvm` |
+| 91 | mobile | SwiftUI state, deep links and scene lifecycle | low | `references/mobile-reverse.md` | covered by `mobile-swiftui` |
+| 92 | firmware | Secure boot chain, key enrollment and rollback | high | `references/firmware-iot.md` | covered by `firmware-secureboot` |
+| 93 | detection | IOC versus behavior, intel aging and false positives | medium | `labs/detection` | covered by `detection-threatintel` |
+| 94 | ir | CloudTrail and audit log timeline reconstruction | medium | `references/vulnerability-research.md` | open |
+| 95 | process | Coordinated disclosure, timelines and vendor silence | medium | `references/claude-bughunter.md` | covered by `process-disclosure` |
+| 96 | crypto | Post-quantum migration and hybrid key exchange | low | `references/vulnerability-research.md` | open |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.

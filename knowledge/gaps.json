@@ -473,8 +473,8 @@
   "gap": "DOM clobbering and named element collisions",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "web-dom-clobbering",
+  "status": "covered"
  },
  {
   "id": "web-postmessage",
@@ -500,8 +500,8 @@
   "gap": "JSONP and callback injection",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "web-jsonp",
+  "status": "covered"
  },
  {
   "id": "web-client-path",
@@ -509,8 +509,8 @@
   "gap": "Client-side path traversal in routers and file pickers",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "web-client-path",
+  "status": "covered"
  },
  {
   "id": "api-oauth-device",
@@ -518,8 +518,8 @@
   "gap": "OAuth device code flow and code phishing",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "api-oauth-device",
+  "status": "covered"
  },
  {
   "id": "api-sse",
@@ -527,8 +527,8 @@
   "gap": "Server-sent events auth, replay and cross-user leakage",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "api-sse",
+  "status": "covered"
  },
  {
   "id": "api-rate-limit",
@@ -563,8 +563,8 @@
   "gap": "Lambda and Cloud Functions event injection and role scope",
   "priority": "medium",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "cloud-serverless",
+  "status": "covered"
  },
  {
   "id": "cloud-eks",
@@ -572,8 +572,8 @@
   "gap": "EKS IRSA, aws-auth and node role paths",
   "priority": "medium",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "cloud-eks",
+  "status": "covered"
  },
  {
   "id": "binary-kernel",
@@ -599,8 +599,8 @@
   "gap": "JIT spraying, RWX pages and code generation bugs",
   "priority": "medium",
   "source": "references/exploit-development.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "binary-jit",
+  "status": "covered"
  },
  {
   "id": "re-go",
@@ -608,8 +608,8 @@
   "gap": "Go symbols, pclntab, goroutines and interface calls",
   "priority": "medium",
   "source": "references/reverse-engineering.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "re-go",
+  "status": "covered"
  },
  {
   "id": "re-dotnet-aot",
@@ -617,8 +617,8 @@
   "gap": ".NET Native AOT metadata and method recovery",
   "priority": "medium",
   "source": "references/reverse-engineering.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "re-dotnet-aot",
+  "status": "covered"
  },
  {
   "id": "re-swift",
@@ -626,8 +626,8 @@
   "gap": "Swift mangling, witness tables and value types",
   "priority": "medium",
   "source": "references/reverse-engineering.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "re-swift",
+  "status": "covered"
  },
  {
   "id": "ai-model-extraction",
@@ -635,8 +635,8 @@
   "gap": "Model extraction and membership inference",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "ai-model-extraction",
+  "status": "covered"
  },
  {
   "id": "ai-data-poison",
@@ -653,8 +653,8 @@
   "gap": "Embedding inversion and vector store access",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "ai-embedding",
+  "status": "covered"
  },
  {
   "id": "detection-edr",
@@ -662,8 +662,8 @@
   "gap": "EDR telemetry and process tree detection",
   "priority": "medium",
   "source": "labs/detection",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "detection-edr",
+  "status": "covered"
  },
  {
   "id": "ir-disk",
@@ -671,8 +671,8 @@
   "gap": "Disk artifacts: MFT, USN, registry and prefetch",
   "priority": "medium",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "ir-disk",
+  "status": "covered"
  },
  {
   "id": "process-duplicate",
@@ -707,8 +707,8 @@
   "gap": "Swift runtime, Objective-C bridging and Swift hooks",
   "priority": "medium",
   "source": "references/mobile-reverse.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "mobile-swift",
+  "status": "covered"
  },
  {
   "id": "firmware-radio",
@@ -716,8 +716,8 @@
   "gap": "BLE, Zigbee and sub-GHz capture and replay",
   "priority": "medium",
   "source": "references/firmware-iot.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "firmware-radio",
+  "status": "covered"
  },
  {
   "id": "hardware-sidechannel",
@@ -725,6 +725,141 @@
   "gap": "Power, timing and EM side channels",
   "priority": "low",
   "source": "references/firmware-iot.md",
+  "covered_by": "hardware-sidechannel",
+  "status": "covered"
+ },
+ {
+  "id": "ai-agent-planning",
+  "domain": "ai",
+  "gap": "Agent goal drift, subagent permissions and plan hijack",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "ai-agent-planning",
+  "status": "covered"
+ },
+ {
+  "id": "ai-sandbox-escape",
+  "domain": "ai",
+  "gap": "Code interpreter and tool sandbox escape",
+  "priority": "high",
+  "source": "labs/llm",
+  "covered_by": "ai-sandbox-escape",
+  "status": "covered"
+ },
+ {
+  "id": "ai-vector-auth",
+  "domain": "ai",
+  "gap": "Vector store authorization and metadata filtering",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "api-idempotency",
+  "domain": "api",
+  "gap": "Idempotency keys, retries and duplicate side effects",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "api-idempotency",
+  "status": "covered"
+ },
+ {
+  "id": "cloud-aks",
+  "domain": "cloud",
+  "gap": "AKS workload identity and Azure RBAC",
+  "priority": "medium",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "cloud-aks",
+  "status": "covered"
+ },
+ {
+  "id": "cloud-oci",
+  "domain": "cloud",
+  "gap": "OCI compartments, instance principals and policy",
+  "priority": "low",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "binary-uefi",
+  "domain": "binary",
+  "gap": "UEFI DXE drivers, SMM and secure boot",
+  "priority": "medium",
+  "source": "references/reverse-engineering.md",
+  "covered_by": "binary-uefi",
+  "status": "covered"
+ },
+ {
+  "id": "binary-hypervisor",
+  "domain": "binary",
+  "gap": "Hypervisor interfaces, VTL and synthetic MSRs",
+  "priority": "low",
+  "source": "references/reverse-engineering.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "re-jvm",
+  "domain": "re",
+  "gap": "JVM bytecode, JIT and deserialization gadgets",
+  "priority": "medium",
+  "source": "references/reverse-engineering.md",
+  "covered_by": "re-jvm",
+  "status": "covered"
+ },
+ {
+  "id": "mobile-swiftui",
+  "domain": "mobile",
+  "gap": "SwiftUI state, deep links and scene lifecycle",
+  "priority": "low",
+  "source": "references/mobile-reverse.md",
+  "covered_by": "mobile-swiftui",
+  "status": "covered"
+ },
+ {
+  "id": "firmware-secureboot",
+  "domain": "firmware",
+  "gap": "Secure boot chain, key enrollment and rollback",
+  "priority": "high",
+  "source": "references/firmware-iot.md",
+  "covered_by": "firmware-secureboot",
+  "status": "covered"
+ },
+ {
+  "id": "detection-threatintel",
+  "domain": "detection",
+  "gap": "IOC versus behavior, intel aging and false positives",
+  "priority": "medium",
+  "source": "labs/detection",
+  "covered_by": "detection-threatintel",
+  "status": "covered"
+ },
+ {
+  "id": "ir-cloud",
+  "domain": "ir",
+  "gap": "CloudTrail and audit log timeline reconstruction",
+  "priority": "medium",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "process-disclosure",
+  "domain": "process",
+  "gap": "Coordinated disclosure, timelines and vendor silence",
+  "priority": "medium",
+  "source": "references/claude-bughunter.md",
+  "covered_by": "process-disclosure",
+  "status": "covered"
+ },
+ {
+  "id": "crypto-postquantum",
+  "domain": "crypto",
+  "gap": "Post-quantum migration and hybrid key exchange",
+  "priority": "low",
+  "source": "references/vulnerability-research.md",
   "covered_by": "",
   "status": "open"
  }
