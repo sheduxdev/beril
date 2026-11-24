@@ -131,7 +131,7 @@ def main() -> None:
     used = 0
     for s, c in ranked:
         age = age_days(c)
-        line = f"[{c['id']}] score={s} confidence={c.get('confidence','?')} age={age}d\n  {c['title']}\n  {c.get('claim','')[:220]}\n  test: {c.get('test','')[:200]}\n  source: {', '.join(c.get('sources', []))}\n"
+        line = f"[{c['id']}] score={s} confidence={c.get('confidence', '?')} age={age}d\n  {c['title']}\n  {c.get('claim', '')[:220]}\n  test: {c.get('test', '')[:200]}\n  source: {', '.join(c.get('sources', []))}\n"
         if used + len(line) > args.max_chars:
             break
         print(line)

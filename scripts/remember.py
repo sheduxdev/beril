@@ -180,7 +180,7 @@ def main() -> None:
         print("updated", args.id)
     elif args.cmd == "list":
         for c in load():
-            print(f"{c['id']:<34} {c.get('confidence','?'):<7} {', '.join(c.get('tags', [])):<28} {c['title']}")
+            print(f"{c['id']:<34} {c.get('confidence', '?'):<7} {', '.join(c.get('tags', [])):<28} {c['title']}")
     elif args.cmd == "index":
         print(len(rebuild()), "cards")
     elif args.cmd == "use":
