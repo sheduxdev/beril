@@ -1,6 +1,6 @@
 # Knowledge index
 
-272 durable cards. Read this before a web search; open a card only when it matches.
+284 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -64,7 +64,9 @@
 | `comp-jit` | A JIT has tiers, guards and a code cache | compiler, jit, deopt | high | 2026-11-25 |
 | `comp-abi` | An ABI is a contract between compiled units | compiler, abi, calling-convention | high | 2026-11-25 |
 | `comp-optimizer` | An optimizer pass must preserve semantics | compiler, optimizer, optimization, semantics, pass | medium | 2026-11-25 |
+| `comp-debug-info` | Debug info maps machine state to source | compiler, dwarf, debug | medium | 2026-11-25 |
 | `comp-instr-select` | Instruction selection matches IR trees to target patterns | compiler, codegen, isel | high | 2026-11-25 |
+| `comp-linking` | Linking resolves symbols and applies relocations | compiler, linker, relocation | medium | 2026-11-25 |
 | `comp-regalloc` | Register allocation maps live ranges to finite registers | compiler, regalloc, spill | medium | 2026-11-25 |
 | `comp-ssa` | SSA makes each definition single and explicit | compiler, ssa, dataflow | high | 2026-11-25 |
 | `comp-type-check` | Type checking proves a property before runtime | compiler, types, soundness | medium | 2026-11-25 |
@@ -75,8 +77,11 @@
 | `crypto-postquantum` | PQC migration is a hybrid, not a flag | crypto, pqc, hybrid | low | 2026-11-24 |
 | `crypto-weak-random` | Predictable randomness is a key recovery bug | crypto, random, predictability | high | 2026-11-24 |
 | `tls-config-review` | TLS is a version, a chain and a policy | crypto, tls, certificate | medium | 2026-11-24 |
+| `db-deadlock` | A deadlock is a cycle in the wait-for graph | database, deadlock, retry | medium | 2026-11-25 |
+| `db-lock-manager` | A lock manager has modes, a wait queue and fairness | database, locks, fairness | medium | 2026-11-25 |
 | `db-isolation` | Isolation levels allow different anomalies | database, isolation, write-skew | high | 2026-11-25 |
 | `db-mvcc` | MVCC keeps versions for concurrent snapshots | database, mvcc, snapshot | high | 2026-11-25 |
+| `db-vacuum` | Vacuum reclaims versions and freezes old transaction ids | database, vacuum, bloat | medium | 2026-11-25 |
 | `detection-sigma` | A Sigma rule needs a logsource, a selection and a false-positive note | detection, sigma, log | high | 2026-11-24 |
 | `detection-beacon` | A beacon is a timing pattern, not a single request | detection, beacon, network | medium | 2026-11-24 |
 | `detection-cloud` | Cloud detection is control-plane and role-assumption first | detection, cloud, audit | high | 2026-11-25 |
@@ -91,9 +96,11 @@
 | `consensus-linearizable-read` | A linearizable read needs a leader lease or a read index | distributed, consensus, read | high | 2026-11-25 |
 | `dist-partition` | A partition forces a choice between availability and consistency | distributed, partition, cap | high | 2026-11-25 |
 | `dist-quorum-read` | A quorum read must overlap the write quorum | distributed, quorum, read | medium | 2026-11-25 |
+| `consensus-snapshot` | A snapshot records the last included index and term | distributed, raft, snapshot | medium | 2026-11-25 |
 | `dist-ordering` | Exactly-once is at-least-once plus dedup | distributed, ordering, dedup | high | 2026-11-25 |
 | `dist-gossip` | Gossip spreads state in logarithmic rounds | distributed, gossip, membership | medium | 2026-11-25 |
 | `consensus-membership` | Membership change is a consensus decision | distributed, raft, membership | high | 2026-11-25 |
+| `consensus-paxos` | Paxos is prepare and accept with a ballot | distributed, paxos, ballot | medium | 2026-11-25 |
 | `dist-clock` | Physical clocks skew; logical clocks order events | distributed, clock, causality | high | 2026-11-25 |
 | `electron-context-isolation` | Electron is Node with a browser attached | electron, desktop, context-isolation | medium | 2026-11-24 |
 | `eng-gc` | A GC trades throughput for pause and space | engineering, gc, allocation | medium | 2026-11-25 |
@@ -199,14 +206,19 @@
 | `mobile-swift` | Swift hooks need mangled names or a bridge | mobile, ios, swift | medium | 2026-11-24 |
 | `mobile-swiftui-state` | SwiftUI state is not a security boundary | mobile, ios, swiftui | low | 2026-11-24 |
 | `org-postmortem-culture` | A blameless postmortem turns incidents into learning | organization, postmortem, postmortems, blameless, culture, learning | high | 2026-11-25 |
+| `org-rotation` | A rotation needs a handoff and shadowing | organization, oncall, rotation | medium | 2026-11-25 |
+| `org-skill-matrix` | A skill matrix makes bus factor visible | organization, skills, bus-factor | medium | 2026-11-25 |
 | `org-budget` | A team budget is maintenance plus a bet | organization, budget, planning | medium | 2026-11-25 |
 | `org-adr` | An ADR records why, not only what | organization, adr, documentation | medium | 2026-11-25 |
 | `org-incentives` | An incentive shapes the local optimum | organization, incentives, metrics | medium | 2026-11-25 |
 | `platform-team-api` | An internal platform is a product with an API and an SLA | organization, platform, api | high | 2026-11-25 |
 | `org-delegation` | Delegation needs a decision right and a boundary | organization, delegation, daci | medium | 2026-11-25 |
+| `platform-pricing` | Internal pricing is a signal, not a profit center | organization, platform, pricing | medium | 2026-11-25 |
 | `org-oncall-comp` | On-call is work and must be paid or traded | organization, oncall, compensation | high | 2026-11-25 |
 | `org-oncall` | On-call load is a reliability input | organization, oncall, reliability | high | 2026-11-25 |
+| `platform-support` | Support needs a tier, a channel and an SLA | organization, platform, support | medium | 2026-11-25 |
 | `org-conway` | The org chart leaks into the architecture | organization, conway, law, ownership, service, teams | high | 2026-11-25 |
+| `org-docs-culture` | Writing makes decisions visible and reviewable | organization, writing, culture | medium | 2026-11-25 |
 | `process-retest` | A fix is not a fix until the same request fails | process, retest, regression | high | 2026-11-24 |
 | `report-impact-chain` | A report is a chain a triager can rerun | process, report, impact | high | 2026-11-24 |
 | `report-cvss-context` | CVSS without business context misranks the bug | process, report, cvss | medium | 2026-11-24 |

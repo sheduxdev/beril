@@ -1769,8 +1769,8 @@
   "gap": "Log snapshots and install-snapshot safety",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "consensus-snapshot",
+  "status": "covered"
  },
  {
   "id": "consensus-paxos",
@@ -1778,8 +1778,8 @@
   "gap": "Paxos phases and multi-Paxos",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "consensus-paxos",
+  "status": "covered"
  },
  {
   "id": "consensus-linearizable-read",
@@ -1814,8 +1814,8 @@
   "gap": "Linking, relocation and symbol resolution",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "comp-linking",
+  "status": "covered"
  },
  {
   "id": "comp-debug-info",
@@ -1823,8 +1823,8 @@
   "gap": "DWARF, source maps and optimized code",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "comp-debug-info",
+  "status": "covered"
  },
  {
   "id": "comp-ub",
@@ -1850,8 +1850,8 @@
   "gap": "Vacuum, bloat and transaction id wraparound",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "db-vacuum",
+  "status": "covered"
  },
  {
   "id": "db-isolation",
@@ -1868,8 +1868,8 @@
   "gap": "Lock modes, wait queues and fairness",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "db-lock-manager",
+  "status": "covered"
  },
  {
   "id": "db-deadlock",
@@ -1877,8 +1877,8 @@
   "gap": "Deadlock detection and retry policy",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "db-deadlock",
+  "status": "covered"
  },
  {
   "id": "platform-team-api",
@@ -1895,8 +1895,8 @@
   "gap": "Internal pricing, chargeback and showback",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "platform-pricing",
+  "status": "covered"
  },
  {
   "id": "platform-support",
@@ -1904,8 +1904,8 @@
   "gap": "Platform support and office hours",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "platform-support",
+  "status": "covered"
  },
  {
   "id": "org-oncall-comp",
@@ -1922,8 +1922,8 @@
   "gap": "Rotation length, handoff and shadowing",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "org-rotation",
+  "status": "covered"
  },
  {
   "id": "org-skill-matrix",
@@ -1931,8 +1931,8 @@
   "gap": "Skill matrix and bus factor",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "org-skill-matrix",
+  "status": "covered"
  },
  {
   "id": "org-docs-culture",
@@ -1940,8 +1940,8 @@
   "gap": "Writing culture and decision visibility",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "org-docs-culture",
+  "status": "covered"
  },
  {
   "id": "org-postmortem-culture",

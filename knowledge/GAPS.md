@@ -200,26 +200,26 @@
 | 194 | engineering | Capacity models and headroom | medium | `references/engineering-mastery.md` | covered by `eng-capacity` |
 | 195 | engineering | Data retention, archival and deletion | medium | `references/engineering-mastery.md` | covered by `eng-retention` |
 | 196 | distributed | Raft membership changes and joint consensus | high | `references/engineering-mastery.md` | covered by `consensus-membership` |
-| 197 | distributed | Log snapshots and install-snapshot safety | medium | `references/engineering-mastery.md` | open |
-| 198 | distributed | Paxos phases and multi-Paxos | medium | `references/engineering-mastery.md` | open |
+| 197 | distributed | Log snapshots and install-snapshot safety | medium | `references/engineering-mastery.md` | covered by `consensus-snapshot` |
+| 198 | distributed | Paxos phases and multi-Paxos | medium | `references/engineering-mastery.md` | covered by `consensus-paxos` |
 | 199 | distributed | Linearizable reads without a log write | high | `references/engineering-mastery.md` | covered by `consensus-linearizable-read` |
 | 200 | compilers | Instruction selection and pattern matching | high | `references/engineering-mastery.md` | covered by `comp-instr-select` |
 | 201 | compilers | ABI, calling conventions and stack layout | high | `references/engineering-mastery.md` | covered by `comp-abi` |
-| 202 | compilers | Linking, relocation and symbol resolution | medium | `references/engineering-mastery.md` | open |
-| 203 | compilers | DWARF, source maps and optimized code | medium | `references/engineering-mastery.md` | open |
+| 202 | compilers | Linking, relocation and symbol resolution | medium | `references/engineering-mastery.md` | covered by `comp-linking` |
+| 203 | compilers | DWARF, source maps and optimized code | medium | `references/engineering-mastery.md` | covered by `comp-debug-info` |
 | 204 | compilers | Undefined behavior and optimizer assumptions | high | `references/engineering-mastery.md` | covered by `comp-ub` |
 | 205 | database | MVCC versions, snapshots and visibility | high | `references/engineering-mastery.md` | covered by `db-mvcc` |
-| 206 | database | Vacuum, bloat and transaction id wraparound | medium | `references/engineering-mastery.md` | open |
+| 206 | database | Vacuum, bloat and transaction id wraparound | medium | `references/engineering-mastery.md` | covered by `db-vacuum` |
 | 207 | database | Isolation levels and write skew | high | `references/engineering-mastery.md` | covered by `db-isolation` |
-| 208 | database | Lock modes, wait queues and fairness | medium | `references/engineering-mastery.md` | open |
-| 209 | database | Deadlock detection and retry policy | medium | `references/engineering-mastery.md` | open |
+| 208 | database | Lock modes, wait queues and fairness | medium | `references/engineering-mastery.md` | covered by `db-lock-manager` |
+| 209 | database | Deadlock detection and retry policy | medium | `references/engineering-mastery.md` | covered by `db-deadlock` |
 | 210 | organization | Platform team API and internal SLA | high | `references/engineering-mastery.md` | covered by `platform-team-api` |
-| 211 | organization | Internal pricing, chargeback and showback | medium | `references/engineering-mastery.md` | open |
-| 212 | organization | Platform support and office hours | medium | `references/engineering-mastery.md` | open |
+| 211 | organization | Internal pricing, chargeback and showback | medium | `references/engineering-mastery.md` | covered by `platform-pricing` |
+| 212 | organization | Platform support and office hours | medium | `references/engineering-mastery.md` | covered by `platform-support` |
 | 213 | organization | On-call compensation and time off | high | `references/engineering-mastery.md` | covered by `org-oncall-comp` |
-| 214 | organization | Rotation length, handoff and shadowing | medium | `references/engineering-mastery.md` | open |
-| 215 | organization | Skill matrix and bus factor | medium | `references/engineering-mastery.md` | open |
-| 216 | organization | Writing culture and decision visibility | medium | `references/engineering-mastery.md` | open |
+| 214 | organization | Rotation length, handoff and shadowing | medium | `references/engineering-mastery.md` | covered by `org-rotation` |
+| 215 | organization | Skill matrix and bus factor | medium | `references/engineering-mastery.md` | covered by `org-skill-matrix` |
+| 216 | organization | Writing culture and decision visibility | medium | `references/engineering-mastery.md` | covered by `org-docs-culture` |
 | 217 | organization | Blameless postmortems and learning loops | high | `references/engineering-mastery.md` | covered by `org-postmortem-culture` |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.

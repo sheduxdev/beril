@@ -69,6 +69,18 @@ CASES = [
     ("platform team internal SLA", "platform-team-api"),
     ("on-call compensation rotation", "org-oncall-comp"),
     ("blameless postmortem actions", "org-postmortem-culture"),
+    ("Raft snapshot install index", "consensus-snapshot"),
+    ("Paxos prepare accept ballot", "consensus-paxos"),
+    ("linker relocation symbol resolution", "comp-linking"),
+    ("DWARF debug info optimized variable", "comp-debug-info"),
+    ("vacuum dead tuples wraparound", "db-vacuum"),
+    ("lock manager wait queue fairness", "db-lock-manager"),
+    ("deadlock wait-for graph victim", "db-deadlock"),
+    ("platform showback chargeback pricing", "platform-pricing"),
+    ("platform support tier SLA", "platform-support"),
+    ("on-call rotation handoff shadow", "org-rotation"),
+    ("skill matrix bus factor", "org-skill-matrix"),
+    ("decision memo writing culture", "org-docs-culture"),
 ]
 
 

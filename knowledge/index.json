@@ -1303,6 +1303,28 @@
   "failure": "A variadic call differs. A struct return may use a hidden pointer."
  },
  {
+  "path": "knowledge/comp-debug-info.md",
+  "body": "# Debug info maps machine state to source\n\n## Claim\n\nDWARF line tables and variable locations let a debugger show source. Optimization moves and removes both.\n\n## Test\n\nBreak on an inlined function. Check the line and the variable availability.\n\n## Proof\n\nA correct source line or an explicit optimized-out marker.\n\n## Failure modes\n\nA variable optimized into a register may be unavailable. A wrong line misleads.",
+  "id": "comp-debug-info",
+  "title": "Debug info maps machine state to source",
+  "tags": [
+   "compiler",
+   "dwarf",
+   "debug"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "DWARF line tables and variable locations let a debugger show source. Optimization moves and removes both.",
+  "test": "Break on an inlined function. Check the line and the variable availability.",
+  "proof": "A correct source line or an explicit optimized-out marker.",
+  "failure": "A variable optimized into a register may be unavailable. A wrong line misleads."
+ },
+ {
   "path": "knowledge/comp-instr-select.md",
   "body": "# Instruction selection matches IR trees to target patterns\n\n## Claim\n\nThe selector rewrites IR shapes into machine instructions, preferring a single instruction when one covers the tree.\n\n## Test\n\nFeed a pattern that has a fused instruction. Compare with a naive lowering.\n\n## Proof\n\nThe fused instruction with correct flags.\n\n## Failure modes\n\nA pattern that ignores side effects reorders a load. A cost model can pick a worse pattern.",
   "id": "comp-instr-select",
@@ -1345,6 +1367,28 @@
   "test": "Read the tier policy and the guards. Force a deopt. Check the code cache.",
   "proof": "A correct result across the deopt.",
   "failure": "A JIT bug can appear only after warmup. Code cache invalidation matters."
+ },
+ {
+  "path": "knowledge/comp-linking.md",
+  "body": "# Linking resolves symbols and applies relocations\n\n## Claim\n\nThe linker maps sections, resolves symbols and rewrites addresses. Static and dynamic linking differ in when.\n\n## Test\n\nInspect relocations and the symbol table. Compare a static and a dynamic build.\n\n## Proof\n\nA correct address and a resolved symbol.\n\n## Failure modes\n\nA duplicate symbol or a missing relocation is a load failure. Lazy binding hides cost until the first call.",
+  "id": "comp-linking",
+  "title": "Linking resolves symbols and applies relocations",
+  "tags": [
+   "compiler",
+   "linker",
+   "relocation"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The linker maps sections, resolves symbols and rewrites addresses. Static and dynamic linking differ in when.",
+  "test": "Inspect relocations and the symbol table. Compare a static and a dynamic build.",
+  "proof": "A correct address and a resolved symbol.",
+  "failure": "A duplicate symbol or a missing relocation is a load failure. Lazy binding hides cost until the first call."
  },
  {
   "path": "knowledge/comp-optimizer.md",
@@ -1503,6 +1547,50 @@
   "failure": "A two-node change in one step can overlap two majorities."
  },
  {
+  "path": "knowledge/consensus-paxos.md",
+  "body": "# Paxos is prepare and accept with a ballot\n\n## Claim\n\nA proposer needs a majority promise before an accept. A higher ballot supersedes. Multi-Paxos elects a stable leader.\n\n## Test\n\nRun two proposers with increasing ballots. Check the chosen value and the promise set.\n\n## Proof\n\nOne value chosen despite contention.\n\n## Failure modes\n\nA promise is not a commit. A leader without a lease can stall.",
+  "id": "consensus-paxos",
+  "title": "Paxos is prepare and accept with a ballot",
+  "tags": [
+   "distributed",
+   "paxos",
+   "ballot"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A proposer needs a majority promise before an accept. A higher ballot supersedes. Multi-Paxos elects a stable leader.",
+  "test": "Run two proposers with increasing ballots. Check the chosen value and the promise set.",
+  "proof": "One value chosen despite contention.",
+  "failure": "A promise is not a commit. A leader without a lease can stall."
+ },
+ {
+  "path": "knowledge/consensus-snapshot.md",
+  "body": "# A snapshot records the last included index and term\n\n## Claim\n\nThe snapshot metadata anchors the log position. Install sends chunks; a lagging follower catches up from the end.\n\n## Test\n\nTake a snapshot. Restart a follower. Kill the leader during install. Check the recovered index.\n\n## Proof\n\nA follower that catches up without losing a committed entry.\n\n## Failure modes\n\nA snapshot without the index can duplicate or skip entries. Install must not block the leader.",
+  "id": "consensus-snapshot",
+  "title": "A snapshot records the last included index and term",
+  "tags": [
+   "distributed",
+   "raft",
+   "snapshot"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The snapshot metadata anchors the log position. Install sends chunks; a lagging follower catches up from the end.",
+  "test": "Take a snapshot. Restart a follower. Kill the leader during install. Check the recovered index.",
+  "proof": "A follower that catches up without losing a committed entry.",
+  "failure": "A snapshot without the index can duplicate or skip entries. Install must not block the leader."
+ },
+ {
   "path": "knowledge/container-escape.md",
   "body": "# A container escape is a host resource exposed to the container\n\n## Claim\n\nThe container has a host mount, the runtime socket, privileged devices or a kernel bug surface.\n\n## Test\n\nList mounts, capabilities, devices and namespaces. Try a host read through each. Check the kernel version.\n\n## Proof\n\nA host file read, a host process signal, or a new container with host mounts.\n\n## Failure modes\n\nRoot inside a container is not root on the host by itself. User namespaces change the mapping.",
   "id": "container-escape",
@@ -1614,6 +1702,28 @@
   "failure": "A random-looking string is not proof. Check the generator and the seed."
  },
  {
+  "path": "knowledge/db-deadlock.md",
+  "body": "# A deadlock is a cycle in the wait-for graph\n\n## Claim\n\nThe detector finds a cycle, picks a victim and aborts it. The client must retry the whole transaction.\n\n## Test\n\nCreate a two-session cycle. Check the victim and the error code.\n\n## Proof\n\nA clear deadlock error and a successful retry.\n\n## Failure modes\n\nA retry inside the same transaction may repeat the partial work.",
+  "id": "db-deadlock",
+  "title": "A deadlock is a cycle in the wait-for graph",
+  "tags": [
+   "database",
+   "deadlock",
+   "retry"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The detector finds a cycle, picks a victim and aborts it. The client must retry the whole transaction.",
+  "test": "Create a two-session cycle. Check the victim and the error code.",
+  "proof": "A clear deadlock error and a successful retry.",
+  "failure": "A retry inside the same transaction may repeat the partial work."
+ },
+ {
   "path": "knowledge/db-isolation.md",
   "body": "# Isolation levels allow different anomalies\n\n## Claim\n\nRead committed permits write skew; serializable prevents it with predicates or locks. The tradeoff is concurrency.\n\n## Test\n\nRun two transactions that read a predicate and write the complement. Repeat under each level.\n\n## Proof\n\nThe anomaly or the serialization failure.\n\n## Failure modes\n\nA snapshot isolation label does not prevent write skew. Retry is part of serializable.",
   "id": "db-isolation",
@@ -1636,6 +1746,28 @@
   "failure": "A snapshot isolation label does not prevent write skew. Retry is part of serializable."
  },
  {
+  "path": "knowledge/db-lock-manager.md",
+  "body": "# A lock manager has modes, a wait queue and fairness\n\n## Claim\n\nShared and exclusive modes conflict by a matrix. The wait queue needs ordering and timeout.\n\n## Test\n\nRequest conflicting modes from two sessions. Check the queue and the timeout.\n\n## Proof\n\nA predictable grant order and a clean timeout.\n\n## Failure modes\n\nA lock upgrade can deadlock. A queue without fairness starves.",
+  "id": "db-lock-manager",
+  "title": "A lock manager has modes, a wait queue and fairness",
+  "tags": [
+   "database",
+   "locks",
+   "fairness"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Shared and exclusive modes conflict by a matrix. The wait queue needs ordering and timeout.",
+  "test": "Request conflicting modes from two sessions. Check the queue and the timeout.",
+  "proof": "A predictable grant order and a clean timeout.",
+  "failure": "A lock upgrade can deadlock. A queue without fairness starves."
+ },
+ {
   "path": "knowledge/db-mvcc.md",
   "body": "# MVCC keeps versions for concurrent snapshots\n\n## Claim\n\nA writer creates a new version; readers see a snapshot. Vacuum removes versions no snapshot can see.\n\n## Test\n\nOpen a long transaction. Update the row in another session. Read both snapshots.\n\n## Proof\n\nThe old version visible to the old snapshot and the new visible to the new one.\n\n## Failure modes\n\nA long snapshot blocks vacuum and bloats the table.",
   "id": "db-mvcc",
@@ -1656,6 +1788,28 @@
   "test": "Open a long transaction. Update the row in another session. Read both snapshots.",
   "proof": "The old version visible to the old snapshot and the new visible to the new one.",
   "failure": "A long snapshot blocks vacuum and bloats the table."
+ },
+ {
+  "path": "knowledge/db-vacuum.md",
+  "body": "# Vacuum reclaims versions and freezes old transaction ids\n\n## Claim\n\nDead tuples are removed after no snapshot needs them. Autovacuum lags under load and bloat grows.\n\n## Test\n\nMeasure dead tuples and table bloat. Check autovacuum settings and the oldest xid.\n\n## Proof\n\nA vacuum that lowers dead tuples and freezes before wraparound.\n\n## Failure modes\n\nA long transaction blocks cleanup. A freeze too late risks wraparound.",
+  "id": "db-vacuum",
+  "title": "Vacuum reclaims versions and freezes old transaction ids",
+  "tags": [
+   "database",
+   "vacuum",
+   "bloat"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Dead tuples are removed after no snapshot needs them. Autovacuum lags under load and bloat grows.",
+  "test": "Measure dead tuples and table bloat. Check autovacuum settings and the oldest xid.",
+  "proof": "A vacuum that lowers dead tuples and freezes before wraparound.",
+  "failure": "A long transaction blocks cleanup. A freeze too late risks wraparound."
  },
  {
   "path": "knowledge/detection-beacon.md",
@@ -4403,6 +4557,28 @@
   "failure": "Delegation without a limit is abdication. A consulted list that is too large stalls."
  },
  {
+  "path": "knowledge/org-docs-culture.md",
+  "body": "# Writing makes decisions visible and reviewable\n\n## Claim\n\nA short memo with the problem, options and decision reduces meetings and preserves context.\n\n## Test\n\nRead three recent decision docs. Check whether the tradeoff is stated.\n\n## Proof\n\nA reader can reconstruct the choice.\n\n## Failure modes\n\nA status update without a decision is noise. A doc nobody reviews is a diary.",
+  "id": "org-docs-culture",
+  "title": "Writing makes decisions visible and reviewable",
+  "tags": [
+   "organization",
+   "writing",
+   "culture"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A short memo with the problem, options and decision reduces meetings and preserves context.",
+  "test": "Read three recent decision docs. Check whether the tradeoff is stated.",
+  "proof": "A reader can reconstruct the choice.",
+  "failure": "A status update without a decision is noise. A doc nobody reviews is a diary."
+ },
+ {
   "path": "knowledge/org-incentives.md",
   "body": "# An incentive shapes the local optimum\n\n## Claim\n\nA team optimizes what it is measured on. A deploy count can beat reliability.\n\n## Test\n\nList the top metric per team. Find a behavior it discourages.\n\n## Proof\n\nA metric pair that balances speed and stability.\n\n## Failure modes\n\nA single metric is gamed. A metric with no owner is ignored.",
   "id": "org-incentives",
@@ -4492,6 +4668,94 @@
   "test": "Read three postmortems. Check whether people admit mistakes and actions close.",
   "proof": "An action with an owner and a date that closed.",
   "failure": "A postmortem that names a person closes early. An action without a date is a wish."
+ },
+ {
+  "path": "knowledge/org-rotation.md",
+  "body": "# A rotation needs a handoff and shadowing\n\n## Claim\n\nShort rotations with a written handoff and a shadow reduce context loss and load spikes.\n\n## Test\n\nRead the handoff template. Check the shadow overlap and the page load.\n\n## Proof\n\nA handoff with open items and a shadowed first shift.\n\n## Failure modes\n\nA one-week rotation with no handoff repeats discovery. A permanent hero hides the process.",
+  "id": "org-rotation",
+  "title": "A rotation needs a handoff and shadowing",
+  "tags": [
+   "organization",
+   "oncall",
+   "rotation"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Short rotations with a written handoff and a shadow reduce context loss and load spikes.",
+  "test": "Read the handoff template. Check the shadow overlap and the page load.",
+  "proof": "A handoff with open items and a shadowed first shift.",
+  "failure": "A one-week rotation with no handoff repeats discovery. A permanent hero hides the process."
+ },
+ {
+  "path": "knowledge/org-skill-matrix.md",
+  "body": "# A skill matrix makes bus factor visible\n\n## Claim\n\nCoverage per system and per skill shows where one person is the only path.\n\n## Test\n\nBuild the matrix. Mark primary and backup. Find a row with one primary.\n\n## Proof\n\nA backup for every critical row.\n\n## Failure modes\n\nA matrix that is stale lies. A backup who never practices is not coverage.",
+  "id": "org-skill-matrix",
+  "title": "A skill matrix makes bus factor visible",
+  "tags": [
+   "organization",
+   "skills",
+   "bus-factor"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Coverage per system and per skill shows where one person is the only path.",
+  "test": "Build the matrix. Mark primary and backup. Find a row with one primary.",
+  "proof": "A backup for every critical row.",
+  "failure": "A matrix that is stale lies. A backup who never practices is not coverage."
+ },
+ {
+  "path": "knowledge/platform-pricing.md",
+  "body": "# Internal pricing is a signal, not a profit center\n\n## Claim\n\nShowback informs; chargeback transfers budget. A price that hides shared cost distorts demand.\n\n## Test\n\nMap the unit and the allocation rule. Compare a team's usage with the bill.\n\n## Proof\n\nA price the team can act on.\n\n## Failure modes\n\nA per-request price misses idle capacity. A flat share hides the heavy user.",
+  "id": "platform-pricing",
+  "title": "Internal pricing is a signal, not a profit center",
+  "tags": [
+   "organization",
+   "platform",
+   "pricing"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Showback informs; chargeback transfers budget. A price that hides shared cost distorts demand.",
+  "test": "Map the unit and the allocation rule. Compare a team's usage with the bill.",
+  "proof": "A price the team can act on.",
+  "failure": "A per-request price misses idle capacity. A flat share hides the heavy user."
+ },
+ {
+  "path": "knowledge/platform-support.md",
+  "body": "# Support needs a tier, a channel and an SLA\n\n## Claim\n\nA platform without a support path is a gate. Tiers separate a broken deploy from a question.\n\n## Test\n\nRead the support docs. Open one incident and one question. Measure the response.\n\n## Proof\n\nA response inside the stated SLA.\n\n## Failure modes\n\nAn office-hours-only channel fails an incident. A chat without a tier floods.",
+  "id": "platform-support",
+  "title": "Support needs a tier, a channel and an SLA",
+  "tags": [
+   "organization",
+   "platform",
+   "support"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A platform without a support path is a gate. Tiers separate a broken deploy from a question.",
+  "test": "Read the support docs. Open one incident and one question. Measure the response.",
+  "proof": "A response inside the stated SLA.",
+  "failure": "An office-hours-only channel fails an incident. A chat without a tier floods."
  },
  {
   "path": "knowledge/platform-team-api.md",
