@@ -277,7 +277,7 @@ make github
 
 ## Memory
 
-Beril recalls before it researches. `knowledge/` holds 319 testable cards; `knowledge/INDEX.md` is the entry point. A fresh high or medium card closes a decision for 180 or 90 days. Stale cards are refreshed, missing ones are researched and added.
+Beril recalls before it researches. `knowledge/` holds 333 testable cards; `knowledge/INDEX.md` is the entry point. A fresh high or medium card closes a decision for 180 or 90 days. Stale cards are refreshed, missing ones are researched and added.
 
 ```bash
 ./beril recall "idor owner check" --decide

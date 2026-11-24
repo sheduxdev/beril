@@ -1,5 +1,27 @@
 [
  {
+  "path": "knowledge/a11y-contrast.md",
+  "body": "# Contrast is a ratio, and color is not the only cue\n\n## Claim\n\nText needs 4.5:1 for normal size. A chart needs a pattern or a label, not only hue.\n\n## Test\n\nMeasure the ratio. Convert to grayscale. Check the non-color cue.\n\n## Proof\n\nA passing ratio and a second cue.\n\n## Failure modes\n\nA large text threshold is lower, not optional. A border can carry the cue.",
+  "id": "a11y-contrast",
+  "title": "Contrast is a ratio, and color is not the only cue",
+  "tags": [
+   "accessibility",
+   "contrast",
+   "color"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Text needs 4.5:1 for normal size. A chart needs a pattern or a label, not only hue.",
+  "test": "Measure the ratio. Convert to grayscale. Check the non-color cue.",
+  "proof": "A passing ratio and a second cue.",
+  "failure": "A large text threshold is lower, not optional. A border can carry the cue."
+ },
+ {
   "path": "knowledge/a11y-keyboard.md",
   "body": "# Keyboard order is the interface for many users\n\n## Claim\n\nFocus order follows the visual order; a trap keeps focus in a widget until escape. Skip links avoid the nav.\n\n## Test\n\nTab through the page. Check the order, the focus ring and the trap.\n\n## Proof\n\nA complete task without a mouse.\n\n## Failure modes\n\nA custom widget without key handling is a trap. A hidden focus ring blocks orientation.",
   "id": "a11y-keyboard",
@@ -20,6 +42,50 @@
   "test": "Tab through the page. Check the order, the focus ring and the trap.",
   "proof": "A complete task without a mouse.",
   "failure": "A custom widget without key handling is a trap. A hidden focus ring blocks orientation."
+ },
+ {
+  "path": "knowledge/a11y-motion.md",
+  "body": "# Reduced motion is a vestibular setting\n\n## Claim\n\nLarge parallax, zoom and spin can cause nausea. A reduce query removes or shortens them.\n\n## Test\n\nEnable reduced motion. Trigger the animation. Check the movement.\n\n## Proof\n\nA static or short transition.\n\n## Failure modes\n\nA small fade is usually fine. A scroll-jacked page is not.",
+  "id": "a11y-motion",
+  "title": "Reduced motion is a vestibular setting",
+  "tags": [
+   "accessibility",
+   "motion",
+   "vestibular"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Large parallax, zoom and spin can cause nausea. A reduce query removes or shortens them.",
+  "test": "Enable reduced motion. Trigger the animation. Check the movement.",
+  "proof": "A static or short transition.",
+  "failure": "A small fade is usually fine. A scroll-jacked page is not."
+ },
+ {
+  "path": "knowledge/a11y-screenreader.md",
+  "body": "# A screen reader needs a role, a name and a state\n\n## Claim\n\nNative elements carry semantics. A custom widget needs a role, an accessible name and a state update.\n\n## Test\n\nNavigate with a screen reader. Check the name and the state change.\n\n## Proof\n\nThe control announced with the right role and name.\n\n## Failure modes\n\nAn aria-label on a div without a role is a label on nothing. A live region without a politeness setting is noisy.",
+  "id": "a11y-screenreader",
+  "title": "A screen reader needs a role, a name and a state",
+  "tags": [
+   "accessibility",
+   "screenreader",
+   "aria"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Native elements carry semantics. A custom widget needs a role, an accessible name and a state update.",
+  "test": "Navigate with a screen reader. Check the name and the state change.",
+  "proof": "The control announced with the right role and name.",
+  "failure": "An aria-label on a div without a role is a label on nothing. A live region without a politeness setting is noisy."
  },
  {
   "path": "knowledge/ad-acl-path.md",
@@ -4622,6 +4688,28 @@
   "failure": "A signature that covers only the header is bypassable. A version floor may block downgrade."
  },
  {
+  "path": "knowledge/formal-contract.md",
+  "body": "# A contract is a precondition, a postcondition and an invariant\n\n## Claim\n\nThe contract states what the caller and callee may assume. A runtime check catches a violation at the boundary.\n\n## Test\n\nWrite the contract. Call with a violated precondition. Check the assertion.\n\n## Proof\n\nA clear failure at the boundary.\n\n## Failure modes\n\nA contract in a comment is not enforced. A debug-only check disappears in production.",
+  "id": "formal-contract",
+  "title": "A contract is a precondition, a postcondition and an invariant",
+  "tags": [
+   "formal",
+   "contract",
+   "runtime"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The contract states what the caller and callee may assume. A runtime check catches a violation at the boundary.",
+  "test": "Write the contract. Call with a violated precondition. Check the assertion.",
+  "proof": "A clear failure at the boundary.",
+  "failure": "A contract in a comment is not enforced. A debug-only check disappears in production."
+ },
+ {
   "path": "knowledge/formal-invariant.md",
   "body": "# An invariant is true before and after every step\n\n## Claim\n\nThe invariant constrains the state; the proof shows each transition preserves it. A broken invariant is the bug.\n\n## Test\n\nWrite the invariant. Try a transition that violates it. Check the proof obligation.\n\n## Proof\n\nA transition that preserves the invariant or a counterexample.\n\n## Failure modes\n\nAn invariant that restates the code proves nothing. A missing precondition hides a case.",
   "id": "formal-invariant",
@@ -4664,6 +4752,50 @@
   "test": "Model a two-process lock. Ask for mutual exclusion. Check the counterexample trace.",
   "proof": "A verified property or a concrete trace to the violation.",
   "failure": "A model that omits a transition proves a smaller system. A state space too large times out."
+ },
+ {
+  "path": "knowledge/formal-proof.md",
+  "body": "# A proof assistant checks every step, at a cost\n\n## Claim\n\nThe tool verifies the proof term. The cost is the model, the lemmas and the maintenance.\n\n## Test\n\nProve a small function. Change the spec. Check what breaks.\n\n## Proof\n\nA checked proof that survives a spec change or a list of broken lemmas.\n\n## Failure modes\n\nA proof of the wrong model is worse than no proof. Maintenance tracks the code.",
+  "id": "formal-proof",
+  "title": "A proof assistant checks every step, at a cost",
+  "tags": [
+   "formal",
+   "proof",
+   "assistant"
+  ],
+  "confidence": "low",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The tool verifies the proof term. The cost is the model, the lemmas and the maintenance.",
+  "test": "Prove a small function. Change the spec. Check what breaks.",
+  "proof": "A checked proof that survives a spec change or a list of broken lemmas.",
+  "failure": "A proof of the wrong model is worse than no proof. Maintenance tracks the code."
+ },
+ {
+  "path": "knowledge/formal-refinement.md",
+  "body": "# Refinement maps an abstract spec to concrete steps\n\n## Claim\n\nEach concrete step must simulate an abstract step or stutter. A refinement proof preserves the spec's properties.\n\n## Test\n\nWrite the abstraction relation. Check one concrete step against it.\n\n## Proof\n\nA simulation relation that holds for every step.\n\n## Failure modes\n\nA refinement that skips internals hides a behavior change. A weak abstraction relation proves a different system.",
+  "id": "formal-refinement",
+  "title": "Refinement maps an abstract spec to concrete steps",
+  "tags": [
+   "formal",
+   "refinement",
+   "spec"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Each concrete step must simulate an abstract step or stutter. A refinement proof preserves the spec's properties.",
+  "test": "Write the abstraction relation. Check one concrete step against it.",
+  "proof": "A simulation relation that holds for every step.",
+  "failure": "A refinement that skips internals hides a behavior change. A weak abstraction relation proves a different system."
  },
  {
   "path": "knowledge/formal-tla.md",
@@ -4729,6 +4861,28 @@
   "test": "Try the destructive action with a near-miss input. Check the guard and the undo.",
   "proof": "A prevented error or a one-step undo.",
   "failure": "A confirmation every time trains a blind click. An undo that expires is a trap."
+ },
+ {
+  "path": "knowledge/hci-fitts.md",
+  "body": "# Fitts's law sizes a target by distance and width\n\n## Claim\n\nTime to point grows with distance and shrinks with width. A small far target is slow.\n\n## Test\n\nMeasure a far small target and a near large one. Compare the time and the error.\n\n## Proof\n\nA target size that matches the frequency and distance.\n\n## Failure modes\n\nA huge button in the center is not always right. A destructive button next to a safe one needs separation.",
+  "id": "hci-fitts",
+  "title": "Fitts's law sizes a target by distance and width",
+  "tags": [
+   "hci",
+   "fitts",
+   "target"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Time to point grows with distance and shrinks with width. A small far target is slow.",
+  "test": "Measure a far small target and a near large one. Compare the time and the error.",
+  "proof": "A target size that matches the frequency and distance.",
+  "failure": "A huge button in the center is not always right. A destructive button next to a safe one needs separation."
  },
  {
   "path": "knowledge/ir-cloud.md",
@@ -5355,6 +5509,50 @@
   "failure": "A matrix that is stale lies. A backup who never practices is not coverage."
  },
  {
+  "path": "knowledge/os-cgroups.md",
+  "body": "# A cgroup is a resource boundary with pressure signals\n\n## Claim\n\nCPU, memory and IO limits apply to the group. The OOM killer acts on the group, not only the process.\n\n## Test\n\nSet a memory limit. Exceed it. Check the OOM scope and the pressure file.\n\n## Proof\n\nA bounded group with a clear OOM event.\n\n## Failure modes\n\nA limit on the parent is shared by children. A swap setting changes the failure.",
+  "id": "os-cgroups",
+  "title": "A cgroup is a resource boundary with pressure signals",
+  "tags": [
+   "os",
+   "cgroups",
+   "limits"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "CPU, memory and IO limits apply to the group. The OOM killer acts on the group, not only the process.",
+  "test": "Set a memory limit. Exceed it. Check the OOM scope and the pressure file.",
+  "proof": "A bounded group with a clear OOM event.",
+  "failure": "A limit on the parent is shared by children. A swap setting changes the failure."
+ },
+ {
+  "path": "knowledge/os-namespaces.md",
+  "body": "# A namespace makes a resource set invisible\n\n## Claim\n\nMount, PID, network and user namespaces split the view. A shared namespace is a shared failure domain.\n\n## Test\n\nInspect the namespace ids. Enter a new mount namespace. Check the visibility.\n\n## Proof\n\nA process that cannot see the host resource.\n\n## Failure modes\n\nA user namespace alone is not a container. A shared network namespace shares ports.",
+  "id": "os-namespaces",
+  "title": "A namespace makes a resource set invisible",
+  "tags": [
+   "os",
+   "namespaces",
+   "isolation"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Mount, PID, network and user namespaces split the view. A shared namespace is a shared failure domain.",
+  "test": "Inspect the namespace ids. Enter a new mount namespace. Check the visibility.",
+  "proof": "A process that cannot see the host resource.",
+  "failure": "A user namespace alone is not a container. A shared network namespace shares ports."
+ },
+ {
   "path": "knowledge/os-page-fault.md",
   "body": "# A page fault is a trap, not always a disk read\n\n## Claim\n\nA minor fault maps an existing page; a major fault reads from disk. Both cost a trap and a TLB change.\n\n## Test\n\nMeasure minor and major faults under a workload. Touch a cold mapping.\n\n## Proof\n\nA fault profile and a lower major rate.\n\n## Failure modes\n\nA major fault in a hot loop destroys latency. Prefaulting helps only a known working set.",
   "id": "os-page-fault",
@@ -5397,6 +5595,72 @@
   "test": "Run a CPU hog with a high-priority thread. Measure the low-priority latency.",
   "proof": "A bounded latency under the policy.",
   "failure": "A priority boost can invert the intent. A real-time class can starve everything else."
+ },
+ {
+  "path": "knowledge/os-signal.md",
+  "body": "# A signal handler runs on an arbitrary stack point\n\n## Claim\n\nOnly async-signal-safe calls are allowed. A handler must be short and restart interrupted calls.\n\n## Test\n\nSend a signal during a blocking call. Check the handler and the restart.\n\n## Proof\n\nA safe handler with a restart or a clean exit.\n\n## Failure modes\n\nA malloc in a handler can deadlock. SA_RESTART hides the interruption.",
+  "id": "os-signal",
+  "title": "A signal handler runs on an arbitrary stack point",
+  "tags": [
+   "os",
+   "signal",
+   "async"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Only async-signal-safe calls are allowed. A handler must be short and restart interrupted calls.",
+  "test": "Send a signal during a blocking call. Check the handler and the restart.",
+  "proof": "A safe handler with a restart or a clean exit.",
+  "failure": "A malloc in a handler can deadlock. SA_RESTART hides the interruption."
+ },
+ {
+  "path": "knowledge/os-syscall.md",
+  "body": "# A syscall is an ABI with an error convention\n\n## Claim\n\nThe number, arguments and return convention are fixed. A negative return carries errno; seccomp can deny the call.\n\n## Test\n\nCall with an invalid pointer and an invalid number. Check the errno and the seccomp log.\n\n## Proof\n\nA correct error and no crash.\n\n## Failure modes\n\nA raw syscall bypasses libc wrappers. A seccomp filter can kill the process.",
+  "id": "os-syscall",
+  "title": "A syscall is an ABI with an error convention",
+  "tags": [
+   "os",
+   "syscall",
+   "errno"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The number, arguments and return convention are fixed. A negative return carries errno; seccomp can deny the call.",
+  "test": "Call with an invalid pointer and an invalid number. Check the errno and the seccomp log.",
+  "proof": "A correct error and no crash.",
+  "failure": "A raw syscall bypasses libc wrappers. A seccomp filter can kill the process."
+ },
+ {
+  "path": "knowledge/os-virtual-memory.md",
+  "body": "# Virtual memory is a translation and permission layer\n\n## Claim\n\nPage tables map virtual to physical; the TLB caches the translation. A permission bit is the boundary.\n\n## Test\n\nTrace a mapping. Check the flags. Touch a read-only page.\n\n## Proof\n\nA fault on the protected access.\n\n## Failure modes\n\nA huge page changes the TLB cost. A stale TLB entry hides a permission change.",
+  "id": "os-virtual-memory",
+  "title": "Virtual memory is a translation and permission layer",
+  "tags": [
+   "os",
+   "virtual-memory",
+   "paging"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Page tables map virtual to physical; the TLB caches the translation. A permission bit is the boundary.",
+  "test": "Trace a mapping. Check the flags. Touch a read-only page.",
+  "proof": "A fault on the protected access.",
+  "failure": "A huge page changes the TLB cost. A stale TLB entry hides a permission change."
  },
  {
   "path": "knowledge/platform-pricing.md",
@@ -5620,6 +5884,28 @@
   "failure": "A shared CDN or cloud IP belongs to many customers. A parent domain does not imply a sibling."
  },
  {
+  "path": "knowledge/proto-backpressure.md",
+  "body": "# Flow control is a window the receiver grants\n\n## Claim\n\nThe receiver advertises capacity; the sender may not exceed it. A zero window pauses the stream.\n\n## Test\n\nFill the window. Check the send behavior and the zero-window probe.\n\n## Proof\n\nA sender that pauses and resumes.\n\n## Failure modes\n\nA window update lost without a probe stalls. A window too large buffers too much.",
+  "id": "proto-backpressure",
+  "title": "Flow control is a window the receiver grants",
+  "tags": [
+   "protocol",
+   "backpressure",
+   "window"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The receiver advertises capacity; the sender may not exceed it. A zero window pauses the stream.",
+  "test": "Fill the window. Check the send behavior and the zero-window probe.",
+  "proof": "A sender that pauses and resumes.",
+  "failure": "A window update lost without a probe stalls. A window too large buffers too much."
+ },
+ {
   "path": "knowledge/proto-framing.md",
   "body": "# A frame needs a length the parser can trust\n\n## Claim\n\nA length prefix or a delimiter defines the frame. Ambiguity between parsers is a desync.\n\n## Test\n\nSend an oversized, a truncated and a nested frame. Compare the parser boundary.\n\n## Proof\n\nA rejected or correctly bounded frame.\n\n## Failure modes\n\nA delimiter inside the payload splits a frame. A length without a cap allocates too much.",
   "id": "proto-framing",
@@ -5640,6 +5926,28 @@
   "test": "Send an oversized, a truncated and a nested frame. Compare the parser boundary.",
   "proof": "A rejected or correctly bounded frame.",
   "failure": "A delimiter inside the payload splits a frame. A length without a cap allocates too much."
+ },
+ {
+  "path": "knowledge/proto-idempotency.md",
+  "body": "# A message id makes a retry safe\n\n## Claim\n\nThe receiver dedups by id for a bounded window. A retry carries the same id.\n\n## Test\n\nSend the same id twice. Check the side effect and the dedup window.\n\n## Proof\n\nOne effect and a duplicate acknowledgement.\n\n## Failure modes\n\nAn unbounded dedup store leaks. A new id on retry doubles the effect.",
+  "id": "proto-idempotency",
+  "title": "A message id makes a retry safe",
+  "tags": [
+   "protocol",
+   "idempotency",
+   "message-id"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The receiver dedups by id for a bounded window. A retry carries the same id.",
+  "test": "Send the same id twice. Check the side effect and the dedup window.",
+  "proof": "One effect and a duplicate acknowledgement.",
+  "failure": "An unbounded dedup store leaks. A new id on retry doubles the effect."
  },
  {
   "path": "knowledge/proto-security.md",

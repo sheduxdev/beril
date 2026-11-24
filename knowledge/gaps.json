@@ -2201,8 +2201,8 @@
   "gap": "Refinement from spec to implementation",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "formal-refinement",
+  "status": "covered"
  },
  {
   "id": "formal-contract",
@@ -2210,8 +2210,8 @@
   "gap": "Design by contract and runtime checks",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "formal-contract",
+  "status": "covered"
  },
  {
   "id": "formal-proof",
@@ -2219,8 +2219,8 @@
   "gap": "Proof assistants and cost",
   "priority": "low",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "formal-proof",
+  "status": "covered"
  },
  {
   "id": "os-scheduler",
@@ -2237,8 +2237,8 @@
   "gap": "Virtual memory, page tables and TLB",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "os-vm",
+  "status": "covered"
  },
  {
   "id": "os-page-fault",
@@ -2255,8 +2255,8 @@
   "gap": "Syscall ABI, errno and seccomp",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "os-syscall",
+  "status": "covered"
  },
  {
   "id": "os-signal",
@@ -2264,8 +2264,8 @@
   "gap": "Signals, async safety and restart",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "os-signal",
+  "status": "covered"
  },
  {
   "id": "os-cgroups",
@@ -2273,8 +2273,8 @@
   "gap": "cgroups v2, limits and OOM",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "os-cgroups",
+  "status": "covered"
  },
  {
   "id": "os-namespaces",
@@ -2282,8 +2282,8 @@
   "gap": "Namespaces, mounts and isolation",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "os-namespaces",
+  "status": "covered"
  },
  {
   "id": "proto-framing",
@@ -2318,8 +2318,8 @@
   "gap": "Flow control and window management",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "proto-backpressure",
+  "status": "covered"
  },
  {
   "id": "proto-idempotency",
@@ -2327,8 +2327,8 @@
   "gap": "Message ids, retries and duplicate suppression",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "proto-idempotency",
+  "status": "covered"
  },
  {
   "id": "proto-security",
@@ -2345,8 +2345,8 @@
   "gap": "Fitts's law and target placement",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "hci-fitts",
+  "status": "covered"
  },
  {
   "id": "hci-error-prevention",
@@ -2372,8 +2372,8 @@
   "gap": "Labels, roles and live regions",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "a11y-screenreader",
+  "status": "covered"
  },
  {
   "id": "a11y-contrast",
@@ -2381,8 +2381,8 @@
   "gap": "Contrast, non-color cues and zoom",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "a11y-contrast",
+  "status": "covered"
  },
  {
   "id": "a11y-motion",
@@ -2390,7 +2390,7 @@
   "gap": "Reduced motion and vestibular safety",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "a11y-motion",
+  "status": "covered"
  }
 ]

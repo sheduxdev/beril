@@ -1,10 +1,13 @@
 # Knowledge index
 
-319 durable cards. Read this before a web search; open a card only when it matches.
+333 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
+| `a11y-screenreader` | A screen reader needs a role, a name and a state | accessibility, screenreader, aria | medium | 2026-11-25 |
+| `a11y-contrast` | Contrast is a ratio, and color is not the only cue | accessibility, contrast, color | medium | 2026-11-25 |
 | `a11y-keyboard` | Keyboard order is the interface for many users | accessibility, keyboard, focus | high | 2026-11-25 |
+| `a11y-motion` | Reduced motion is a vestibular setting | accessibility, motion, vestibular | medium | 2026-11-25 |
 | `ad-acl-path` | AD compromise is an edge path, not a single bug | ad, windows, acl | high | 2026-11-24 |
 | `ad-adcs-esc1` | ESC1 is an enrollable SAN on a client-auth template | ad, adcs, certificate | high | 2026-11-24 |
 | `ai-sandbox-escape` | A code interpreter is a process with a filesystem | ai, sandbox, interpreter | high | 2026-11-24 |
@@ -213,10 +216,14 @@
 | `firmware-spi` | SPI flash reads need two matching dumps | firmware, hardware, spi | medium | 2026-11-24 |
 | `firmware-secureboot` | Secure boot is a chain, not a boolean | firmware, secureboot, boot | high | 2026-11-24 |
 | `firmware-uart` | UART is found by idle levels and confirmed by baud | firmware, hardware, uart | high | 2026-11-24 |
+| `formal-contract` | A contract is a precondition, a postcondition and an invariant | formal, contract, runtime | medium | 2026-11-25 |
+| `formal-proof` | A proof assistant checks every step, at a cost | formal, proof, assistant | low | 2026-11-25 |
 | `formal-invariant` | An invariant is true before and after every step | formal, invariant, proof | high | 2026-11-25 |
 | `formal-model-check` | Model checking enumerates states until a property fails | formal, model-check, states | high | 2026-11-25 |
+| `formal-refinement` | Refinement maps an abstract spec to concrete steps | formal, refinement, spec | medium | 2026-11-25 |
 | `formal-tla` | TLA+ describes a protocol as state and actions | formal, tla, protocol | high | 2026-11-25 |
 | `hardware-sidechannel` | Side channels leak through power, timing or EM | hardware, sidechannel | low | 2026-11-24 |
+| `hci-fitts` | Fitts's law sizes a target by distance and width | hci, fitts, target | medium | 2026-11-25 |
 | `hci-error-prevention` | Prevent the error before the confirmation | hci, error-prevention, undo | high | 2026-11-25 |
 | `ir-timeline` | An incident timeline needs three independent clocks | ir, timeline, forensics | medium | 2026-11-24 |
 | `ir-cloud` | Cloud audit logs are the timeline | ir, cloud, logs | medium | 2026-11-24 |
@@ -248,8 +255,13 @@
 | `platform-support` | Support needs a tier, a channel and an SLA | organization, platform, support | medium | 2026-11-25 |
 | `org-conway` | The org chart leaks into the architecture | organization, conway, law, ownership, service, teams | high | 2026-11-25 |
 | `org-docs-culture` | Writing makes decisions visible and reviewable | organization, writing, culture | medium | 2026-11-25 |
+| `os-cgroups` | A cgroup is a resource boundary with pressure signals | os, cgroups, limits | medium | 2026-11-25 |
+| `os-namespaces` | A namespace makes a resource set invisible | os, namespaces, isolation | medium | 2026-11-25 |
 | `os-page-fault` | A page fault is a trap, not always a disk read | os, page-fault, memory | high | 2026-11-25 |
 | `os-scheduler` | A scheduler chooses runnable work under a policy | os, scheduler, priority | high | 2026-11-25 |
+| `os-signal` | A signal handler runs on an arbitrary stack point | os, signal, async | medium | 2026-11-25 |
+| `os-syscall` | A syscall is an ABI with an error convention | os, syscall, errno | medium | 2026-11-25 |
+| `os-virtual-memory` | Virtual memory is a translation and permission layer | os, virtual-memory, paging | medium | 2026-11-25 |
 | `process-retest` | A fix is not a fix until the same request fails | process, retest, regression | high | 2026-11-24 |
 | `report-impact-chain` | A report is a chain a triager can rerun | process, report, impact | high | 2026-11-24 |
 | `report-cvss-context` | CVSS without business context misranks the bug | process, report, cvss | medium | 2026-11-24 |
@@ -264,7 +276,9 @@
 | `process-duplicate-search` | Search duplicates before writing a report | process, triage, duplicate | high | 2026-11-24 |
 | `proto-framing` | A frame needs a length the parser can trust | protocol, framing, length | high | 2026-11-25 |
 | `proto-security` | A handshake binds the transcript | protocol, handshake, replay | high | 2026-11-25 |
+| `proto-idempotency` | A message id makes a retry safe | protocol, idempotency, message-id | medium | 2026-11-25 |
 | `proto-state-machine` | A protocol is a set of legal transitions | protocol, state-machine, transitions | high | 2026-11-25 |
+| `proto-backpressure` | Flow control is a window the receiver grants | protocol, backpressure, window | medium | 2026-11-25 |
 | `proto-versioning` | Version negotiation needs a downgrade policy | protocol, versioning, downgrade | high | 2026-11-25 |
 | `re-crash-triage-primitive` | A crash is a lead; the primitive is the finding | re, triage, crash | high | 2026-11-24 |
 | `re-arm64` | AArch64 has a calling convention, PAC and MTE | re, arm64, pac | medium | 2026-11-25 |

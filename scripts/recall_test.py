@@ -116,6 +116,20 @@ CASES = [
     ("handshake transcript binding replay", "proto-security"),
     ("error prevention undo confirmation", "hci-error-prevention"),
     ("keyboard focus order trap", "a11y-keyboard"),
+    ("refinement simulation relation", "formal-refinement"),
+    ("precondition postcondition contract", "formal-contract"),
+    ("proof assistant lemma maintenance", "formal-proof"),
+    ("virtual memory page table TLB", "os-virtual-memory"),
+    ("syscall errno seccomp", "os-syscall"),
+    ("signal handler async safe restart", "os-signal"),
+    ("cgroup OOM memory limit", "os-cgroups"),
+    ("namespace mount isolation", "os-namespaces"),
+    ("flow control zero window", "proto-backpressure"),
+    ("message id dedup retry", "proto-idempotency"),
+    ("Fitts law target distance width", "hci-fitts"),
+    ("screen reader role accessible name", "a11y-screenreader"),
+    ("contrast ratio non color cue", "a11y-contrast"),
+    ("reduced motion vestibular", "a11y-motion"),
 ]
 
 

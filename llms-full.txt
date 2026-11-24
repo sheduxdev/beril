@@ -7088,7 +7088,7 @@ Do not store secrets, customer data, or private report text in a card. Link the 
 
 ## Gaps
 
-`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. 266 gaps exist: 252 covered, 14 open at medium or low priority, no high gaps. The recall regression set is now 104 cases. The recall regression set is `scripts/recall_test.py`. Do not pretend a gap is covered.
+`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. 266 gaps exist and all are covered. The recall regression set is now 118 cases. The recall regression set is `scripts/recall_test.py`. Do not pretend a gap is covered.
 
 ```bash
 ./beril gaps --next
@@ -7127,18 +7127,21 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 
 ## Current seed
 
-319 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
+333 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
 
 
 <!-- ===== knowledge/INDEX.md ===== -->
 
 # Knowledge index
 
-319 durable cards. Read this before a web search; open a card only when it matches.
+333 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
+| `a11y-screenreader` | A screen reader needs a role, a name and a state | accessibility, screenreader, aria | medium | 2026-11-25 |
+| `a11y-contrast` | Contrast is a ratio, and color is not the only cue | accessibility, contrast, color | medium | 2026-11-25 |
 | `a11y-keyboard` | Keyboard order is the interface for many users | accessibility, keyboard, focus | high | 2026-11-25 |
+| `a11y-motion` | Reduced motion is a vestibular setting | accessibility, motion, vestibular | medium | 2026-11-25 |
 | `ad-acl-path` | AD compromise is an edge path, not a single bug | ad, windows, acl | high | 2026-11-24 |
 | `ad-adcs-esc1` | ESC1 is an enrollable SAN on a client-auth template | ad, adcs, certificate | high | 2026-11-24 |
 | `ai-sandbox-escape` | A code interpreter is a process with a filesystem | ai, sandbox, interpreter | high | 2026-11-24 |
@@ -7347,10 +7350,14 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `firmware-spi` | SPI flash reads need two matching dumps | firmware, hardware, spi | medium | 2026-11-24 |
 | `firmware-secureboot` | Secure boot is a chain, not a boolean | firmware, secureboot, boot | high | 2026-11-24 |
 | `firmware-uart` | UART is found by idle levels and confirmed by baud | firmware, hardware, uart | high | 2026-11-24 |
+| `formal-contract` | A contract is a precondition, a postcondition and an invariant | formal, contract, runtime | medium | 2026-11-25 |
+| `formal-proof` | A proof assistant checks every step, at a cost | formal, proof, assistant | low | 2026-11-25 |
 | `formal-invariant` | An invariant is true before and after every step | formal, invariant, proof | high | 2026-11-25 |
 | `formal-model-check` | Model checking enumerates states until a property fails | formal, model-check, states | high | 2026-11-25 |
+| `formal-refinement` | Refinement maps an abstract spec to concrete steps | formal, refinement, spec | medium | 2026-11-25 |
 | `formal-tla` | TLA+ describes a protocol as state and actions | formal, tla, protocol | high | 2026-11-25 |
 | `hardware-sidechannel` | Side channels leak through power, timing or EM | hardware, sidechannel | low | 2026-11-24 |
+| `hci-fitts` | Fitts's law sizes a target by distance and width | hci, fitts, target | medium | 2026-11-25 |
 | `hci-error-prevention` | Prevent the error before the confirmation | hci, error-prevention, undo | high | 2026-11-25 |
 | `ir-timeline` | An incident timeline needs three independent clocks | ir, timeline, forensics | medium | 2026-11-24 |
 | `ir-cloud` | Cloud audit logs are the timeline | ir, cloud, logs | medium | 2026-11-24 |
@@ -7382,8 +7389,13 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `platform-support` | Support needs a tier, a channel and an SLA | organization, platform, support | medium | 2026-11-25 |
 | `org-conway` | The org chart leaks into the architecture | organization, conway, law, ownership, service, teams | high | 2026-11-25 |
 | `org-docs-culture` | Writing makes decisions visible and reviewable | organization, writing, culture | medium | 2026-11-25 |
+| `os-cgroups` | A cgroup is a resource boundary with pressure signals | os, cgroups, limits | medium | 2026-11-25 |
+| `os-namespaces` | A namespace makes a resource set invisible | os, namespaces, isolation | medium | 2026-11-25 |
 | `os-page-fault` | A page fault is a trap, not always a disk read | os, page-fault, memory | high | 2026-11-25 |
 | `os-scheduler` | A scheduler chooses runnable work under a policy | os, scheduler, priority | high | 2026-11-25 |
+| `os-signal` | A signal handler runs on an arbitrary stack point | os, signal, async | medium | 2026-11-25 |
+| `os-syscall` | A syscall is an ABI with an error convention | os, syscall, errno | medium | 2026-11-25 |
+| `os-virtual-memory` | Virtual memory is a translation and permission layer | os, virtual-memory, paging | medium | 2026-11-25 |
 | `process-retest` | A fix is not a fix until the same request fails | process, retest, regression | high | 2026-11-24 |
 | `report-impact-chain` | A report is a chain a triager can rerun | process, report, impact | high | 2026-11-24 |
 | `report-cvss-context` | CVSS without business context misranks the bug | process, report, cvss | medium | 2026-11-24 |
@@ -7398,7 +7410,9 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `process-duplicate-search` | Search duplicates before writing a report | process, triage, duplicate | high | 2026-11-24 |
 | `proto-framing` | A frame needs a length the parser can trust | protocol, framing, length | high | 2026-11-25 |
 | `proto-security` | A handshake binds the transcript | protocol, handshake, replay | high | 2026-11-25 |
+| `proto-idempotency` | A message id makes a retry safe | protocol, idempotency, message-id | medium | 2026-11-25 |
 | `proto-state-machine` | A protocol is a set of legal transitions | protocol, state-machine, transitions | high | 2026-11-25 |
+| `proto-backpressure` | Flow control is a window the receiver grants | protocol, backpressure, window | medium | 2026-11-25 |
 | `proto-versioning` | Version negotiation needs a downgrade policy | protocol, versioning, downgrade | high | 2026-11-25 |
 | `re-crash-triage-primitive` | A crash is a lead; the primitive is the finding | re, triage, crash | high | 2026-11-24 |
 | `re-arm64` | AArch64 has a calling convention, PAC and MTE | re, arm64, pac | medium | 2026-11-25 |
@@ -7711,28 +7725,28 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | 242 | formal | Invariants, preconditions and postconditions | high | `references/engineering-mastery.md` | covered by `formal-invariant` |
 | 243 | formal | Model checking and state explosion | high | `references/engineering-mastery.md` | covered by `formal-model-check` |
 | 244 | formal | TLA+ specs for concurrent protocols | high | `references/engineering-mastery.md` | covered by `formal-tla` |
-| 245 | formal | Refinement from spec to implementation | medium | `references/engineering-mastery.md` | open |
-| 246 | formal | Design by contract and runtime checks | medium | `references/engineering-mastery.md` | open |
-| 247 | formal | Proof assistants and cost | low | `references/engineering-mastery.md` | open |
+| 245 | formal | Refinement from spec to implementation | medium | `references/engineering-mastery.md` | covered by `formal-refinement` |
+| 246 | formal | Design by contract and runtime checks | medium | `references/engineering-mastery.md` | covered by `formal-contract` |
+| 247 | formal | Proof assistants and cost | low | `references/engineering-mastery.md` | covered by `formal-proof` |
 | 248 | os | Scheduler classes, priority and starvation | high | `references/engineering-mastery.md` | covered by `os-scheduler` |
-| 249 | os | Virtual memory, page tables and TLB | medium | `references/engineering-mastery.md` | open |
+| 249 | os | Virtual memory, page tables and TLB | medium | `references/engineering-mastery.md` | covered by `os-vm` |
 | 250 | os | Page faults, demand paging and minor/major cost | high | `references/engineering-mastery.md` | covered by `os-page-fault` |
-| 251 | os | Syscall ABI, errno and seccomp | medium | `references/engineering-mastery.md` | open |
-| 252 | os | Signals, async safety and restart | medium | `references/engineering-mastery.md` | open |
-| 253 | os | cgroups v2, limits and OOM | medium | `references/engineering-mastery.md` | open |
-| 254 | os | Namespaces, mounts and isolation | medium | `references/engineering-mastery.md` | open |
+| 251 | os | Syscall ABI, errno and seccomp | medium | `references/engineering-mastery.md` | covered by `os-syscall` |
+| 252 | os | Signals, async safety and restart | medium | `references/engineering-mastery.md` | covered by `os-signal` |
+| 253 | os | cgroups v2, limits and OOM | medium | `references/engineering-mastery.md` | covered by `os-cgroups` |
+| 254 | os | Namespaces, mounts and isolation | medium | `references/engineering-mastery.md` | covered by `os-namespaces` |
 | 255 | protocol | Framing, length prefixes and desync | high | `references/engineering-mastery.md` | covered by `proto-framing` |
 | 256 | protocol | Protocol state machines and illegal transitions | high | `references/engineering-mastery.md` | covered by `proto-state-machine` |
 | 257 | protocol | Version negotiation and downgrade | high | `references/engineering-mastery.md` | covered by `proto-versioning` |
-| 258 | protocol | Flow control and window management | medium | `references/engineering-mastery.md` | open |
-| 259 | protocol | Message ids, retries and duplicate suppression | medium | `references/engineering-mastery.md` | open |
+| 258 | protocol | Flow control and window management | medium | `references/engineering-mastery.md` | covered by `proto-backpressure` |
+| 259 | protocol | Message ids, retries and duplicate suppression | medium | `references/engineering-mastery.md` | covered by `proto-idempotency` |
 | 260 | protocol | Handshake, transcript binding and replay | high | `references/engineering-mastery.md` | covered by `proto-security` |
-| 261 | hci | Fitts's law and target placement | medium | `references/engineering-mastery.md` | open |
+| 261 | hci | Fitts's law and target placement | medium | `references/engineering-mastery.md` | covered by `hci-fitts` |
 | 262 | hci | Error prevention, undo and confirmation | high | `references/engineering-mastery.md` | covered by `hci-error-prevention` |
 | 263 | accessibility | Keyboard order, focus and traps | high | `references/engineering-mastery.md` | covered by `a11y-keyboard` |
-| 264 | accessibility | Labels, roles and live regions | medium | `references/engineering-mastery.md` | open |
-| 265 | accessibility | Contrast, non-color cues and zoom | medium | `references/engineering-mastery.md` | open |
-| 266 | accessibility | Reduced motion and vestibular safety | medium | `references/engineering-mastery.md` | open |
+| 264 | accessibility | Labels, roles and live regions | medium | `references/engineering-mastery.md` | covered by `a11y-screenreader` |
+| 265 | accessibility | Contrast, non-color cues and zoom | medium | `references/engineering-mastery.md` | covered by `a11y-contrast` |
+| 266 | accessibility | Reduced motion and vestibular safety | medium | `references/engineering-mastery.md` | covered by `a11y-motion` |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.
 

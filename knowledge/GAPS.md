@@ -248,27 +248,27 @@
 | 242 | formal | Invariants, preconditions and postconditions | high | `references/engineering-mastery.md` | covered by `formal-invariant` |
 | 243 | formal | Model checking and state explosion | high | `references/engineering-mastery.md` | covered by `formal-model-check` |
 | 244 | formal | TLA+ specs for concurrent protocols | high | `references/engineering-mastery.md` | covered by `formal-tla` |
-| 245 | formal | Refinement from spec to implementation | medium | `references/engineering-mastery.md` | open |
-| 246 | formal | Design by contract and runtime checks | medium | `references/engineering-mastery.md` | open |
-| 247 | formal | Proof assistants and cost | low | `references/engineering-mastery.md` | open |
+| 245 | formal | Refinement from spec to implementation | medium | `references/engineering-mastery.md` | covered by `formal-refinement` |
+| 246 | formal | Design by contract and runtime checks | medium | `references/engineering-mastery.md` | covered by `formal-contract` |
+| 247 | formal | Proof assistants and cost | low | `references/engineering-mastery.md` | covered by `formal-proof` |
 | 248 | os | Scheduler classes, priority and starvation | high | `references/engineering-mastery.md` | covered by `os-scheduler` |
-| 249 | os | Virtual memory, page tables and TLB | medium | `references/engineering-mastery.md` | open |
+| 249 | os | Virtual memory, page tables and TLB | medium | `references/engineering-mastery.md` | covered by `os-vm` |
 | 250 | os | Page faults, demand paging and minor/major cost | high | `references/engineering-mastery.md` | covered by `os-page-fault` |
-| 251 | os | Syscall ABI, errno and seccomp | medium | `references/engineering-mastery.md` | open |
-| 252 | os | Signals, async safety and restart | medium | `references/engineering-mastery.md` | open |
-| 253 | os | cgroups v2, limits and OOM | medium | `references/engineering-mastery.md` | open |
-| 254 | os | Namespaces, mounts and isolation | medium | `references/engineering-mastery.md` | open |
+| 251 | os | Syscall ABI, errno and seccomp | medium | `references/engineering-mastery.md` | covered by `os-syscall` |
+| 252 | os | Signals, async safety and restart | medium | `references/engineering-mastery.md` | covered by `os-signal` |
+| 253 | os | cgroups v2, limits and OOM | medium | `references/engineering-mastery.md` | covered by `os-cgroups` |
+| 254 | os | Namespaces, mounts and isolation | medium | `references/engineering-mastery.md` | covered by `os-namespaces` |
 | 255 | protocol | Framing, length prefixes and desync | high | `references/engineering-mastery.md` | covered by `proto-framing` |
 | 256 | protocol | Protocol state machines and illegal transitions | high | `references/engineering-mastery.md` | covered by `proto-state-machine` |
 | 257 | protocol | Version negotiation and downgrade | high | `references/engineering-mastery.md` | covered by `proto-versioning` |
-| 258 | protocol | Flow control and window management | medium | `references/engineering-mastery.md` | open |
-| 259 | protocol | Message ids, retries and duplicate suppression | medium | `references/engineering-mastery.md` | open |
+| 258 | protocol | Flow control and window management | medium | `references/engineering-mastery.md` | covered by `proto-backpressure` |
+| 259 | protocol | Message ids, retries and duplicate suppression | medium | `references/engineering-mastery.md` | covered by `proto-idempotency` |
 | 260 | protocol | Handshake, transcript binding and replay | high | `references/engineering-mastery.md` | covered by `proto-security` |
-| 261 | hci | Fitts's law and target placement | medium | `references/engineering-mastery.md` | open |
+| 261 | hci | Fitts's law and target placement | medium | `references/engineering-mastery.md` | covered by `hci-fitts` |
 | 262 | hci | Error prevention, undo and confirmation | high | `references/engineering-mastery.md` | covered by `hci-error-prevention` |
 | 263 | accessibility | Keyboard order, focus and traps | high | `references/engineering-mastery.md` | covered by `a11y-keyboard` |
-| 264 | accessibility | Labels, roles and live regions | medium | `references/engineering-mastery.md` | open |
-| 265 | accessibility | Contrast, non-color cues and zoom | medium | `references/engineering-mastery.md` | open |
-| 266 | accessibility | Reduced motion and vestibular safety | medium | `references/engineering-mastery.md` | open |
+| 264 | accessibility | Labels, roles and live regions | medium | `references/engineering-mastery.md` | covered by `a11y-screenreader` |
+| 265 | accessibility | Contrast, non-color cues and zoom | medium | `references/engineering-mastery.md` | covered by `a11y-contrast` |
+| 266 | accessibility | Reduced motion and vestibular safety | medium | `references/engineering-mastery.md` | covered by `a11y-motion` |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.
