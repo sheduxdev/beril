@@ -8,7 +8,7 @@ Beril also reads the security sites that block plain HTTP clients, keeps every l
 
 [![version](https://img.shields.io/github/v/tag/sheduxdev/beril?sort=semver&label=version&color=2f6f4e)](https://github.com/sheduxdev/beril/tags)
 ![license](https://img.shields.io/badge/license-MIT-2f6f4e)
-![python](https://img.shields.io/badge/python-3.10%2B-2f6f4e)
+![python](https://img.shields.io/badge/python-3.11%2B-2f6f4e)
 [![validate](https://github.com/sheduxdev/beril/actions/workflows/validate.yml/badge.svg)](https://github.com/sheduxdev/beril/actions/workflows/validate.yml)
 [![stars](https://img.shields.io/github/stars/sheduxdev/beril?style=flat&color=2f6f4e)](https://github.com/sheduxdev/beril/stargazers)
 
@@ -140,7 +140,7 @@ Then open `examples/dossier.md`.
 
 ### Manual install
 
-Python 3.10 or newer is required. The Camoufox browser needs about 300 MB. On headless Linux, install `xvfb` for the headful fallback.
+Python 3.11.5 or newer is required. The Camoufox browser needs about 300 MB. On headless Linux, install `xvfb` for the headful fallback.
 
 With uv:
 

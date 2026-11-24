@@ -7,7 +7,7 @@ name = "beril"
 version = "1.4.0"
 description = "Local-first security intelligence skill with a defense scan line and an ownership gated hunt line."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11.5"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "Deniz USTA", email = "sheduxdev@users.noreply.github.com" }]
@@ -18,7 +18,6 @@ classifiers = [
   "Intended Audience :: Developers",
   "Intended Audience :: System Administrators",
   "Operating System :: OS Independent",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
@@ -27,6 +26,7 @@ classifiers = [
 dependencies = [
   "camoufox[geoip]>=0.5.9",
   "beautifulsoup4>=4.15.0",
+  "soupsieve>=4.1.3",
   "lxml>=5.0",
   "androguard>=4.1",
   "pefile>=2023.2.7",
@@ -107,7 +107,7 @@ ignore = [
 [tool.pyright]
 include = ["scripts", "tests"]
 exclude = [".venv", "labs", "profile", "raw", "data", "scripts/dashboard_page.py"]
-pythonVersion = "3.10"
+pythonVersion = "3.11"
 extraPaths = ["scripts", "."]
 typeCheckingMode = "basic"
 reportMissingImports = "warning"

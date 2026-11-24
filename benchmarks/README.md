@@ -18,7 +18,10 @@ Juliet files are one variant per test case from CWE-78 s01 and s02. Every file
 contains a bad function, so the corpus measures recall only.
 
 The secret corpus pairs 18 positives with 16 near misses: wrong length, wrong
-charset, a missing header, a URL without a password.
+charset, a missing header, a URL without a password. Every value is synthetic,
+crafted from `data/secret_providers.json` and shaped to match the provider
+pattern; no key was ever live. GitHub secret scanning flags the Google and
+OpenAI samples, and both alerts are closed as `used_in_tests`.
 
 The CVE corpus pairs six seed-affected versions with the matching fixed version.
 

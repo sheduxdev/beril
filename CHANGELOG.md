@@ -2,6 +2,17 @@
 
 All notable changes. Beril uses semantic versioning.
 
+## Unreleased
+
+### Security
+
+- Require `soupsieve>=4.1.3` and Python 3.11.5 or newer. The three open soupsieve
+  advisories (exponential ReDoS in selector compilation, uncontrolled CSS parser
+  recursion, polynomial descendant combinator DoS) are only fixed from 3.0.2 and
+  4.0.0, and every fixed release needs Python 3.11.5 or newer.
+- Record the synthetic Google and OpenAI keys in `benchmarks/secrets` as used in
+  tests, so secret scanning carries a reason instead of a standing alert.
+
 ## 1.4.0 - 2026-11-23
 
 The two-line model: defence scans on artifacts you own, an attack line with an

@@ -54,7 +54,7 @@ def test_workflow_matrix_covers_platforms_and_pythons():
     assert "ubuntu-latest" in text
     assert "macos-" in text
     assert "windows-latest" in text
-    for version in ("3.10", "3.11", "3.12", "3.13"):
+    for version in ("3.11", "3.12", "3.13"):
         assert f'"{version}"' in text
 
 

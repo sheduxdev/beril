@@ -5,7 +5,7 @@ The CLI itself makes no network request unless a command asks for one.
 
 ## Requirements
 
-- Python 3.10 or newer.
+- Python 3.11.5 or newer.
 - Linux, macOS or Windows. The test matrix is advisory outside Linux.
 - Optional external binaries for `beril run`, `image` and `re` are detected,
   never bundled.
