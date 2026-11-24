@@ -81,7 +81,8 @@ def training() -> dict:
     cur = fileio.load_json(os.path.join(DATA, "curriculum.json"), {"weeks": []})
     tasks = []
     for w in cur["weeks"]:
-        tasks += w["drills"] + [{**w["deliverable"], "week": w["week"]}]
+        dv = w.get("deliverable")
+        tasks += w["drills"] + ([{**dv, "week": w["week"]}] if dv else [])
         for t in w["drills"]:
             t["week"] = w["week"]
     done = len([t for t in tasks if t["key"] in state["done"]])
@@ -472,6 +473,20 @@ class Handler(BaseHTTPRequestHandler):
             else:
                 items = []
             return self.json(filter_rows(items, q.get("q", [""])[0], 200, 0))
+        if path == "/api/gaps":
+            gp = os.path.join(ROOT, "knowledge", "gaps.json")
+            if os.path.exists(gp):
+                with open(gp, encoding="utf-8") as fh:
+                    items = json.load(fh)
+            else:
+                items = []
+            st = q.get("status", ["open"])[0]
+            pr = q.get("priority", [""])[0]
+            if st:
+                items = [r for r in items if r.get("status") == st]
+            if pr:
+                items = [r for r in items if r.get("priority") == pr]
+            return self.json(items[:200])
         if path == "/api/memory/card":
             cid = q.get("id", [""])[0]
             if not re.match(r"^[a-z0-9-]+$", cid):

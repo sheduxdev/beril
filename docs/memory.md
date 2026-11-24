@@ -71,6 +71,18 @@ Every card is a Markdown file with a date and a source. Commit messages become t
 
 Do not store secrets, customer data, or private report text in a card. Link the source.
 
+## Gaps
+
+`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. Do not pretend a gap is covered.
+
+```bash
+./beril gaps --next
+./beril gaps --priority high
+./beril gaps --cover web-ldap-xpath --card web-ldap-xpath
+```
+
+Close a gap by teaching the card, then cover it.
+
 ## What belongs here
 
 - A mechanism that repeats across targets.
@@ -92,4 +104,4 @@ The entry files in the repo root tell Claude, Codex, Cursor and Gemini to recall
 
 ## Current seed
 
-27 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
+53 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.

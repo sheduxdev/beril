@@ -57,6 +57,7 @@ COMMANDS = {
     "job": "job.py",
     "recall": "recall.py",
     "remember": "remember.py",
+    "gaps": "gaps.py",
 }
 
 

@@ -14,7 +14,8 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 - [docs/agents.md](docs/agents.md): agent file matrix
 - [docs/dashboard.md](docs/dashboard.md): local dashboard
 - [docs/memory.md](docs/memory.md): durable memory loop
-- [knowledge/INDEX.md](knowledge/INDEX.md): knowledge cards and its limits
+- [knowledge/INDEX.md](knowledge/INDEX.md): knowledge cards
+- [knowledge/GAPS.md](knowledge/GAPS.md): open gaps and its limits
 
 ## Lines
 

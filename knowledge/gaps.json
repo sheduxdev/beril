@@ -1,0 +1,461 @@
+[
+ {
+  "id": "web-csrf",
+  "domain": "web",
+  "gap": "CSRF beyond token checks: SameSite, state-changing GET, JSON content type",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "web-csrf-samesite",
+  "status": "covered"
+ },
+ {
+  "id": "web-cors",
+  "domain": "web",
+  "gap": "CORS origin reflection, null origin, credentials and preflight cache",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "web-cors-null-origin",
+  "status": "covered"
+ },
+ {
+  "id": "web-host-header",
+  "domain": "web",
+  "gap": "Host header and password-reset poisoning across proxies",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "web-host-header-reset",
+  "status": "covered"
+ },
+ {
+  "id": "web-open-redirect",
+  "domain": "web",
+  "gap": "Open redirect and its use in OAuth and SSO chains",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "web-open-redirect-chain",
+  "status": "covered"
+ },
+ {
+  "id": "web-upload",
+  "domain": "web",
+  "gap": "Upload validation: extension, MIME, magic, polyglot, storage path",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "web-upload-validation",
+  "status": "covered"
+ },
+ {
+  "id": "web-websocket",
+  "domain": "web",
+  "gap": "WebSocket origin checks, token handling and message auth",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "web-websocket-origin",
+  "status": "covered"
+ },
+ {
+  "id": "web-cache-deception",
+  "domain": "web",
+  "gap": "Cache deception versus poisoning, extension confusion",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "web-prototype-pollution",
+  "domain": "web",
+  "gap": "Prototype pollution sources, merge sinks and gadget paths",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "web-prototype-pollution",
+  "status": "covered"
+ },
+ {
+  "id": "web-deserialization",
+  "domain": "web",
+  "gap": "Python pickle, PHP unserialize, Java streams, .NET formatters",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "web-deserialization-gadget",
+  "status": "covered"
+ },
+ {
+  "id": "web-xxe",
+  "domain": "web",
+  "gap": "XXE in XML, SAML, DOCX and SVG parsers",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "web-xxe-parser",
+  "status": "covered"
+ },
+ {
+  "id": "web-ldap-xpath",
+  "domain": "web",
+  "gap": "LDAP and XPath injection syntax and blind variants",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "api-grpc",
+  "domain": "api",
+  "gap": "gRPC reflection, proto exposure, per-method auth",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "api-mass-assignment",
+  "domain": "api",
+  "gap": "Mass assignment through JSON and form binding",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "api-mass-assignment",
+  "status": "covered"
+ },
+ {
+  "id": "cloud-iam-wildcard",
+  "domain": "cloud",
+  "gap": "IAM wildcard actions, trust policies and privilege escalation paths",
+  "priority": "high",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "cloud-iam-wildcard",
+  "status": "covered"
+ },
+ {
+  "id": "cloud-k8s-pod",
+  "domain": "cloud",
+  "gap": "Privileged pods, hostPath, service account tokens and admission bypass",
+  "priority": "high",
+  "source": "labs/cloud",
+  "covered_by": "cloud-k8s-hostpath",
+  "status": "covered"
+ },
+ {
+  "id": "cloud-docker",
+  "domain": "cloud",
+  "gap": "Docker socket, root container, image digest and build secrets",
+  "priority": "medium",
+  "source": "labs/cloud",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "cloud-terraform",
+  "domain": "cloud",
+  "gap": "Terraform public resources, state secrets and provider trust",
+  "priority": "medium",
+  "source": "labs/cloud",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "supply-typosquat",
+  "domain": "supply-chain",
+  "gap": "Typosquatting, dependency confusion and install scripts",
+  "priority": "high",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "supply-typosquat",
+  "status": "covered"
+ },
+ {
+  "id": "supply-lockfile",
+  "domain": "supply-chain",
+  "gap": "Lockfile integrity, registry pinning and reproducible builds",
+  "priority": "medium",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "supply-sigstore",
+  "domain": "supply-chain",
+  "gap": "Signing, provenance and verification of build artifacts",
+  "priority": "medium",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "cicd-pr-target",
+  "domain": "supply-chain",
+  "gap": "pull_request_target, workflow permissions and untrusted checkout",
+  "priority": "high",
+  "source": "labs/cloud",
+  "covered_by": "cicd-pr-target",
+  "status": "covered"
+ },
+ {
+  "id": "secrets-verified",
+  "domain": "supply-chain",
+  "gap": "Secret scanning with verification and blast-radius proof",
+  "priority": "high",
+  "source": "references/tooling.md",
+  "covered_by": "secrets-verified",
+  "status": "covered"
+ },
+ {
+  "id": "mobile-ios-ats",
+  "domain": "mobile",
+  "gap": "iOS ATS exceptions and WKWebView bridges",
+  "priority": "medium",
+  "source": "references/mobile-reverse.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "mobile-android-provider",
+  "domain": "mobile",
+  "gap": "Android FileProvider paths and exported providers",
+  "priority": "high",
+  "source": "labs/mobile",
+  "covered_by": "mobile-provider-paths",
+  "status": "covered"
+ },
+ {
+  "id": "mobile-flutter",
+  "domain": "mobile",
+  "gap": "Flutter Dart snapshots, SSL pinning and reFlutter",
+  "priority": "medium",
+  "source": "references/mobile-reverse.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "firmware-uart",
+  "domain": "firmware",
+  "gap": "UART discovery, baud detection and console access",
+  "priority": "high",
+  "source": "references/firmware-iot.md",
+  "covered_by": "firmware-uart",
+  "status": "covered"
+ },
+ {
+  "id": "firmware-jtag",
+  "domain": "firmware",
+  "gap": "JTAG and SWD identification and flash dump",
+  "priority": "medium",
+  "source": "references/firmware-iot.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "firmware-spi",
+  "domain": "firmware",
+  "gap": "SPI flash read, verification and recovery",
+  "priority": "medium",
+  "source": "references/firmware-iot.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "firmware-update-sign",
+  "domain": "firmware",
+  "gap": "Update signature, downgrade and rollback",
+  "priority": "high",
+  "source": "labs/firmware",
+  "covered_by": "firmware-update-sign",
+  "status": "covered"
+ },
+ {
+  "id": "win-service-acl",
+  "domain": "windows",
+  "gap": "Service ACL, unquoted path and weak service permissions",
+  "priority": "high",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "win-service-acl",
+  "status": "covered"
+ },
+ {
+  "id": "win-token",
+  "domain": "windows",
+  "gap": "Token privileges, impersonation and potato family",
+  "priority": "high",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "win-credential",
+  "domain": "windows",
+  "gap": "DPAPI, Credential Manager and browser stores",
+  "priority": "medium",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "linux-suid",
+  "domain": "linux",
+  "gap": "SUID and capabilities review and GTFOBins paths",
+  "priority": "high",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "linux-suid",
+  "status": "covered"
+ },
+ {
+  "id": "linux-cron-systemd",
+  "domain": "linux",
+  "gap": "Cron, systemd unit and PATH privilege paths",
+  "priority": "medium",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "container-escape",
+  "domain": "container",
+  "gap": "Container escape primitives and host mounts",
+  "priority": "high",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "browser-extension",
+  "domain": "browser",
+  "gap": "Extension permissions, content scripts and message passing",
+  "priority": "medium",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "electron-context",
+  "domain": "browser",
+  "gap": "Electron context isolation, preload and nodeIntegration",
+  "priority": "medium",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "detection-sigma",
+  "domain": "detection",
+  "gap": "Sigma rule structure, logsource and false-positive analysis",
+  "priority": "high",
+  "source": "labs/detection",
+  "covered_by": "detection-sigma",
+  "status": "covered"
+ },
+ {
+  "id": "detection-beacon",
+  "domain": "detection",
+  "gap": "Beaconing detection from flow timing and jitter",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "ir-timeline",
+  "domain": "ir",
+  "gap": "Incident timeline from logs, disk and memory",
+  "priority": "medium",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "ir-memory",
+  "domain": "ir",
+  "gap": "Memory capture order and volatile evidence",
+  "priority": "medium",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "ai-agent-tool",
+  "domain": "ai",
+  "gap": "Agent tool-call confusion and argument injection",
+  "priority": "high",
+  "source": "labs/llm",
+  "covered_by": "ai-agent-tool",
+  "status": "covered"
+ },
+ {
+  "id": "ai-memory-poison",
+  "domain": "ai",
+  "gap": "Agent memory poisoning and later action",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "ai-mcp",
+  "domain": "ai",
+  "gap": "MCP server config, tool permissions and prompt injection",
+  "priority": "high",
+  "source": "references/claude-bughunter.md",
+  "covered_by": "ai-mcp",
+  "status": "covered"
+ },
+ {
+  "id": "ai-cost",
+  "domain": "ai",
+  "gap": "Token budget, loop control and cost caps for agents",
+  "priority": "medium",
+  "source": "docs/dashboard.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "report-cvss",
+  "domain": "process",
+  "gap": "CVSS with business context and severity defense",
+  "priority": "medium",
+  "source": "references/scoring.md",
+  "covered_by": "report-cvss",
+  "status": "covered"
+ },
+ {
+  "id": "report-evidence",
+  "domain": "process",
+  "gap": "Evidence redaction and chain of custody",
+  "priority": "high",
+  "source": "references/claude-bughunter.md",
+  "covered_by": "report-evidence",
+  "status": "covered"
+ },
+ {
+  "id": "tls-config",
+  "domain": "crypto",
+  "gap": "TLS versions, ciphers, certificate chain and pinning",
+  "priority": "medium",
+  "source": "references/tooling.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "key-management",
+  "domain": "crypto",
+  "gap": "Key storage, rotation and envelope encryption",
+  "priority": "medium",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "webhook-signature",
+  "domain": "api",
+  "gap": "Webhook HMAC, timestamp and replay",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "race-db",
+  "domain": "web",
+  "gap": "Database isolation, unique constraints and idempotency keys",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ }
+]

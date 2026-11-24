@@ -41,6 +41,7 @@ FILES = [
     "docs/dashboard.md",
     "docs/memory.md",
     "knowledge/INDEX.md",
+    "knowledge/GAPS.md",
     "docs/attacking.md",
     "docs/defending.md",
     "docs/report-format.md",
