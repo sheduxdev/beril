@@ -59,6 +59,16 @@ CASES = [
     ("open loop load test saturation", "eng-load-test"),
     ("capacity model headroom", "eng-capacity"),
     ("retention deletion clock", "eng-retention"),
+    ("Raft membership joint consensus", "consensus-membership"),
+    ("linearizable read leader lease", "consensus-linearizable-read"),
+    ("instruction selection tree pattern", "comp-instr-select"),
+    ("ABI calling convention alignment", "comp-abi"),
+    ("undefined behavior optimizer assumption", "comp-ub"),
+    ("MVCC snapshot version vacuum", "db-mvcc"),
+    ("write skew serializable isolation", "db-isolation"),
+    ("platform team internal SLA", "platform-team-api"),
+    ("on-call compensation rotation", "org-oncall-comp"),
+    ("blameless postmortem actions", "org-postmortem-culture"),
 ]
 
 

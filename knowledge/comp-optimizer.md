@@ -1,14 +1,14 @@
 ---
 id: comp-optimizer
-title: An optimization must preserve semantics
-tags: compiler, optimizer, semantics
+title: An optimizer pass must preserve semantics
+tags: compiler, optimizer, optimization, semantics, pass
 confidence: medium
 updated: 2026-11-25
 uses: 0
 sources: references/engineering-mastery.md
 status: active
 ---
-# An optimization must preserve semantics
+# An optimizer pass must preserve semantics
 
 ## Claim
 

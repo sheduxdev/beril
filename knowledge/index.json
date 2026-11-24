@@ -1281,6 +1281,50 @@
   "failure": "A console UI bug may not affect the API. Version mapping matters."
  },
  {
+  "path": "knowledge/comp-abi.md",
+  "body": "# An ABI is a contract between compiled units\n\n## Claim\n\nArgument registers, stack alignment, red zone and return values are fixed. A mismatch is a silent corruption.\n\n## Test\n\nCompile a caller and callee from different units. Check the registers and alignment.\n\n## Proof\n\nA call that passes the argument and returns correctly.\n\n## Failure modes\n\nA variadic call differs. A struct return may use a hidden pointer.",
+  "id": "comp-abi",
+  "title": "An ABI is a contract between compiled units",
+  "tags": [
+   "compiler",
+   "abi",
+   "calling-convention"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Argument registers, stack alignment, red zone and return values are fixed. A mismatch is a silent corruption.",
+  "test": "Compile a caller and callee from different units. Check the registers and alignment.",
+  "proof": "A call that passes the argument and returns correctly.",
+  "failure": "A variadic call differs. A struct return may use a hidden pointer."
+ },
+ {
+  "path": "knowledge/comp-instr-select.md",
+  "body": "# Instruction selection matches IR trees to target patterns\n\n## Claim\n\nThe selector rewrites IR shapes into machine instructions, preferring a single instruction when one covers the tree.\n\n## Test\n\nFeed a pattern that has a fused instruction. Compare with a naive lowering.\n\n## Proof\n\nThe fused instruction with correct flags.\n\n## Failure modes\n\nA pattern that ignores side effects reorders a load. A cost model can pick a worse pattern.",
+  "id": "comp-instr-select",
+  "title": "Instruction selection matches IR trees to target patterns",
+  "tags": [
+   "compiler",
+   "codegen",
+   "isel"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The selector rewrites IR shapes into machine instructions, preferring a single instruction when one covers the tree.",
+  "test": "Feed a pattern that has a fused instruction. Compare with a naive lowering.",
+  "proof": "The fused instruction with correct flags.",
+  "failure": "A pattern that ignores side effects reorders a load. A cost model can pick a worse pattern."
+ },
+ {
   "path": "knowledge/comp-jit.md",
   "body": "# A JIT has tiers, guards and a code cache\n\n## Claim\n\nFast code depends on assumptions. A guard fails and the runtime deopts to a slower tier.\n\n## Test\n\nRead the tier policy and the guards. Force a deopt. Check the code cache.\n\n## Proof\n\nA correct result across the deopt.\n\n## Failure modes\n\nA JIT bug can appear only after warmup. Code cache invalidation matters.",
   "id": "comp-jit",
@@ -1304,13 +1348,15 @@
  },
  {
   "path": "knowledge/comp-optimizer.md",
-  "body": "# An optimization must preserve semantics\n\n## Claim\n\nConstant folding, inlining and loop transforms change the shape, not the result. A test oracle is required.\n\n## Test\n\nRun a randomized program corpus with and without the pass. Compare output.\n\n## Proof\n\nIdentical output across the corpus.\n\n## Failure modes\n\nUndefined behavior lets an optimizer do surprising things. A pass without a test is a guess.",
+  "body": "# An optimizer pass must preserve semantics\n\n## Claim\n\nConstant folding, inlining and loop transforms change the shape, not the result. A test oracle is required.\n\n## Test\n\nRun a randomized program corpus with and without the pass. Compare output.\n\n## Proof\n\nIdentical output across the corpus.\n\n## Failure modes\n\nUndefined behavior lets an optimizer do surprising things. A pass without a test is a guess.",
   "id": "comp-optimizer",
-  "title": "An optimization must preserve semantics",
+  "title": "An optimizer pass must preserve semantics",
   "tags": [
    "compiler",
    "optimizer",
-   "semantics"
+   "optimization",
+   "semantics",
+   "pass"
   ],
   "confidence": "medium",
   "updated": "2026-11-25",
@@ -1389,6 +1435,72 @@
   "test": "Write a bad program. Check the error location. Compare with a gradual type escape.",
   "proof": "A rejection with a rule and a location.",
   "failure": "An `any` escape moves the proof to runtime. An unsound cast hides it."
+ },
+ {
+  "path": "knowledge/comp-ub.md",
+  "body": "# Undefined behavior lets the optimizer assume\n\n## Claim\n\nSigned overflow, strict aliasing and null dereference let the compiler remove checks. The source can look safe.\n\n## Test\n\nCompile at -O2 with UBSAN. Compare the branch with -O0. Trigger the assumption.\n\n## Proof\n\nA sanitizer report or a behavior change across optimization levels.\n\n## Failure modes\n\nA test at -O0 can pass while production breaks.",
+  "id": "comp-ub",
+  "title": "Undefined behavior lets the optimizer assume",
+  "tags": [
+   "compiler",
+   "ub",
+   "optimizer"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Signed overflow, strict aliasing and null dereference let the compiler remove checks. The source can look safe.",
+  "test": "Compile at -O2 with UBSAN. Compare the branch with -O0. Trigger the assumption.",
+  "proof": "A sanitizer report or a behavior change across optimization levels.",
+  "failure": "A test at -O0 can pass while production breaks."
+ },
+ {
+  "path": "knowledge/consensus-linearizable-read.md",
+  "body": "# A linearizable read needs a leader lease or a read index\n\n## Claim\n\nReading from a follower can be stale. A read index confirms the leader's commit index; a lease bounds staleness.\n\n## Test\n\nRead from a follower under partition. Check the value and the lease expiry.\n\n## Proof\n\nThe latest committed value or a clear refusal.\n\n## Failure modes\n\nA clock-based lease can expire early. A stale read is invisible without a version.",
+  "id": "consensus-linearizable-read",
+  "title": "A linearizable read needs a leader lease or a read index",
+  "tags": [
+   "distributed",
+   "consensus",
+   "read"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Reading from a follower can be stale. A read index confirms the leader's commit index; a lease bounds staleness.",
+  "test": "Read from a follower under partition. Check the value and the lease expiry.",
+  "proof": "The latest committed value or a clear refusal.",
+  "failure": "A clock-based lease can expire early. A stale read is invisible without a version."
+ },
+ {
+  "path": "knowledge/consensus-membership.md",
+  "body": "# Membership change is a consensus decision\n\n## Claim\n\nChanging the voter set can create two majorities. Joint consensus or one-at-a-time changes preserve overlap.\n\n## Test\n\nAdd and remove a node while writes continue. Check the quorum and the leader.\n\n## Proof\n\nA config change with no split brain and no lost commit.\n\n## Failure modes\n\nA two-node change in one step can overlap two majorities.",
+  "id": "consensus-membership",
+  "title": "Membership change is a consensus decision",
+  "tags": [
+   "distributed",
+   "raft",
+   "membership"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Changing the voter set can create two majorities. Joint consensus or one-at-a-time changes preserve overlap.",
+  "test": "Add and remove a node while writes continue. Check the quorum and the leader.",
+  "proof": "A config change with no split brain and no lost commit.",
+  "failure": "A two-node change in one step can overlap two majorities."
  },
  {
   "path": "knowledge/container-escape.md",
@@ -1500,6 +1612,50 @@
   "test": "Collect many outputs. Check the seed source. Try to predict the next value from the timestamp or PID.",
   "proof": "A predicted token accepted by the server.",
   "failure": "A random-looking string is not proof. Check the generator and the seed."
+ },
+ {
+  "path": "knowledge/db-isolation.md",
+  "body": "# Isolation levels allow different anomalies\n\n## Claim\n\nRead committed permits write skew; serializable prevents it with predicates or locks. The tradeoff is concurrency.\n\n## Test\n\nRun two transactions that read a predicate and write the complement. Repeat under each level.\n\n## Proof\n\nThe anomaly or the serialization failure.\n\n## Failure modes\n\nA snapshot isolation label does not prevent write skew. Retry is part of serializable.",
+  "id": "db-isolation",
+  "title": "Isolation levels allow different anomalies",
+  "tags": [
+   "database",
+   "isolation",
+   "write-skew"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Read committed permits write skew; serializable prevents it with predicates or locks. The tradeoff is concurrency.",
+  "test": "Run two transactions that read a predicate and write the complement. Repeat under each level.",
+  "proof": "The anomaly or the serialization failure.",
+  "failure": "A snapshot isolation label does not prevent write skew. Retry is part of serializable."
+ },
+ {
+  "path": "knowledge/db-mvcc.md",
+  "body": "# MVCC keeps versions for concurrent snapshots\n\n## Claim\n\nA writer creates a new version; readers see a snapshot. Vacuum removes versions no snapshot can see.\n\n## Test\n\nOpen a long transaction. Update the row in another session. Read both snapshots.\n\n## Proof\n\nThe old version visible to the old snapshot and the new visible to the new one.\n\n## Failure modes\n\nA long snapshot blocks vacuum and bloats the table.",
+  "id": "db-mvcc",
+  "title": "MVCC keeps versions for concurrent snapshots",
+  "tags": [
+   "database",
+   "mvcc",
+   "snapshot"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A writer creates a new version; readers see a snapshot. Vacuum removes versions no snapshot can see.",
+  "test": "Open a long transaction. Update the row in another session. Read both snapshots.",
+  "proof": "The old version visible to the old snapshot and the new visible to the new one.",
+  "failure": "A long snapshot blocks vacuum and bloats the table."
  },
  {
   "path": "knowledge/detection-beacon.md",
@@ -3490,11 +3646,12 @@
  },
  {
   "path": "knowledge/eng-tradeoffs.md",
-  "body": "# A tradeoff without a cost is marketing\n\n## Claim\n\nState what improves, what worsens and who pays. Then choose.\n\n## Test\n\nWrite two options and their costs. Pick one.\n\n## Proof\n\nA decision record with the rejected option.\n\n## Failure modes\n\nA choice that claims all benefits has no tradeoff.",
+  "body": "# An architecture tradeoff without a cost is marketing\n\n## Claim\n\nState what improves, what worsens and who pays. Then choose.\n\n## Test\n\nWrite two options and their costs. Pick one.\n\n## Proof\n\nA decision record with the rejected option.\n\n## Failure modes\n\nA choice that claims all benefits has no tradeoff.",
   "id": "eng-tradeoffs",
-  "title": "A tradeoff without a cost is marketing",
+  "title": "An architecture tradeoff without a cost is marketing",
   "tags": [
    "engineering",
+   "tradeoff",
    "tradeoffs",
    "design",
    "cost",
@@ -4268,6 +4425,28 @@
   "failure": "A single metric is gamed. A metric with no owner is ignored."
  },
  {
+  "path": "knowledge/org-oncall-comp.md",
+  "body": "# On-call is work and must be paid or traded\n\n## Claim\n\nCompensation, time off and rotation fairness decide whether on-call is sustainable.\n\n## Test\n\nCount pages per person. Check the compensation and the recovery time.\n\n## Proof\n\nA rotation with fair load and a recovery rule.\n\n## Failure modes\n\nAn unpaid 24/7 rotation burns out. A single hero hides the load.",
+  "id": "org-oncall-comp",
+  "title": "On-call is work and must be paid or traded",
+  "tags": [
+   "organization",
+   "oncall",
+   "compensation"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Compensation, time off and rotation fairness decide whether on-call is sustainable.",
+  "test": "Count pages per person. Check the compensation and the recovery time.",
+  "proof": "A rotation with fair load and a recovery rule.",
+  "failure": "An unpaid 24/7 rotation burns out. A single hero hides the load."
+ },
+ {
   "path": "knowledge/org-oncall.md",
   "body": "# On-call load is a reliability input\n\n## Claim\n\nA noisy rotation burns the team and hides the real reliability work. Page volume is a metric.\n\n## Test\n\nCount pages per week and per person. Classify actionable vs noise. Fix the top noise source.\n\n## Proof\n\nA page budget and a lower noise rate.\n\n## Failure modes\n\nA dashboard alert is not a page. A rotation without handoff loses context.",
   "id": "org-oncall",
@@ -4288,6 +4467,53 @@
   "test": "Count pages per week and per person. Classify actionable vs noise. Fix the top noise source.",
   "proof": "A page budget and a lower noise rate.",
   "failure": "A dashboard alert is not a page. A rotation without handoff loses context."
+ },
+ {
+  "path": "knowledge/org-postmortem-culture.md",
+  "body": "# A blameless postmortem turns incidents into learning\n\n## Claim\n\nThe timeline, contributing factors and actions matter. Blame stops the second-order detail.\n\n## Test\n\nRead three postmortems. Check whether people admit mistakes and actions close.\n\n## Proof\n\nAn action with an owner and a date that closed.\n\n## Failure modes\n\nA postmortem that names a person closes early. An action without a date is a wish.",
+  "id": "org-postmortem-culture",
+  "title": "A blameless postmortem turns incidents into learning",
+  "tags": [
+   "organization",
+   "postmortem",
+   "postmortems",
+   "blameless",
+   "culture",
+   "learning"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The timeline, contributing factors and actions matter. Blame stops the second-order detail.",
+  "test": "Read three postmortems. Check whether people admit mistakes and actions close.",
+  "proof": "An action with an owner and a date that closed.",
+  "failure": "A postmortem that names a person closes early. An action without a date is a wish."
+ },
+ {
+  "path": "knowledge/platform-team-api.md",
+  "body": "# An internal platform is a product with an API and an SLA\n\n## Claim\n\nThe team publishes a contract, a support path and a deprecation policy. A ticket queue is not a product.\n\n## Test\n\nRead the internal docs. Try to onboard without asking. Measure the time to first deploy.\n\n## Proof\n\nA team onboarded from the docs.\n\n## Failure modes\n\nA platform with no support path is a gate. A version without a deprecation date is a trap.",
+  "id": "platform-team-api",
+  "title": "An internal platform is a product with an API and an SLA",
+  "tags": [
+   "organization",
+   "platform",
+   "api"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The team publishes a contract, a support path and a deprecation policy. A ticket queue is not a product.",
+  "test": "Read the internal docs. Try to onboard without asking. Measure the time to first deploy.",
+  "proof": "A team onboarded from the docs.",
+  "failure": "A platform with no support path is a gate. A version without a deprecation date is a trap."
  },
  {
   "path": "knowledge/process-bounty-platform.md",

@@ -1,14 +1,14 @@
 ---
 id: eng-tradeoffs
-title: A tradeoff without a cost is marketing
-tags: engineering, tradeoffs, design, cost, architecture
+title: An architecture tradeoff without a cost is marketing
+tags: engineering, tradeoff, tradeoffs, design, cost, architecture
 confidence: high
 updated: 2026-11-25
 uses: 0
 sources: references/engineering-mastery.md
 status: active
 ---
-# A tradeoff without a cost is marketing
+# An architecture tradeoff without a cost is marketing
 
 ## Claim
 

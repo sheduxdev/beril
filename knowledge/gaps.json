@@ -1753,5 +1753,203 @@
   "source": "references/engineering-mastery.md",
   "covered_by": "eng-retention",
   "status": "covered"
+ },
+ {
+  "id": "consensus-membership",
+  "domain": "distributed",
+  "gap": "Raft membership changes and joint consensus",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "consensus-membership",
+  "status": "covered"
+ },
+ {
+  "id": "consensus-snapshot",
+  "domain": "distributed",
+  "gap": "Log snapshots and install-snapshot safety",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "consensus-paxos",
+  "domain": "distributed",
+  "gap": "Paxos phases and multi-Paxos",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "consensus-linearizable-read",
+  "domain": "distributed",
+  "gap": "Linearizable reads without a log write",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "consensus-linearizable-read",
+  "status": "covered"
+ },
+ {
+  "id": "comp-instr-select",
+  "domain": "compilers",
+  "gap": "Instruction selection and pattern matching",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "comp-instr-select",
+  "status": "covered"
+ },
+ {
+  "id": "comp-abi",
+  "domain": "compilers",
+  "gap": "ABI, calling conventions and stack layout",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "comp-abi",
+  "status": "covered"
+ },
+ {
+  "id": "comp-linking",
+  "domain": "compilers",
+  "gap": "Linking, relocation and symbol resolution",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "comp-debug-info",
+  "domain": "compilers",
+  "gap": "DWARF, source maps and optimized code",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "comp-ub",
+  "domain": "compilers",
+  "gap": "Undefined behavior and optimizer assumptions",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "comp-ub",
+  "status": "covered"
+ },
+ {
+  "id": "db-mvcc",
+  "domain": "database",
+  "gap": "MVCC versions, snapshots and visibility",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "db-mvcc",
+  "status": "covered"
+ },
+ {
+  "id": "db-vacuum",
+  "domain": "database",
+  "gap": "Vacuum, bloat and transaction id wraparound",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "db-isolation",
+  "domain": "database",
+  "gap": "Isolation levels and write skew",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "db-isolation",
+  "status": "covered"
+ },
+ {
+  "id": "db-lock-manager",
+  "domain": "database",
+  "gap": "Lock modes, wait queues and fairness",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "db-deadlock",
+  "domain": "database",
+  "gap": "Deadlock detection and retry policy",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "platform-team-api",
+  "domain": "organization",
+  "gap": "Platform team API and internal SLA",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "platform-team-api",
+  "status": "covered"
+ },
+ {
+  "id": "platform-pricing",
+  "domain": "organization",
+  "gap": "Internal pricing, chargeback and showback",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "platform-support",
+  "domain": "organization",
+  "gap": "Platform support and office hours",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "org-oncall-comp",
+  "domain": "organization",
+  "gap": "On-call compensation and time off",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "org-oncall-comp",
+  "status": "covered"
+ },
+ {
+  "id": "org-rotation",
+  "domain": "organization",
+  "gap": "Rotation length, handoff and shadowing",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "org-skill-matrix",
+  "domain": "organization",
+  "gap": "Skill matrix and bus factor",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "org-docs-culture",
+  "domain": "organization",
+  "gap": "Writing culture and decision visibility",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "org-postmortem-culture",
+  "domain": "organization",
+  "gap": "Blameless postmortems and learning loops",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "org-postmortem-culture",
+  "status": "covered"
  }
 ]

@@ -1,6 +1,6 @@
 # Knowledge index
 
-262 durable cards. Read this before a web search; open a card only when it matches.
+272 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -62,16 +62,21 @@
 | `cloud-terraform-state` | Terraform state is a secret store | cloud, terraform, state | medium | 2026-11-24 |
 | `cloud-vmware` | VMware appliances are a chain of SSO and service bugs | cloud, vmware, vcenter | high | 2026-11-25 |
 | `comp-jit` | A JIT has tiers, guards and a code cache | compiler, jit, deopt | high | 2026-11-25 |
-| `comp-optimizer` | An optimization must preserve semantics | compiler, optimizer, semantics | medium | 2026-11-25 |
+| `comp-abi` | An ABI is a contract between compiled units | compiler, abi, calling-convention | high | 2026-11-25 |
+| `comp-optimizer` | An optimizer pass must preserve semantics | compiler, optimizer, optimization, semantics, pass | medium | 2026-11-25 |
+| `comp-instr-select` | Instruction selection matches IR trees to target patterns | compiler, codegen, isel | high | 2026-11-25 |
 | `comp-regalloc` | Register allocation maps live ranges to finite registers | compiler, regalloc, spill | medium | 2026-11-25 |
 | `comp-ssa` | SSA makes each definition single and explicit | compiler, ssa, dataflow | high | 2026-11-25 |
 | `comp-type-check` | Type checking proves a property before runtime | compiler, types, soundness | medium | 2026-11-25 |
+| `comp-ub` | Undefined behavior lets the optimizer assume | compiler, ub, optimizer | high | 2026-11-25 |
 | `container-escape` | A container escape is a host resource exposed to the container | container, escape, kubernetes | high | 2026-11-24 |
 | `crypto-kdf` | A password hash is a cost parameter | crypto, kdf, password | medium | 2026-11-25 |
 | `key-management` | Key management is where crypto bugs become data bugs | crypto, keys, storage | medium | 2026-11-24 |
 | `crypto-postquantum` | PQC migration is a hybrid, not a flag | crypto, pqc, hybrid | low | 2026-11-24 |
 | `crypto-weak-random` | Predictable randomness is a key recovery bug | crypto, random, predictability | high | 2026-11-24 |
 | `tls-config-review` | TLS is a version, a chain and a policy | crypto, tls, certificate | medium | 2026-11-24 |
+| `db-isolation` | Isolation levels allow different anomalies | database, isolation, write-skew | high | 2026-11-25 |
+| `db-mvcc` | MVCC keeps versions for concurrent snapshots | database, mvcc, snapshot | high | 2026-11-25 |
 | `detection-sigma` | A Sigma rule needs a logsource, a selection and a false-positive note | detection, sigma, log | high | 2026-11-24 |
 | `detection-beacon` | A beacon is a timing pattern, not a single request | detection, beacon, network | medium | 2026-11-24 |
 | `detection-cloud` | Cloud detection is control-plane and role-assumption first | detection, cloud, audit | high | 2026-11-25 |
@@ -83,10 +88,12 @@
 | `detection-threatintel` | Threat intel ages and IOCs are easy to rotate | detection, intel, ioc | medium | 2026-11-24 |
 | `dist-crdt` | A CRDT merges without coordination | distributed, crdt, merge | high | 2026-11-25 |
 | `dist-backfill` | A backfill is a throttled repair stream | distributed, backfill, repair | medium | 2026-11-25 |
+| `consensus-linearizable-read` | A linearizable read needs a leader lease or a read index | distributed, consensus, read | high | 2026-11-25 |
 | `dist-partition` | A partition forces a choice between availability and consistency | distributed, partition, cap | high | 2026-11-25 |
 | `dist-quorum-read` | A quorum read must overlap the write quorum | distributed, quorum, read | medium | 2026-11-25 |
 | `dist-ordering` | Exactly-once is at-least-once plus dedup | distributed, ordering, dedup | high | 2026-11-25 |
 | `dist-gossip` | Gossip spreads state in logarithmic rounds | distributed, gossip, membership | medium | 2026-11-25 |
+| `consensus-membership` | Membership change is a consensus decision | distributed, raft, membership | high | 2026-11-25 |
 | `dist-clock` | Physical clocks skew; logical clocks order events | distributed, clock, causality | high | 2026-11-25 |
 | `electron-context-isolation` | Electron is Node with a browser attached | electron, desktop, context-isolation | medium | 2026-11-24 |
 | `eng-gc` | A GC trades throughput for pause and space | engineering, gc, allocation | medium | 2026-11-25 |
@@ -107,12 +114,12 @@
 | `eng-roadmap` | A roadmap is a set of bets with kill criteria | engineering, roadmap, product | medium | 2026-11-25 |
 | `eng-distributed-tx` | A saga is a sequence with compensation | engineering, distributed, transaction | high | 2026-11-25 |
 | `eng-boundaries` | A service boundary owns a decision and its data | engineering, architecture, boundaries, boundary, ownership, service, data, team | high | 2026-11-25 |
-| `eng-tradeoffs` | A tradeoff without a cost is marketing | engineering, tradeoffs, design, cost, architecture | high | 2026-11-25 |
 | `eng-transactions` | A transaction is a boundary, not a decoration | engineering, database, transactions | high | 2026-11-25 |
 | `eng-api-versioning` | A version is a deprecation clock | engineering, api, versioning | medium | 2026-11-25 |
 | `eng-accessibility` | Accessibility is a correctness requirement | engineering, accessibility, ui | medium | 2026-11-25 |
 | `eng-api-contract` | An API is a promise about errors and time | engineering, api, contract | high | 2026-11-25 |
 | `eng-slo` | An SLO is a budget for unreliability | engineering, sre, slo | high | 2026-11-25 |
+| `eng-tradeoffs` | An architecture tradeoff without a cost is marketing | engineering, tradeoff, tradeoffs, design, cost, architecture | high | 2026-11-25 |
 | `eng-errors` | An error is a value with a caller decision | engineering, errors, api | high | 2026-11-25 |
 | `eng-estimation` | An estimate is a range and its assumptions | engineering, estimation, planning | medium | 2026-11-25 |
 | `eng-hiring` | An interview samples the job, not trivia | engineering, hiring, interview | low | 2026-11-25 |
@@ -191,10 +198,13 @@
 | `mobile-flutter` | Flutter hides logic in libapp.so and pins in Dart | mobile, flutter, dart | medium | 2026-11-24 |
 | `mobile-swift` | Swift hooks need mangled names or a bridge | mobile, ios, swift | medium | 2026-11-24 |
 | `mobile-swiftui-state` | SwiftUI state is not a security boundary | mobile, ios, swiftui | low | 2026-11-24 |
+| `org-postmortem-culture` | A blameless postmortem turns incidents into learning | organization, postmortem, postmortems, blameless, culture, learning | high | 2026-11-25 |
 | `org-budget` | A team budget is maintenance plus a bet | organization, budget, planning | medium | 2026-11-25 |
 | `org-adr` | An ADR records why, not only what | organization, adr, documentation | medium | 2026-11-25 |
 | `org-incentives` | An incentive shapes the local optimum | organization, incentives, metrics | medium | 2026-11-25 |
+| `platform-team-api` | An internal platform is a product with an API and an SLA | organization, platform, api | high | 2026-11-25 |
 | `org-delegation` | Delegation needs a decision right and a boundary | organization, delegation, daci | medium | 2026-11-25 |
+| `org-oncall-comp` | On-call is work and must be paid or traded | organization, oncall, compensation | high | 2026-11-25 |
 | `org-oncall` | On-call load is a reliability input | organization, oncall, reliability | high | 2026-11-25 |
 | `org-conway` | The org chart leaks into the architecture | organization, conway, law, ownership, service, teams | high | 2026-11-25 |
 | `process-retest` | A fix is not a fix until the same request fails | process, retest, regression | high | 2026-11-24 |

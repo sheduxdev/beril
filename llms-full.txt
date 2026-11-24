@@ -7088,7 +7088,7 @@ Do not store secrets, customer data, or private report text in a card. Link the 
 
 ## Gaps
 
-`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. 195 gaps exist and all are covered. The recall regression set is now 47 cases. The recall regression set is `scripts/recall_test.py`. Do not pretend a gap is covered.
+`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. 217 gaps exist: 205 covered, 12 open at medium or low priority, no high gaps. The recall regression set is now 57 cases. The recall regression set is `scripts/recall_test.py`. Do not pretend a gap is covered.
 
 ```bash
 ./beril gaps --next
@@ -7127,14 +7127,14 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 
 ## Current seed
 
-262 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
+272 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
 
 
 <!-- ===== knowledge/INDEX.md ===== -->
 
 # Knowledge index
 
-262 durable cards. Read this before a web search; open a card only when it matches.
+272 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -7196,16 +7196,21 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `cloud-terraform-state` | Terraform state is a secret store | cloud, terraform, state | medium | 2026-11-24 |
 | `cloud-vmware` | VMware appliances are a chain of SSO and service bugs | cloud, vmware, vcenter | high | 2026-11-25 |
 | `comp-jit` | A JIT has tiers, guards and a code cache | compiler, jit, deopt | high | 2026-11-25 |
-| `comp-optimizer` | An optimization must preserve semantics | compiler, optimizer, semantics | medium | 2026-11-25 |
+| `comp-abi` | An ABI is a contract between compiled units | compiler, abi, calling-convention | high | 2026-11-25 |
+| `comp-optimizer` | An optimizer pass must preserve semantics | compiler, optimizer, optimization, semantics, pass | medium | 2026-11-25 |
+| `comp-instr-select` | Instruction selection matches IR trees to target patterns | compiler, codegen, isel | high | 2026-11-25 |
 | `comp-regalloc` | Register allocation maps live ranges to finite registers | compiler, regalloc, spill | medium | 2026-11-25 |
 | `comp-ssa` | SSA makes each definition single and explicit | compiler, ssa, dataflow | high | 2026-11-25 |
 | `comp-type-check` | Type checking proves a property before runtime | compiler, types, soundness | medium | 2026-11-25 |
+| `comp-ub` | Undefined behavior lets the optimizer assume | compiler, ub, optimizer | high | 2026-11-25 |
 | `container-escape` | A container escape is a host resource exposed to the container | container, escape, kubernetes | high | 2026-11-24 |
 | `crypto-kdf` | A password hash is a cost parameter | crypto, kdf, password | medium | 2026-11-25 |
 | `key-management` | Key management is where crypto bugs become data bugs | crypto, keys, storage | medium | 2026-11-24 |
 | `crypto-postquantum` | PQC migration is a hybrid, not a flag | crypto, pqc, hybrid | low | 2026-11-24 |
 | `crypto-weak-random` | Predictable randomness is a key recovery bug | crypto, random, predictability | high | 2026-11-24 |
 | `tls-config-review` | TLS is a version, a chain and a policy | crypto, tls, certificate | medium | 2026-11-24 |
+| `db-isolation` | Isolation levels allow different anomalies | database, isolation, write-skew | high | 2026-11-25 |
+| `db-mvcc` | MVCC keeps versions for concurrent snapshots | database, mvcc, snapshot | high | 2026-11-25 |
 | `detection-sigma` | A Sigma rule needs a logsource, a selection and a false-positive note | detection, sigma, log | high | 2026-11-24 |
 | `detection-beacon` | A beacon is a timing pattern, not a single request | detection, beacon, network | medium | 2026-11-24 |
 | `detection-cloud` | Cloud detection is control-plane and role-assumption first | detection, cloud, audit | high | 2026-11-25 |
@@ -7217,10 +7222,12 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `detection-threatintel` | Threat intel ages and IOCs are easy to rotate | detection, intel, ioc | medium | 2026-11-24 |
 | `dist-crdt` | A CRDT merges without coordination | distributed, crdt, merge | high | 2026-11-25 |
 | `dist-backfill` | A backfill is a throttled repair stream | distributed, backfill, repair | medium | 2026-11-25 |
+| `consensus-linearizable-read` | A linearizable read needs a leader lease or a read index | distributed, consensus, read | high | 2026-11-25 |
 | `dist-partition` | A partition forces a choice between availability and consistency | distributed, partition, cap | high | 2026-11-25 |
 | `dist-quorum-read` | A quorum read must overlap the write quorum | distributed, quorum, read | medium | 2026-11-25 |
 | `dist-ordering` | Exactly-once is at-least-once plus dedup | distributed, ordering, dedup | high | 2026-11-25 |
 | `dist-gossip` | Gossip spreads state in logarithmic rounds | distributed, gossip, membership | medium | 2026-11-25 |
+| `consensus-membership` | Membership change is a consensus decision | distributed, raft, membership | high | 2026-11-25 |
 | `dist-clock` | Physical clocks skew; logical clocks order events | distributed, clock, causality | high | 2026-11-25 |
 | `electron-context-isolation` | Electron is Node with a browser attached | electron, desktop, context-isolation | medium | 2026-11-24 |
 | `eng-gc` | A GC trades throughput for pause and space | engineering, gc, allocation | medium | 2026-11-25 |
@@ -7241,12 +7248,12 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `eng-roadmap` | A roadmap is a set of bets with kill criteria | engineering, roadmap, product | medium | 2026-11-25 |
 | `eng-distributed-tx` | A saga is a sequence with compensation | engineering, distributed, transaction | high | 2026-11-25 |
 | `eng-boundaries` | A service boundary owns a decision and its data | engineering, architecture, boundaries, boundary, ownership, service, data, team | high | 2026-11-25 |
-| `eng-tradeoffs` | A tradeoff without a cost is marketing | engineering, tradeoffs, design, cost, architecture | high | 2026-11-25 |
 | `eng-transactions` | A transaction is a boundary, not a decoration | engineering, database, transactions | high | 2026-11-25 |
 | `eng-api-versioning` | A version is a deprecation clock | engineering, api, versioning | medium | 2026-11-25 |
 | `eng-accessibility` | Accessibility is a correctness requirement | engineering, accessibility, ui | medium | 2026-11-25 |
 | `eng-api-contract` | An API is a promise about errors and time | engineering, api, contract | high | 2026-11-25 |
 | `eng-slo` | An SLO is a budget for unreliability | engineering, sre, slo | high | 2026-11-25 |
+| `eng-tradeoffs` | An architecture tradeoff without a cost is marketing | engineering, tradeoff, tradeoffs, design, cost, architecture | high | 2026-11-25 |
 | `eng-errors` | An error is a value with a caller decision | engineering, errors, api | high | 2026-11-25 |
 | `eng-estimation` | An estimate is a range and its assumptions | engineering, estimation, planning | medium | 2026-11-25 |
 | `eng-hiring` | An interview samples the job, not trivia | engineering, hiring, interview | low | 2026-11-25 |
@@ -7325,10 +7332,13 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `mobile-flutter` | Flutter hides logic in libapp.so and pins in Dart | mobile, flutter, dart | medium | 2026-11-24 |
 | `mobile-swift` | Swift hooks need mangled names or a bridge | mobile, ios, swift | medium | 2026-11-24 |
 | `mobile-swiftui-state` | SwiftUI state is not a security boundary | mobile, ios, swiftui | low | 2026-11-24 |
+| `org-postmortem-culture` | A blameless postmortem turns incidents into learning | organization, postmortem, postmortems, blameless, culture, learning | high | 2026-11-25 |
 | `org-budget` | A team budget is maintenance plus a bet | organization, budget, planning | medium | 2026-11-25 |
 | `org-adr` | An ADR records why, not only what | organization, adr, documentation | medium | 2026-11-25 |
 | `org-incentives` | An incentive shapes the local optimum | organization, incentives, metrics | medium | 2026-11-25 |
+| `platform-team-api` | An internal platform is a product with an API and an SLA | organization, platform, api | high | 2026-11-25 |
 | `org-delegation` | Delegation needs a decision right and a boundary | organization, delegation, daci | medium | 2026-11-25 |
+| `org-oncall-comp` | On-call is work and must be paid or traded | organization, oncall, compensation | high | 2026-11-25 |
 | `org-oncall` | On-call load is a reliability input | organization, oncall, reliability | high | 2026-11-25 |
 | `org-conway` | The org chart leaks into the architecture | organization, conway, law, ownership, service, teams | high | 2026-11-25 |
 | `process-retest` | A fix is not a fix until the same request fails | process, retest, regression | high | 2026-11-24 |
@@ -7406,7 +7416,7 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 
 # Knowledge gaps
 
-195 gaps. A gap is a card that does not exist yet, ranked by priority.
+217 gaps. A gap is a card that does not exist yet, ranked by priority.
 
 | # | Domain | Gap | Priority | Source | Status |
 |---|---|---|---|---|---|
@@ -7605,6 +7615,28 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | 193 | engineering | Load models, open vs closed loop and saturation | medium | `references/engineering-mastery.md` | covered by `eng-load-test` |
 | 194 | engineering | Capacity models and headroom | medium | `references/engineering-mastery.md` | covered by `eng-capacity` |
 | 195 | engineering | Data retention, archival and deletion | medium | `references/engineering-mastery.md` | covered by `eng-retention` |
+| 196 | distributed | Raft membership changes and joint consensus | high | `references/engineering-mastery.md` | covered by `consensus-membership` |
+| 197 | distributed | Log snapshots and install-snapshot safety | medium | `references/engineering-mastery.md` | open |
+| 198 | distributed | Paxos phases and multi-Paxos | medium | `references/engineering-mastery.md` | open |
+| 199 | distributed | Linearizable reads without a log write | high | `references/engineering-mastery.md` | covered by `consensus-linearizable-read` |
+| 200 | compilers | Instruction selection and pattern matching | high | `references/engineering-mastery.md` | covered by `comp-instr-select` |
+| 201 | compilers | ABI, calling conventions and stack layout | high | `references/engineering-mastery.md` | covered by `comp-abi` |
+| 202 | compilers | Linking, relocation and symbol resolution | medium | `references/engineering-mastery.md` | open |
+| 203 | compilers | DWARF, source maps and optimized code | medium | `references/engineering-mastery.md` | open |
+| 204 | compilers | Undefined behavior and optimizer assumptions | high | `references/engineering-mastery.md` | covered by `comp-ub` |
+| 205 | database | MVCC versions, snapshots and visibility | high | `references/engineering-mastery.md` | covered by `db-mvcc` |
+| 206 | database | Vacuum, bloat and transaction id wraparound | medium | `references/engineering-mastery.md` | open |
+| 207 | database | Isolation levels and write skew | high | `references/engineering-mastery.md` | covered by `db-isolation` |
+| 208 | database | Lock modes, wait queues and fairness | medium | `references/engineering-mastery.md` | open |
+| 209 | database | Deadlock detection and retry policy | medium | `references/engineering-mastery.md` | open |
+| 210 | organization | Platform team API and internal SLA | high | `references/engineering-mastery.md` | covered by `platform-team-api` |
+| 211 | organization | Internal pricing, chargeback and showback | medium | `references/engineering-mastery.md` | open |
+| 212 | organization | Platform support and office hours | medium | `references/engineering-mastery.md` | open |
+| 213 | organization | On-call compensation and time off | high | `references/engineering-mastery.md` | covered by `org-oncall-comp` |
+| 214 | organization | Rotation length, handoff and shadowing | medium | `references/engineering-mastery.md` | open |
+| 215 | organization | Skill matrix and bus factor | medium | `references/engineering-mastery.md` | open |
+| 216 | organization | Writing culture and decision visibility | medium | `references/engineering-mastery.md` | open |
+| 217 | organization | Blameless postmortems and learning loops | high | `references/engineering-mastery.md` | covered by `org-postmortem-culture` |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.
 
