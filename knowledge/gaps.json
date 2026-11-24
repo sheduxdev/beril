@@ -1231,5 +1231,275 @@
   "source": "references/scoring.md",
   "covered_by": "",
   "status": "open"
+ },
+ {
+  "id": "eng-consensus",
+  "domain": "engineering",
+  "gap": "Consensus, quorum and leader election",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "eng-consensus",
+  "status": "covered"
+ },
+ {
+  "id": "eng-consistency",
+  "domain": "engineering",
+  "gap": "Consistency models and read-your-writes",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "eng-consistency",
+  "status": "covered"
+ },
+ {
+  "id": "eng-storage",
+  "domain": "engineering",
+  "gap": "B-tree, LSM and write amplification",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-query-planner",
+  "domain": "engineering",
+  "gap": "Query planning, indexes and statistics",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "eng-query-planner",
+  "status": "covered"
+ },
+ {
+  "id": "eng-memory",
+  "domain": "engineering",
+  "gap": "Virtual memory, page cache and allocators",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-congestion",
+  "domain": "engineering",
+  "gap": "Congestion control, queues and bufferbloat",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-type-systems",
+  "domain": "engineering",
+  "gap": "Type systems, variance and exhaustiveness",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-ml-systems",
+  "domain": "engineering",
+  "gap": "Feature stores, training serving skew and evaluation",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "eng-ml-systems",
+  "status": "covered"
+ },
+ {
+  "id": "eng-slo",
+  "domain": "engineering",
+  "gap": "SLOs, error budgets and alerting",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "eng-slo",
+  "status": "covered"
+ },
+ {
+  "id": "eng-multi-tenancy",
+  "domain": "engineering",
+  "gap": "Tenant isolation, noisy neighbors and data partitioning",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "eng-multi-tenancy",
+  "status": "covered"
+ },
+ {
+  "id": "eng-event-sourcing",
+  "domain": "engineering",
+  "gap": "Event sourcing, replay and projections",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-cqrs",
+  "domain": "engineering",
+  "gap": "CQRS and read model consistency",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-distributed-tx",
+  "domain": "engineering",
+  "gap": "Sagas, outbox and compensation",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "eng-distributed-tx",
+  "status": "covered"
+ },
+ {
+  "id": "eng-idempotent-consumer",
+  "domain": "engineering",
+  "gap": "At-least-once delivery and idempotent consumers",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "eng-idempotent-consumer",
+  "status": "covered"
+ },
+ {
+  "id": "eng-rate-limit",
+  "domain": "engineering",
+  "gap": "Token bucket, leaky bucket and fairness",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-cache-topology",
+  "domain": "engineering",
+  "gap": "Cache-aside, write-through and stampede",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-schema-evolution",
+  "domain": "engineering",
+  "gap": "Backward and forward compatible schema changes",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "eng-schema-evolution",
+  "status": "covered"
+ },
+ {
+  "id": "eng-api-versioning",
+  "domain": "engineering",
+  "gap": "API versioning and deprecation",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-platform",
+  "domain": "engineering",
+  "gap": "Platform teams, golden paths and paved roads",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-team-topology",
+  "domain": "engineering",
+  "gap": "Team boundaries and ownership",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-roadmap",
+  "domain": "engineering",
+  "gap": "Roadmaps, bets and kill criteria",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-hiring",
+  "domain": "engineering",
+  "gap": "Hiring signals and interview design",
+  "priority": "low",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-privacy",
+  "domain": "engineering",
+  "gap": "Privacy by design and data minimization",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "eng-privacy",
+  "status": "covered"
+ },
+ {
+  "id": "eng-compliance",
+  "domain": "engineering",
+  "gap": "SOC2, GDPR and evidence collection",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-finops",
+  "domain": "engineering",
+  "gap": "Unit economics and cost allocation",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-frontend-state",
+  "domain": "engineering",
+  "gap": "Client state, server state and cache ownership",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-mobile-arch",
+  "domain": "engineering",
+  "gap": "Offline-first mobile architecture",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-compiler",
+  "domain": "engineering",
+  "gap": "Lexing, parsing, IR and optimization",
+  "priority": "low",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-gc",
+  "domain": "engineering",
+  "gap": "Garbage collection and allocation pressure",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-observability-cost",
+  "domain": "engineering",
+  "gap": "Cardinality, sampling and telemetry cost",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
  }
 ]

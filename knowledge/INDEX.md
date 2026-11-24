@@ -1,6 +1,6 @@
 # Knowledge index
 
-152 durable cards. Read this before a web search; open a card only when it matches.
+202 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -72,6 +72,56 @@
 | `detection-tls` | TLS fingerprints identify a client stack, not a person | detection, tls, ja3 | medium | 2026-11-25 |
 | `detection-threatintel` | Threat intel ages and IOCs are easy to rotate | detection, intel, ioc | medium | 2026-11-24 |
 | `electron-context-isolation` | Electron is Node with a browser attached | electron, desktop, context-isolation | medium | 2026-11-24 |
+| `eng-boundaries` | A boundary hides a decision and owns its data | engineering, architecture, boundaries | high | 2026-11-25 |
+| `eng-regression` | A bug fix needs a test that failed before it | engineering, testing, regression | high | 2026-11-25 |
+| `eng-repro-build` | A build should be reproducible from a clean checkout | engineering, build, reproducible | high | 2026-11-25 |
+| `eng-cache-invalidation` | A cache needs a key, a TTL and an invalidation path | engineering, cache, invalidation | high | 2026-11-25 |
+| `eng-timeouts` | A call without a deadline can hang a pool | engineering, timeouts, reliability | high | 2026-11-25 |
+| `eng-communication` | A decision nobody understands is a future incident | engineering, communication, writing | high | 2026-11-25 |
+| `eng-feature-flags` | A feature flag is a temporary branch with an owner | engineering, feature-flag, release | medium | 2026-11-25 |
+| `eng-migrations` | A migration is expand, backfill, switch, contract | engineering, database, migration | high | 2026-11-25 |
+| `eng-postmortem` | A postmortem is blameless and actionable | engineering, postmortem, learning | high | 2026-11-25 |
+| `eng-backpressure` | A queue without a limit is a memory leak | engineering, queue, backpressure | high | 2026-11-25 |
+| `eng-distributed-tx` | A saga is a sequence with compensation | engineering, distributed, transaction | high | 2026-11-25 |
+| `eng-tradeoffs` | A tradeoff without a cost is marketing | engineering, tradeoffs, design | high | 2026-11-25 |
+| `eng-transactions` | A transaction is a boundary, not a decoration | engineering, database, transactions | high | 2026-11-25 |
+| `eng-accessibility` | Accessibility is a correctness requirement | engineering, accessibility, ui | medium | 2026-11-25 |
+| `eng-api-contract` | An API is a promise about errors and time | engineering, api, contract | high | 2026-11-25 |
+| `eng-slo` | An SLO is a budget for unreliability | engineering, sre, slo | high | 2026-11-25 |
+| `eng-errors` | An error is a value with a caller decision | engineering, errors, api | high | 2026-11-25 |
+| `eng-estimation` | An estimate is a range and its assumptions | engineering, estimation, planning | medium | 2026-11-25 |
+| `eng-mentoring` | Ask until the blocker is clear | engineering, mentoring, teaching | high | 2026-11-25 |
+| `eng-idempotent-consumer` | At-least-once delivery needs an idempotent consumer | engineering, queue, consumer | high | 2026-11-25 |
+| `eng-debug-bisect` | Bisect the space, not the code | engineering, debugging, bisect | high | 2026-11-25 |
+| `eng-concurrency` | Concurrency bugs are about shared state and ordering | engineering, concurrency, locks | high | 2026-11-25 |
+| `eng-config` | Config belongs to the environment, secrets belong to a store | engineering, config, secrets | high | 2026-11-25 |
+| `eng-consensus` | Consensus is quorum plus a log | engineering, distributed, consensus | high | 2026-11-25 |
+| `eng-consistency` | Consistency is a contract about reads | engineering, distributed, consistency | high | 2026-11-25 |
+| `eng-cost` | Cost is a design constraint | engineering, cost, cloud | medium | 2026-11-25 |
+| `eng-data-model` | Data outlives code | engineering, data, schema | high | 2026-11-25 |
+| `eng-deletion` | Deletion is a feature | engineering, deletion, maintenance | medium | 2026-11-25 |
+| `eng-legacy-strangler` | Do not rewrite the legacy system; strangle it | engineering, legacy, refactor | high | 2026-11-25 |
+| `eng-docs` | Docs are for the next decision | engineering, docs, writing | medium | 2026-11-25 |
+| `eng-ethics` | Engineering judgment includes who pays | engineering, ethics, product | medium | 2026-11-25 |
+| `eng-dependencies` | Every dependency is a maintenance contract | engineering, dependencies, supply-chain | medium | 2026-11-25 |
+| `eng-idempotency` | Every retryable write needs a key | engineering, idempotency, retry | high | 2026-11-25 |
+| `eng-logging` | Log the decision, not the whole world | engineering, logging, observability | medium | 2026-11-25 |
+| `eng-multi-tenancy` | Multi-tenancy is isolation plus noisy-neighbor control | engineering, multi-tenant, isolation | high | 2026-11-25 |
+| `eng-observability` | Observability answers the next question | engineering, observability, logs | high | 2026-11-25 |
+| `eng-performance-budget` | Performance is a budget before it is an optimization | engineering, performance, budget | high | 2026-11-25 |
+| `eng-privacy` | Privacy is data minimization with a retention clock | engineering, privacy, data | high | 2026-11-25 |
+| `eng-property-tests` | Property tests find the input you did not imagine | engineering, testing, property | medium | 2026-11-25 |
+| `eng-refactor-small` | Refactor in small, behavior-preserving steps | engineering, refactor, testing | high | 2026-11-25 |
+| `eng-requirements` | Requirements are a decision, not a transcript | engineering, requirements, product | high | 2026-11-25 |
+| `eng-code-review` | Review the change, not the author | engineering, review, quality | high | 2026-11-25 |
+| `eng-schema-evolution` | Schema changes must be compatible in both directions | engineering, schema, evolution | high | 2026-11-25 |
+| `eng-security-design` | Security is a property of the design | engineering, security, design | high | 2026-11-25 |
+| `eng-simplicity` | Simplicity is removing accidental complexity | engineering, design, simplicity | high | 2026-11-25 |
+| `eng-incident` | Stabilize before you diagnose | engineering, incident, operations | high | 2026-11-25 |
+| `eng-testing-pyramid` | Test at the lowest level that can catch the bug | engineering, testing, pyramid | high | 2026-11-25 |
+| `eng-i18n` | Text, time and money are not strings | engineering, i18n, locale | medium | 2026-11-25 |
+| `eng-query-planner` | The planner is the database's brain | engineering, database, query | high | 2026-11-25 |
+| `eng-ml-systems` | Training and serving must share the same features | engineering, ml, features | high | 2026-11-25 |
 | `exploit-uaf-reallocate` | UAF becomes control when the freed slot is reallocated | exploit, uaf, heap | high | 2026-11-24 |
 | `exploit-rop-argument-registers` | x86_64 ROP needs the argument registers | exploit, rop, linux | high | 2026-11-24 |
 | `firmware-update-sign` | A signed update is useless if verification is off | firmware, update, signature | high | 2026-11-24 |

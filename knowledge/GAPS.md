@@ -1,6 +1,6 @@
 # Knowledge gaps
 
-137 gaps. A gap is a card that does not exist yet, ranked by priority.
+167 gaps. A gap is a card that does not exist yet, ranked by priority.
 
 | # | Domain | Gap | Priority | Source | Status |
 |---|---|---|---|---|---|
@@ -141,5 +141,35 @@
 | 135 | ai | Multi-agent delegation, shared memory and trust | high | `references/techniques.md` | covered by `ai-multiagent` |
 | 136 | process | Safe harbor, authorization and data handling | medium | `docs/break-my-app.md` | open |
 | 137 | process | Payout expectations, VRT and severity negotiation | medium | `references/scoring.md` | open |
+| 138 | engineering | Consensus, quorum and leader election | high | `references/engineering-mastery.md` | covered by `eng-consensus` |
+| 139 | engineering | Consistency models and read-your-writes | high | `references/engineering-mastery.md` | covered by `eng-consistency` |
+| 140 | engineering | B-tree, LSM and write amplification | medium | `references/engineering-mastery.md` | open |
+| 141 | engineering | Query planning, indexes and statistics | high | `references/engineering-mastery.md` | covered by `eng-query-planner` |
+| 142 | engineering | Virtual memory, page cache and allocators | medium | `references/engineering-mastery.md` | open |
+| 143 | engineering | Congestion control, queues and bufferbloat | medium | `references/engineering-mastery.md` | open |
+| 144 | engineering | Type systems, variance and exhaustiveness | medium | `references/engineering-mastery.md` | open |
+| 145 | engineering | Feature stores, training serving skew and evaluation | high | `references/engineering-mastery.md` | covered by `eng-ml-systems` |
+| 146 | engineering | SLOs, error budgets and alerting | high | `references/engineering-mastery.md` | covered by `eng-slo` |
+| 147 | engineering | Tenant isolation, noisy neighbors and data partitioning | high | `references/engineering-mastery.md` | covered by `eng-multi-tenancy` |
+| 148 | engineering | Event sourcing, replay and projections | medium | `references/engineering-mastery.md` | open |
+| 149 | engineering | CQRS and read model consistency | medium | `references/engineering-mastery.md` | open |
+| 150 | engineering | Sagas, outbox and compensation | high | `references/engineering-mastery.md` | covered by `eng-distributed-tx` |
+| 151 | engineering | At-least-once delivery and idempotent consumers | high | `references/engineering-mastery.md` | covered by `eng-idempotent-consumer` |
+| 152 | engineering | Token bucket, leaky bucket and fairness | medium | `references/engineering-mastery.md` | open |
+| 153 | engineering | Cache-aside, write-through and stampede | medium | `references/engineering-mastery.md` | open |
+| 154 | engineering | Backward and forward compatible schema changes | high | `references/engineering-mastery.md` | covered by `eng-schema-evolution` |
+| 155 | engineering | API versioning and deprecation | medium | `references/engineering-mastery.md` | open |
+| 156 | engineering | Platform teams, golden paths and paved roads | medium | `references/engineering-mastery.md` | open |
+| 157 | engineering | Team boundaries and ownership | medium | `references/engineering-mastery.md` | open |
+| 158 | engineering | Roadmaps, bets and kill criteria | medium | `references/engineering-mastery.md` | open |
+| 159 | engineering | Hiring signals and interview design | low | `references/engineering-mastery.md` | open |
+| 160 | engineering | Privacy by design and data minimization | high | `references/engineering-mastery.md` | covered by `eng-privacy` |
+| 161 | engineering | SOC2, GDPR and evidence collection | medium | `references/engineering-mastery.md` | open |
+| 162 | engineering | Unit economics and cost allocation | medium | `references/engineering-mastery.md` | open |
+| 163 | engineering | Client state, server state and cache ownership | medium | `references/engineering-mastery.md` | open |
+| 164 | engineering | Offline-first mobile architecture | medium | `references/engineering-mastery.md` | open |
+| 165 | engineering | Lexing, parsing, IR and optimization | low | `references/engineering-mastery.md` | open |
+| 166 | engineering | Garbage collection and allocation pressure | medium | `references/engineering-mastery.md` | open |
+| 167 | engineering | Cardinality, sampling and telemetry cost | medium | `references/engineering-mastery.md` | open |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.

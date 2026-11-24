@@ -1502,6 +1502,1106 @@
   "failure": "A sandboxed renderer with a narrow preload is safer. A local file page is a different origin."
  },
  {
+  "path": "knowledge/eng-accessibility.md",
+  "body": "# Accessibility is a correctness requirement\n\n## Claim\n\nKeyboard, screen reader, contrast and focus are part of the interface, not a later polish.\n\n## Test\n\nNavigate by keyboard. Check labels and focus. Run an audit.\n\n## Proof\n\nA task completed without a mouse.\n\n## Failure modes\n\nA hidden label is not a label.",
+  "id": "eng-accessibility",
+  "title": "Accessibility is a correctness requirement",
+  "tags": [
+   "engineering",
+   "accessibility",
+   "ui"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Keyboard, screen reader, contrast and focus are part of the interface, not a later polish.",
+  "test": "Navigate by keyboard. Check labels and focus. Run an audit.",
+  "proof": "A task completed without a mouse.",
+  "failure": "A hidden label is not a label."
+ },
+ {
+  "path": "knowledge/eng-api-contract.md",
+  "body": "# An API is a promise about errors and time\n\n## Claim\n\nInputs, outputs, status codes, idempotency and latency are part of the contract. A version change is a migration.\n\n## Test\n\nWrite the contract before the handler. Test the error and timeout cases. Diff the schema.\n\n## Proof\n\nA consumer can code against the contract without reading the implementation.\n\n## Failure modes\n\nA 200 with an error body breaks the promise.",
+  "id": "eng-api-contract",
+  "title": "An API is a promise about errors and time",
+  "tags": [
+   "engineering",
+   "api",
+   "contract"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Inputs, outputs, status codes, idempotency and latency are part of the contract. A version change is a migration.",
+  "test": "Write the contract before the handler. Test the error and timeout cases. Diff the schema.",
+  "proof": "A consumer can code against the contract without reading the implementation.",
+  "failure": "A 200 with an error body breaks the promise."
+ },
+ {
+  "path": "knowledge/eng-backpressure.md",
+  "body": "# A queue without a limit is a memory leak\n\n## Claim\n\nProducers can outrun consumers. A bounded queue, a timeout and a load-shedding rule keep the system alive.\n\n## Test\n\nMeasure arrival and service rate. Fill the queue. Check latency and drop behavior.\n\n## Proof\n\nA bounded latency and an explicit drop or slow-down.\n\n## Failure modes\n\nAn unbounded queue hides the problem until OOM.",
+  "id": "eng-backpressure",
+  "title": "A queue without a limit is a memory leak",
+  "tags": [
+   "engineering",
+   "queue",
+   "backpressure"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Producers can outrun consumers. A bounded queue, a timeout and a load-shedding rule keep the system alive.",
+  "test": "Measure arrival and service rate. Fill the queue. Check latency and drop behavior.",
+  "proof": "A bounded latency and an explicit drop or slow-down.",
+  "failure": "An unbounded queue hides the problem until OOM."
+ },
+ {
+  "path": "knowledge/eng-boundaries.md",
+  "body": "# A boundary hides a decision and owns its data\n\n## Claim\n\nA good boundary has a contract, a data owner and a failure mode. A layer that calls through is not a boundary.\n\n## Test\n\nList the decisions each module owns. Find a change that crosses three modules. Move one decision behind the boundary.\n\n## Proof\n\nA change local to one module with a stable contract.\n\n## Failure modes\n\nA shared database makes two services one boundary.",
+  "id": "eng-boundaries",
+  "title": "A boundary hides a decision and owns its data",
+  "tags": [
+   "engineering",
+   "architecture",
+   "boundaries"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A good boundary has a contract, a data owner and a failure mode. A layer that calls through is not a boundary.",
+  "test": "List the decisions each module owns. Find a change that crosses three modules. Move one decision behind the boundary.",
+  "proof": "A change local to one module with a stable contract.",
+  "failure": "A shared database makes two services one boundary."
+ },
+ {
+  "path": "knowledge/eng-cache-invalidation.md",
+  "body": "# A cache needs a key, a TTL and an invalidation path\n\n## Claim\n\nA cache without an invalidation story serves stale data. The key and the invalidation event are the design.\n\n## Test\n\nWrite a value, update the source, read again. Check the TTL and the invalidation.\n\n## Proof\n\nA read after a write returns the new value.\n\n## Failure modes\n\nA short TTL hides a missing invalidation until the write path is slow.",
+  "id": "eng-cache-invalidation",
+  "title": "A cache needs a key, a TTL and an invalidation path",
+  "tags": [
+   "engineering",
+   "cache",
+   "invalidation"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A cache without an invalidation story serves stale data. The key and the invalidation event are the design.",
+  "test": "Write a value, update the source, read again. Check the TTL and the invalidation.",
+  "proof": "A read after a write returns the new value.",
+  "failure": "A short TTL hides a missing invalidation until the write path is slow."
+ },
+ {
+  "path": "knowledge/eng-code-review.md",
+  "body": "# Review the change, not the author\n\n## Claim\n\nA review checks the problem, the smallest change, the failure modes, the tests and the rollback.\n\n## Test\n\nRead the description. Read the diff. Ask one question per risk. Approve only what you understand.\n\n## Proof\n\nA review comment that changes a decision or confirms it.\n\n## Failure modes\n\nStyle comments without a reason are noise.",
+  "id": "eng-code-review",
+  "title": "Review the change, not the author",
+  "tags": [
+   "engineering",
+   "review",
+   "quality"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A review checks the problem, the smallest change, the failure modes, the tests and the rollback.",
+  "test": "Read the description. Read the diff. Ask one question per risk. Approve only what you understand.",
+  "proof": "A review comment that changes a decision or confirms it.",
+  "failure": "Style comments without a reason are noise."
+ },
+ {
+  "path": "knowledge/eng-communication.md",
+  "body": "# A decision nobody understands is a future incident\n\n## Claim\n\nWrite the problem, the options, the tradeoff and the decision. A short memo beats a meeting.\n\n## Test\n\nWrite a one-page decision record. Ask a reader to restate it.\n\n## Proof\n\nA reader can explain the tradeoff.\n\n## Failure modes\n\nA status update without a decision is noise.",
+  "id": "eng-communication",
+  "title": "A decision nobody understands is a future incident",
+  "tags": [
+   "engineering",
+   "communication",
+   "writing"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Write the problem, the options, the tradeoff and the decision. A short memo beats a meeting.",
+  "test": "Write a one-page decision record. Ask a reader to restate it.",
+  "proof": "A reader can explain the tradeoff.",
+  "failure": "A status update without a decision is noise."
+ },
+ {
+  "path": "knowledge/eng-concurrency.md",
+  "body": "# Concurrency bugs are about shared state and ordering\n\n## Claim\n\nA lock, an atomic or a queue protects a shared invariant. A check outside the lock is not protected.\n\n## Test\n\nFind the invariant. Draw the interleaving. Test with many workers.\n\n## Proof\n\nThe invariant holds under parallel load.\n\n## Failure modes\n\nA lock that is too broad hides a design problem. A lock that is too narrow races.",
+  "id": "eng-concurrency",
+  "title": "Concurrency bugs are about shared state and ordering",
+  "tags": [
+   "engineering",
+   "concurrency",
+   "locks"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A lock, an atomic or a queue protects a shared invariant. A check outside the lock is not protected.",
+  "test": "Find the invariant. Draw the interleaving. Test with many workers.",
+  "proof": "The invariant holds under parallel load.",
+  "failure": "A lock that is too broad hides a design problem. A lock that is too narrow races."
+ },
+ {
+  "path": "knowledge/eng-config.md",
+  "body": "# Config belongs to the environment, secrets belong to a store\n\n## Claim\n\nA config value changes per environment. A secret is not a config default in source.\n\n## Test\n\nList every config key. Check the default, the validation and the secret source.\n\n## Proof\n\nA deploy that fails fast on a missing or invalid value.\n\n## Failure modes\n\nA secret in a config file in git is a leak.",
+  "id": "eng-config",
+  "title": "Config belongs to the environment, secrets belong to a store",
+  "tags": [
+   "engineering",
+   "config",
+   "secrets"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A config value changes per environment. A secret is not a config default in source.",
+  "test": "List every config key. Check the default, the validation and the secret source.",
+  "proof": "A deploy that fails fast on a missing or invalid value.",
+  "failure": "A secret in a config file in git is a leak."
+ },
+ {
+  "path": "knowledge/eng-consensus.md",
+  "body": "# Consensus is quorum plus a log\n\n## Claim\n\nA leader appends to a replicated log; a quorum acknowledges before commit. Two leaders with the same term are a split brain.\n\n## Test\n\nWrite on the leader. Kill the leader. Check the new leader and the committed index.\n\n## Proof\n\nA committed write survives a leader change.\n\n## Failure modes\n\nA majority of one is not consensus. A stale leader can serve old reads.",
+  "id": "eng-consensus",
+  "title": "Consensus is quorum plus a log",
+  "tags": [
+   "engineering",
+   "distributed",
+   "consensus"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A leader appends to a replicated log; a quorum acknowledges before commit. Two leaders with the same term are a split brain.",
+  "test": "Write on the leader. Kill the leader. Check the new leader and the committed index.",
+  "proof": "A committed write survives a leader change.",
+  "failure": "A majority of one is not consensus. A stale leader can serve old reads."
+ },
+ {
+  "path": "knowledge/eng-consistency.md",
+  "body": "# Consistency is a contract about reads\n\n## Claim\n\nStrong, eventual, read-your-writes and monotonic reads answer different questions. The UI often needs the weaker one.\n\n## Test\n\nWrite, then read from two replicas. Check the ordering and the lag.\n\n## Proof\n\nA read model that matches the promise, with the lag stated.\n\n## Failure modes\n\nAn eventually consistent read is not a bug if the UI says so.",
+  "id": "eng-consistency",
+  "title": "Consistency is a contract about reads",
+  "tags": [
+   "engineering",
+   "distributed",
+   "consistency"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Strong, eventual, read-your-writes and monotonic reads answer different questions. The UI often needs the weaker one.",
+  "test": "Write, then read from two replicas. Check the ordering and the lag.",
+  "proof": "A read model that matches the promise, with the lag stated.",
+  "failure": "An eventually consistent read is not a bug if the UI says so."
+ },
+ {
+  "path": "knowledge/eng-cost.md",
+  "body": "# Cost is a design constraint\n\n## Claim\n\nEvery request, byte and idle resource has a price. A cost budget changes the architecture.\n\n## Test\n\nMeasure cost per request. Find the dominant term. Set a budget.\n\n## Proof\n\nA unit cost under the budget.\n\n## Failure modes\n\nA free tier is not an architecture.",
+  "id": "eng-cost",
+  "title": "Cost is a design constraint",
+  "tags": [
+   "engineering",
+   "cost",
+   "cloud"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Every request, byte and idle resource has a price. A cost budget changes the architecture.",
+  "test": "Measure cost per request. Find the dominant term. Set a budget.",
+  "proof": "A unit cost under the budget.",
+  "failure": "A free tier is not an architecture."
+ },
+ {
+  "path": "knowledge/eng-data-model.md",
+  "body": "# Data outlives code\n\n## Claim\n\nNames, identifiers, relationships and events survive rewrites. A schema mistake costs more than a code mistake.\n\n## Test\n\nReview the schema before the API. Name the source of truth. Check constraints, nullability and deletion.\n\n## Proof\n\nA model that answers the next three queries without a rewrite.\n\n## Failure modes\n\nA flexible document can hide an unbounded shape. Flexibility is not free.",
+  "id": "eng-data-model",
+  "title": "Data outlives code",
+  "tags": [
+   "engineering",
+   "data",
+   "schema"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Names, identifiers, relationships and events survive rewrites. A schema mistake costs more than a code mistake.",
+  "test": "Review the schema before the API. Name the source of truth. Check constraints, nullability and deletion.",
+  "proof": "A model that answers the next three queries without a rewrite.",
+  "failure": "A flexible document can hide an unbounded shape. Flexibility is not free."
+ },
+ {
+  "path": "knowledge/eng-debug-bisect.md",
+  "body": "# Bisect the space, not the code\n\n## Claim\n\nThe failing input, commit, config or layer can be narrowed by halving. Change one variable at a time.\n\n## Test\n\nReproduce. List the variables. Halve the commits or inputs. Keep a log.\n\n## Proof\n\nA minimal failing case and the first bad change.\n\n## Failure modes\n\nA cache can make a bisect lie. Clear state between runs.",
+  "id": "eng-debug-bisect",
+  "title": "Bisect the space, not the code",
+  "tags": [
+   "engineering",
+   "debugging",
+   "bisect"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The failing input, commit, config or layer can be narrowed by halving. Change one variable at a time.",
+  "test": "Reproduce. List the variables. Halve the commits or inputs. Keep a log.",
+  "proof": "A minimal failing case and the first bad change.",
+  "failure": "A cache can make a bisect lie. Clear state between runs."
+ },
+ {
+  "path": "knowledge/eng-deletion.md",
+  "body": "# Deletion is a feature\n\n## Claim\n\nDead code, flags and services are liabilities. Removal needs a check that nothing depends on it.\n\n## Test\n\nFind unused code. Check callers and metrics. Remove it. Watch the error rate.\n\n## Proof\n\nA smaller system with no regression.\n\n## Failure modes\n\nA flag kept for a rollback can stay forever.",
+  "id": "eng-deletion",
+  "title": "Deletion is a feature",
+  "tags": [
+   "engineering",
+   "deletion",
+   "maintenance"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Dead code, flags and services are liabilities. Removal needs a check that nothing depends on it.",
+  "test": "Find unused code. Check callers and metrics. Remove it. Watch the error rate.",
+  "proof": "A smaller system with no regression.",
+  "failure": "A flag kept for a rollback can stay forever."
+ },
+ {
+  "path": "knowledge/eng-dependencies.md",
+  "body": "# Every dependency is a maintenance contract\n\n## Claim\n\nA dependency adds upgrade cost, attack surface and a license. Pin it, test it and know why it exists.\n\n## Test\n\nList direct dependencies. Find unused ones. Check the license and the last release.\n\n## Proof\n\nA smaller dependency set with a lockfile.\n\n## Failure modes\n\nA transitive dependency is still your dependency.",
+  "id": "eng-dependencies",
+  "title": "Every dependency is a maintenance contract",
+  "tags": [
+   "engineering",
+   "dependencies",
+   "supply-chain"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A dependency adds upgrade cost, attack surface and a license. Pin it, test it and know why it exists.",
+  "test": "List direct dependencies. Find unused ones. Check the license and the last release.",
+  "proof": "A smaller dependency set with a lockfile.",
+  "failure": "A transitive dependency is still your dependency."
+ },
+ {
+  "path": "knowledge/eng-distributed-tx.md",
+  "body": "# A saga is a sequence with compensation\n\n## Claim\n\nA distributed write has no single transaction. Each step needs a compensating action and a retry policy.\n\n## Test\n\nFail a middle step. Check the compensation and the final state.\n\n## Proof\n\nA consistent final state after a partial failure.\n\n## Failure modes\n\nA compensation that is not idempotent can double-refund.",
+  "id": "eng-distributed-tx",
+  "title": "A saga is a sequence with compensation",
+  "tags": [
+   "engineering",
+   "distributed",
+   "transaction"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A distributed write has no single transaction. Each step needs a compensating action and a retry policy.",
+  "test": "Fail a middle step. Check the compensation and the final state.",
+  "proof": "A consistent final state after a partial failure.",
+  "failure": "A compensation that is not idempotent can double-refund."
+ },
+ {
+  "path": "knowledge/eng-docs.md",
+  "body": "# Docs are for the next decision\n\n## Claim\n\nA README explains why and how to run. An ADR records a decision. A runbook explains the failure.\n\n## Test\n\nRead the docs as a new hire. Can you run and debug it?\n\n## Proof\n\nA new hire completes the task without asking.\n\n## Failure modes\n\nA stale doc is worse than none if it is trusted.",
+  "id": "eng-docs",
+  "title": "Docs are for the next decision",
+  "tags": [
+   "engineering",
+   "docs",
+   "writing"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A README explains why and how to run. An ADR records a decision. A runbook explains the failure.",
+  "test": "Read the docs as a new hire. Can you run and debug it?",
+  "proof": "A new hire completes the task without asking.",
+  "failure": "A stale doc is worse than none if it is trusted."
+ },
+ {
+  "path": "knowledge/eng-errors.md",
+  "body": "# An error is a value with a caller decision\n\n## Claim\n\nThe caller needs to know whether to retry, fix input or alert. A generic error hides that choice.\n\n## Test\n\nList the failure modes. Map each to a code and a retry policy.\n\n## Proof\n\nA caller can decide without parsing a message.\n\n## Failure modes\n\nA stack trace in a user response leaks internals.",
+  "id": "eng-errors",
+  "title": "An error is a value with a caller decision",
+  "tags": [
+   "engineering",
+   "errors",
+   "api"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The caller needs to know whether to retry, fix input or alert. A generic error hides that choice.",
+  "test": "List the failure modes. Map each to a code and a retry policy.",
+  "proof": "A caller can decide without parsing a message.",
+  "failure": "A stack trace in a user response leaks internals."
+ },
+ {
+  "path": "knowledge/eng-estimation.md",
+  "body": "# An estimate is a range and its assumptions\n\n## Claim\n\nKnown work, unknown work and coordination have different uncertainty. A point estimate hides it.\n\n## Test\n\nList the three buckets. Give a range. Name the risk that doubles it.\n\n## Proof\n\nA range a planner can use.\n\n## Failure modes\n\nAn estimate without assumptions is a guess.",
+  "id": "eng-estimation",
+  "title": "An estimate is a range and its assumptions",
+  "tags": [
+   "engineering",
+   "estimation",
+   "planning"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Known work, unknown work and coordination have different uncertainty. A point estimate hides it.",
+  "test": "List the three buckets. Give a range. Name the risk that doubles it.",
+  "proof": "A range a planner can use.",
+  "failure": "An estimate without assumptions is a guess."
+ },
+ {
+  "path": "knowledge/eng-ethics.md",
+  "body": "# Engineering judgment includes who pays\n\n## Claim\n\nA system can be correct and harmful. Name the user, the excluded user and the failure cost.\n\n## Test\n\nWrite the harm model. Check the default and the edge case.\n\n## Proof\n\nA design with a stated harm and a mitigation.\n\n## Failure modes\n\nA privacy policy is not a design.",
+  "id": "eng-ethics",
+  "title": "Engineering judgment includes who pays",
+  "tags": [
+   "engineering",
+   "ethics",
+   "product"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A system can be correct and harmful. Name the user, the excluded user and the failure cost.",
+  "test": "Write the harm model. Check the default and the edge case.",
+  "proof": "A design with a stated harm and a mitigation.",
+  "failure": "A privacy policy is not a design."
+ },
+ {
+  "path": "knowledge/eng-feature-flags.md",
+  "body": "# A feature flag is a temporary branch with an owner\n\n## Claim\n\nA flag lets code ship before it is on. A flag without an expiry becomes permanent complexity.\n\n## Test\n\nName the owner, the default and the removal date. Test both states.\n\n## Proof\n\nA flag with a removal ticket.\n\n## Failure modes\n\nA flag that controls a schema or a security check is a liability.",
+  "id": "eng-feature-flags",
+  "title": "A feature flag is a temporary branch with an owner",
+  "tags": [
+   "engineering",
+   "feature-flag",
+   "release"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A flag lets code ship before it is on. A flag without an expiry becomes permanent complexity.",
+  "test": "Name the owner, the default and the removal date. Test both states.",
+  "proof": "A flag with a removal ticket.",
+  "failure": "A flag that controls a schema or a security check is a liability."
+ },
+ {
+  "path": "knowledge/eng-i18n.md",
+  "body": "# Text, time and money are not strings\n\n## Claim\n\nPluralization, direction, timezone and currency need a model. Concatenated strings break.\n\n## Test\n\nTest a long translation, a right-to-left locale and a different timezone.\n\n## Proof\n\nA layout and a value that remain correct.\n\n## Failure modes\n\nA date without a timezone is ambiguous.",
+  "id": "eng-i18n",
+  "title": "Text, time and money are not strings",
+  "tags": [
+   "engineering",
+   "i18n",
+   "locale"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Pluralization, direction, timezone and currency need a model. Concatenated strings break.",
+  "test": "Test a long translation, a right-to-left locale and a different timezone.",
+  "proof": "A layout and a value that remain correct.",
+  "failure": "A date without a timezone is ambiguous."
+ },
+ {
+  "path": "knowledge/eng-idempotency.md",
+  "body": "# Every retryable write needs a key\n\n## Claim\n\nA client retry or a queue redelivery can duplicate a write. An idempotency key or a natural unique constraint makes it safe.\n\n## Test\n\nSend the same write twice. Check the side effect. Scope the key to the user and the operation.\n\n## Proof\n\nOne effect after two identical requests.\n\n## Failure modes\n\nA key that is not stored has no effect. A key without a scope can collide.",
+  "id": "eng-idempotency",
+  "title": "Every retryable write needs a key",
+  "tags": [
+   "engineering",
+   "idempotency",
+   "retry"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A client retry or a queue redelivery can duplicate a write. An idempotency key or a natural unique constraint makes it safe.",
+  "test": "Send the same write twice. Check the side effect. Scope the key to the user and the operation.",
+  "proof": "One effect after two identical requests.",
+  "failure": "A key that is not stored has no effect. A key without a scope can collide."
+ },
+ {
+  "path": "knowledge/eng-idempotent-consumer.md",
+  "body": "# At-least-once delivery needs an idempotent consumer\n\n## Claim\n\nThe queue can redeliver. The consumer must deduplicate by message id or a natural key.\n\n## Test\n\nDeliver the same message twice. Check the side effect. Kill the consumer mid-processing.\n\n## Proof\n\nOne effect after a redelivery.\n\n## Failure modes\n\nA local set grows without bound. Store the dedup key with the effect.",
+  "id": "eng-idempotent-consumer",
+  "title": "At-least-once delivery needs an idempotent consumer",
+  "tags": [
+   "engineering",
+   "queue",
+   "consumer"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The queue can redeliver. The consumer must deduplicate by message id or a natural key.",
+  "test": "Deliver the same message twice. Check the side effect. Kill the consumer mid-processing.",
+  "proof": "One effect after a redelivery.",
+  "failure": "A local set grows without bound. Store the dedup key with the effect."
+ },
+ {
+  "path": "knowledge/eng-incident.md",
+  "body": "# Stabilize before you diagnose\n\n## Claim\n\nRollback, flag off, drain or fail over. Diagnosis can wait until users are safe.\n\n## Test\n\nName the stabilization. Assign commander and scribe. Time-stamp decisions.\n\n## Proof\n\nA stable system with a log.\n\n## Failure modes\n\nA root-cause hunt during an outage extends the outage.",
+  "id": "eng-incident",
+  "title": "Stabilize before you diagnose",
+  "tags": [
+   "engineering",
+   "incident",
+   "operations"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Rollback, flag off, drain or fail over. Diagnosis can wait until users are safe.",
+  "test": "Name the stabilization. Assign commander and scribe. Time-stamp decisions.",
+  "proof": "A stable system with a log.",
+  "failure": "A root-cause hunt during an outage extends the outage."
+ },
+ {
+  "path": "knowledge/eng-legacy-strangler.md",
+  "body": "# Do not rewrite the legacy system; strangle it\n\n## Claim\n\nA seam, a wrapper and a behavior-by-behavior move keep the old path alive until the new one is proven.\n\n## Test\n\nFind a seam. Add a facade. Move one behavior. Compare outputs.\n\n## Proof\n\nOne behavior on the new path with the old path still available.\n\n## Failure modes\n\nA big-bang rewrite loses the edge cases the old code encodes.",
+  "id": "eng-legacy-strangler",
+  "title": "Do not rewrite the legacy system; strangle it",
+  "tags": [
+   "engineering",
+   "legacy",
+   "refactor"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A seam, a wrapper and a behavior-by-behavior move keep the old path alive until the new one is proven.",
+  "test": "Find a seam. Add a facade. Move one behavior. Compare outputs.",
+  "proof": "One behavior on the new path with the old path still available.",
+  "failure": "A big-bang rewrite loses the edge cases the old code encodes."
+ },
+ {
+  "path": "knowledge/eng-logging.md",
+  "body": "# Log the decision, not the whole world\n\n## Claim\n\nA log line should answer what happened and what to do. Request ids, actor, resource and outcome make it useful.\n\n## Test\n\nRead a log from a failed request. Can you reconstruct the decision?\n\n## Proof\n\nA log that reconstructs the request without the source.\n\n## Failure modes\n\nPII in logs is a liability. Unstructured logs are hard to query.",
+  "id": "eng-logging",
+  "title": "Log the decision, not the whole world",
+  "tags": [
+   "engineering",
+   "logging",
+   "observability"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A log line should answer what happened and what to do. Request ids, actor, resource and outcome make it useful.",
+  "test": "Read a log from a failed request. Can you reconstruct the decision?",
+  "proof": "A log that reconstructs the request without the source.",
+  "failure": "PII in logs is a liability. Unstructured logs are hard to query."
+ },
+ {
+  "path": "knowledge/eng-mentoring.md",
+  "body": "# Ask until the blocker is clear\n\n## Claim\n\nA hint at the right level unblocks. A lecture hides the gap.\n\n## Test\n\nAsk what they expect. Ask what happened. Give one hint. Ask for the next step.\n\n## Proof\n\nThe learner produces the evidence.\n\n## Failure modes\n\nSolving it for them removes the practice.",
+  "id": "eng-mentoring",
+  "title": "Ask until the blocker is clear",
+  "tags": [
+   "engineering",
+   "mentoring",
+   "teaching"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A hint at the right level unblocks. A lecture hides the gap.",
+  "test": "Ask what they expect. Ask what happened. Give one hint. Ask for the next step.",
+  "proof": "The learner produces the evidence.",
+  "failure": "Solving it for them removes the practice."
+ },
+ {
+  "path": "knowledge/eng-migrations.md",
+  "body": "# A migration is expand, backfill, switch, contract\n\n## Claim\n\nThe old and new schema must coexist during deploy. A rename in one step breaks a rolling deploy.\n\n## Test\n\nWrite the four steps. Test a rollback. Check old and new code together.\n\n## Proof\n\nA deploy with no downtime and a reversible path.\n\n## Failure modes\n\nA backfill without a throttle can lock the table.",
+  "id": "eng-migrations",
+  "title": "A migration is expand, backfill, switch, contract",
+  "tags": [
+   "engineering",
+   "database",
+   "migration"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The old and new schema must coexist during deploy. A rename in one step breaks a rolling deploy.",
+  "test": "Write the four steps. Test a rollback. Check old and new code together.",
+  "proof": "A deploy with no downtime and a reversible path.",
+  "failure": "A backfill without a throttle can lock the table."
+ },
+ {
+  "path": "knowledge/eng-ml-systems.md",
+  "body": "# Training and serving must share the same features\n\n## Claim\n\nA feature computed differently in training and serving creates skew. A model is only as good as its pipeline.\n\n## Test\n\nLog the serving features. Recompute them offline. Compare distributions.\n\n## Proof\n\nA feature parity check in CI.\n\n## Failure modes\n\nA model metric without a pipeline check is a demo.",
+  "id": "eng-ml-systems",
+  "title": "Training and serving must share the same features",
+  "tags": [
+   "engineering",
+   "ml",
+   "features"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A feature computed differently in training and serving creates skew. A model is only as good as its pipeline.",
+  "test": "Log the serving features. Recompute them offline. Compare distributions.",
+  "proof": "A feature parity check in CI.",
+  "failure": "A model metric without a pipeline check is a demo."
+ },
+ {
+  "path": "knowledge/eng-multi-tenancy.md",
+  "body": "# Multi-tenancy is isolation plus noisy-neighbor control\n\n## Claim\n\nTenant id must be enforced at the data boundary, and a single tenant must not starve the rest.\n\n## Test\n\nQuery as tenant A with a tenant B id. Load one tenant and measure another.\n\n## Proof\n\nA cross-tenant read fails and a noisy tenant is rate-limited.\n\n## Failure modes\n\nA tenant filter in the UI is not a data boundary.",
+  "id": "eng-multi-tenancy",
+  "title": "Multi-tenancy is isolation plus noisy-neighbor control",
+  "tags": [
+   "engineering",
+   "multi-tenant",
+   "isolation"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Tenant id must be enforced at the data boundary, and a single tenant must not starve the rest.",
+  "test": "Query as tenant A with a tenant B id. Load one tenant and measure another.",
+  "proof": "A cross-tenant read fails and a noisy tenant is rate-limited.",
+  "failure": "A tenant filter in the UI is not a data boundary."
+ },
+ {
+  "path": "knowledge/eng-observability.md",
+  "body": "# Observability answers the next question\n\n## Claim\n\nLogs, metrics and traces should identify the request, the dependency and the failure. A log line without a request id is noise.\n\n## Test\n\nAsk three production questions. Check whether the data answers them. Add the missing field.\n\n## Proof\n\nA trace or query that resolves an incident question.\n\n## Failure modes\n\nHigh-cardinality labels can cost more than they reveal.",
+  "id": "eng-observability",
+  "title": "Observability answers the next question",
+  "tags": [
+   "engineering",
+   "observability",
+   "logs"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Logs, metrics and traces should identify the request, the dependency and the failure. A log line without a request id is noise.",
+  "test": "Ask three production questions. Check whether the data answers them. Add the missing field.",
+  "proof": "A trace or query that resolves an incident question.",
+  "failure": "High-cardinality labels can cost more than they reveal."
+ },
+ {
+  "path": "knowledge/eng-performance-budget.md",
+  "body": "# Performance is a budget before it is an optimization\n\n## Claim\n\nName p50, p95, payload, memory and cost. Measure the same workload before and after.\n\n## Test\n\nSet the budget. Profile. Find the dominant term. Re-measure.\n\n## Proof\n\nA benchmark that fits the budget and runs in CI.\n\n## Failure modes\n\nA micro-optimization of a cold path is waste.",
+  "id": "eng-performance-budget",
+  "title": "Performance is a budget before it is an optimization",
+  "tags": [
+   "engineering",
+   "performance",
+   "budget"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Name p50, p95, payload, memory and cost. Measure the same workload before and after.",
+  "test": "Set the budget. Profile. Find the dominant term. Re-measure.",
+  "proof": "A benchmark that fits the budget and runs in CI.",
+  "failure": "A micro-optimization of a cold path is waste."
+ },
+ {
+  "path": "knowledge/eng-postmortem.md",
+  "body": "# A postmortem is blameless and actionable\n\n## Claim\n\nThe timeline, the contributing factors and the actions matter. Blame stops learning.\n\n## Test\n\nWrite the timeline. Ask why five times. Assign owners and dates.\n\n## Proof\n\nActions with owners that close.\n\n## Failure modes\n\nAn action without a date is a wish.",
+  "id": "eng-postmortem",
+  "title": "A postmortem is blameless and actionable",
+  "tags": [
+   "engineering",
+   "postmortem",
+   "learning"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The timeline, the contributing factors and the actions matter. Blame stops learning.",
+  "test": "Write the timeline. Ask why five times. Assign owners and dates.",
+  "proof": "Actions with owners that close.",
+  "failure": "An action without a date is a wish."
+ },
+ {
+  "path": "knowledge/eng-privacy.md",
+  "body": "# Privacy is data minimization with a retention clock\n\n## Claim\n\nCollect only what the feature needs, keep it only as long as needed, and make deletion real.\n\n## Test\n\nList the fields. Ask why each exists. Check retention and deletion.\n\n## Proof\n\nA data map with a deletion path.\n\n## Failure modes\n\nA privacy policy does not delete data for you.",
+  "id": "eng-privacy",
+  "title": "Privacy is data minimization with a retention clock",
+  "tags": [
+   "engineering",
+   "privacy",
+   "data"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Collect only what the feature needs, keep it only as long as needed, and make deletion real.",
+  "test": "List the fields. Ask why each exists. Check retention and deletion.",
+  "proof": "A data map with a deletion path.",
+  "failure": "A privacy policy does not delete data for you."
+ },
+ {
+  "path": "knowledge/eng-property-tests.md",
+  "body": "# Property tests find the input you did not imagine\n\n## Claim\n\nA property states an invariant for all inputs. A generator explores the edge cases.\n\n## Test\n\nWrite one invariant. Generate inputs. Shrink the failure.\n\n## Proof\n\nA minimal counterexample.\n\n## Failure modes\n\nA property that restates the implementation is circular.",
+  "id": "eng-property-tests",
+  "title": "Property tests find the input you did not imagine",
+  "tags": [
+   "engineering",
+   "testing",
+   "property"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A property states an invariant for all inputs. A generator explores the edge cases.",
+  "test": "Write one invariant. Generate inputs. Shrink the failure.",
+  "proof": "A minimal counterexample.",
+  "failure": "A property that restates the implementation is circular."
+ },
+ {
+  "path": "knowledge/eng-query-planner.md",
+  "body": "# The planner is the database's brain\n\n## Claim\n\nIndexes, statistics and join order decide the plan. A missing index or a stale statistic turns a fast query slow.\n\n## Test\n\nRun EXPLAIN. Check the row estimate and the actual. Add the index and re-measure.\n\n## Proof\n\nA plan with fewer rows and a lower cost.\n\n## Failure modes\n\nAn index on a low-selectivity column can be ignored.",
+  "id": "eng-query-planner",
+  "title": "The planner is the database's brain",
+  "tags": [
+   "engineering",
+   "database",
+   "query"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Indexes, statistics and join order decide the plan. A missing index or a stale statistic turns a fast query slow.",
+  "test": "Run EXPLAIN. Check the row estimate and the actual. Add the index and re-measure.",
+  "proof": "A plan with fewer rows and a lower cost.",
+  "failure": "An index on a low-selectivity column can be ignored."
+ },
+ {
+  "path": "knowledge/eng-refactor-small.md",
+  "body": "# Refactor in small, behavior-preserving steps\n\n## Claim\n\nA refactor changes structure without changing behavior. A test suite proves the behavior stayed.\n\n## Test\n\nName the behavior. Make one structural change. Run tests. Repeat.\n\n## Proof\n\nA sequence of green commits.\n\n## Failure modes\n\nA refactor mixed with a feature hides both.",
+  "id": "eng-refactor-small",
+  "title": "Refactor in small, behavior-preserving steps",
+  "tags": [
+   "engineering",
+   "refactor",
+   "testing"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A refactor changes structure without changing behavior. A test suite proves the behavior stayed.",
+  "test": "Name the behavior. Make one structural change. Run tests. Repeat.",
+  "proof": "A sequence of green commits.",
+  "failure": "A refactor mixed with a feature hides both."
+ },
+ {
+  "path": "knowledge/eng-regression.md",
+  "body": "# A bug fix needs a test that failed before it\n\n## Claim\n\nThe regression test proves the bug existed and the fix holds. Without it, the bug returns.\n\n## Test\n\nReproduce the bug in a test. Fix it. Run the test forward and backward.\n\n## Proof\n\nA test that fails on the old code and passes on the new.\n\n## Failure modes\n\nA test that asserts the new implementation, not the behavior.",
+  "id": "eng-regression",
+  "title": "A bug fix needs a test that failed before it",
+  "tags": [
+   "engineering",
+   "testing",
+   "regression"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The regression test proves the bug existed and the fix holds. Without it, the bug returns.",
+  "test": "Reproduce the bug in a test. Fix it. Run the test forward and backward.",
+  "proof": "A test that fails on the old code and passes on the new.",
+  "failure": "A test that asserts the new implementation, not the behavior."
+ },
+ {
+  "path": "knowledge/eng-repro-build.md",
+  "body": "# A build should be reproducible from a clean checkout\n\n## Claim\n\nPinned toolchain, lockfile, deterministic inputs and no local state. A build that depends on a laptop is not a build.\n\n## Test\n\nClean clone, build, compare the artifact hash.\n\n## Proof\n\nThe same hash on two machines.\n\n## Failure modes\n\nA timestamp or path in the artifact breaks reproducibility.",
+  "id": "eng-repro-build",
+  "title": "A build should be reproducible from a clean checkout",
+  "tags": [
+   "engineering",
+   "build",
+   "reproducible"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Pinned toolchain, lockfile, deterministic inputs and no local state. A build that depends on a laptop is not a build.",
+  "test": "Clean clone, build, compare the artifact hash.",
+  "proof": "The same hash on two machines.",
+  "failure": "A timestamp or path in the artifact breaks reproducibility."
+ },
+ {
+  "path": "knowledge/eng-requirements.md",
+  "body": "# Requirements are a decision, not a transcript\n\n## Claim\n\nA requirement names the user, the job, the constraint and the acceptance test. A feature list is not a requirement.\n\n## Test\n\nWrite one sentence with actor, action and outcome. List what is out of scope. Ask what would make it fail.\n\n## Proof\n\nA builder and a reviewer can agree on the acceptance test before code.\n\n## Failure modes\n\nA requirement that cannot fail is a slogan.",
+  "id": "eng-requirements",
+  "title": "Requirements are a decision, not a transcript",
+  "tags": [
+   "engineering",
+   "requirements",
+   "product"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A requirement names the user, the job, the constraint and the acceptance test. A feature list is not a requirement.",
+  "test": "Write one sentence with actor, action and outcome. List what is out of scope. Ask what would make it fail.",
+  "proof": "A builder and a reviewer can agree on the acceptance test before code.",
+  "failure": "A requirement that cannot fail is a slogan."
+ },
+ {
+  "path": "knowledge/eng-schema-evolution.md",
+  "body": "# Schema changes must be compatible in both directions\n\n## Claim\n\nOld readers and new writers coexist during a deploy. Add fields as optional, never rename in one step.\n\n## Test\n\nDeploy old and new together. Read and write with both.\n\n## Proof\n\nA rolling deploy with no error.\n\n## Failure modes\n\nA required field added in one step breaks old readers.",
+  "id": "eng-schema-evolution",
+  "title": "Schema changes must be compatible in both directions",
+  "tags": [
+   "engineering",
+   "schema",
+   "evolution"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Old readers and new writers coexist during a deploy. Add fields as optional, never rename in one step.",
+  "test": "Deploy old and new together. Read and write with both.",
+  "proof": "A rolling deploy with no error.",
+  "failure": "A required field added in one step breaks old readers."
+ },
+ {
+  "path": "knowledge/eng-security-design.md",
+  "body": "# Security is a property of the design\n\n## Claim\n\nA check at the edge is not a boundary if another path reaches the data. Authorization belongs next to the data.\n\n## Test\n\nDraw the paths. Put the check at the narrowest boundary. Test a sibling path.\n\n## Proof\n\nA sibling path that cannot bypass the check.\n\n## Failure modes\n\nA UI check is not an authorization check.",
+  "id": "eng-security-design",
+  "title": "Security is a property of the design",
+  "tags": [
+   "engineering",
+   "security",
+   "design"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A check at the edge is not a boundary if another path reaches the data. Authorization belongs next to the data.",
+  "test": "Draw the paths. Put the check at the narrowest boundary. Test a sibling path.",
+  "proof": "A sibling path that cannot bypass the check.",
+  "failure": "A UI check is not an authorization check."
+ },
+ {
+  "path": "knowledge/eng-simplicity.md",
+  "body": "# Simplicity is removing accidental complexity\n\n## Claim\n\nMost complexity comes from the solution: extra layers, flags, abstractions and copies. Essential complexity is the problem itself.\n\n## Test\n\nName each abstraction and the decision it hides. Remove one that only forwards calls. Measure the diff.\n\n## Proof\n\nA smaller diff with the same behavior and fewer concepts.\n\n## Failure modes\n\nClever compression can hide complexity. The reader matters.",
+  "id": "eng-simplicity",
+  "title": "Simplicity is removing accidental complexity",
+  "tags": [
+   "engineering",
+   "design",
+   "simplicity"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Most complexity comes from the solution: extra layers, flags, abstractions and copies. Essential complexity is the problem itself.",
+  "test": "Name each abstraction and the decision it hides. Remove one that only forwards calls. Measure the diff.",
+  "proof": "A smaller diff with the same behavior and fewer concepts.",
+  "failure": "Clever compression can hide complexity. The reader matters."
+ },
+ {
+  "path": "knowledge/eng-slo.md",
+  "body": "# An SLO is a budget for unreliability\n\n## Claim\n\nAn SLO names the indicator, the target and the window. The error budget decides how fast to ship.\n\n## Test\n\nDefine the SLI. Measure. Set the alert on burn rate, not a raw threshold.\n\n## Proof\n\nAn alert that fires before the budget is gone.\n\n## Failure modes\n\nA 100% target leaves no room to deploy.",
+  "id": "eng-slo",
+  "title": "An SLO is a budget for unreliability",
+  "tags": [
+   "engineering",
+   "sre",
+   "slo"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "An SLO names the indicator, the target and the window. The error budget decides how fast to ship.",
+  "test": "Define the SLI. Measure. Set the alert on burn rate, not a raw threshold.",
+  "proof": "An alert that fires before the budget is gone.",
+  "failure": "A 100% target leaves no room to deploy."
+ },
+ {
+  "path": "knowledge/eng-testing-pyramid.md",
+  "body": "# Test at the lowest level that can catch the bug\n\n## Claim\n\nMany unit tests, fewer integration tests, a small number of end-to-end tests. The pyramid is about feedback speed.\n\n## Test\n\nClassify the suite. Move a slow test down a level. Keep one end-to-end happy path.\n\n## Proof\n\nA faster suite with the same defect detection.\n\n## Failure modes\n\nA test that mocks the thing under test proves little.",
+  "id": "eng-testing-pyramid",
+  "title": "Test at the lowest level that can catch the bug",
+  "tags": [
+   "engineering",
+   "testing",
+   "pyramid"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Many unit tests, fewer integration tests, a small number of end-to-end tests. The pyramid is about feedback speed.",
+  "test": "Classify the suite. Move a slow test down a level. Keep one end-to-end happy path.",
+  "proof": "A faster suite with the same defect detection.",
+  "failure": "A test that mocks the thing under test proves little."
+ },
+ {
+  "path": "knowledge/eng-timeouts.md",
+  "body": "# A call without a deadline can hang a pool\n\n## Claim\n\nEvery network call needs a deadline, a retry budget and a cancellation path. A retry without jitter amplifies load.\n\n## Test\n\nKill a dependency. Watch the caller. Check pool exhaustion and retry storms.\n\n## Proof\n\nA bounded failure with a clear error.\n\n## Failure modes\n\nA retry on a non-idempotent call duplicates work.",
+  "id": "eng-timeouts",
+  "title": "A call without a deadline can hang a pool",
+  "tags": [
+   "engineering",
+   "timeouts",
+   "reliability"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Every network call needs a deadline, a retry budget and a cancellation path. A retry without jitter amplifies load.",
+  "test": "Kill a dependency. Watch the caller. Check pool exhaustion and retry storms.",
+  "proof": "A bounded failure with a clear error.",
+  "failure": "A retry on a non-idempotent call duplicates work."
+ },
+ {
+  "path": "knowledge/eng-tradeoffs.md",
+  "body": "# A tradeoff without a cost is marketing\n\n## Claim\n\nState what improves, what worsens and who pays. Then choose.\n\n## Test\n\nWrite two options and their costs. Pick one.\n\n## Proof\n\nA decision record with the rejected option.\n\n## Failure modes\n\nA choice that claims all benefits has no tradeoff.",
+  "id": "eng-tradeoffs",
+  "title": "A tradeoff without a cost is marketing",
+  "tags": [
+   "engineering",
+   "tradeoffs",
+   "design"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "State what improves, what worsens and who pays. Then choose.",
+  "test": "Write two options and their costs. Pick one.",
+  "proof": "A decision record with the rejected option.",
+  "failure": "A choice that claims all benefits has no tradeoff."
+ },
+ {
+  "path": "knowledge/eng-transactions.md",
+  "body": "# A transaction is a boundary, not a decoration\n\n## Claim\n\nThe unit of consistency is the transaction. A side effect outside it can commit while the transaction rolls back.\n\n## Test\n\nList the writes and the external calls. Move the external call out or add compensation.\n\n## Proof\n\nA failure leaves the system in one consistent state.\n\n## Failure modes\n\nA distributed transaction without a protocol is a hope.",
+  "id": "eng-transactions",
+  "title": "A transaction is a boundary, not a decoration",
+  "tags": [
+   "engineering",
+   "database",
+   "transactions"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The unit of consistency is the transaction. A side effect outside it can commit while the transaction rolls back.",
+  "test": "List the writes and the external calls. Move the external call out or add compensation.",
+  "proof": "A failure leaves the system in one consistent state.",
+  "failure": "A distributed transaction without a protocol is a hope."
+ },
+ {
   "path": "knowledge/exploit-rop-argument-registers.md",
   "body": "# x86_64 ROP needs the argument registers\n\n## Claim\n\nThe first six arguments are rdi, rsi, rdx, rcx, r8, r9. A chain needs pop gadgets or a function that sets them.\n\n## Test\n\nFind pop rdi; ret. Put /bin/sh in a writable location. Call system or execve through a PLT or libc leak.\n\n## Proof\n\nA shell or a controlled call with the arguments visible in the debugger.\n\n## Failure modes\n\nA chain that assumes NX off fails on the target. libc offsets differ by build.",
   "id": "exploit-rop-argument-registers",

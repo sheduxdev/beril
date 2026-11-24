@@ -7088,7 +7088,7 @@ Do not store secrets, customer data, or private report text in a card. Link the 
 
 ## Gaps
 
-`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. 137 gaps exist: 125 covered, 12 open at medium or low priority, no high gaps. Do not pretend a gap is covered.
+`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. 167 gaps exist: 135 covered, 32 open at medium or low priority, no high gaps. Do not pretend a gap is covered.
 
 ```bash
 ./beril gaps --next
@@ -7119,14 +7119,14 @@ The entry files in the repo root tell Claude, Codex, Cursor and Gemini to recall
 
 ## Current seed
 
-152 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
+202 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
 
 
 <!-- ===== knowledge/INDEX.md ===== -->
 
 # Knowledge index
 
-152 durable cards. Read this before a web search; open a card only when it matches.
+202 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -7198,6 +7198,56 @@ The entry files in the repo root tell Claude, Codex, Cursor and Gemini to recall
 | `detection-tls` | TLS fingerprints identify a client stack, not a person | detection, tls, ja3 | medium | 2026-11-25 |
 | `detection-threatintel` | Threat intel ages and IOCs are easy to rotate | detection, intel, ioc | medium | 2026-11-24 |
 | `electron-context-isolation` | Electron is Node with a browser attached | electron, desktop, context-isolation | medium | 2026-11-24 |
+| `eng-boundaries` | A boundary hides a decision and owns its data | engineering, architecture, boundaries | high | 2026-11-25 |
+| `eng-regression` | A bug fix needs a test that failed before it | engineering, testing, regression | high | 2026-11-25 |
+| `eng-repro-build` | A build should be reproducible from a clean checkout | engineering, build, reproducible | high | 2026-11-25 |
+| `eng-cache-invalidation` | A cache needs a key, a TTL and an invalidation path | engineering, cache, invalidation | high | 2026-11-25 |
+| `eng-timeouts` | A call without a deadline can hang a pool | engineering, timeouts, reliability | high | 2026-11-25 |
+| `eng-communication` | A decision nobody understands is a future incident | engineering, communication, writing | high | 2026-11-25 |
+| `eng-feature-flags` | A feature flag is a temporary branch with an owner | engineering, feature-flag, release | medium | 2026-11-25 |
+| `eng-migrations` | A migration is expand, backfill, switch, contract | engineering, database, migration | high | 2026-11-25 |
+| `eng-postmortem` | A postmortem is blameless and actionable | engineering, postmortem, learning | high | 2026-11-25 |
+| `eng-backpressure` | A queue without a limit is a memory leak | engineering, queue, backpressure | high | 2026-11-25 |
+| `eng-distributed-tx` | A saga is a sequence with compensation | engineering, distributed, transaction | high | 2026-11-25 |
+| `eng-tradeoffs` | A tradeoff without a cost is marketing | engineering, tradeoffs, design | high | 2026-11-25 |
+| `eng-transactions` | A transaction is a boundary, not a decoration | engineering, database, transactions | high | 2026-11-25 |
+| `eng-accessibility` | Accessibility is a correctness requirement | engineering, accessibility, ui | medium | 2026-11-25 |
+| `eng-api-contract` | An API is a promise about errors and time | engineering, api, contract | high | 2026-11-25 |
+| `eng-slo` | An SLO is a budget for unreliability | engineering, sre, slo | high | 2026-11-25 |
+| `eng-errors` | An error is a value with a caller decision | engineering, errors, api | high | 2026-11-25 |
+| `eng-estimation` | An estimate is a range and its assumptions | engineering, estimation, planning | medium | 2026-11-25 |
+| `eng-mentoring` | Ask until the blocker is clear | engineering, mentoring, teaching | high | 2026-11-25 |
+| `eng-idempotent-consumer` | At-least-once delivery needs an idempotent consumer | engineering, queue, consumer | high | 2026-11-25 |
+| `eng-debug-bisect` | Bisect the space, not the code | engineering, debugging, bisect | high | 2026-11-25 |
+| `eng-concurrency` | Concurrency bugs are about shared state and ordering | engineering, concurrency, locks | high | 2026-11-25 |
+| `eng-config` | Config belongs to the environment, secrets belong to a store | engineering, config, secrets | high | 2026-11-25 |
+| `eng-consensus` | Consensus is quorum plus a log | engineering, distributed, consensus | high | 2026-11-25 |
+| `eng-consistency` | Consistency is a contract about reads | engineering, distributed, consistency | high | 2026-11-25 |
+| `eng-cost` | Cost is a design constraint | engineering, cost, cloud | medium | 2026-11-25 |
+| `eng-data-model` | Data outlives code | engineering, data, schema | high | 2026-11-25 |
+| `eng-deletion` | Deletion is a feature | engineering, deletion, maintenance | medium | 2026-11-25 |
+| `eng-legacy-strangler` | Do not rewrite the legacy system; strangle it | engineering, legacy, refactor | high | 2026-11-25 |
+| `eng-docs` | Docs are for the next decision | engineering, docs, writing | medium | 2026-11-25 |
+| `eng-ethics` | Engineering judgment includes who pays | engineering, ethics, product | medium | 2026-11-25 |
+| `eng-dependencies` | Every dependency is a maintenance contract | engineering, dependencies, supply-chain | medium | 2026-11-25 |
+| `eng-idempotency` | Every retryable write needs a key | engineering, idempotency, retry | high | 2026-11-25 |
+| `eng-logging` | Log the decision, not the whole world | engineering, logging, observability | medium | 2026-11-25 |
+| `eng-multi-tenancy` | Multi-tenancy is isolation plus noisy-neighbor control | engineering, multi-tenant, isolation | high | 2026-11-25 |
+| `eng-observability` | Observability answers the next question | engineering, observability, logs | high | 2026-11-25 |
+| `eng-performance-budget` | Performance is a budget before it is an optimization | engineering, performance, budget | high | 2026-11-25 |
+| `eng-privacy` | Privacy is data minimization with a retention clock | engineering, privacy, data | high | 2026-11-25 |
+| `eng-property-tests` | Property tests find the input you did not imagine | engineering, testing, property | medium | 2026-11-25 |
+| `eng-refactor-small` | Refactor in small, behavior-preserving steps | engineering, refactor, testing | high | 2026-11-25 |
+| `eng-requirements` | Requirements are a decision, not a transcript | engineering, requirements, product | high | 2026-11-25 |
+| `eng-code-review` | Review the change, not the author | engineering, review, quality | high | 2026-11-25 |
+| `eng-schema-evolution` | Schema changes must be compatible in both directions | engineering, schema, evolution | high | 2026-11-25 |
+| `eng-security-design` | Security is a property of the design | engineering, security, design | high | 2026-11-25 |
+| `eng-simplicity` | Simplicity is removing accidental complexity | engineering, design, simplicity | high | 2026-11-25 |
+| `eng-incident` | Stabilize before you diagnose | engineering, incident, operations | high | 2026-11-25 |
+| `eng-testing-pyramid` | Test at the lowest level that can catch the bug | engineering, testing, pyramid | high | 2026-11-25 |
+| `eng-i18n` | Text, time and money are not strings | engineering, i18n, locale | medium | 2026-11-25 |
+| `eng-query-planner` | The planner is the database's brain | engineering, database, query | high | 2026-11-25 |
+| `eng-ml-systems` | Training and serving must share the same features | engineering, ml, features | high | 2026-11-25 |
 | `exploit-uaf-reallocate` | UAF becomes control when the freed slot is reallocated | exploit, uaf, heap | high | 2026-11-24 |
 | `exploit-rop-argument-registers` | x86_64 ROP needs the argument registers | exploit, rop, linux | high | 2026-11-24 |
 | `firmware-update-sign` | A signed update is useless if verification is off | firmware, update, signature | high | 2026-11-24 |
@@ -7288,7 +7338,7 @@ The entry files in the repo root tell Claude, Codex, Cursor and Gemini to recall
 
 # Knowledge gaps
 
-137 gaps. A gap is a card that does not exist yet, ranked by priority.
+167 gaps. A gap is a card that does not exist yet, ranked by priority.
 
 | # | Domain | Gap | Priority | Source | Status |
 |---|---|---|---|---|---|
@@ -7429,6 +7479,36 @@ The entry files in the repo root tell Claude, Codex, Cursor and Gemini to recall
 | 135 | ai | Multi-agent delegation, shared memory and trust | high | `references/techniques.md` | covered by `ai-multiagent` |
 | 136 | process | Safe harbor, authorization and data handling | medium | `docs/break-my-app.md` | open |
 | 137 | process | Payout expectations, VRT and severity negotiation | medium | `references/scoring.md` | open |
+| 138 | engineering | Consensus, quorum and leader election | high | `references/engineering-mastery.md` | covered by `eng-consensus` |
+| 139 | engineering | Consistency models and read-your-writes | high | `references/engineering-mastery.md` | covered by `eng-consistency` |
+| 140 | engineering | B-tree, LSM and write amplification | medium | `references/engineering-mastery.md` | open |
+| 141 | engineering | Query planning, indexes and statistics | high | `references/engineering-mastery.md` | covered by `eng-query-planner` |
+| 142 | engineering | Virtual memory, page cache and allocators | medium | `references/engineering-mastery.md` | open |
+| 143 | engineering | Congestion control, queues and bufferbloat | medium | `references/engineering-mastery.md` | open |
+| 144 | engineering | Type systems, variance and exhaustiveness | medium | `references/engineering-mastery.md` | open |
+| 145 | engineering | Feature stores, training serving skew and evaluation | high | `references/engineering-mastery.md` | covered by `eng-ml-systems` |
+| 146 | engineering | SLOs, error budgets and alerting | high | `references/engineering-mastery.md` | covered by `eng-slo` |
+| 147 | engineering | Tenant isolation, noisy neighbors and data partitioning | high | `references/engineering-mastery.md` | covered by `eng-multi-tenancy` |
+| 148 | engineering | Event sourcing, replay and projections | medium | `references/engineering-mastery.md` | open |
+| 149 | engineering | CQRS and read model consistency | medium | `references/engineering-mastery.md` | open |
+| 150 | engineering | Sagas, outbox and compensation | high | `references/engineering-mastery.md` | covered by `eng-distributed-tx` |
+| 151 | engineering | At-least-once delivery and idempotent consumers | high | `references/engineering-mastery.md` | covered by `eng-idempotent-consumer` |
+| 152 | engineering | Token bucket, leaky bucket and fairness | medium | `references/engineering-mastery.md` | open |
+| 153 | engineering | Cache-aside, write-through and stampede | medium | `references/engineering-mastery.md` | open |
+| 154 | engineering | Backward and forward compatible schema changes | high | `references/engineering-mastery.md` | covered by `eng-schema-evolution` |
+| 155 | engineering | API versioning and deprecation | medium | `references/engineering-mastery.md` | open |
+| 156 | engineering | Platform teams, golden paths and paved roads | medium | `references/engineering-mastery.md` | open |
+| 157 | engineering | Team boundaries and ownership | medium | `references/engineering-mastery.md` | open |
+| 158 | engineering | Roadmaps, bets and kill criteria | medium | `references/engineering-mastery.md` | open |
+| 159 | engineering | Hiring signals and interview design | low | `references/engineering-mastery.md` | open |
+| 160 | engineering | Privacy by design and data minimization | high | `references/engineering-mastery.md` | covered by `eng-privacy` |
+| 161 | engineering | SOC2, GDPR and evidence collection | medium | `references/engineering-mastery.md` | open |
+| 162 | engineering | Unit economics and cost allocation | medium | `references/engineering-mastery.md` | open |
+| 163 | engineering | Client state, server state and cache ownership | medium | `references/engineering-mastery.md` | open |
+| 164 | engineering | Offline-first mobile architecture | medium | `references/engineering-mastery.md` | open |
+| 165 | engineering | Lexing, parsing, IR and optimization | low | `references/engineering-mastery.md` | open |
+| 166 | engineering | Garbage collection and allocation pressure | medium | `references/engineering-mastery.md` | open |
+| 167 | engineering | Cardinality, sampling and telemetry cost | medium | `references/engineering-mastery.md` | open |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.
 
