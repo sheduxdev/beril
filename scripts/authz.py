@@ -40,7 +40,7 @@ UA = "Beril/1.4 ownership-check"
 
 
 def now() -> dt.datetime:
-    return dt.datetime.now(dt.timezone.utc)
+    return dt.datetime.now(dt.UTC)
 
 
 def token() -> str:

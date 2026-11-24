@@ -214,7 +214,7 @@ def online_hits(components: list[tuple]) -> tuple[list[dict], str]:
     pairs = [(n, v, e, path, line) for n, v, e, path, line in components if ECOSYSTEM.get(e)]
     if not pairs:
         return [], "no components"
-    results, errors, marker = feeds.osv_query_many([(ECOSYSTEM[e], n, v) for n, v, e, _p, _line in pairs], online=True)
+    results, errors, _marker = feeds.osv_query_many([(ECOSYSTEM[e], n, v) for n, v, e, _p, _line in pairs], online=True)
     out = []
     for component, vulns in zip(pairs, results, strict=False):
         for vuln in vulns[:3]:

@@ -68,7 +68,7 @@ CVSS_HINT = {
 
 
 def utc_now() -> str:
-    return dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
+    return dt.datetime.now(dt.UTC).isoformat(timespec="seconds")
 
 
 def norm_subject(subject: str) -> str:
@@ -182,7 +182,7 @@ class Finding:
             multiplier *= 1.5
         if self.epss:
             multiplier *= 1.0 + min(max(self.epss, 0.0), 1.0) * 0.8
-        return int(round(base * factor * multiplier))
+        return round(base * factor * multiplier)
 
     def priority_reason(self) -> str:
         parts = [f"base {self.severity}", f"confidence {self.confidence}"]
@@ -316,7 +316,7 @@ class Report:
 
     def summary_line(self) -> str:
         c = self.counts()
-        return f"{c['critical']} critical, {c['high']} high, {c['medium']} medium, " f"{c['low']} low, {c['info']} info"
+        return f"{c['critical']} critical, {c['high']} high, {c['medium']} medium, {c['low']} low, {c['info']} info"
 
     def to_dict(self) -> dict:
         return {

@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import guard
 from camo import CamoSession, clean
 
-NOW = lambda: dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")  # noqa: E731
+NOW = lambda: dt.datetime.now(dt.UTC).isoformat(timespec="seconds")  # noqa: E731
 
 DYNAMIC = {
     "reddit.com": "shreddit-post",

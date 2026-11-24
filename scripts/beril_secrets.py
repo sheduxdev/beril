@@ -219,7 +219,7 @@ def provider_guide(provider: str) -> dict:
 def adjust(provider: str, severity: str, confidence: str, value: str, path: str) -> tuple[str, str, list[str], str]:
     tags, note = [], ""
     if in_example_path(path):
-        confidence = "low" if confidence != "low" else "low"
+        confidence = "low"
         tags.append("example-path")
         note = "The path looks like an example, test or document."
     if is_placeholder(value):
@@ -259,8 +259,7 @@ def scan_text(name: str, text: str, limit_per_rule: int = MAX_HITS_PER_RULE) -> 
                 confidence=confidence,
                 evidence=f"{name}:{line} {mask(value)} ({provider})",
                 impact=(
-                    "Key leak. If the value is live it allows API calls, data access "
-                    "or resource use in the owner name."
+                    "Key leak. If the value is live it allows API calls, data access or resource use in the owner name."
                 ),
                 fix=f"Revoke first: {guide.get('revoke', 'provider console')}. Then issue a new key, "
                 f"then clean git history. {guide.get('rotate', '')}".strip(),

@@ -816,8 +816,8 @@ def tls_info(url: str, timeout: int = 12) -> dict:
             not_after = cert.get("notAfter", "")
             days = None
             if not_after:
-                expiry = dt.datetime.strptime(not_after, "%b %d %H:%M:%S %Y %Z").replace(tzinfo=dt.timezone.utc)
-                days = (expiry - dt.datetime.now(dt.timezone.utc)).days
+                expiry = dt.datetime.strptime(not_after, "%b %d %H:%M:%S %Y %Z").replace(tzinfo=dt.UTC)
+                days = (expiry - dt.datetime.now(dt.UTC)).days
             return {
                 "enabled": True,
                 "version": tls.version(),

@@ -22,7 +22,7 @@ def test_record_expires(tmp_path, monkeypatch):
     assert authz.load("a.test")["method"] == "dns"
     path = Path(authz._path("a.test"))
     data = json.loads(path.read_text())
-    data["expires_at"] = (dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=1)).isoformat()
+    data["expires_at"] = (dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).isoformat()
     path.write_text(json.dumps(data))
     assert authz.load("a.test") is None
 

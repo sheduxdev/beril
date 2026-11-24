@@ -67,7 +67,7 @@ def capa(path: str, findings: list[dict], timeout: int) -> dict:
     if os.path.isdir(sigs):
         cmd += ["-s", sigs]
     cmd.append(path)
-    code, out, err = run(cmd, timeout=timeout)
+    _code, out, err = run(cmd, timeout=timeout)
     try:
         data = json.loads(out)
     except json.JSONDecodeError:
@@ -87,7 +87,7 @@ def capa(path: str, findings: list[dict], timeout: int) -> dict:
 def floss(path: str, findings: list[dict], timeout: int) -> dict:
     if not have("floss"):
         return {"status": "missing"}
-    code, out, err = run([tool("floss"), "-j", path], timeout=timeout)
+    _code, out, err = run([tool("floss"), "-j", path], timeout=timeout)
     try:
         data = json.loads(out)
     except json.JSONDecodeError:
@@ -110,7 +110,7 @@ def floss(path: str, findings: list[dict], timeout: int) -> dict:
 def rizin(path: str, findings: list[dict], timeout: int) -> dict:
     if not have("rizin"):
         return {"status": "missing"}
-    code, out, err = run([tool("rizin"), "-q", "-j", "-c", "iI;iS;iE;ii;iz", path], timeout=timeout)
+    _code, out, err = run([tool("rizin"), "-q", "-j", "-c", "iI;iS;iE;ii;iz", path], timeout=timeout)
     try:
         data = json.loads(out)
     except json.JSONDecodeError:
@@ -190,7 +190,7 @@ def ghidra(path: str, findings: list[dict], timeout: int, output: str) -> dict:
 def yara(path: str, findings: list[dict], rules: str, timeout: int) -> dict:
     if not rules or not have("yara"):
         return {"status": "missing" if not rules else "tool-missing"}
-    code, out, err = run([tool("yara"), "-w", "-r", rules, path], timeout=timeout)
+    _code, out, _err = run([tool("yara"), "-w", "-r", rules, path], timeout=timeout)
     hits = [line for line in out.splitlines() if line.strip()]
     for line in hits[:40]:
         add(findings, "medium", "YARA match", line, "Review the matched rule and offset.", "yara")

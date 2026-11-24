@@ -164,7 +164,7 @@ def build(root: str) -> dict:
         "serialNumber": "urn:uuid:" + str(uuid.uuid4()),
         "version": 1,
         "metadata": {
-            "timestamp": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+            "timestamp": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
             "tools": [{"name": "beril", "version": TOOL_VERSION}],
             "component": {
                 "type": "application",
@@ -185,7 +185,7 @@ def build_spdx(root: str, sbom: dict) -> dict:
     """Render an SPDX 2.3 document from the CycloneDX component list."""
     project = os.path.basename(os.path.abspath(root)) or "project"
     root_license = declared_license(root) or "NOASSERTION"
-    created = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    created = dt.datetime.now(dt.UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     packages = [
         {
             "SPDXID": "SPDXRef-Package-root",
@@ -271,7 +271,7 @@ def build_vex(sbom: dict, hits: list[dict]) -> dict:
         "@context": "https://openvex.dev/ns/v0.2.0",
         "@id": f"https://beril.local/vex/{uuid.uuid4()}",
         "author": "Beril",
-        "timestamp": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+        "timestamp": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
         "version": 1,
         "tooling": f"beril-{TOOL_VERSION}",
         "statements": list(statements.values()),

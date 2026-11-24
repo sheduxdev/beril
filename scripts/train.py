@@ -139,7 +139,7 @@ def main() -> None:
         print("2. Run `./beril incidents lab` and `run`, then explain why the noise does not match.")
         print("3. Find one more log line that the rule misses.")
         print("4. Write the detection as a sigma rule.")
-        print(f"5. Log the session: `./beril train --log \"{case['id']} done\"`.")
+        print(f'5. Log the session: `./beril train --log "{case["id"]} done"`.')
         return
 
     curriculum, state = load_curriculum(), load_state()

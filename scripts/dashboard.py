@@ -125,7 +125,7 @@ def job_start(kind: str, title: str, target: str = "") -> str:
 
 def costs() -> dict:
     rows = jobmod.load()
-    now = dt.datetime.now(dt.timezone.utc)
+    now = dt.datetime.now(dt.UTC)
 
     def bucket(days: int) -> float:
         return round(
@@ -341,7 +341,7 @@ def run_scan(target: str) -> dict:
             jid,
             {
                 "status": "done" if p.returncode == 0 else "failed",
-                "finished_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+                "finished_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
                 "log": os.path.basename(out) + ".md",
             },
         )
@@ -376,7 +376,7 @@ def run_lab(name: str) -> dict:
             jid,
             {
                 "status": "done" if p.returncode == 0 else "failed",
-                "finished_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+                "finished_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
             },
         )
     except Exception as exc:
@@ -551,7 +551,7 @@ class Handler(BaseHTTPRequestHandler):
             pin, pout = jobmod.price(model)
             patch = {
                 "status": body.get("status", "done"),
-                "finished_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+                "finished_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
                 "tokens_in": int(body.get("tokens_in") or 0),
                 "tokens_out": int(body.get("tokens_out") or 0),
                 "notes": body.get("notes", ""),
