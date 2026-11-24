@@ -1,6 +1,6 @@
 # Knowledge index
 
-294 durable cards. Read this before a web search; open a card only when it matches.
+308 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -21,7 +21,10 @@
 | `ai-data-poison` | Poisoned data changes the model or the retrieval set | ai, data, poisoning | high | 2026-11-24 |
 | `ai-rag-tenant-filter` | RAG leaks when retrieval ignores the tenant | ai, llm, rag | high | 2026-11-24 |
 | `ai-tool-output` | Tool output is untrusted input to the next turn | ai, tool, injection | high | 2026-11-24 |
+| `alloc-arena` | An arena frees a whole region at once | allocator, arena, region | medium | 2026-11-25 |
 | `alloc-fragmentation` | External fragmentation grows when live objects pin pages | allocator, fragmentation, memory | high | 2026-11-25 |
+| `alloc-numa` | NUMA locality is decided by first touch | allocator, numa, memory | medium | 2026-11-25 |
+| `alloc-size-class` | Size classes trade internal fragmentation for speed | allocator, size-class, fragmentation | medium | 2026-11-25 |
 | `alloc-tcache` | Thread caches reduce contention and create remote frees | allocator, tcache, threads | high | 2026-11-25 |
 | `api-batch` | A batch endpoint checks the envelope, not each item | api, batch, auth | medium | 2026-11-25 |
 | `api-webhook-signature` | A webhook without HMAC is an unauthenticated write | api, webhook, hmac | high | 2026-11-24 |
@@ -81,11 +84,14 @@
 | `tls-config-review` | TLS is a version, a chain and a policy | crypto, tls, certificate | medium | 2026-11-24 |
 | `db-deadlock` | A deadlock is a cycle in the wait-for graph | database, deadlock, retry | medium | 2026-11-25 |
 | `db-lock-manager` | A lock manager has modes, a wait queue and fairness | database, locks, fairness | medium | 2026-11-25 |
+| `db-parallel-query` | A parallel plan needs even work and a worker limit | database, parallel, skew | medium | 2026-11-25 |
 | `db-cardinality-estimate` | Estimates decide the plan; bad estimates ruin it | database, cardinality, planner | high | 2026-11-25 |
+| `db-spill-sort` | External sort spills sorted runs and merges them | database, sort, spill | medium | 2026-11-25 |
 | `db-isolation` | Isolation levels allow different anomalies | database, isolation, write-skew | high | 2026-11-25 |
 | `db-join-algorithms` | Join choice is a cost model over sizes and order | database, join, query | high | 2026-11-25 |
 | `db-mvcc` | MVCC keeps versions for concurrent snapshots | database, mvcc, snapshot | high | 2026-11-25 |
 | `db-vacuum` | Vacuum reclaims versions and freezes old transaction ids | database, vacuum, bloat | medium | 2026-11-25 |
+| `db-vectorized-exec` | Vectorized execution amortizes per-row cost | database, vectorized, execution | medium | 2026-11-25 |
 | `detection-sigma` | A Sigma rule needs a logsource, a selection and a false-positive note | detection, sigma, log | high | 2026-11-24 |
 | `detection-beacon` | A beacon is a timing pattern, not a single request | detection, beacon, network | medium | 2026-11-24 |
 | `detection-cloud` | Cloud detection is control-plane and role-assumption first | detection, cloud, audit | high | 2026-11-25 |
@@ -101,6 +107,9 @@
 | `dist-partition` | A partition forces a choice between availability and consistency | distributed, partition, cap | high | 2026-11-25 |
 | `dist-quorum-read` | A quorum read must overlap the write quorum | distributed, quorum, read | medium | 2026-11-25 |
 | `consensus-snapshot` | A snapshot records the last included index and term | distributed, raft, snapshot | medium | 2026-11-25 |
+| `consensus-witness` | A witness votes but stores no data | distributed, consensus, witness | low | 2026-11-25 |
+| `consensus-bft` | BFT assumes f faulty nodes and 3f+1 votes | distributed, bft, byzantine | low | 2026-11-25 |
+| `consensus-log-compaction` | Compaction keeps a snapshot and the suffix after it | distributed, consensus, compaction | medium | 2026-11-25 |
 | `dist-ordering` | Exactly-once is at-least-once plus dedup | distributed, ordering, dedup | high | 2026-11-25 |
 | `dist-gossip` | Gossip spreads state in logarithmic rounds | distributed, gossip, membership | medium | 2026-11-25 |
 | `consensus-membership` | Membership change is a consensus decision | distributed, raft, membership | high | 2026-11-25 |
@@ -109,7 +118,12 @@
 | `consensus-pre-vote` | Pre-vote stops a rejoining node from disrupting the leader | distributed, raft, election | high | 2026-11-25 |
 | `consensus-crash-recovery` | Recovery replays the log to the commit index, not past it | distributed, consensus, recovery | high | 2026-11-25 |
 | `econ-make-buy` | Build versus buy compares maintenance, not license | economics, make-buy, maintenance | high | 2026-11-25 |
+| `econ-headcount` | Headcount is a recurring cost with a ramp | economics, headcount, ramp | medium | 2026-11-25 |
 | `econ-vendor-lock` | Lock-in is the exit cost, not the logo | economics, vendor, exit | high | 2026-11-25 |
+| `econ-opportunity` | Opportunity cost is the next best use of the same time | economics, opportunity, cost | medium | 2026-11-25 |
+| `econ-pricing` | Pricing is a signal about unit cost and margin | economics, pricing, price, unit, cost, margin | medium | 2026-11-25 |
+| `econ-risk-adjusted` | Risk-adjusted value multiplies by probability | economics, risk, expected-value | medium | 2026-11-25 |
+| `econ-sunk-cost` | Sunk cost is spent; only the forward cost matters | economics, sunk-cost, decision | medium | 2026-11-25 |
 | `econ-debt-interest` | Technical debt is principal plus interest | economics, debt, interest | high | 2026-11-25 |
 | `econ-total-cost` | Total cost includes the invisible line items | economics, tco, cost | high | 2026-11-25 |
 | `electron-context-isolation` | Electron is Node with a browser attached | electron, desktop, context-isolation | medium | 2026-11-24 |

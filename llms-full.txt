@@ -7088,7 +7088,7 @@ Do not store secrets, customer data, or private report text in a card. Link the 
 
 ## Gaps
 
-`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. 241 gaps exist: 227 covered, 14 open at medium or low priority, no high gaps. The recall regression set is now 79 cases. The recall regression set is `scripts/recall_test.py`. Do not pretend a gap is covered.
+`knowledge/GAPS.md` is the honest counterpart to the cards. It lists what Beril does not know yet, ranked. 241 gaps exist and all are covered. The recall regression set is now 93 cases. The recall regression set is `scripts/recall_test.py`. Do not pretend a gap is covered.
 
 ```bash
 ./beril gaps --next
@@ -7127,14 +7127,14 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 
 ## Current seed
 
-294 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
+308 cards across web, mobile, firmware, cloud, AD, RE, exploit, AI and process. The first pass is broad. Grow it from labs and real findings, one card at a time.
 
 
 <!-- ===== knowledge/INDEX.md ===== -->
 
 # Knowledge index
 
-294 durable cards. Read this before a web search; open a card only when it matches.
+308 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -7155,7 +7155,10 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `ai-data-poison` | Poisoned data changes the model or the retrieval set | ai, data, poisoning | high | 2026-11-24 |
 | `ai-rag-tenant-filter` | RAG leaks when retrieval ignores the tenant | ai, llm, rag | high | 2026-11-24 |
 | `ai-tool-output` | Tool output is untrusted input to the next turn | ai, tool, injection | high | 2026-11-24 |
+| `alloc-arena` | An arena frees a whole region at once | allocator, arena, region | medium | 2026-11-25 |
 | `alloc-fragmentation` | External fragmentation grows when live objects pin pages | allocator, fragmentation, memory | high | 2026-11-25 |
+| `alloc-numa` | NUMA locality is decided by first touch | allocator, numa, memory | medium | 2026-11-25 |
+| `alloc-size-class` | Size classes trade internal fragmentation for speed | allocator, size-class, fragmentation | medium | 2026-11-25 |
 | `alloc-tcache` | Thread caches reduce contention and create remote frees | allocator, tcache, threads | high | 2026-11-25 |
 | `api-batch` | A batch endpoint checks the envelope, not each item | api, batch, auth | medium | 2026-11-25 |
 | `api-webhook-signature` | A webhook without HMAC is an unauthenticated write | api, webhook, hmac | high | 2026-11-24 |
@@ -7215,11 +7218,14 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `tls-config-review` | TLS is a version, a chain and a policy | crypto, tls, certificate | medium | 2026-11-24 |
 | `db-deadlock` | A deadlock is a cycle in the wait-for graph | database, deadlock, retry | medium | 2026-11-25 |
 | `db-lock-manager` | A lock manager has modes, a wait queue and fairness | database, locks, fairness | medium | 2026-11-25 |
+| `db-parallel-query` | A parallel plan needs even work and a worker limit | database, parallel, skew | medium | 2026-11-25 |
 | `db-cardinality-estimate` | Estimates decide the plan; bad estimates ruin it | database, cardinality, planner | high | 2026-11-25 |
+| `db-spill-sort` | External sort spills sorted runs and merges them | database, sort, spill | medium | 2026-11-25 |
 | `db-isolation` | Isolation levels allow different anomalies | database, isolation, write-skew | high | 2026-11-25 |
 | `db-join-algorithms` | Join choice is a cost model over sizes and order | database, join, query | high | 2026-11-25 |
 | `db-mvcc` | MVCC keeps versions for concurrent snapshots | database, mvcc, snapshot | high | 2026-11-25 |
 | `db-vacuum` | Vacuum reclaims versions and freezes old transaction ids | database, vacuum, bloat | medium | 2026-11-25 |
+| `db-vectorized-exec` | Vectorized execution amortizes per-row cost | database, vectorized, execution | medium | 2026-11-25 |
 | `detection-sigma` | A Sigma rule needs a logsource, a selection and a false-positive note | detection, sigma, log | high | 2026-11-24 |
 | `detection-beacon` | A beacon is a timing pattern, not a single request | detection, beacon, network | medium | 2026-11-24 |
 | `detection-cloud` | Cloud detection is control-plane and role-assumption first | detection, cloud, audit | high | 2026-11-25 |
@@ -7235,6 +7241,9 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `dist-partition` | A partition forces a choice between availability and consistency | distributed, partition, cap | high | 2026-11-25 |
 | `dist-quorum-read` | A quorum read must overlap the write quorum | distributed, quorum, read | medium | 2026-11-25 |
 | `consensus-snapshot` | A snapshot records the last included index and term | distributed, raft, snapshot | medium | 2026-11-25 |
+| `consensus-witness` | A witness votes but stores no data | distributed, consensus, witness | low | 2026-11-25 |
+| `consensus-bft` | BFT assumes f faulty nodes and 3f+1 votes | distributed, bft, byzantine | low | 2026-11-25 |
+| `consensus-log-compaction` | Compaction keeps a snapshot and the suffix after it | distributed, consensus, compaction | medium | 2026-11-25 |
 | `dist-ordering` | Exactly-once is at-least-once plus dedup | distributed, ordering, dedup | high | 2026-11-25 |
 | `dist-gossip` | Gossip spreads state in logarithmic rounds | distributed, gossip, membership | medium | 2026-11-25 |
 | `consensus-membership` | Membership change is a consensus decision | distributed, raft, membership | high | 2026-11-25 |
@@ -7243,7 +7252,12 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `consensus-pre-vote` | Pre-vote stops a rejoining node from disrupting the leader | distributed, raft, election | high | 2026-11-25 |
 | `consensus-crash-recovery` | Recovery replays the log to the commit index, not past it | distributed, consensus, recovery | high | 2026-11-25 |
 | `econ-make-buy` | Build versus buy compares maintenance, not license | economics, make-buy, maintenance | high | 2026-11-25 |
+| `econ-headcount` | Headcount is a recurring cost with a ramp | economics, headcount, ramp | medium | 2026-11-25 |
 | `econ-vendor-lock` | Lock-in is the exit cost, not the logo | economics, vendor, exit | high | 2026-11-25 |
+| `econ-opportunity` | Opportunity cost is the next best use of the same time | economics, opportunity, cost | medium | 2026-11-25 |
+| `econ-pricing` | Pricing is a signal about unit cost and margin | economics, pricing, price, unit, cost, margin | medium | 2026-11-25 |
+| `econ-risk-adjusted` | Risk-adjusted value multiplies by probability | economics, risk, expected-value | medium | 2026-11-25 |
+| `econ-sunk-cost` | Sunk cost is spent; only the forward cost matters | economics, sunk-cost, decision | medium | 2026-11-25 |
 | `econ-debt-interest` | Technical debt is principal plus interest | economics, debt, interest | high | 2026-11-25 |
 | `econ-total-cost` | Total cost includes the invisible line items | economics, tco, cost | high | 2026-11-25 |
 | `electron-context-isolation` | Electron is Node with a browser attached | electron, desktop, context-isolation | medium | 2026-11-24 |
@@ -7660,29 +7674,29 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | 216 | organization | Writing culture and decision visibility | medium | `references/engineering-mastery.md` | covered by `org-docs-culture` |
 | 217 | organization | Blameless postmortems and learning loops | high | `references/engineering-mastery.md` | covered by `org-postmortem-culture` |
 | 218 | distributed | Crash recovery, log replay and commit index | high | `references/engineering-mastery.md` | covered by `consensus-crash-recovery` |
-| 219 | distributed | Log compaction and snapshot retention | medium | `references/engineering-mastery.md` | open |
-| 220 | distributed | Witness replicas and quorum cost | low | `references/engineering-mastery.md` | open |
+| 219 | distributed | Log compaction and snapshot retention | medium | `references/engineering-mastery.md` | covered by `consensus-log-compaction` |
+| 220 | distributed | Witness replicas and quorum cost | low | `references/engineering-mastery.md` | covered by `consensus-witness` |
 | 221 | distributed | Pre-vote and disruptive server rejoin | high | `references/engineering-mastery.md` | covered by `consensus-pre-vote` |
-| 222 | distributed | Byzantine faults and BFT quorum | low | `references/engineering-mastery.md` | open |
-| 223 | allocator | Size classes, rounding and internal fragmentation | medium | `references/engineering-mastery.md` | open |
+| 222 | distributed | Byzantine faults and BFT quorum | low | `references/engineering-mastery.md` | covered by `consensus-bft` |
+| 223 | allocator | Size classes, rounding and internal fragmentation | medium | `references/engineering-mastery.md` | covered by `alloc-size-class` |
 | 224 | allocator | External fragmentation and compaction | high | `references/engineering-mastery.md` | covered by `alloc-fragmentation` |
-| 225 | allocator | Arena and region allocation | medium | `references/engineering-mastery.md` | open |
+| 225 | allocator | Arena and region allocation | medium | `references/engineering-mastery.md` | covered by `alloc-arena` |
 | 226 | allocator | Thread caches, remote free and false sharing | high | `references/engineering-mastery.md` | covered by `alloc-tcache` |
-| 227 | allocator | NUMA locality and first-touch policy | medium | `references/engineering-mastery.md` | open |
+| 227 | allocator | NUMA locality and first-touch policy | medium | `references/engineering-mastery.md` | covered by `alloc-numa` |
 | 228 | database | Nested loop, hash and merge join cost | high | `references/engineering-mastery.md` | covered by `db-join-algorithms` |
-| 229 | database | Vectorized execution and batch size | medium | `references/engineering-mastery.md` | open |
-| 230 | database | Parallel plans, skew and worker limits | medium | `references/engineering-mastery.md` | open |
-| 231 | database | External sort, spill files and memory limits | medium | `references/engineering-mastery.md` | open |
+| 229 | database | Vectorized execution and batch size | medium | `references/engineering-mastery.md` | covered by `db-vectorized-exec` |
+| 230 | database | Parallel plans, skew and worker limits | medium | `references/engineering-mastery.md` | covered by `db-parallel-query` |
+| 231 | database | External sort, spill files and memory limits | medium | `references/engineering-mastery.md` | covered by `db-spill-sort` |
 | 232 | database | Cardinality estimates, histograms and bad plans | high | `references/engineering-mastery.md` | covered by `db-cardinality-estimate` |
 | 233 | economics | Build versus buy with maintenance cost | high | `references/engineering-mastery.md` | covered by `econ-make-buy` |
 | 234 | economics | Total cost of ownership and hidden cost | high | `references/engineering-mastery.md` | covered by `econ-total-cost` |
-| 235 | economics | Opportunity cost and the next best use | medium | `references/engineering-mastery.md` | open |
+| 235 | economics | Opportunity cost and the next best use | medium | `references/engineering-mastery.md` | covered by `econ-opportunity` |
 | 236 | economics | Technical debt interest and repayment | high | `references/engineering-mastery.md` | covered by `econ-debt-interest` |
-| 237 | economics | Pricing, margin and unit economics | medium | `references/engineering-mastery.md` | open |
-| 238 | economics | Headcount cost and ramp time | medium | `references/engineering-mastery.md` | open |
+| 237 | economics | Pricing, margin and unit economics | medium | `references/engineering-mastery.md` | covered by `econ-pricing` |
+| 238 | economics | Headcount cost and ramp time | medium | `references/engineering-mastery.md` | covered by `econ-headcount` |
 | 239 | economics | Vendor lock-in and exit cost | high | `references/engineering-mastery.md` | covered by `econ-vendor-lock` |
-| 240 | economics | Sunk cost and kill decisions | medium | `references/engineering-mastery.md` | open |
-| 241 | economics | Risk-adjusted return and expected value | medium | `references/engineering-mastery.md` | open |
+| 240 | economics | Sunk cost and kill decisions | medium | `references/engineering-mastery.md` | covered by `econ-sunk-cost` |
+| 241 | economics | Risk-adjusted return and expected value | medium | `references/engineering-mastery.md` | covered by `econ-risk-adjusted` |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.
 

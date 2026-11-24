@@ -222,28 +222,28 @@
 | 216 | organization | Writing culture and decision visibility | medium | `references/engineering-mastery.md` | covered by `org-docs-culture` |
 | 217 | organization | Blameless postmortems and learning loops | high | `references/engineering-mastery.md` | covered by `org-postmortem-culture` |
 | 218 | distributed | Crash recovery, log replay and commit index | high | `references/engineering-mastery.md` | covered by `consensus-crash-recovery` |
-| 219 | distributed | Log compaction and snapshot retention | medium | `references/engineering-mastery.md` | open |
-| 220 | distributed | Witness replicas and quorum cost | low | `references/engineering-mastery.md` | open |
+| 219 | distributed | Log compaction and snapshot retention | medium | `references/engineering-mastery.md` | covered by `consensus-log-compaction` |
+| 220 | distributed | Witness replicas and quorum cost | low | `references/engineering-mastery.md` | covered by `consensus-witness` |
 | 221 | distributed | Pre-vote and disruptive server rejoin | high | `references/engineering-mastery.md` | covered by `consensus-pre-vote` |
-| 222 | distributed | Byzantine faults and BFT quorum | low | `references/engineering-mastery.md` | open |
-| 223 | allocator | Size classes, rounding and internal fragmentation | medium | `references/engineering-mastery.md` | open |
+| 222 | distributed | Byzantine faults and BFT quorum | low | `references/engineering-mastery.md` | covered by `consensus-bft` |
+| 223 | allocator | Size classes, rounding and internal fragmentation | medium | `references/engineering-mastery.md` | covered by `alloc-size-class` |
 | 224 | allocator | External fragmentation and compaction | high | `references/engineering-mastery.md` | covered by `alloc-fragmentation` |
-| 225 | allocator | Arena and region allocation | medium | `references/engineering-mastery.md` | open |
+| 225 | allocator | Arena and region allocation | medium | `references/engineering-mastery.md` | covered by `alloc-arena` |
 | 226 | allocator | Thread caches, remote free and false sharing | high | `references/engineering-mastery.md` | covered by `alloc-tcache` |
-| 227 | allocator | NUMA locality and first-touch policy | medium | `references/engineering-mastery.md` | open |
+| 227 | allocator | NUMA locality and first-touch policy | medium | `references/engineering-mastery.md` | covered by `alloc-numa` |
 | 228 | database | Nested loop, hash and merge join cost | high | `references/engineering-mastery.md` | covered by `db-join-algorithms` |
-| 229 | database | Vectorized execution and batch size | medium | `references/engineering-mastery.md` | open |
-| 230 | database | Parallel plans, skew and worker limits | medium | `references/engineering-mastery.md` | open |
-| 231 | database | External sort, spill files and memory limits | medium | `references/engineering-mastery.md` | open |
+| 229 | database | Vectorized execution and batch size | medium | `references/engineering-mastery.md` | covered by `db-vectorized-exec` |
+| 230 | database | Parallel plans, skew and worker limits | medium | `references/engineering-mastery.md` | covered by `db-parallel-query` |
+| 231 | database | External sort, spill files and memory limits | medium | `references/engineering-mastery.md` | covered by `db-spill-sort` |
 | 232 | database | Cardinality estimates, histograms and bad plans | high | `references/engineering-mastery.md` | covered by `db-cardinality-estimate` |
 | 233 | economics | Build versus buy with maintenance cost | high | `references/engineering-mastery.md` | covered by `econ-make-buy` |
 | 234 | economics | Total cost of ownership and hidden cost | high | `references/engineering-mastery.md` | covered by `econ-total-cost` |
-| 235 | economics | Opportunity cost and the next best use | medium | `references/engineering-mastery.md` | open |
+| 235 | economics | Opportunity cost and the next best use | medium | `references/engineering-mastery.md` | covered by `econ-opportunity` |
 | 236 | economics | Technical debt interest and repayment | high | `references/engineering-mastery.md` | covered by `econ-debt-interest` |
-| 237 | economics | Pricing, margin and unit economics | medium | `references/engineering-mastery.md` | open |
-| 238 | economics | Headcount cost and ramp time | medium | `references/engineering-mastery.md` | open |
+| 237 | economics | Pricing, margin and unit economics | medium | `references/engineering-mastery.md` | covered by `econ-pricing` |
+| 238 | economics | Headcount cost and ramp time | medium | `references/engineering-mastery.md` | covered by `econ-headcount` |
 | 239 | economics | Vendor lock-in and exit cost | high | `references/engineering-mastery.md` | covered by `econ-vendor-lock` |
-| 240 | economics | Sunk cost and kill decisions | medium | `references/engineering-mastery.md` | open |
-| 241 | economics | Risk-adjusted return and expected value | medium | `references/engineering-mastery.md` | open |
+| 240 | economics | Sunk cost and kill decisions | medium | `references/engineering-mastery.md` | covered by `econ-sunk-cost` |
+| 241 | economics | Risk-adjusted return and expected value | medium | `references/engineering-mastery.md` | covered by `econ-risk-adjusted` |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.

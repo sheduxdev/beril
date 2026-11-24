@@ -1967,8 +1967,8 @@
   "gap": "Log compaction and snapshot retention",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "consensus-log-compaction",
+  "status": "covered"
  },
  {
   "id": "consensus-witness",
@@ -1976,8 +1976,8 @@
   "gap": "Witness replicas and quorum cost",
   "priority": "low",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "consensus-witness",
+  "status": "covered"
  },
  {
   "id": "consensus-pre-vote",
@@ -1994,8 +1994,8 @@
   "gap": "Byzantine faults and BFT quorum",
   "priority": "low",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "consensus-bft",
+  "status": "covered"
  },
  {
   "id": "alloc-size-class",
@@ -2003,8 +2003,8 @@
   "gap": "Size classes, rounding and internal fragmentation",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "alloc-size-class",
+  "status": "covered"
  },
  {
   "id": "alloc-fragmentation",
@@ -2021,8 +2021,8 @@
   "gap": "Arena and region allocation",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "alloc-arena",
+  "status": "covered"
  },
  {
   "id": "alloc-tcache",
@@ -2039,8 +2039,8 @@
   "gap": "NUMA locality and first-touch policy",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "alloc-numa",
+  "status": "covered"
  },
  {
   "id": "db-join-algorithms",
@@ -2057,8 +2057,8 @@
   "gap": "Vectorized execution and batch size",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "db-vectorized-exec",
+  "status": "covered"
  },
  {
   "id": "db-parallel-query",
@@ -2066,8 +2066,8 @@
   "gap": "Parallel plans, skew and worker limits",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "db-parallel-query",
+  "status": "covered"
  },
  {
   "id": "db-spill-sort",
@@ -2075,8 +2075,8 @@
   "gap": "External sort, spill files and memory limits",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "db-spill-sort",
+  "status": "covered"
  },
  {
   "id": "db-cardinality-estimate",
@@ -2111,8 +2111,8 @@
   "gap": "Opportunity cost and the next best use",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "econ-opportunity",
+  "status": "covered"
  },
  {
   "id": "econ-debt-interest",
@@ -2129,8 +2129,8 @@
   "gap": "Pricing, margin and unit economics",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "econ-pricing",
+  "status": "covered"
  },
  {
   "id": "econ-headcount",
@@ -2138,8 +2138,8 @@
   "gap": "Headcount cost and ramp time",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "econ-headcount",
+  "status": "covered"
  },
  {
   "id": "econ-vendor-lock",
@@ -2156,8 +2156,8 @@
   "gap": "Sunk cost and kill decisions",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "econ-sunk-cost",
+  "status": "covered"
  },
  {
   "id": "econ-risk-adjusted",
@@ -2165,7 +2165,7 @@
   "gap": "Risk-adjusted return and expected value",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "econ-risk-adjusted",
+  "status": "covered"
  }
 ]

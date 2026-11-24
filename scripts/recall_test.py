@@ -91,6 +91,20 @@ CASES = [
     ("total cost migration exit hidden", "econ-total-cost"),
     ("technical debt interest repayment", "econ-debt-interest"),
     ("vendor lock exit cost migration", "econ-vendor-lock"),
+    ("log compaction snapshot retention", "consensus-log-compaction"),
+    ("witness quorum vote", "consensus-witness"),
+    ("BFT faulty nodes 3f+1", "consensus-bft"),
+    ("size class internal fragmentation", "alloc-size-class"),
+    ("arena region allocation", "alloc-arena"),
+    ("NUMA first touch locality", "alloc-numa"),
+    ("vectorized batch execution", "db-vectorized-exec"),
+    ("parallel query skew workers", "db-parallel-query"),
+    ("external sort spill merge", "db-spill-sort"),
+    ("opportunity cost next best use", "econ-opportunity"),
+    ("pricing unit cost margin", "econ-pricing"),
+    ("headcount ramp fully loaded cost", "econ-headcount"),
+    ("sunk cost forward value", "econ-sunk-cost"),
+    ("risk adjusted expected value downside", "econ-risk-adjusted"),
 ]
 
 

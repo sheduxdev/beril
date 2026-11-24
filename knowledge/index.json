@@ -378,6 +378,28 @@
   "failure": "A shared public corpus is not a leak. A filter without a tenant field is decorative."
  },
  {
+  "path": "knowledge/alloc-arena.md",
+  "body": "# An arena frees a whole region at once\n\n## Claim\n\nBump allocation is cheap; individual frees are not. The lifetime is the region.\n\n## Test\n\nAllocate many small objects. Free the arena. Check the RSS and the reuse.\n\n## Proof\n\nA region freed in one operation.\n\n## Failure modes\n\nA long-lived object in a short arena dangles. Growth needs a new chunk.",
+  "id": "alloc-arena",
+  "title": "An arena frees a whole region at once",
+  "tags": [
+   "allocator",
+   "arena",
+   "region"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Bump allocation is cheap; individual frees are not. The lifetime is the region.",
+  "test": "Allocate many small objects. Free the arena. Check the RSS and the reuse.",
+  "proof": "A region freed in one operation.",
+  "failure": "A long-lived object in a short arena dangles. Growth needs a new chunk."
+ },
+ {
   "path": "knowledge/alloc-fragmentation.md",
   "body": "# External fragmentation grows when live objects pin pages\n\n## Claim\n\nFree memory exists but is split into unusable holes. An arena or a compacting GC reduces it.\n\n## Test\n\nRun a mixed allocation workload. Measure the largest free block and RSS.\n\n## Proof\n\nA stable largest block under load.\n\n## Failure modes\n\nInternal fragmentation is rounding. External is layout. A size-class tweak helps one, not the other.",
   "id": "alloc-fragmentation",
@@ -398,6 +420,50 @@
   "test": "Run a mixed allocation workload. Measure the largest free block and RSS.",
   "proof": "A stable largest block under load.",
   "failure": "Internal fragmentation is rounding. External is layout. A size-class tweak helps one, not the other."
+ },
+ {
+  "path": "knowledge/alloc-numa.md",
+  "body": "# NUMA locality is decided by first touch\n\n## Claim\n\nA page lives on the node that first touched it. A remote access costs more than a local one.\n\n## Test\n\nPin a thread to a node. Allocate and touch. Measure remote access and bandwidth.\n\n## Proof\n\nA local allocation policy and a lower remote ratio.\n\n## Failure modes\n\nA first touch on the wrong node follows the object. Migration is expensive.",
+  "id": "alloc-numa",
+  "title": "NUMA locality is decided by first touch",
+  "tags": [
+   "allocator",
+   "numa",
+   "memory"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A page lives on the node that first touched it. A remote access costs more than a local one.",
+  "test": "Pin a thread to a node. Allocate and touch. Measure remote access and bandwidth.",
+  "proof": "A local allocation policy and a lower remote ratio.",
+  "failure": "A first touch on the wrong node follows the object. Migration is expensive."
+ },
+ {
+  "path": "knowledge/alloc-size-class.md",
+  "body": "# Size classes trade internal fragmentation for speed\n\n## Claim\n\nRounding a request to a class makes the free list O(1) and wastes the delta. A large delta is internal fragmentation.\n\n## Test\n\nAllocate sizes around a class boundary. Measure the RSS delta and the class distribution.\n\n## Proof\n\nA class layout with a bounded waste.\n\n## Failure modes\n\nA class that is too coarse wastes memory. A perfect-fit list is slow.",
+  "id": "alloc-size-class",
+  "title": "Size classes trade internal fragmentation for speed",
+  "tags": [
+   "allocator",
+   "size-class",
+   "fragmentation"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Rounding a request to a class makes the free list O(1) and wastes the delta. A large delta is internal fragmentation.",
+  "test": "Allocate sizes around a class boundary. Measure the RSS delta and the class distribution.",
+  "proof": "A class layout with a bounded waste.",
+  "failure": "A class that is too coarse wastes memory. A perfect-fit list is slow."
  },
  {
   "path": "knowledge/alloc-tcache.md",
@@ -1547,6 +1613,28 @@
   "failure": "A test at -O0 can pass while production breaks."
  },
  {
+  "path": "knowledge/consensus-bft.md",
+  "body": "# BFT assumes f faulty nodes and 3f+1 votes\n\n## Claim\n\nByzantine nodes can lie. The quorum must be 2f+1 of 3f+1 to tolerate f liars.\n\n## Test\n\nRun a four-node BFT cluster with one liar. Check commit and view change.\n\n## Proof\n\nA commit that survives the liar.\n\n## Failure modes\n\nA crash-fault quorum is not BFT. Message cost grows with node count.",
+  "id": "consensus-bft",
+  "title": "BFT assumes f faulty nodes and 3f+1 votes",
+  "tags": [
+   "distributed",
+   "bft",
+   "byzantine"
+  ],
+  "confidence": "low",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Byzantine nodes can lie. The quorum must be 2f+1 of 3f+1 to tolerate f liars.",
+  "test": "Run a four-node BFT cluster with one liar. Check commit and view change.",
+  "proof": "A commit that survives the liar.",
+  "failure": "A crash-fault quorum is not BFT. Message cost grows with node count."
+ },
+ {
   "path": "knowledge/consensus-crash-recovery.md",
   "body": "# Recovery replays the log to the commit index, not past it\n\n## Claim\n\nA restarted node loads the snapshot, replays committed entries and truncates uncommitted ones.\n\n## Test\n\nKill a follower after an append but before commit. Restart. Compare the index.\n\n## Proof\n\nThe node rejoins at the committed index with no duplicate.\n\n## Failure modes\n\nA commit index that is not durable can commit twice. A snapshot without truncation diverges.",
   "id": "consensus-crash-recovery",
@@ -1589,6 +1677,28 @@
   "test": "Read from a follower under partition. Check the value and the lease expiry.",
   "proof": "The latest committed value or a clear refusal.",
   "failure": "A clock-based lease can expire early. A stale read is invisible without a version."
+ },
+ {
+  "path": "knowledge/consensus-log-compaction.md",
+  "body": "# Compaction keeps a snapshot and the suffix after it\n\n## Claim\n\nThe log is truncated up to the snapshot index. The suffix stays for lagging followers; a lag beyond it needs install.\n\n## Test\n\nCompact below a follower's index. Restart the follower after a long pause.\n\n## Proof\n\nA follower either catches up from the suffix or installs the snapshot.\n\n## Failure modes\n\nA snapshot without retention bricks a slow follower. Compaction during a snapshot transfer is racy.",
+  "id": "consensus-log-compaction",
+  "title": "Compaction keeps a snapshot and the suffix after it",
+  "tags": [
+   "distributed",
+   "consensus",
+   "compaction"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The log is truncated up to the snapshot index. The suffix stays for lagging followers; a lag beyond it needs install.",
+  "test": "Compact below a follower's index. Restart the follower after a long pause.",
+  "proof": "A follower either catches up from the suffix or installs the snapshot.",
+  "failure": "A snapshot without retention bricks a slow follower. Compaction during a snapshot transfer is racy."
  },
  {
   "path": "knowledge/consensus-membership.md",
@@ -1677,6 +1787,28 @@
   "test": "Take a snapshot. Restart a follower. Kill the leader during install. Check the recovered index.",
   "proof": "A follower that catches up without losing a committed entry.",
   "failure": "A snapshot without the index can duplicate or skip entries. Install must not block the leader."
+ },
+ {
+  "path": "knowledge/consensus-witness.md",
+  "body": "# A witness votes but stores no data\n\n## Claim\n\nThe witness adds a quorum vote with little storage. It cannot serve a snapshot or become a full replica.\n\n## Test\n\nLose a data node. Check whether the witness preserves quorum and recovery limits.\n\n## Proof\n\nA quorum that survives one data-node loss.\n\n## Failure modes\n\nA witness cannot replace a failed replica. Two witnesses with one data node are fragile.",
+  "id": "consensus-witness",
+  "title": "A witness votes but stores no data",
+  "tags": [
+   "distributed",
+   "consensus",
+   "witness"
+  ],
+  "confidence": "low",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The witness adds a quorum vote with little storage. It cannot serve a snapshot or become a full replica.",
+  "test": "Lose a data node. Check whether the witness preserves quorum and recovery limits.",
+  "proof": "A quorum that survives one data-node loss.",
+  "failure": "A witness cannot replace a failed replica. Two witnesses with one data node are fragile."
  },
  {
   "path": "knowledge/container-escape.md",
@@ -1922,6 +2054,50 @@
   "failure": "A long snapshot blocks vacuum and bloats the table."
  },
  {
+  "path": "knowledge/db-parallel-query.md",
+  "body": "# A parallel plan needs even work and a worker limit\n\n## Claim\n\nWorkers split the scan; a skewed key makes one worker the tail. The limit protects the host.\n\n## Test\n\nRun a plan with a skewed key. Measure the slowest worker.\n\n## Proof\n\nA plan with balanced workers and a bounded memory.\n\n## Failure modes\n\nMore workers can increase contention. A parallel plan on a tiny table is overhead.",
+  "id": "db-parallel-query",
+  "title": "A parallel plan needs even work and a worker limit",
+  "tags": [
+   "database",
+   "parallel",
+   "skew"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Workers split the scan; a skewed key makes one worker the tail. The limit protects the host.",
+  "test": "Run a plan with a skewed key. Measure the slowest worker.",
+  "proof": "A plan with balanced workers and a bounded memory.",
+  "failure": "More workers can increase contention. A parallel plan on a tiny table is overhead."
+ },
+ {
+  "path": "knowledge/db-spill-sort.md",
+  "body": "# External sort spills sorted runs and merges them\n\n## Claim\n\nMemory fills, runs are written to disk and a merge follows. The spill path is the cost.\n\n## Test\n\nSort more rows than the memory limit. Measure spill bytes and merge time.\n\n## Proof\n\nA sorted result within the disk budget.\n\n## Failure modes\n\nA spill to a slow disk stalls the query. A merge with too many runs hits the file limit.",
+  "id": "db-spill-sort",
+  "title": "External sort spills sorted runs and merges them",
+  "tags": [
+   "database",
+   "sort",
+   "spill"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Memory fills, runs are written to disk and a merge follows. The spill path is the cost.",
+  "test": "Sort more rows than the memory limit. Measure spill bytes and merge time.",
+  "proof": "A sorted result within the disk budget.",
+  "failure": "A spill to a slow disk stalls the query. A merge with too many runs hits the file limit."
+ },
+ {
   "path": "knowledge/db-vacuum.md",
   "body": "# Vacuum reclaims versions and freezes old transaction ids\n\n## Claim\n\nDead tuples are removed after no snapshot needs them. Autovacuum lags under load and bloat grows.\n\n## Test\n\nMeasure dead tuples and table bloat. Check autovacuum settings and the oldest xid.\n\n## Proof\n\nA vacuum that lowers dead tuples and freezes before wraparound.\n\n## Failure modes\n\nA long transaction blocks cleanup. A freeze too late risks wraparound.",
   "id": "db-vacuum",
@@ -1942,6 +2118,28 @@
   "test": "Measure dead tuples and table bloat. Check autovacuum settings and the oldest xid.",
   "proof": "A vacuum that lowers dead tuples and freezes before wraparound.",
   "failure": "A long transaction blocks cleanup. A freeze too late risks wraparound."
+ },
+ {
+  "path": "knowledge/db-vectorized-exec.md",
+  "body": "# Vectorized execution amortizes per-row cost\n\n## Claim\n\nOperators process batches, improving cache and branch behavior. The batch size is a tradeoff.\n\n## Test\n\nCompare a row-at-a-time and a vectorized operator on the same data.\n\n## Proof\n\nA faster operator with a bounded batch memory.\n\n## Failure modes\n\nA batch that is too large spills the cache. A small batch loses the gain.",
+  "id": "db-vectorized-exec",
+  "title": "Vectorized execution amortizes per-row cost",
+  "tags": [
+   "database",
+   "vectorized",
+   "execution"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Operators process batches, improving cache and branch behavior. The batch size is a tradeoff.",
+  "test": "Compare a row-at-a-time and a vectorized operator on the same data.",
+  "proof": "A faster operator with a bounded batch memory.",
+  "failure": "A batch that is too large spills the cache. A small batch loses the gain."
  },
  {
   "path": "knowledge/detection-beacon.md",
@@ -2318,6 +2516,28 @@
   "failure": "A debt with no interest is a deferred choice, not debt. A rewrite can be more debt."
  },
  {
+  "path": "knowledge/econ-headcount.md",
+  "body": "# Headcount is a recurring cost with a ramp\n\n## Claim\n\nSalary is only part. Recruiting, onboarding, tools and management add, and the ramp delays output.\n\n## Test\n\nCost a role for a year with the ramp and the overhead.\n\n## Proof\n\nA fully loaded cost and a time to productivity.\n\n## Failure modes\n\nAn FTE as a one-time cost undersells it. A senior hire with no onboarding is still slow.",
+  "id": "econ-headcount",
+  "title": "Headcount is a recurring cost with a ramp",
+  "tags": [
+   "economics",
+   "headcount",
+   "ramp"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Salary is only part. Recruiting, onboarding, tools and management add, and the ramp delays output.",
+  "test": "Cost a role for a year with the ramp and the overhead.",
+  "proof": "A fully loaded cost and a time to productivity.",
+  "failure": "An FTE as a one-time cost undersells it. A senior hire with no onboarding is still slow."
+ },
+ {
   "path": "knowledge/econ-make-buy.md",
   "body": "# Build versus buy compares maintenance, not license\n\n## Claim\n\nThe buy price is visible; the build cost includes people, on-call, upgrades and the feature you will miss.\n\n## Test\n\nWrite the three-year total for both. Include the team time and the exit.\n\n## Proof\n\nA total cost comparison with a clear delta.\n\n## Failure modes\n\nA build that ignores on-call is a discount illusion. A buy that ignores lock-in is a trap.",
   "id": "econ-make-buy",
@@ -2338,6 +2558,97 @@
   "test": "Write the three-year total for both. Include the team time and the exit.",
   "proof": "A total cost comparison with a clear delta.",
   "failure": "A build that ignores on-call is a discount illusion. A buy that ignores lock-in is a trap."
+ },
+ {
+  "path": "knowledge/econ-opportunity.md",
+  "body": "# Opportunity cost is the next best use of the same time\n\n## Claim\n\nThe chosen project consumes the capacity of the rejected one. The rejected value is the cost.\n\n## Test\n\nName the next best option. Compare the expected value of both.\n\n## Proof\n\nA decision that names what was given up.\n\n## Failure modes\n\nA project with no alternative is not free. A sunk cost can hide the next option.",
+  "id": "econ-opportunity",
+  "title": "Opportunity cost is the next best use of the same time",
+  "tags": [
+   "economics",
+   "opportunity",
+   "cost"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The chosen project consumes the capacity of the rejected one. The rejected value is the cost.",
+  "test": "Name the next best option. Compare the expected value of both.",
+  "proof": "A decision that names what was given up.",
+  "failure": "A project with no alternative is not free. A sunk cost can hide the next option."
+ },
+ {
+  "path": "knowledge/econ-pricing.md",
+  "body": "# Pricing is a signal about unit cost and margin\n\n## Claim\n\nA price below cost attracts the wrong demand. A price above value loses the buyer.\n\n## Test\n\nCompute the unit cost and the value. Compare with the market.\n\n## Proof\n\nA price with a stated margin and a value case.\n\n## Failure modes\n\nA discount for a long contract is a lock. A free tier without a cost cap is a subsidy.",
+  "id": "econ-pricing",
+  "title": "Pricing is a signal about unit cost and margin",
+  "tags": [
+   "economics",
+   "pricing",
+   "price",
+   "unit",
+   "cost",
+   "margin"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A price below cost attracts the wrong demand. A price above value loses the buyer.",
+  "test": "Compute the unit cost and the value. Compare with the market.",
+  "proof": "A price with a stated margin and a value case.",
+  "failure": "A discount for a long contract is a lock. A free tier without a cost cap is a subsidy."
+ },
+ {
+  "path": "knowledge/econ-risk-adjusted.md",
+  "body": "# Risk-adjusted value multiplies by probability\n\n## Claim\n\nA return is weighted by the chance and the cost of failure. A high upside with a low probability can lose.\n\n## Test\n\nWrite the scenarios, the probabilities and the downside.\n\n## Proof\n\nAn expected value with the downside stated.\n\n## Failure modes\n\nA point estimate without probability is a wish. A small probability of a huge loss can dominate.",
+  "id": "econ-risk-adjusted",
+  "title": "Risk-adjusted value multiplies by probability",
+  "tags": [
+   "economics",
+   "risk",
+   "expected-value"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A return is weighted by the chance and the cost of failure. A high upside with a low probability can lose.",
+  "test": "Write the scenarios, the probabilities and the downside.",
+  "proof": "An expected value with the downside stated.",
+  "failure": "A point estimate without probability is a wish. A small probability of a huge loss can dominate."
+ },
+ {
+  "path": "knowledge/econ-sunk-cost.md",
+  "body": "# Sunk cost is spent; only the forward cost matters\n\n## Claim\n\nThe money is gone. Continue only if the remaining cost beats the remaining value.\n\n## Test\n\nWrite the forward cost and the forward value. Ignore the spent amount.\n\n## Proof\n\nA continue or kill decision on forward numbers.\n\n## Failure modes\n\nA big past spend makes a bad project feel mandatory. A small past spend can hide a big future.",
+  "id": "econ-sunk-cost",
+  "title": "Sunk cost is spent; only the forward cost matters",
+  "tags": [
+   "economics",
+   "sunk-cost",
+   "decision"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The money is gone. Continue only if the remaining cost beats the remaining value.",
+  "test": "Write the forward cost and the forward value. Ignore the spent amount.",
+  "proof": "A continue or kill decision on forward numbers.",
+  "failure": "A big past spend makes a bad project feel mandatory. A small past spend can hide a big future."
  },
  {
   "path": "knowledge/econ-total-cost.md",
