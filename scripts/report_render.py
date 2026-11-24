@@ -388,7 +388,7 @@ def render_evidence(report: Report) -> str:
         f"{meta.get('inferred', 0)} inferred. URL sources were "
         f"{'fetched' if meta.get('fetched') else 'not fetched'}; local copies are hashed.",
         "",
-        "A hash proves the copy did not change after this run. It does not prove the " "source is right.",
+        "A hash proves the copy did not change after this run. It does not prove the source is right.",
         "",
         "## Claims",
         "",
@@ -527,8 +527,7 @@ def render_cra(report: Report) -> str:
     lines += [f"| {label} | {value} |" for label, value in timeline]
     lines += [
         "",
-        "Default handling window is 90 days from the report before publication, "
-        "shorter when exploitation is observed.",
+        "Default handling window is 90 days from the report before publication, shorter when exploitation is observed.",
         "",
         "## CRA article map",
         "",

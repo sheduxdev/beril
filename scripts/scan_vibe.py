@@ -129,7 +129,7 @@ def scan_sql(rel: str, text: str) -> list[Finding]:
                 impact="The anon key is public. Without RLS the table is read and written over REST.",
                 fix="Add `alter table ... enable row level security` and a fitting policy to the migration. "
                 "Tables created through the API have no default protection.",
-                subject=f"{rel}:{text[:match.start()].count(chr(10)) + 1}",
+                subject=f"{rel}:{text[: match.start()].count(chr(10)) + 1}",
                 source="static",
                 cwe=["CWE-284"],
                 tags=["supabase", "rls"],

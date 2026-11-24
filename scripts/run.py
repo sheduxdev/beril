@@ -79,8 +79,7 @@ def run(
             auth = authz.require(host, owned=owned)
             if not auth:
                 raise SystemExit(
-                    f"active tools need an ownership record for {host}. "
-                    f"Use --owned or `./beril verify --new {host}`."
+                    f"active tools need an ownership record for {host}. Use --owned or `./beril verify --new {host}`."
                 )
             report.authorization = auth
         if scope_file:

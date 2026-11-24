@@ -60,7 +60,7 @@ ERRORS: list[str] = []
 
 
 def now() -> dt.datetime:
-    return dt.datetime.now(dt.timezone.utc)
+    return dt.datetime.now(dt.UTC)
 
 
 def stamp() -> str:
@@ -81,7 +81,7 @@ def read_cache(name: str, key: str = "") -> dict | None:
     except ValueError:
         return None
     if fetched.tzinfo is None:
-        fetched = fetched.replace(tzinfo=dt.timezone.utc)
+        fetched = fetched.replace(tzinfo=dt.UTC)
     return data
 
 
@@ -93,7 +93,7 @@ def fresh(entry: dict | None, ttl: int) -> bool:
     except ValueError:
         return False
     if fetched.tzinfo is None:
-        fetched = fetched.replace(tzinfo=dt.timezone.utc)
+        fetched = fetched.replace(tzinfo=dt.UTC)
     return (now() - fetched).total_seconds() < ttl
 
 

@@ -85,7 +85,7 @@ def test_online_url_error_falls_back_to_stale_cache(isolated, monkeypatch):
     feeds.write_cache("epss", "CVE-2021-44228", {"cve": "CVE-2021-44228", "score": 0.5}, "test")
     path = feeds.cache_path("epss", "CVE-2021-44228")
     entry = json.loads(Path(path).read_text())
-    entry["fetched_at"] = (dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=3)).isoformat()
+    entry["fetched_at"] = (dt.datetime.now(dt.UTC) - dt.timedelta(days=3)).isoformat()
     Path(path).write_text(json.dumps(entry))
 
     def boom(_url, _body=None):

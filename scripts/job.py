@@ -25,7 +25,7 @@ BUDGET = os.path.join(paths.DATA, "budget.json")
 
 
 def now() -> str:
-    return dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
+    return dt.datetime.now(dt.UTC).isoformat(timespec="seconds")
 
 
 def price(model: str) -> tuple[float, float]:

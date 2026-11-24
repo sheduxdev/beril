@@ -27,7 +27,7 @@ from beril_model import load_report
 
 
 def now() -> str:
-    return dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
+    return dt.datetime.now(dt.UTC).isoformat(timespec="seconds")
 
 
 def notify(url: str, payload: dict) -> str:
