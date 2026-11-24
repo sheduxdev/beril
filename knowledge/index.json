@@ -1281,6 +1281,50 @@
   "failure": "A console UI bug may not affect the API. Version mapping matters."
  },
  {
+  "path": "knowledge/comp-jit.md",
+  "body": "# A JIT has tiers, guards and a code cache\n\n## Claim\n\nFast code depends on assumptions. A guard fails and the runtime deopts to a slower tier.\n\n## Test\n\nRead the tier policy and the guards. Force a deopt. Check the code cache.\n\n## Proof\n\nA correct result across the deopt.\n\n## Failure modes\n\nA JIT bug can appear only after warmup. Code cache invalidation matters.",
+  "id": "comp-jit",
+  "title": "A JIT has tiers, guards and a code cache",
+  "tags": [
+   "compiler",
+   "jit",
+   "deopt"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Fast code depends on assumptions. A guard fails and the runtime deopts to a slower tier.",
+  "test": "Read the tier policy and the guards. Force a deopt. Check the code cache.",
+  "proof": "A correct result across the deopt.",
+  "failure": "A JIT bug can appear only after warmup. Code cache invalidation matters."
+ },
+ {
+  "path": "knowledge/comp-ssa.md",
+  "body": "# SSA makes each definition single and explicit\n\n## Claim\n\nStatic single assignment gives every value one definition and uses phi nodes at joins. Dataflow becomes a graph walk.\n\n## Test\n\nConvert a small CFG to SSA. Name the phi nodes. Check the def-use chains.\n\n## Proof\n\nA correct SSA form with no duplicate defs.\n\n## Failure modes\n\nA phi missing at a join is a miscompile. Dominance matters.",
+  "id": "comp-ssa",
+  "title": "SSA makes each definition single and explicit",
+  "tags": [
+   "compiler",
+   "ssa",
+   "dataflow"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Static single assignment gives every value one definition and uses phi nodes at joins. Dataflow becomes a graph walk.",
+  "test": "Convert a small CFG to SSA. Name the phi nodes. Check the def-use chains.",
+  "proof": "A correct SSA form with no duplicate defs.",
+  "failure": "A phi missing at a join is a miscompile. Dominance matters."
+ },
+ {
   "path": "knowledge/container-escape.md",
   "body": "# A container escape is a host resource exposed to the container\n\n## Claim\n\nThe container has a host mount, the runtime socket, privileged devices or a kernel bug surface.\n\n## Test\n\nList mounts, capabilities, devices and namespaces. Try a host read through each. Check the kernel version.\n\n## Proof\n\nA host file read, a host process signal, or a new container with host mounts.\n\n## Failure modes\n\nRoot inside a container is not root on the host by itself. User namespaces change the mapping.",
   "id": "container-escape",
@@ -1590,6 +1634,94 @@
   "failure": "A proxy or library changes the fingerprint. A match is not proof of malware."
  },
  {
+  "path": "knowledge/dist-clock.md",
+  "body": "# Physical clocks skew; logical clocks order events\n\n## Claim\n\nTwo machines disagree about time. Lamport clocks, vector clocks and version vectors encode causality.\n\n## Test\n\nWrite on two nodes. Compare timestamps and versions. Check the merge rule.\n\n## Proof\n\nA causal order that survives clock skew.\n\n## Failure modes\n\nTimestamp ordering can drop a concurrent write. NTP reduces skew, not causality.",
+  "id": "dist-clock",
+  "title": "Physical clocks skew; logical clocks order events",
+  "tags": [
+   "distributed",
+   "clock",
+   "causality"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Two machines disagree about time. Lamport clocks, vector clocks and version vectors encode causality.",
+  "test": "Write on two nodes. Compare timestamps and versions. Check the merge rule.",
+  "proof": "A causal order that survives clock skew.",
+  "failure": "Timestamp ordering can drop a concurrent write. NTP reduces skew, not causality."
+ },
+ {
+  "path": "knowledge/dist-crdt.md",
+  "body": "# A CRDT merges without coordination\n\n## Claim\n\nCounters, sets and sequences with a join rule converge. The data type carries the merge.\n\n## Test\n\nApply concurrent updates on two replicas. Merge. Check convergence and intent.\n\n## Proof\n\nThe same state on both replicas.\n\n## Failure modes\n\nA CRDT can lose intent: a remove-wins set loses an add. The type choice matters.",
+  "id": "dist-crdt",
+  "title": "A CRDT merges without coordination",
+  "tags": [
+   "distributed",
+   "crdt",
+   "merge"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Counters, sets and sequences with a join rule converge. The data type carries the merge.",
+  "test": "Apply concurrent updates on two replicas. Merge. Check convergence and intent.",
+  "proof": "The same state on both replicas.",
+  "failure": "A CRDT can lose intent: a remove-wins set loses an add. The type choice matters."
+ },
+ {
+  "path": "knowledge/dist-ordering.md",
+  "body": "# Exactly-once is at-least-once plus dedup\n\n## Claim\n\nThe network duplicates and reorders. The consumer must dedup and tolerate order.\n\n## Test\n\nRedeliver and reorder messages. Check the consumer and the state.\n\n## Proof\n\nOne effect per message id with a bounded dedup store.\n\n## Failure modes\n\nAn unbounded dedup set is a leak. A sequence number without a gap policy is a stall.",
+  "id": "dist-ordering",
+  "title": "Exactly-once is at-least-once plus dedup",
+  "tags": [
+   "distributed",
+   "ordering",
+   "dedup"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The network duplicates and reorders. The consumer must dedup and tolerate order.",
+  "test": "Redeliver and reorder messages. Check the consumer and the state.",
+  "proof": "One effect per message id with a bounded dedup store.",
+  "failure": "An unbounded dedup set is a leak. A sequence number without a gap policy is a stall."
+ },
+ {
+  "path": "knowledge/dist-partition.md",
+  "body": "# A partition forces a choice between availability and consistency\n\n## Claim\n\nDuring a partition, a node can serve stale data or refuse. The choice is per operation, not per system.\n\n## Test\n\nPartition a replica. Read and write on both sides. Check the consistency and the error.\n\n## Proof\n\nA documented choice with the read/write behavior under partition.\n\n## Failure modes\n\nA system that claims both without a partition story is marketing.",
+  "id": "dist-partition",
+  "title": "A partition forces a choice between availability and consistency",
+  "tags": [
+   "distributed",
+   "partition",
+   "cap"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "During a partition, a node can serve stale data or refuse. The choice is per operation, not per system.",
+  "test": "Partition a replica. Read and write on both sides. Check the consistency and the error.",
+  "proof": "A documented choice with the read/write behavior under partition.",
+  "failure": "A system that claims both without a partition story is marketing."
+ },
+ {
   "path": "knowledge/electron-context-isolation.md",
   "body": "# Electron is Node with a browser attached\n\n## Claim\n\nnodeIntegration is on, contextIsolation is off, or the preload exposes a broad bridge.\n\n## Test\n\nRead BrowserWindow options and the preload. Load an attacker page. Call the exposed API.\n\n## Proof\n\nA Node or file action from a remote page.\n\n## Failure modes\n\nA sandboxed renderer with a narrow preload is safer. A local file page is a different origin.",
   "id": "electron-context-isolation",
@@ -1698,6 +1830,28 @@
   "test": "Measure arrival and service rate. Fill the queue. Check latency and drop behavior.",
   "proof": "A bounded latency and an explicit drop or slow-down.",
   "failure": "An unbounded queue hides the problem until OOM."
+ },
+ {
+  "path": "knowledge/eng-backup-restore.md",
+  "body": "# An untested backup is a hope\n\n## Claim\n\nThe restore path, the encryption key and the recovery time are part of the backup. Test the restore, not the backup job.\n\n## Test\n\nRestore a random backup into an isolated environment. Measure the time. Check the key.\n\n## Proof\n\nA restored dataset with a measured RTO.\n\n## Failure modes\n\nA successful backup job says nothing about the restore. A key lost with the host is data loss.",
+  "id": "eng-backup-restore",
+  "title": "An untested backup is a hope",
+  "tags": [
+   "engineering",
+   "backup",
+   "restore"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The restore path, the encryption key and the recovery time are part of the backup. Test the restore, not the backup job.",
+  "test": "Restore a random backup into an isolated environment. Measure the time. Check the key.",
+  "proof": "A restored dataset with a measured RTO.",
+  "failure": "A successful backup job says nothing about the restore. A key lost with the host is data loss."
  },
  {
   "path": "knowledge/eng-boundaries.md",
@@ -2099,6 +2253,28 @@
   "test": "List direct dependencies. Find unused ones. Check the license and the last release.",
   "proof": "A smaller dependency set with a lockfile.",
   "failure": "A transitive dependency is still your dependency."
+ },
+ {
+  "path": "knowledge/eng-disaster-recovery.md",
+  "body": "# DR is RTO, RPO and a rehearsal\n\n## Claim\n\nThe recovery time and the acceptable data loss are business decisions. A runbook without a rehearsal is a guess.\n\n## Test\n\nDefine RTO and RPO. Run a game day. Record the gaps.\n\n## Proof\n\nA rehearsal that meets both targets.\n\n## Failure modes\n\n A full failover without a rollback is risky. A warm standby can be cold in practice.",
+  "id": "eng-disaster-recovery",
+  "title": "DR is RTO, RPO and a rehearsal",
+  "tags": [
+   "engineering",
+   "disaster",
+   "recovery"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The recovery time and the acceptable data loss are business decisions. A runbook without a rehearsal is a guess.",
+  "test": "Define RTO and RPO. Run a game day. Record the gaps.",
+  "proof": "A rehearsal that meets both targets.",
+  "failure": "A full failover without a rollback is risky. A warm standby can be cold in practice."
  },
  {
   "path": "knowledge/eng-distributed-tx.md",
@@ -3759,6 +3935,53 @@
   "failure": "A hidden button is not a server-side control. Test the API."
  },
  {
+  "path": "knowledge/org-conway.md",
+  "body": "# The org chart leaks into the architecture\n\n## Claim\n\nConway's law says teams ship their communication structure. A boundary with three owners becomes a distributed monolith.\n\n## Test\n\nMap services to teams. Find a service with more than one owner or a team with ten services.\n\n## Proof\n\nOne owner and one on-call per boundary.\n\n## Failure modes\n\nA platform team can own a shared capability. A matrix org blurs it.",
+  "id": "org-conway",
+  "title": "The org chart leaks into the architecture",
+  "tags": [
+   "organization",
+   "conway",
+   "law",
+   "ownership",
+   "service",
+   "teams"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Conway's law says teams ship their communication structure. A boundary with three owners becomes a distributed monolith.",
+  "test": "Map services to teams. Find a service with more than one owner or a team with ten services.",
+  "proof": "One owner and one on-call per boundary.",
+  "failure": "A platform team can own a shared capability. A matrix org blurs it."
+ },
+ {
+  "path": "knowledge/org-oncall.md",
+  "body": "# On-call load is a reliability input\n\n## Claim\n\nA noisy rotation burns the team and hides the real reliability work. Page volume is a metric.\n\n## Test\n\nCount pages per week and per person. Classify actionable vs noise. Fix the top noise source.\n\n## Proof\n\nA page budget and a lower noise rate.\n\n## Failure modes\n\nA dashboard alert is not a page. A rotation without handoff loses context.",
+  "id": "org-oncall",
+  "title": "On-call load is a reliability input",
+  "tags": [
+   "organization",
+   "oncall",
+   "reliability"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A noisy rotation burns the team and hides the real reliability work. Page volume is a metric.",
+  "test": "Count pages per week and per person. Classify actionable vs noise. Fix the top noise source.",
+  "proof": "A page budget and a lower noise rate.",
+  "failure": "A dashboard alert is not a page. A rotation without handoff loses context."
+ },
+ {
   "path": "knowledge/process-bounty-platform.md",
   "body": "# Program rules decide what is payable\n\n## Claim\n\nThe brief defines assets, exclusions, severity, payout and disclosure. A valid bug can still be out of scope.\n\n## Test\n\nParse the brief into allow and deny rules. Check the VRT mapping, the payout table and the disclosure terms.\n\n## Proof\n\nA finding with a scope citation and a payout line.\n\n## Failure modes\n\nA platform default can be overridden by the program. A closed report can still be a valid bug.",
   "id": "process-bounty-platform",
@@ -4289,6 +4512,50 @@
   "test": "Identify the provider. Call a read-only identity or list endpoint. Check the scope and expiry.",
   "proof": "A successful read-only API response with the key's permissions.",
   "failure": "A public client key may be intended. A revoked key is a false positive."
+ },
+ {
+  "path": "knowledge/storage-replication.md",
+  "body": "# Replication has a lag and a loss window\n\n## Claim\n\nAsync replicas lag; failover to a lagging replica loses the tail. Sync replicas cost latency.\n\n## Test\n\nMeasure lag under load. Fail over. Compare the last committed key.\n\n## Proof\n\nA failover with a stated loss window.\n\n## Failure modes\n\nA replica that is up is not caught up. A sync quorum can block writes.",
+  "id": "storage-replication",
+  "title": "Replication has a lag and a loss window",
+  "tags": [
+   "storage",
+   "replication",
+   "failover"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Async replicas lag; failover to a lagging replica loses the tail. Sync replicas cost latency.",
+  "test": "Measure lag under load. Fail over. Compare the last committed key.",
+  "proof": "A failover with a stated loss window.",
+  "failure": "A replica that is up is not caught up. A sync quorum can block writes."
+ },
+ {
+  "path": "knowledge/storage-wal.md",
+  "body": "# A write-ahead log makes the write durable before the page\n\n## Claim\n\nThe log record is appended and fsynced before the data page changes. Recovery replays the log.\n\n## Test\n\nKill the process between log and page. Restart. Check the replay.\n\n## Proof\n\nThe committed record survives the crash.\n\n## Failure modes\n\nA log without fsync is not durable. A checkpoint that outruns the log loses data.",
+  "id": "storage-wal",
+  "title": "A write-ahead log makes the write durable before the page",
+  "tags": [
+   "storage",
+   "wal",
+   "durability"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The log record is appended and fsynced before the data page changes. Recovery replays the log.",
+  "test": "Kill the process between log and page. Restart. Check the replay.",
+  "proof": "The committed record survives the crash.",
+  "failure": "A log without fsync is not durable. A checkpoint that outruns the log loses data."
  },
  {
   "path": "knowledge/supply-lockfile.md",

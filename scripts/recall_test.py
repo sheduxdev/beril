@@ -32,6 +32,17 @@ CASES = [
     ("platform golden path", "eng-platform"),
     ("mobile offline conflict merge", "eng-mobile-arch"),
     ("telemetry cardinality sampling", "eng-observability-cost"),
+    ("network partition availability consistency", "dist-partition"),
+    ("clock skew causal order", "dist-clock"),
+    ("CRDT concurrent merge", "dist-crdt"),
+    ("SSA phi node dataflow", "comp-ssa"),
+    ("JIT deopt guard code cache", "comp-jit"),
+    ("write ahead log fsync crash", "storage-wal"),
+    ("replication lag failover data loss", "storage-replication"),
+    ("Conway law service ownership", "org-conway"),
+    ("on-call page noise rotation", "org-oncall"),
+    ("backup restore measured RTO", "eng-backup-restore"),
+    ("RTO RPO disaster rehearsal", "eng-disaster-recovery"),
 ]
 
 

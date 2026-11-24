@@ -1,6 +1,6 @@
 # Knowledge index
 
-234 durable cards. Read this before a web search; open a card only when it matches.
+246 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -61,6 +61,8 @@
 | `cloud-serverless` | Serverless events are input, not a trusted trigger | cloud, serverless, lambda | medium | 2026-11-24 |
 | `cloud-terraform-state` | Terraform state is a secret store | cloud, terraform, state | medium | 2026-11-24 |
 | `cloud-vmware` | VMware appliances are a chain of SSO and service bugs | cloud, vmware, vcenter | high | 2026-11-25 |
+| `comp-jit` | A JIT has tiers, guards and a code cache | compiler, jit, deopt | high | 2026-11-25 |
+| `comp-ssa` | SSA makes each definition single and explicit | compiler, ssa, dataflow | high | 2026-11-25 |
 | `container-escape` | A container escape is a host resource exposed to the container | container, escape, kubernetes | high | 2026-11-24 |
 | `crypto-kdf` | A password hash is a cost parameter | crypto, kdf, password | medium | 2026-11-25 |
 | `key-management` | Key management is where crypto bugs become data bugs | crypto, keys, storage | medium | 2026-11-24 |
@@ -76,6 +78,10 @@
 | `detection-lolbins` | LOLBins hide in parent-child and arguments | detection, lolbins, process | high | 2026-11-24 |
 | `detection-tls` | TLS fingerprints identify a client stack, not a person | detection, tls, ja3 | medium | 2026-11-25 |
 | `detection-threatintel` | Threat intel ages and IOCs are easy to rotate | detection, intel, ioc | medium | 2026-11-24 |
+| `dist-crdt` | A CRDT merges without coordination | distributed, crdt, merge | high | 2026-11-25 |
+| `dist-partition` | A partition forces a choice between availability and consistency | distributed, partition, cap | high | 2026-11-25 |
+| `dist-ordering` | Exactly-once is at-least-once plus dedup | distributed, ordering, dedup | high | 2026-11-25 |
+| `dist-clock` | Physical clocks skew; logical clocks order events | distributed, clock, causality | high | 2026-11-25 |
 | `electron-context-isolation` | Electron is Node with a browser attached | electron, desktop, context-isolation | medium | 2026-11-24 |
 | `eng-gc` | A GC trades throughput for pause and space | engineering, gc, allocation | medium | 2026-11-25 |
 | `eng-regression` | A bug fix needs a test that failed before it | engineering, testing, regression | high | 2026-11-25 |
@@ -102,6 +108,7 @@
 | `eng-errors` | An error is a value with a caller decision | engineering, errors, api | high | 2026-11-25 |
 | `eng-estimation` | An estimate is a range and its assumptions | engineering, estimation, planning | medium | 2026-11-25 |
 | `eng-hiring` | An interview samples the job, not trivia | engineering, hiring, interview | low | 2026-11-25 |
+| `eng-backup-restore` | An untested backup is a hope | engineering, backup, restore | high | 2026-11-25 |
 | `eng-mentoring` | Ask until the blocker is clear | engineering, mentoring, teaching | high | 2026-11-25 |
 | `eng-idempotent-consumer` | At-least-once delivery needs an idempotent consumer | engineering, queue, consumer | high | 2026-11-25 |
 | `eng-debug-bisect` | Bisect the space, not the code | engineering, debugging, bisect | high | 2026-11-25 |
@@ -115,6 +122,7 @@
 | `eng-consensus` | Consensus is quorum plus a log | engineering, distributed, consensus | high | 2026-11-25 |
 | `eng-consistency` | Consistency is a contract about reads | engineering, distributed, consistency | high | 2026-11-25 |
 | `eng-cost` | Cost is a design constraint | engineering, cost, cloud | medium | 2026-11-25 |
+| `eng-disaster-recovery` | DR is RTO, RPO and a rehearsal | engineering, disaster, recovery | high | 2026-11-25 |
 | `eng-data-model` | Data outlives code | engineering, data, schema | high | 2026-11-25 |
 | `eng-deletion` | Deletion is a feature | engineering, deletion, maintenance | medium | 2026-11-25 |
 | `eng-legacy-strangler` | Do not rewrite the legacy system; strangle it | engineering, legacy, refactor | high | 2026-11-25 |
@@ -173,6 +181,8 @@
 | `mobile-flutter` | Flutter hides logic in libapp.so and pins in Dart | mobile, flutter, dart | medium | 2026-11-24 |
 | `mobile-swift` | Swift hooks need mangled names or a bridge | mobile, ios, swift | medium | 2026-11-24 |
 | `mobile-swiftui-state` | SwiftUI state is not a security boundary | mobile, ios, swiftui | low | 2026-11-24 |
+| `org-oncall` | On-call load is a reliability input | organization, oncall, reliability | high | 2026-11-25 |
+| `org-conway` | The org chart leaks into the architecture | organization, conway, law, ownership, service, teams | high | 2026-11-25 |
 | `process-retest` | A fix is not a fix until the same request fails | process, retest, regression | high | 2026-11-24 |
 | `report-impact-chain` | A report is a chain a triager can rerun | process, report, impact | high | 2026-11-24 |
 | `report-cvss-context` | CVSS without business context misranks the bug | process, report, cvss | medium | 2026-11-24 |
@@ -196,6 +206,8 @@
 | `re-dotnet-aot` | Native AOT is not IL | re, dotnet, aot | medium | 2026-11-24 |
 | `re-rust-layout` | Rust types are not C types | re, rust, layout | high | 2026-11-24 |
 | `re-swift` | Swift uses witness tables and value types | re, swift, ios | medium | 2026-11-24 |
+| `storage-wal` | A write-ahead log makes the write durable before the page | storage, wal, durability | high | 2026-11-25 |
+| `storage-replication` | Replication has a lag and a loss window | storage, replication, failover | high | 2026-11-25 |
 | `supply-lockfile` | A lockfile is an integrity contract | supply-chain, lockfile, reproducible | medium | 2026-11-24 |
 | `supply-typosquat` | A package name one character off is a supply-chain bug | supply-chain, package, typosquat | high | 2026-11-24 |
 | `secrets-verified` | A secret is a finding only after a read-only proof | supply-chain, secret, verification | high | 2026-11-24 |

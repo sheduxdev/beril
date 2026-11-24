@@ -1501,5 +1501,257 @@
   "source": "references/engineering-mastery.md",
   "covered_by": "eng-observability-cost",
   "status": "covered"
+ },
+ {
+  "id": "dist-partition",
+  "domain": "distributed",
+  "gap": "Network partitions and split-brain behavior",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "dist-partition",
+  "status": "covered"
+ },
+ {
+  "id": "dist-clock",
+  "domain": "distributed",
+  "gap": "Clock skew, logical clocks and causality",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "dist-clock",
+  "status": "covered"
+ },
+ {
+  "id": "dist-crdt",
+  "domain": "distributed",
+  "gap": "CRDTs and conflict-free merge",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "dist-crdt",
+  "status": "covered"
+ },
+ {
+  "id": "dist-gossip",
+  "domain": "distributed",
+  "gap": "Gossip membership and failure detection",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "dist-ordering",
+  "domain": "distributed",
+  "gap": "Message ordering, dedup and exactly-once myth",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "dist-ordering",
+  "status": "covered"
+ },
+ {
+  "id": "dist-backfill",
+  "domain": "distributed",
+  "gap": "Safe backfills and read repair",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "dist-quorum-read",
+  "domain": "distributed",
+  "gap": "Quorum reads, sticky reads and monotonicity",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "comp-ssa",
+  "domain": "compilers",
+  "gap": "SSA form, phi nodes and dataflow",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "comp-ssa",
+  "status": "covered"
+ },
+ {
+  "id": "comp-regalloc",
+  "domain": "compilers",
+  "gap": "Register allocation and spilling",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "comp-jit",
+  "domain": "compilers",
+  "gap": "JIT tiers, deopt and code cache",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "comp-jit",
+  "status": "covered"
+ },
+ {
+  "id": "comp-type-check",
+  "domain": "compilers",
+  "gap": "Type checking, inference and soundness",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "comp-optimizer",
+  "domain": "compilers",
+  "gap": "Optimization passes and semantic preservation",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "storage-wal",
+  "domain": "storage",
+  "gap": "Write-ahead log, fsync and crash consistency",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "storage-wal",
+  "status": "covered"
+ },
+ {
+  "id": "storage-compaction",
+  "domain": "storage",
+  "gap": "Compaction policy, tombstones and write stalls",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "storage-checksum",
+  "domain": "storage",
+  "gap": "Checksums, bit rot and scrub",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "storage-replication",
+  "domain": "storage",
+  "gap": "Replication lag, failover and data loss windows",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "storage-replication",
+  "status": "covered"
+ },
+ {
+  "id": "org-conway",
+  "domain": "organization",
+  "gap": "Conway's law and service ownership",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "org-conway",
+  "status": "covered"
+ },
+ {
+  "id": "org-oncall",
+  "domain": "organization",
+  "gap": "On-call load, escalation and handoff",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "org-oncall",
+  "status": "covered"
+ },
+ {
+  "id": "org-delegation",
+  "domain": "organization",
+  "gap": "Delegation, decision rights and DACI",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "org-adr",
+  "domain": "organization",
+  "gap": "Architecture decision records and durable context",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "org-budget",
+  "domain": "organization",
+  "gap": "Headcount, maintenance and innovation budget",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "org-incentives",
+  "domain": "organization",
+  "gap": "Incentives, metrics and local optimization",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-backup-restore",
+  "domain": "engineering",
+  "gap": "Backup, restore and the untested backup",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "eng-backup-restore",
+  "status": "covered"
+ },
+ {
+  "id": "eng-disaster-recovery",
+  "domain": "engineering",
+  "gap": "RTO, RPO and disaster exercises",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "eng-disaster-recovery",
+  "status": "covered"
+ },
+ {
+  "id": "eng-chaos",
+  "domain": "engineering",
+  "gap": "Chaos experiments and steady-state hypothesis",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-load-test",
+  "domain": "engineering",
+  "gap": "Load models, open vs closed loop and saturation",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-capacity",
+  "domain": "engineering",
+  "gap": "Capacity models and headroom",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "eng-retention",
+  "domain": "engineering",
+  "gap": "Data retention, archival and deletion",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
  }
 ]
