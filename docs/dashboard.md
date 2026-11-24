@@ -66,6 +66,18 @@ Three references, one system. Tokens are plain CSS custom properties at the top 
 - No page-change animation: the sidebar and top bar stay still while the content swaps. `prefers-reduced-motion` removes the rest.
 - Brand: the round avatar is `assets/avatar-round.png`, inlined as the favicon and the sidebar mark.
 
+### Live
+
+Motion lives in the content, never in the sidebar or top bar.
+
+- Overview, Jobs, Activity, Costs and Labs refresh every 6 seconds while the tab is visible. A refresh is skipped while you type, while a drawer is open and while a lab or scan runs. The green dot and clock in the top bar show the last refresh.
+- Pages load behind a shimmer skeleton, then rise in with a short stagger. Numbers count up, bars and rings fill, charts grow.
+- Running jobs and labs pulse. A lab card shows an indeterminate bar while it runs.
+- Actions answer with a toast: lab result, scan finished, job created, task done, budget saved.
+- Scan output types into a terminal panel. Reports open in place.
+- Training shows a progress ring, the curriculum by week, tick-to-complete tasks and a journal timeline. Posture shows severity bars per target, a findings-by-day chart and coverage rings.
+- `prefers-reduced-motion` turns every animation off.
+
 ### Responsive
 
 The layout reacts to the content width (container queries), not the window, so it holds inside a narrow browser pane.
