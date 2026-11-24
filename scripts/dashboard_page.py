@@ -199,11 +199,11 @@ pre{background:var(--bg);border:1px solid var(--line);border-radius:var(--r1);pa
 <aside class="side">
   <div class="brand"><span class="av" role="img" aria-label="Beril"></span><b>Beril</b><small>local workspace</small></div>
   <nav class="nav" id="nav">
-    <a href="#overview" data-page="overview" data-group="overview"><span>Overview</span></a>
-    <a href="#jobs" data-page="jobs" data-group="work"><span>Work</span><b id="nJobs"></b></a>
-    <a href="#memory" data-page="memory" data-group="memory"><span>Memory</span><b id="nMemory"></b></a>
-    <a href="#threads" data-page="threads" data-group="intel"><span>Intel</span></a>
-    <a href="#labs" data-page="labs" data-group="lab"><span>Lab</span></a>
+    <a href="/" data-page="overview" data-group="overview"><span>Overview</span></a>
+    <a href="/jobs" data-page="jobs" data-group="work"><span>Work</span><b id="nJobs"></b></a>
+    <a href="/memory" data-page="memory" data-group="memory"><span>Memory</span><b id="nMemory"></b></a>
+    <a href="/threads" data-page="threads" data-group="intel"><span>Intel</span></a>
+    <a href="/labs" data-page="labs" data-group="lab"><span>Lab</span></a>
   </nav>
 </aside>
 <main>
@@ -230,10 +230,14 @@ const when=s=>{if(!s)return '';const d=new Date(s);return isNaN(d)?String(s).sli
 const GROUPS={overview:{label:'Overview',tabs:[]},work:{label:'Work',tabs:[['jobs','Jobs'],['activity','Activity'],['costs','Costs']]},memory:{label:'Memory',tabs:[]},intel:{label:'Intel',tabs:[['threads','Threads'],['experts','Experts'],['tools','Tools'],['methods','Methods'],['atlas','GitHub atlas'],['sources','Sources']]},lab:{label:'Lab',tabs:[['labs','Labs'],['training','Training'],['posture','Posture'],['scans','Scans']]}};
 const groupOf=p=>Object.keys(GROUPS).find(g=>g===p||GROUPS[g].tabs.some(t=>t[0]===p))||'overview';
 const PAGES=Object.keys(GROUPS).flatMap(g=>GROUPS[g].tabs.length?GROUPS[g].tabs.map(t=>[t[0],t[1],GROUPS[g].label]):[[g,GROUPS[g].label,'']]);
-function nav(p){const go=()=>{page=p;const g=groupOf(p);document.querySelectorAll('.nav a').forEach(a=>a.classList.toggle('on',a.dataset.group===g));$('#crumb').textContent=GROUPS[g].label;$('#subnav').innerHTML=GROUPS[g].tabs.map(t=>`<a href="#${t[0]}" class="${t[0]===p?'on':''}">${t[1]}</a>`).join('');closeDrawer();route()};go()}
-document.querySelectorAll('.nav a').forEach(a=>a.onclick=e=>{e.preventDefault();nav(a.dataset.page)});
+function nav(p){const go=()=>{page=p;const g=groupOf(p);document.querySelectorAll('.nav a').forEach(a=>a.classList.toggle('on',a.dataset.group===g));$('#crumb').textContent=GROUPS[g].label;$('#subnav').innerHTML=GROUPS[g].tabs.map(t=>`<a href="/${t[0]}" class="${t[0]===p?'on':''}">${t[1]}</a>`).join('');closeDrawer();route()};go()}
+const pathFor=p=>p==='overview'?'/':'/'+p;
+const pageFromPath=pn=>{const s=pn.replace(/^\/|\/$/g,'').split('/')[0];return PAGES.some(x=>x[0]===s)?s:'overview'};
+const qp=(k,d)=>new URLSearchParams(location.search).get(k)||d;
+function navTo(url){const u=new URL(url,location.origin),to=u.pathname+u.search;if(to!==location.pathname+location.search)history.pushState(null,'',to);nav(pageFromPath(u.pathname))}
+document.addEventListener('click',e=>{const a=e.target.closest('a[href^="/"]');if(!a||a.target||e.metaKey||e.ctrlKey||e.shiftKey||e.button)return;e.preventDefault();navTo(a.getAttribute('href'))});
 $('#q').oninput=()=>{clearTimeout(timer);timer=setTimeout(route,250)};
-$('#newJob').onclick=()=>nav('jobs');
+$('#newJob').onclick=()=>navTo('/jobs');
 function setSide(off){document.body.classList.toggle('noside',off);$('#sideBtn').setAttribute('aria-pressed',off);try{localStorage.setItem('beril.noside',off?'1':'')}catch(e){}}
 $('#sideBtn').onclick=()=>setSide(!document.body.classList.contains('noside'));
 try{if(localStorage.getItem('beril.noside'))setSide(true)}catch(e){}
@@ -241,7 +245,7 @@ const pal=$('#pal'),palIn=$('#palIn'),palList=$('#palList');let palSel=0,palItem
 function palRender(){const q=palIn.value.trim().toLowerCase();palItems=PAGES.filter(x=>(x[1]+' '+x[2]).toLowerCase().includes(q));palSel=Math.min(palSel,Math.max(0,palItems.length-1));palList.innerHTML=palItems.map((x,i)=>`<button class="pal-item ${i===palSel?'on':''}" data-i="${i}"><span>${esc(x[1])}</span><small>${esc(x[2])}</small></button>`).join('')||'<div class="empty">No match.</div>'}
 function palOpen(){pal.hidden=false;palIn.value='';palSel=0;palRender();palIn.focus()}
 function palClose(){pal.hidden=true}
-function palGo(i){const x=palItems[i];if(!x)return;palClose();if(location.hash.slice(1).split('?')[0]===x[0])nav(x[0]);else location.hash=x[0]}
+function palGo(i){const x=palItems[i];if(!x)return;palClose();navTo(pathFor(x[0]))}
 $('#palBtn').onclick=palOpen;
 palIn.oninput=()=>{palSel=0;palRender()};
 palIn.onkeydown=e=>{if(e.key==='ArrowDown'){e.preventDefault();palSel=Math.min(palSel+1,palItems.length-1);palRender()}else if(e.key==='ArrowUp'){e.preventDefault();palSel=Math.max(palSel-1,0);palRender()}else if(e.key==='Enter'){e.preventDefault();palGo(palSel)}};
@@ -265,17 +269,17 @@ async function overview(){
     <section class="panel pad"><p class="label">Running now</p><div class="big">${running}</div><p class="sub" style="margin-top:var(--s4)">${d.activity.length} recent entries</p></section>
     <section class="panel pad"><p class="label">Training</p><div class="big">${t.done}<span class="of">/${t.total}</span></div><div class="bar"><i style="width:${tpct}%"></i></div><p class="sub">${s.memory} memory cards · ${s.threads} threads</p></section>
   </div>
-  <div class="ledger"><section class="panel"><div class="panel-head"><p class="label">Recent activity</p><a class="link sub" href="#activity">View all</a></div>${table(d.activity.slice(0,8),[['Work',r=>`<span class="title">${esc(r.title)}</span><div class="meta">${esc(r.type||r.kind)} · ${esc(r.actor||'')}</div>`],['When',r=>`<span class="num meta">${when(r.at)}</span>`],['Cost',r=>`<span class="num">${money(r.cost)}</span>`],['State',r=>`<span class="status ${esc(r.status)}">${esc(r.status)}</span>`]])}</section>
+  <div class="ledger"><section class="panel"><div class="panel-head"><p class="label">Recent activity</p><a class="link sub" href="/activity">View all</a></div>${table(d.activity.slice(0,8),[['Work',r=>`<span class="title">${esc(r.title)}</span><div class="meta">${esc(r.type||r.kind)} · ${esc(r.actor||'')}</div>`],['When',r=>`<span class="num meta">${when(r.at)}</span>`],['Cost',r=>`<span class="num">${money(r.cost)}</span>`],['State',r=>`<span class="status ${esc(r.status)}">${esc(r.status)}</span>`]])}</section>
   <div class="rail"><section class="panel pad"><p class="label">Next training</p>${t.next.slice(0,3).map(n=>`<div class="event" style="grid-template-columns:minmax(0,1fr) auto"><span>week ${n.week} · ${esc(n.text)}</span><button class="btn" onclick="done('${n.key}')">Done</button></div>`).join('')||'<p class="sub">Queue clear.</p>'}</section>
   <section class="panel pad"><p class="label">Latest scans</p>${d.scans.map(x=>`<div class="event" style="grid-template-columns:minmax(0,1fr)"><a class="link" href="#" onclick="openReport('${x.name}');return false">${esc(x.name)}</a></div>`).join('')||'<p class="sub">No reports.</p>'}</section></div></div>
   <details class="faq" style="margin-top:var(--s4)"><summary>How to read this</summary><p>The score is severity times confidence, with verified and KEV boosts. It orders work and is not CVSS. A clean scan covers a short check list: logged-in flows, business logic and authorization stay manual. Reports live under scans/ on this machine; Posture aggregates them without uploading anything.</p></details>`;
 }
 async function activity(){const d=await get('/api/activity?limit=120');
   view.innerHTML=`<div class="head"><h1>Activity</h1><p>Jobs, labs, scans and journal entries in one stream. Newest first.</p></div><div class="panel pad"><div class="timeline">${d.map(r=>`<div class="event"><time>${when(r.at)}</time><span class="status ${esc(r.status)}">${esc(r.type||r.kind)}</span><span>${esc(r.title)}</span><span class="num">${money(r.cost)}</span></div>`).join('')||'<div class="empty">No activity.</div>'}</div></div>`;}
-async function jobs(){const filter=location.hash.split('?status=')[1]||'';
+async function jobs(){const filter=qp('status','');
   const d=await get('/api/jobs?status='+filter+'&q='+encodeURIComponent($('#q').value));
   view.innerHTML=`<div class="head"><h1>Jobs</h1><p>Every unit of work, its actor, model, tokens and cost. Click a row for detail.</p></div>
-  <div class="split"><div class="panel"><div style="padding:var(--s3) var(--s3) 0"><div class="chips seg">${['','running','done','failed'].map(s=>`<button class="chip ${filter===s?'on':''}" onclick="location.hash='jobs${s?'?status='+s:''}'">${s||'all'}</button>`).join('')}</div></div>${table(d,[['Started',r=>`<span class="num">${when(r.started_at)}</span>`],['Type',r=>esc(r.type)],['Work',r=>`<span class="title">${esc(r.title)}</span>`],['Model',r=>`<span class="meta">${esc(r.model||'-')}</span>`],['Cost',r=>`<span class="num">${money(r.cost_usd)}</span>`],['State',r=>`<span class="status ${esc(r.status)}">${esc(r.status)}</span>`]])}</div>
+  <div class="split"><div class="panel"><div style="padding:var(--s3) var(--s3) 0"><div class="chips seg">${['','running','done','failed'].map(s=>`<button class="chip ${filter===s?'on':''}" onclick="navTo('/jobs${s?'?status='+s:''}')">${s||'all'}</button>`).join('')}</div></div>${table(d,[['Started',r=>`<span class="num">${when(r.started_at)}</span>`],['Type',r=>esc(r.type)],['Work',r=>`<span class="title">${esc(r.title)}</span>`],['Model',r=>`<span class="meta">${esc(r.model||'-')}</span>`],['Cost',r=>`<span class="num">${money(r.cost_usd)}</span>`],['State',r=>`<span class="status ${esc(r.status)}">${esc(r.status)}</span>`]])}</div>
   <form class="panel form" onsubmit="logJob(event)"><p class="label wide">Log a job</p>
     <label class="wide">Title<input name="title" required placeholder="What is being done"></label>
     <label>Type<select name="type"><option>llm</option><option>manual</option><option>scan</option><option>harvest</option><option>report</option></select></label>
@@ -309,16 +313,16 @@ async function costs(){const c=await get('/api/costs');const max=Math.max(1,...O
   <section class="panel pad"><p class="label">By type</p>${Object.entries(c.by_type).map(([m,v])=>`<div class="bar-row"><span>${esc(m)}</span><div class="track"><i style="width:${v/Math.max(1,c.total)*100}%"></i></div><span class="num">${money(v)}</span></div>`).join('')||'<p class="sub">None.</p>'}</section></div></div>`;
 }
 async function saveBudget(){await post('/api/budget',{monthly_usd:Number($('#budget').value)||25});route()}
-async function threads(){const src=location.hash.split('?source=')[1]||'';const d=await get('/api/threads?limit=200&q='+encodeURIComponent($('#q').value)+'&source='+encodeURIComponent(src));
+async function threads(){const src=qp('source','');const d=await get('/api/threads?limit=200&q='+encodeURIComponent($('#q').value)+'&source='+encodeURIComponent(src));
   view.innerHTML=`<div class="head"><h1>Threads</h1><p>${d.length} public threads and reports.</p></div><div class="chips" id="srcs"></div>`+table(d,[['Source',r=>esc(r.source)],['Title',r=>`<a class="link" href="${esc(r.url)}" target="_blank">${esc(r.title)}</a>`],['Date',r=>`<span class="num">${esc((r.date||'').slice(0,10))}</span>`]]);
-  const s=await get('/api/sources');$('#srcs').innerHTML=s.map(x=>`<button class="chip ${x[0]===src?'on':''}" onclick="location.hash='threads?source='+encodeURIComponent('${esc(x[0])}')">${esc(x[0])} ${x[1]}</button>`).join('');
+  const s=await get('/api/sources');$('#srcs').innerHTML=s.map(x=>`<button class="chip ${x[0]===src?'on':''}" onclick="navTo('/threads?source='+encodeURIComponent('${esc(x[0])}'))">${esc(x[0])} ${x[1]}</button>`).join('');
 }
 async function experts(){const d=await get('/api/experts?q='+encodeURIComponent($('#q').value));view.innerHTML=`<div class="head"><h1>Experts</h1><p>People and teams with public work.</p></div>`+table(d,[['Name',r=>`<a class="link" href="${esc(r.profile)}" target="_blank">${esc(r.name)}</a>`],['Focus',r=>esc(r.focus)],['Works',r=>r.works?.length||0]]);}
-async function tools(){const kind=location.hash.split('?kind=')[1]||'re';const d=await get('/api/tools?kind='+kind+'&q='+encodeURIComponent($('#q').value));
-  view.innerHTML=`<div class="head"><h1>Tools</h1><p>${d.length} entries. A shelf, not a verdict.</p></div><div class="chips"><button class="chip ${kind==='re'?'on':''}" onclick="location.hash='tools?kind=re'">RE and offense</button><button class="chip ${kind==='canonical'?'on':''}" onclick="location.hash='tools?kind=canonical'">Core shelf</button></div>`+table(d,[['Name',r=>`<a class="link" href="${esc(r.repo)}" target="_blank">${esc(r.name)}</a>`],['Category',r=>esc(r.category)],['Stars',r=>`<span class="num">${esc(r.stars||'-')}</span>`],['Description',r=>esc((r.description||'').slice(0,110))]]);}
+async function tools(){const kind=qp('kind','re');const d=await get('/api/tools?kind='+kind+'&q='+encodeURIComponent($('#q').value));
+  view.innerHTML=`<div class="head"><h1>Tools</h1><p>${d.length} entries. A shelf, not a verdict.</p></div><div class="chips"><button class="chip ${kind==='re'?'on':''}" onclick="navTo('/tools?kind=re')">RE and offense</button><button class="chip ${kind==='canonical'?'on':''}" onclick="navTo('/tools?kind=canonical')">Core shelf</button></div>`+table(d,[['Name',r=>`<a class="link" href="${esc(r.repo)}" target="_blank">${esc(r.name)}</a>`],['Category',r=>esc(r.category)],['Stars',r=>`<span class="num">${esc(r.stars||'-')}</span>`],['Description',r=>esc((r.description||'').slice(0,110))]]);}
 async function methods(){const d=await get('/api/methods?q='+encodeURIComponent($('#q').value));view.innerHTML=`<div class="head"><h1>Methods</h1><p>Extracted structure and code density.</p></div>`+table(d,[['Title',r=>`<a class="link" href="${esc(r.url)}" target="_blank">${esc(r.title)}</a>`],['Source',r=>esc(r.source)],['Code',r=>`<span class="num">${r.code_blocks||0}</span>`]]);}
-async function atlas(){const cat=location.hash.split('?cat=')[1]||'';const d=await get('/api/atlas?category='+encodeURIComponent(cat)+'&q='+encodeURIComponent($('#q').value));
-  view.innerHTML=`<div class="head"><h1>GitHub atlas</h1><p>${d.length} repositories. Stars are a snapshot.</p></div><div class="chips"><button class="chip ${!cat?'on':''}" onclick="location.hash='atlas'">all</button>${['bug-bounty','web-security','cloud-security','binary','fuzzing','detection','mobile','firmware','ai-security'].map(c=>`<button class="chip ${cat===c?'on':''}" onclick="location.hash='atlas?cat=${c}'">${c}</button>`).join('')}</div>`+table(d,[['Repo',r=>`<a class="link" href="${esc(r.url)}" target="_blank">${esc(r.repo)}</a>`],['Stars',r=>`<span class="num">${r.stars}</span>`],['Language',r=>esc(r.language||'-')],['Description',r=>esc((r.description||'').slice(0,110))]]);}
+async function atlas(){const cat=qp('cat','');const d=await get('/api/atlas?category='+encodeURIComponent(cat)+'&q='+encodeURIComponent($('#q').value));
+  view.innerHTML=`<div class="head"><h1>GitHub atlas</h1><p>${d.length} repositories. Stars are a snapshot.</p></div><div class="chips"><button class="chip ${!cat?'on':''}" onclick="navTo('/atlas')">all</button>${['bug-bounty','web-security','cloud-security','binary','fuzzing','detection','mobile','firmware','ai-security'].map(c=>`<button class="chip ${cat===c?'on':''}" onclick="navTo('/atlas?cat=${c}')">${c}</button>`).join('')}</div>`+table(d,[['Repo',r=>`<a class="link" href="${esc(r.url)}" target="_blank">${esc(r.repo)}</a>`],['Stars',r=>`<span class="num">${r.stars}</span>`],['Language',r=>esc(r.language||'-')],['Description',r=>esc((r.description||'').slice(0,110))]]);}
 async function labs(){const d=await get('/api/labs');view.innerHTML=`<div class="head"><h1>Labs</h1><p>Each run executes the smoke test and stores the tail.</p></div><div class="panel">${d.labs.map(l=>{const r=d.runs[l]||{};return `<div class="event" style="grid-template-columns:120px minmax(0,1fr) 90px 110px 90px"><b>${l}</b><pre class="${r.output?'':'hidden'}" id="out-${l}" style="max-height:120px">${esc(r.output||'')}</pre><span class="status ${r.ok?'done':r.ok===false?'failed':'cancelled'}">${r.ok?'pass':r.ok===false?'fail':'idle'}</span><span class="meta">${esc(r.at||'not run')}</span><button class="btn" onclick="runLab('${l}',this)">Run test</button></div>`}).join('')}</div>`;}
 async function runLab(l,b){b.disabled=true;b.textContent='Running';const d=await post('/api/lab/run',{lab:l});const o=$('#out-'+l);o.textContent=d.output;o.classList.remove('hidden');b.disabled=false;b.textContent='run test';}
 async function training(){const d=await get('/api/training');view.innerHTML=`<div class="head"><h1>Training</h1><p>${d.done}/${d.total} tasks. A missed day is not a missed week.</p></div><div class="panel pad"><div class="bar"><i style="width:${d.pct}%"></i></div><p class="num">${d.pct}%</p></div><h2 class="label" style="margin-top:24px">Next</h2><div class="panel">${d.next.map(n=>`<div class="event" style="grid-template-columns:minmax(0,1fr) auto"><span>week ${n.week} · ${esc(n.text)}</span><button class="btn" onclick="done('${n.key}')">done</button></div>`).join('')||'<div class="empty">Complete.</div>'}</div><h2 class="label" style="margin-top:24px">Journal</h2><div class="panel">${d.journal.map(j=>`<div class="event" style="grid-template-columns:90px minmax(0,1fr)"><time>${esc(j.at)}</time><span>${esc(j.text)}</span></div>`).join('')||'<div class="empty">No entries.</div>'}</div>`;}
@@ -331,6 +335,7 @@ async function doScan(e){e.preventDefault();const b=e.target.querySelector('butt
 async function openReport(name){const d=await get('/api/report?name='+encodeURIComponent(name));$('#report').innerHTML=`<h2 class="label" style="margin-top:24px">${esc(name)}</h2><div class="panel pad">${d.html||d.error}</div>`;scrollTo(0,0)}
 async function sources(){const d=await get('/api/sources');shell('Sources','Harvested rows by source. One row is a gap.',table(d.map(x=>({name:x[0],n:x[1]})),[['Source',r=>esc(r.name)],['Rows',r=>`<span class="num">${r.n}</span>`]]),`<section class="panel pad"><p class="label">Coverage</p><p class="sub">${d.length} sources seen. Add a source in references/forums.md.</p></section>`);}
 async function route(){closeDrawer();if(page==='overview')return overview();if(page==='activity')return activity();if(page==='jobs')return jobs();if(page==='costs')return costs();if(page==='memory')return memory();if(page==='threads')return threads();if(page==='experts')return experts();if(page==='tools')return tools();if(page==='methods')return methods();if(page==='atlas')return atlas();if(page==='labs')return labs();if(page==='training')return training();if(page==='posture')return posture();if(page==='scans')return scans();if(page==='sources')return sources();}
-addEventListener('hashchange',()=>{const p=location.hash.slice(1).split('?')[0];if(p)nav(p)});
-nav(location.hash?location.hash.slice(1).split('?')[0]:'overview');
+addEventListener('popstate',()=>nav(pageFromPath(location.pathname)));
+if(location.hash.length>1)history.replaceState(null,'','/'+location.hash.slice(1));
+nav(pageFromPath(location.pathname));
 </script></body></html>"""

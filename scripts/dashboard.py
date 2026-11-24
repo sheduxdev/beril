@@ -451,7 +451,7 @@ class Handler(BaseHTTPRequestHandler):
         q = urllib.parse.parse_qs(p.query)
         path = p.path
 
-        if path == "/":
+        if path == "/" or (path.count("/") == 1 and path[1:].isalpha() and path != "/api"):
             return self.html(PAGE)
         if path == "/api/overview":
             return self.json(

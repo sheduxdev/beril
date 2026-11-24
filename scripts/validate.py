@@ -68,10 +68,13 @@ def main() -> None:
             for field in required:
                 if not str(row.get(field, "")).strip():
                     errors.append(f"{name}:{i} missing {field}")
-        ids = collections.Counter(
-            (row.get("url") or row.get("repo") or row.get("profile"), row.get("title") or row.get("name"))
-            for row in dataset
-        )
+        if name == "jobs.jsonl":
+            ids = collections.Counter(row.get("id") for row in dataset)
+        else:
+            ids = collections.Counter(
+                (row.get("url") or row.get("repo") or row.get("profile"), row.get("title") or row.get("name"))
+                for row in dataset
+            )
         dupes = [k for k, n in ids.items() if n > 1]
         if dupes:
             warnings.append(f"{name}: {len(dupes)} duplicate identities, first {dupes[0]}")
