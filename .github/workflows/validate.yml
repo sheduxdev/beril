@@ -29,6 +29,19 @@ jobs:
       - name: Audit the lock against advisories
         run: uv --preview-features audit-command audit
 
+  catalog:
+    name: catalog
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: "3.12"
+      - name: Validate catalog schema, machine data and prose
+        run: python scripts/validate.py
+
   test:
     name: test ${{ matrix.os }} py${{ matrix.python }}
     runs-on: ${{ matrix.os }}
@@ -58,8 +71,6 @@ jobs:
         run: python -m compileall -q scripts
       - name: Run the regression suite
         run: python -m pytest -q
-      - name: Validate catalog schema, machine data and prose
-        run: python scripts/validate.py
       - name: Check the report schema on a fixture scan
         run: |
           python scripts/scan_app.py --target https://example.com --json --out "$RUNNER_TEMP/scan" >/dev/null

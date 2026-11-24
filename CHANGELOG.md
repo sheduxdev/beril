@@ -17,6 +17,8 @@ All notable changes. Beril uses semantic versioning.
   add a CI job that keeps the lock in step with `pyproject.toml` and audits it
   with `uv audit`.
 - Add Python 3.14 to the test matrix and classifiers.
+- Restore the dedicated `catalog` job that the main ruleset requires, so pull
+  requests can merge again.
 
 ## 1.4.0 - 2026-11-23
 

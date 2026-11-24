@@ -58,6 +58,11 @@ def test_workflow_matrix_covers_platforms_and_pythons():
         assert f'"{version}"' in text
 
 
+def test_workflow_exposes_the_catalog_check():
+    text = (ROOT / ".github/workflows/validate.yml").read_text()
+    assert "\n  catalog:\n" in text
+
+
 def test_env_override_wins(monkeypatch, tmp_path):
     monkeypatch.setenv("BERIL_DATA", str(tmp_path))
     assert paths.locate("data", "BERIL_DATA") == str(tmp_path)
