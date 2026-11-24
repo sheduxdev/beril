@@ -378,6 +378,50 @@
   "failure": "A shared public corpus is not a leak. A filter without a tenant field is decorative."
  },
  {
+  "path": "knowledge/alloc-fragmentation.md",
+  "body": "# External fragmentation grows when live objects pin pages\n\n## Claim\n\nFree memory exists but is split into unusable holes. An arena or a compacting GC reduces it.\n\n## Test\n\nRun a mixed allocation workload. Measure the largest free block and RSS.\n\n## Proof\n\nA stable largest block under load.\n\n## Failure modes\n\nInternal fragmentation is rounding. External is layout. A size-class tweak helps one, not the other.",
+  "id": "alloc-fragmentation",
+  "title": "External fragmentation grows when live objects pin pages",
+  "tags": [
+   "allocator",
+   "fragmentation",
+   "memory"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Free memory exists but is split into unusable holes. An arena or a compacting GC reduces it.",
+  "test": "Run a mixed allocation workload. Measure the largest free block and RSS.",
+  "proof": "A stable largest block under load.",
+  "failure": "Internal fragmentation is rounding. External is layout. A size-class tweak helps one, not the other."
+ },
+ {
+  "path": "knowledge/alloc-tcache.md",
+  "body": "# Thread caches reduce contention and create remote frees\n\n## Claim\n\nPer-thread caches avoid a global lock, but a free from another thread goes to a remote list and causes imbalance.\n\n## Test\n\nAllocate on one thread, free on another. Measure cache growth and remote free.\n\n## Proof\n\nA bounded cache with a drain path.\n\n## Failure modes\n\nAn unbounded tcache grows by thread count. A false sharing bug hides in the cache line.",
+  "id": "alloc-tcache",
+  "title": "Thread caches reduce contention and create remote frees",
+  "tags": [
+   "allocator",
+   "tcache",
+   "threads"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Per-thread caches avoid a global lock, but a free from another thread goes to a remote list and causes imbalance.",
+  "test": "Allocate on one thread, free on another. Measure cache growth and remote free.",
+  "proof": "A bounded cache with a drain path.",
+  "failure": "An unbounded tcache grows by thread count. A false sharing bug hides in the cache line."
+ },
+ {
   "path": "knowledge/api-batch.md",
   "body": "# A batch endpoint checks the envelope, not each item\n\n## Claim\n\nThe batch handler authenticates once and applies items by id without per-item authorization or partial-failure reporting.\n\n## Test\n\nSend a batch with one allowed and one forbidden item. Check the response and the side effects.\n\n## Proof\n\nA forbidden item succeeds, or the error hides which item failed.\n\n## Failure modes\n\nA batch that stops on the first error is safer. Check idempotency too.",
   "id": "api-batch",
@@ -1503,6 +1547,28 @@
   "failure": "A test at -O0 can pass while production breaks."
  },
  {
+  "path": "knowledge/consensus-crash-recovery.md",
+  "body": "# Recovery replays the log to the commit index, not past it\n\n## Claim\n\nA restarted node loads the snapshot, replays committed entries and truncates uncommitted ones.\n\n## Test\n\nKill a follower after an append but before commit. Restart. Compare the index.\n\n## Proof\n\nThe node rejoins at the committed index with no duplicate.\n\n## Failure modes\n\nA commit index that is not durable can commit twice. A snapshot without truncation diverges.",
+  "id": "consensus-crash-recovery",
+  "title": "Recovery replays the log to the commit index, not past it",
+  "tags": [
+   "distributed",
+   "consensus",
+   "recovery"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A restarted node loads the snapshot, replays committed entries and truncates uncommitted ones.",
+  "test": "Kill a follower after an append but before commit. Restart. Compare the index.",
+  "proof": "The node rejoins at the committed index with no duplicate.",
+  "failure": "A commit index that is not durable can commit twice. A snapshot without truncation diverges."
+ },
+ {
   "path": "knowledge/consensus-linearizable-read.md",
   "body": "# A linearizable read needs a leader lease or a read index\n\n## Claim\n\nReading from a follower can be stale. A read index confirms the leader's commit index; a lease bounds staleness.\n\n## Test\n\nRead from a follower under partition. Check the value and the lease expiry.\n\n## Proof\n\nThe latest committed value or a clear refusal.\n\n## Failure modes\n\nA clock-based lease can expire early. A stale read is invisible without a version.",
   "id": "consensus-linearizable-read",
@@ -1567,6 +1633,28 @@
   "test": "Run two proposers with increasing ballots. Check the chosen value and the promise set.",
   "proof": "One value chosen despite contention.",
   "failure": "A promise is not a commit. A leader without a lease can stall."
+ },
+ {
+  "path": "knowledge/consensus-pre-vote.md",
+  "body": "# Pre-vote stops a rejoining node from disrupting the leader\n\n## Claim\n\nA node with a stale term asks for votes before incrementing. A majority pre-vote prevents term inflation.\n\n## Test\n\nPartition a follower, restart it, rejoin. Watch the leader term.\n\n## Proof\n\nThe leader stays stable through the rejoin.\n\n## Failure modes\n\nPre-vote without a timeout can stall. A partition that heals mid-vote is subtle.",
+  "id": "consensus-pre-vote",
+  "title": "Pre-vote stops a rejoining node from disrupting the leader",
+  "tags": [
+   "distributed",
+   "raft",
+   "election"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A node with a stale term asks for votes before incrementing. A majority pre-vote prevents term inflation.",
+  "test": "Partition a follower, restart it, rejoin. Watch the leader term.",
+  "proof": "The leader stays stable through the rejoin.",
+  "failure": "Pre-vote without a timeout can stall. A partition that heals mid-vote is subtle."
  },
  {
   "path": "knowledge/consensus-snapshot.md",
@@ -1702,6 +1790,28 @@
   "failure": "A random-looking string is not proof. Check the generator and the seed."
  },
  {
+  "path": "knowledge/db-cardinality-estimate.md",
+  "body": "# Estimates decide the plan; bad estimates ruin it\n\n## Claim\n\nHistograms and stats predict rows. A correlated predicate or a stale stat produces a 1-row guess for 1M rows.\n\n## Test\n\nCompare EXPLAIN estimate with actual. Update stats. Test a correlated predicate.\n\n## Proof\n\nAn estimate within an order of magnitude and a better plan.\n\n## Failure modes\n\nAn estimate that is wrong by 1000x picks a nested loop. Sampling helps, correlation does not.",
+  "id": "db-cardinality-estimate",
+  "title": "Estimates decide the plan; bad estimates ruin it",
+  "tags": [
+   "database",
+   "cardinality",
+   "planner"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Histograms and stats predict rows. A correlated predicate or a stale stat produces a 1-row guess for 1M rows.",
+  "test": "Compare EXPLAIN estimate with actual. Update stats. Test a correlated predicate.",
+  "proof": "An estimate within an order of magnitude and a better plan.",
+  "failure": "An estimate that is wrong by 1000x picks a nested loop. Sampling helps, correlation does not."
+ },
+ {
   "path": "knowledge/db-deadlock.md",
   "body": "# A deadlock is a cycle in the wait-for graph\n\n## Claim\n\nThe detector finds a cycle, picks a victim and aborts it. The client must retry the whole transaction.\n\n## Test\n\nCreate a two-session cycle. Check the victim and the error code.\n\n## Proof\n\nA clear deadlock error and a successful retry.\n\n## Failure modes\n\nA retry inside the same transaction may repeat the partial work.",
   "id": "db-deadlock",
@@ -1744,6 +1854,28 @@
   "test": "Run two transactions that read a predicate and write the complement. Repeat under each level.",
   "proof": "The anomaly or the serialization failure.",
   "failure": "A snapshot isolation label does not prevent write skew. Retry is part of serializable."
+ },
+ {
+  "path": "knowledge/db-join-algorithms.md",
+  "body": "# Join choice is a cost model over sizes and order\n\n## Claim\n\nNested loop is cheap for a small outer, hash for an equi-join with memory, merge for sorted input.\n\n## Test\n\nRead the plan. Compare a nested loop and a hash join on the same data.\n\n## Proof\n\nThe cheaper plan with the expected row count.\n\n## Failure modes\n\nA hash join spills on a bad estimate. A merge join stalls on unsorted input.",
+  "id": "db-join-algorithms",
+  "title": "Join choice is a cost model over sizes and order",
+  "tags": [
+   "database",
+   "join",
+   "query"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Nested loop is cheap for a small outer, hash for an equi-join with memory, merge for sorted input.",
+  "test": "Read the plan. Compare a nested loop and a hash join on the same data.",
+  "proof": "The cheaper plan with the expected row count.",
+  "failure": "A hash join spills on a bad estimate. A merge join stalls on unsorted input."
  },
  {
   "path": "knowledge/db-lock-manager.md",
@@ -2162,6 +2294,94 @@
   "test": "Write with a quorum. Read with different R values. Compare the value and the version.",
   "proof": "The latest value at the documented quorum.",
   "failure": "A sticky read hides a weak quorum. A repair without a version is a guess."
+ },
+ {
+  "path": "knowledge/econ-debt-interest.md",
+  "body": "# Technical debt is principal plus interest\n\n## Claim\n\nThe shortcut saves time now and slows every later change. Interest is the recurring tax.\n\n## Test\n\nEstimate the weekly tax. Compare with the repayment cost.\n\n## Proof\n\nA repayment plan where interest exceeds the fix cost.\n\n## Failure modes\n\nA debt with no interest is a deferred choice, not debt. A rewrite can be more debt.",
+  "id": "econ-debt-interest",
+  "title": "Technical debt is principal plus interest",
+  "tags": [
+   "economics",
+   "debt",
+   "interest"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The shortcut saves time now and slows every later change. Interest is the recurring tax.",
+  "test": "Estimate the weekly tax. Compare with the repayment cost.",
+  "proof": "A repayment plan where interest exceeds the fix cost.",
+  "failure": "A debt with no interest is a deferred choice, not debt. A rewrite can be more debt."
+ },
+ {
+  "path": "knowledge/econ-make-buy.md",
+  "body": "# Build versus buy compares maintenance, not license\n\n## Claim\n\nThe buy price is visible; the build cost includes people, on-call, upgrades and the feature you will miss.\n\n## Test\n\nWrite the three-year total for both. Include the team time and the exit.\n\n## Proof\n\nA total cost comparison with a clear delta.\n\n## Failure modes\n\nA build that ignores on-call is a discount illusion. A buy that ignores lock-in is a trap.",
+  "id": "econ-make-buy",
+  "title": "Build versus buy compares maintenance, not license",
+  "tags": [
+   "economics",
+   "make-buy",
+   "maintenance"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The buy price is visible; the build cost includes people, on-call, upgrades and the feature you will miss.",
+  "test": "Write the three-year total for both. Include the team time and the exit.",
+  "proof": "A total cost comparison with a clear delta.",
+  "failure": "A build that ignores on-call is a discount illusion. A buy that ignores lock-in is a trap."
+ },
+ {
+  "path": "knowledge/econ-total-cost.md",
+  "body": "# Total cost includes the invisible line items\n\n## Claim\n\nMigration, training, support, audit and exit sit outside the invoice. A cheap option can be the expensive one.\n\n## Test\n\nList every line item for three years. Price the migration and the exit.\n\n## Proof\n\nA total that includes the hidden work.\n\n## Failure modes\n\nA license comparison alone hides the operations cost.",
+  "id": "econ-total-cost",
+  "title": "Total cost includes the invisible line items",
+  "tags": [
+   "economics",
+   "tco",
+   "cost"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Migration, training, support, audit and exit sit outside the invoice. A cheap option can be the expensive one.",
+  "test": "List every line item for three years. Price the migration and the exit.",
+  "proof": "A total that includes the hidden work.",
+  "failure": "A license comparison alone hides the operations cost."
+ },
+ {
+  "path": "knowledge/econ-vendor-lock.md",
+  "body": "# Lock-in is the exit cost, not the logo\n\n## Claim\n\nProprietary APIs, data gravity and contract terms decide the cost to leave. The exit plan is the test.\n\n## Test\n\nExtract a sample dataset. Price the migration. Read the exit clause.\n\n## Proof\n\nA migration and a data export completed.\n\n## Failure modes\n\nAn open API is not an exit plan. A discount for a long term is a lock.",
+  "id": "econ-vendor-lock",
+  "title": "Lock-in is the exit cost, not the logo",
+  "tags": [
+   "economics",
+   "vendor",
+   "exit"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Proprietary APIs, data gravity and contract terms decide the cost to leave. The exit plan is the test.",
+  "test": "Extract a sample dataset. Price the migration. Read the exit clause.",
+  "proof": "A migration and a data export completed.",
+  "failure": "An open API is not an exit plan. A discount for a long term is a lock."
  },
  {
   "path": "knowledge/electron-context-isolation.md",

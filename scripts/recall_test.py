@@ -81,6 +81,16 @@ CASES = [
     ("on-call rotation handoff shadow", "org-rotation"),
     ("skill matrix bus factor", "org-skill-matrix"),
     ("decision memo writing culture", "org-docs-culture"),
+    ("crash recovery replay commit index", "consensus-crash-recovery"),
+    ("pre-vote disruptive rejoin", "consensus-pre-vote"),
+    ("external fragmentation largest block", "alloc-fragmentation"),
+    ("thread cache remote free imbalance", "alloc-tcache"),
+    ("hash join nested loop cost", "db-join-algorithms"),
+    ("cardinality estimate bad plan histogram", "db-cardinality-estimate"),
+    ("build versus buy maintenance cost", "econ-make-buy"),
+    ("total cost migration exit hidden", "econ-total-cost"),
+    ("technical debt interest repayment", "econ-debt-interest"),
+    ("vendor lock exit cost migration", "econ-vendor-lock"),
 ]
 
 

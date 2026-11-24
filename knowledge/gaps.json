@@ -1951,5 +1951,221 @@
   "source": "references/engineering-mastery.md",
   "covered_by": "org-postmortem-culture",
   "status": "covered"
+ },
+ {
+  "id": "consensus-crash-recovery",
+  "domain": "distributed",
+  "gap": "Crash recovery, log replay and commit index",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "consensus-crash-recovery",
+  "status": "covered"
+ },
+ {
+  "id": "consensus-log-compaction",
+  "domain": "distributed",
+  "gap": "Log compaction and snapshot retention",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "consensus-witness",
+  "domain": "distributed",
+  "gap": "Witness replicas and quorum cost",
+  "priority": "low",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "consensus-pre-vote",
+  "domain": "distributed",
+  "gap": "Pre-vote and disruptive server rejoin",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "consensus-pre-vote",
+  "status": "covered"
+ },
+ {
+  "id": "consensus-bft",
+  "domain": "distributed",
+  "gap": "Byzantine faults and BFT quorum",
+  "priority": "low",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "alloc-size-class",
+  "domain": "allocator",
+  "gap": "Size classes, rounding and internal fragmentation",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "alloc-fragmentation",
+  "domain": "allocator",
+  "gap": "External fragmentation and compaction",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "alloc-fragmentation",
+  "status": "covered"
+ },
+ {
+  "id": "alloc-arena",
+  "domain": "allocator",
+  "gap": "Arena and region allocation",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "alloc-tcache",
+  "domain": "allocator",
+  "gap": "Thread caches, remote free and false sharing",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "alloc-tcache",
+  "status": "covered"
+ },
+ {
+  "id": "alloc-numa",
+  "domain": "allocator",
+  "gap": "NUMA locality and first-touch policy",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "db-join-algorithms",
+  "domain": "database",
+  "gap": "Nested loop, hash and merge join cost",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "db-join-algorithms",
+  "status": "covered"
+ },
+ {
+  "id": "db-vectorized-exec",
+  "domain": "database",
+  "gap": "Vectorized execution and batch size",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "db-parallel-query",
+  "domain": "database",
+  "gap": "Parallel plans, skew and worker limits",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "db-spill-sort",
+  "domain": "database",
+  "gap": "External sort, spill files and memory limits",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "db-cardinality-estimate",
+  "domain": "database",
+  "gap": "Cardinality estimates, histograms and bad plans",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "db-cardinality-estimate",
+  "status": "covered"
+ },
+ {
+  "id": "econ-make-buy",
+  "domain": "economics",
+  "gap": "Build versus buy with maintenance cost",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "econ-make-buy",
+  "status": "covered"
+ },
+ {
+  "id": "econ-total-cost",
+  "domain": "economics",
+  "gap": "Total cost of ownership and hidden cost",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "econ-total-cost",
+  "status": "covered"
+ },
+ {
+  "id": "econ-opportunity",
+  "domain": "economics",
+  "gap": "Opportunity cost and the next best use",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "econ-debt-interest",
+  "domain": "economics",
+  "gap": "Technical debt interest and repayment",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "econ-debt-interest",
+  "status": "covered"
+ },
+ {
+  "id": "econ-pricing",
+  "domain": "economics",
+  "gap": "Pricing, margin and unit economics",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "econ-headcount",
+  "domain": "economics",
+  "gap": "Headcount cost and ramp time",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "econ-vendor-lock",
+  "domain": "economics",
+  "gap": "Vendor lock-in and exit cost",
+  "priority": "high",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "econ-vendor-lock",
+  "status": "covered"
+ },
+ {
+  "id": "econ-sunk-cost",
+  "domain": "economics",
+  "gap": "Sunk cost and kill decisions",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "econ-risk-adjusted",
+  "domain": "economics",
+  "gap": "Risk-adjusted return and expected value",
+  "priority": "medium",
+  "source": "references/engineering-mastery.md",
+  "covered_by": "",
+  "status": "open"
  }
 ]
