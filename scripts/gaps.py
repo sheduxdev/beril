@@ -78,11 +78,12 @@ def main() -> None:
                 return
         print("not found")
     elif args.next:
-        for r in rows:
-            if r["status"] == "open" and r["priority"] == "high":
-                print(f"{r['id']} [{r['domain']}] {r['gap']}\n  source: {r['source']}")
-                return
-        print("no high gaps")
+        for pri in ("high", "medium", "low"):
+            for r in rows:
+                if r["status"] == "open" and r["priority"] == pri:
+                    print(f"{r['id']} [{r['domain']}] {r['gap']}\n  source: {r['source']}")
+                    return
+        print("no open gaps")
     elif args.index:
         save(rows)
         print(len(rows), "gaps")

@@ -68,6 +68,50 @@
   "failure": "A tool call that repeats the user's request is normal. Check the argument, not only the tool name."
  },
  {
+  "path": "knowledge/ai-cost-control.md",
+  "body": "# An agent loop is a budget bug\n\n## Claim\n\nRetries, reflection and tool loops consume tokens without a cap. A single task can cost more than the result.\n\n## Test\n\nSet a token and turn budget. Log each job with tokens and cost. Stop on a plateau.\n\n## Proof\n\nA job ledger entry with a cost under the budget.\n\n## Failure modes\n\nA cheap model still loops. A budget without a stop condition is a warning only.",
+  "id": "ai-cost-control",
+  "title": "An agent loop is a budget bug",
+  "tags": [
+   "ai",
+   "cost",
+   "agent"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "docs/dashboard.md"
+  ],
+  "status": "active",
+  "claim": "Retries, reflection and tool loops consume tokens without a cap. A single task can cost more than the result.",
+  "test": "Set a token and turn budget. Log each job with tokens and cost. Stop on a plateau.",
+  "proof": "A job ledger entry with a cost under the budget.",
+  "failure": "A cheap model still loops. A budget without a stop condition is a warning only."
+ },
+ {
+  "path": "knowledge/ai-data-poison.md",
+  "body": "# Poisoned data changes the model or the retrieval set\n\n## Claim\n\nAn attacker can add documents, feedback or training samples that later influence an answer or a tool call.\n\n## Test\n\nAdd a document with a unique claim or instruction. Ask a related question. Check whether retrieval or training picks it up.\n\n## Proof\n\nA later answer repeats the planted claim or follows the instruction.\n\n## Failure modes\n\nA one-off prompt is not poisoning. The data must persist and be retrieved.",
+  "id": "ai-data-poison",
+  "title": "Poisoned data changes the model or the retrieval set",
+  "tags": [
+   "ai",
+   "data",
+   "poisoning"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "An attacker can add documents, feedback or training samples that later influence an answer or a tool call.",
+  "test": "Add a document with a unique claim or instruction. Ask a related question. Check whether retrieval or training picks it up.",
+  "proof": "A later answer repeats the planted claim or follows the instruction.",
+  "failure": "A one-off prompt is not poisoning. The data must persist and be retrieved."
+ },
+ {
   "path": "knowledge/ai-indirect-injection-tool.md",
   "body": "# Indirect injection turns a document into an instruction\n\n## Claim\n\nA retrieved chunk contains instructions that the model follows, especially when a tool can send data out.\n\n## Test\n\nPlant an instruction in a document. Ask a normal question. Watch for a tool call with attacker arguments.\n\n## Proof\n\nA tool call or output that crosses the boundary without a user instruction.\n\n## Failure modes\n\nA prompt that says ignore previous instructions is not impact until the tool acts.",
   "id": "ai-indirect-injection-tool",
@@ -113,6 +157,28 @@
   "failure": "A read-only server is lower risk. A server that shells out is high."
  },
  {
+  "path": "knowledge/ai-memory-poison.md",
+  "body": "# Agent memory is a write target\n\n## Claim\n\nAn agent stores notes, summaries or embeddings from untrusted content, then retrieves them as trusted context later.\n\n## Test\n\nPlant an instruction in a document the agent summarizes. Ask a later question. Watch for the planted behavior.\n\n## Proof\n\nA later answer or action that follows the planted note.\n\n## Failure modes\n\nA one-turn injection is not memory poisoning. The effect must survive a new session.",
+  "id": "ai-memory-poison",
+  "title": "Agent memory is a write target",
+  "tags": [
+   "ai",
+   "agent",
+   "memory"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "An agent stores notes, summaries or embeddings from untrusted content, then retrieves them as trusted context later.",
+  "test": "Plant an instruction in a document the agent summarizes. Ask a later question. Watch for the planted behavior.",
+  "proof": "A later answer or action that follows the planted note.",
+  "failure": "A one-turn injection is not memory poisoning. The effect must survive a new session."
+ },
+ {
   "path": "knowledge/ai-rag-tenant-filter.md",
   "body": "# RAG leaks when retrieval ignores the tenant\n\n## Claim\n\nThe retriever ranks chunks across users and filters after generation, or not at all.\n\n## Test\n\nCreate two users with distinct documents. Query as A and inspect the retrieved sources and the answer.\n\n## Proof\n\nA document from user B appears in A's answer or source list.\n\n## Failure modes\n\nA shared public doc is not a leak. A model hallucination is not retrieval.",
   "id": "ai-rag-tenant-filter",
@@ -134,6 +200,28 @@
   "test": "Create two users with distinct documents. Query as A and inspect the retrieved sources and the answer.",
   "proof": "A document from user B appears in A's answer or source list.",
   "failure": "A shared public doc is not a leak. A model hallucination is not retrieval."
+ },
+ {
+  "path": "knowledge/api-grpc-reflection.md",
+  "body": "# gRPC reflection is a map, per-method auth is the bug\n\n## Claim\n\nThe server exposes reflection and descriptors, but individual methods lack authorization or validate only the transport.\n\n## Test\n\nCall reflection, list services, call every method with and without a token. Compare a low-privilege caller.\n\n## Proof\n\nA method returns data or performs an action for the wrong role.\n\n## Failure modes\n\nReflection enabled is not a finding. A method that is public by design is not either.",
+  "id": "api-grpc-reflection",
+  "title": "gRPC reflection is a map, per-method auth is the bug",
+  "tags": [
+   "api",
+   "grpc",
+   "reflection"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "The server exposes reflection and descriptors, but individual methods lack authorization or validate only the transport.",
+  "test": "Call reflection, list services, call every method with and without a token. Compare a low-privilege caller.",
+  "proof": "A method returns data or performs an action for the wrong role.",
+  "failure": "Reflection enabled is not a finding. A method that is public by design is not either."
  },
  {
   "path": "knowledge/api-mass-assignment.md",
@@ -158,6 +246,28 @@
   "failure": "A field that is ignored is not mass assignment. Read the serializer or schema."
  },
  {
+  "path": "knowledge/api-rate-limit-bypass.md",
+  "body": "# Rate limits are only as strong as the key\n\n## Claim\n\nThe limiter keys on IP, header or route, and the attacker can change that key or hit an unlisted sibling route.\n\n## Test\n\nIdentify the key. Rotate IP, user agent, account and path case. Test a trailing slash, version prefix and a batched body.\n\n## Proof\n\nMore requests than the policy allows with the same account.\n\n## Failure modes\n\nA limit that is intentionally per-IP is not a bug. Distributed sources change the test.",
+  "id": "api-rate-limit-bypass",
+  "title": "Rate limits are only as strong as the key",
+  "tags": [
+   "api",
+   "rate-limit",
+   "bypass"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "The limiter keys on IP, header or route, and the attacker can change that key or hit an unlisted sibling route.",
+  "test": "Identify the key. Rotate IP, user agent, account and path case. Test a trailing slash, version prefix and a batched body.",
+  "proof": "More requests than the policy allows with the same account.",
+  "failure": "A limit that is intentionally per-IP is not a bug. Distributed sources change the test."
+ },
+ {
   "path": "knowledge/api-webhook-signature.md",
   "body": "# A webhook without HMAC is an unauthenticated write\n\n## Claim\n\nThe receiver trusts the body or a static token, or verifies HMAC without a timestamp and replay window.\n\n## Test\n\nCapture a delivery. Replay it. Change the body. Test a stale timestamp.\n\n## Proof\n\nA replayed or modified event changes state.\n\n## Failure modes\n\nAn HMAC that covers only part of the body may still be bypassable. Timing-safe comparison matters.",
   "id": "api-webhook-signature",
@@ -180,6 +290,72 @@
   "failure": "An HMAC that covers only part of the body may still be bypassable. Timing-safe comparison matters."
  },
  {
+  "path": "knowledge/binary-browser.md",
+  "body": "# Browser exploitation needs a renderer bug and a sandbox path\n\n## Claim\n\nA JIT or DOM bug gives read/write in the renderer; a second bug or a feature escapes the sandbox.\n\n## Test\n\nMap the bug to a primitive. Build addrof/fakeobj. Chain to a write. Then look for a sandbox escape.\n\n## Proof\n\nA controlled read/write in the renderer and a host action outside it.\n\n## Failure modes\n\nA renderer crash is not a full chain. The sandbox is a separate boundary.",
+  "id": "binary-browser",
+  "title": "Browser exploitation needs a renderer bug and a sandbox path",
+  "tags": [
+   "binary",
+   "browser",
+   "jit"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/exploit-development.md"
+  ],
+  "status": "active",
+  "claim": "A JIT or DOM bug gives read/write in the renderer; a second bug or a feature escapes the sandbox.",
+  "test": "Map the bug to a primitive. Build addrof/fakeobj. Chain to a write. Then look for a sandbox escape.",
+  "proof": "A controlled read/write in the renderer and a host action outside it.",
+  "failure": "A renderer crash is not a full chain. The sandbox is a separate boundary."
+ },
+ {
+  "path": "knowledge/binary-kernel.md",
+  "body": "# A kernel bug is an object lifetime bug with a user buffer\n\n## Claim\n\nAn IOCTL trusts a user pointer or size, or an object is freed while a callback still references it.\n\n## Test\n\nMap the IOCTL codes. Check METHOD_NEITHER and probe calls. Fuzz the buffer and watch pool corruption.\n\n## Proof\n\nA controlled write or a privilege escalation in a VM.\n\n## Failure modes\n\nA crash in a driver can be a bug but not exploitable. Check the pool and the IRQL.",
+  "id": "binary-kernel",
+  "title": "A kernel bug is an object lifetime bug with a user buffer",
+  "tags": [
+   "binary",
+   "kernel",
+   "driver"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/reverse-engineering.md"
+  ],
+  "status": "active",
+  "claim": "An IOCTL trusts a user pointer or size, or an object is freed while a callback still references it.",
+  "test": "Map the IOCTL codes. Check METHOD_NEITHER and probe calls. Fuzz the buffer and watch pool corruption.",
+  "proof": "A controlled write or a privilege escalation in a VM.",
+  "failure": "A crash in a driver can be a bug but not exploitable. Check the pool and the IRQL."
+ },
+ {
+  "path": "knowledge/browser-extension-permissions.md",
+  "body": "# An extension is a trusted page with broad APIs\n\n## Claim\n\nThe extension has host permissions, content scripts and message passing. A web page or another extension can send messages.\n\n## Test\n\nRead the manifest. List permissions. Send messages from a page and from another extension. Check externally_connectable.\n\n## Proof\n\nA privileged action or data read from an untrusted sender.\n\n## Failure modes\n\nA permission that is never used is not a finding. Content script isolation matters.",
+  "id": "browser-extension-permissions",
+  "title": "An extension is a trusted page with broad APIs",
+  "tags": [
+   "browser",
+   "extension",
+   "permissions"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "The extension has host permissions, content scripts and message passing. A web page or another extension can send messages.",
+  "test": "Read the manifest. List permissions. Send messages from a page and from another extension. Check externally_connectable.",
+  "proof": "A privileged action or data read from an untrusted sender.",
+  "failure": "A permission that is never used is not a finding. Content script isolation matters."
+ },
+ {
   "path": "knowledge/cicd-pr-target.md",
   "body": "# pull_request_target can run untrusted code with a write token\n\n## Claim\n\nThe workflow uses pull_request_target, checks out the PR head and runs code with repository secrets or write permissions.\n\n## Test\n\nRead the workflow. Open a PR from a fork. Change a script it runs. Watch the token and secrets.\n\n## Proof\n\nA secret exfiltration or a push from the PR code.\n\n## Failure modes\n\npull_request_target with no checkout of the head is safe. A read-only token limits impact.",
   "id": "cicd-pr-target",
@@ -200,6 +376,72 @@
   "test": "Read the workflow. Open a PR from a fork. Change a script it runs. Watch the token and secrets.",
   "proof": "A secret exfiltration or a push from the PR code.",
   "failure": "pull_request_target with no checkout of the head is safe. A read-only token limits impact."
+ },
+ {
+  "path": "knowledge/cloud-azure-role.md",
+  "body": "# Azure identity is a role assignment graph\n\n## Claim\n\nA managed identity, service principal or guest has a role at a scope that reaches a subscription or a key vault.\n\n## Test\n\nList role assignments for the identity. Check scope inheritance. Test a read at the highest scope.\n\n## Proof\n\nA read of a resource outside the intended scope.\n\n## Failure modes\n\nA role definition name is not the effective permission. Conditions and PIM change it.",
+  "id": "cloud-azure-role",
+  "title": "Azure identity is a role assignment graph",
+  "tags": [
+   "cloud",
+   "azure",
+   "iam"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "A managed identity, service principal or guest has a role at a scope that reaches a subscription or a key vault.",
+  "test": "List role assignments for the identity. Check scope inheritance. Test a read at the highest scope.",
+  "proof": "A read of a resource outside the intended scope.",
+  "failure": "A role definition name is not the effective permission. Conditions and PIM change it."
+ },
+ {
+  "path": "knowledge/cloud-docker-socket.md",
+  "body": "# A mounted Docker socket is root on the host\n\n## Claim\n\nThe container mounts /var/run/docker.sock or runs privileged, so it can create a host-mounted container.\n\n## Test\n\nCheck mounts and capabilities. Run a short container with / mounted and read a host file.\n\n## Proof\n\nA host file read or written from a container you control.\n\n## Failure modes\n\nA TCP socket with TLS and auth is weaker. A socket proxy with a narrow API may limit impact.",
+  "id": "cloud-docker-socket",
+  "title": "A mounted Docker socket is root on the host",
+  "tags": [
+   "cloud",
+   "docker",
+   "container"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "labs/cloud"
+  ],
+  "status": "active",
+  "claim": "The container mounts /var/run/docker.sock or runs privileged, so it can create a host-mounted container.",
+  "test": "Check mounts and capabilities. Run a short container with / mounted and read a host file.",
+  "proof": "A host file read or written from a container you control.",
+  "failure": "A TCP socket with TLS and auth is weaker. A socket proxy with a narrow API may limit impact."
+ },
+ {
+  "path": "knowledge/cloud-gcp-iam.md",
+  "body": "# GCP IAM binds a member to a role on a resource\n\n## Claim\n\nA service account has a primitive role or a bucket-level binding that reaches other projects, or workload identity is too broad.\n\n## Test\n\nGet the token. List the IAM policy. Test storage, compute and secret access. Check the service account's keys.\n\n## Proof\n\nA read or token mint outside the intended project.\n\n## Failure modes\n\nA basic role on a single bucket is limited. Impersonation needs iam.serviceAccounts.getAccessToken.",
+  "id": "cloud-gcp-iam",
+  "title": "GCP IAM binds a member to a role on a resource",
+  "tags": [
+   "cloud",
+   "gcp",
+   "iam"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "A service account has a primitive role or a bucket-level binding that reaches other projects, or workload identity is too broad.",
+  "test": "Get the token. List the IAM policy. Test storage, compute and secret access. Check the service account's keys.",
+  "proof": "A read or token mint outside the intended project.",
+  "failure": "A basic role on a single bucket is limited. Impersonation needs iam.serviceAccounts.getAccessToken."
  },
  {
   "path": "knowledge/cloud-iam-wildcard.md",
@@ -269,6 +511,50 @@
   "failure": "A role name is not a permission. IMDSv2 blocks naive requests."
  },
  {
+  "path": "knowledge/cloud-terraform-state.md",
+  "body": "# Terraform state is a secret store\n\n## Claim\n\nThe state file holds resource attributes, connection strings and sometimes plaintext secrets. A public bucket or repo leaks it.\n\n## Test\n\nFind the backend. Check access. Grep state for passwords, keys and endpoints.\n\n## Proof\n\nA secret from state used against the resource.\n\n## Failure modes\n\nAn encrypted remote backend with narrow access is safer. Lock files matter for integrity.",
+  "id": "cloud-terraform-state",
+  "title": "Terraform state is a secret store",
+  "tags": [
+   "cloud",
+   "terraform",
+   "state"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "labs/cloud"
+  ],
+  "status": "active",
+  "claim": "The state file holds resource attributes, connection strings and sometimes plaintext secrets. A public bucket or repo leaks it.",
+  "test": "Find the backend. Check access. Grep state for passwords, keys and endpoints.",
+  "proof": "A secret from state used against the resource.",
+  "failure": "An encrypted remote backend with narrow access is safer. Lock files matter for integrity."
+ },
+ {
+  "path": "knowledge/container-escape.md",
+  "body": "# A container escape is a host resource exposed to the container\n\n## Claim\n\nThe container has a host mount, the runtime socket, privileged devices or a kernel bug surface.\n\n## Test\n\nList mounts, capabilities, devices and namespaces. Try a host read through each. Check the kernel version.\n\n## Proof\n\nA host file read, a host process signal, or a new container with host mounts.\n\n## Failure modes\n\nRoot inside a container is not root on the host by itself. User namespaces change the mapping.",
+  "id": "container-escape",
+  "title": "A container escape is a host resource exposed to the container",
+  "tags": [
+   "container",
+   "escape",
+   "kubernetes"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "The container has a host mount, the runtime socket, privileged devices or a kernel bug surface.",
+  "test": "List mounts, capabilities, devices and namespaces. Try a host read through each. Check the kernel version.",
+  "proof": "A host file read, a host process signal, or a new container with host mounts.",
+  "failure": "Root inside a container is not root on the host by itself. User namespaces change the mapping."
+ },
+ {
   "path": "knowledge/cost-job-ledger.md",
   "body": "# Every job has an actor and a cost\n\n## Claim\n\nWork without a ledger cannot be budgeted. A job records type, actor, model, tokens, cost and status.\n\n## Test\n\nStart a job, do the work, finish it with tokens or a cost. Review the monthly total against the budget.\n\n## Proof\n\nA job row with a cost and a finished timestamp.\n\n## Failure modes\n\nA model without a price is zero. Add the rate before trusting the total.",
   "id": "cost-job-ledger",
@@ -292,6 +578,50 @@
   "failure": "A model without a price is zero. Add the rate before trusting the total."
  },
  {
+  "path": "knowledge/crypto-weak-random.md",
+  "body": "# Predictable randomness is a key recovery bug\n\n## Claim\n\nA token, nonce or key comes from time, a weak PRNG, or a seed reused across processes.\n\n## Test\n\nCollect many outputs. Check the seed source. Try to predict the next value from the timestamp or PID.\n\n## Proof\n\nA predicted token accepted by the server.\n\n## Failure modes\n\nA random-looking string is not proof. Check the generator and the seed.",
+  "id": "crypto-weak-random",
+  "title": "Predictable randomness is a key recovery bug",
+  "tags": [
+   "crypto",
+   "random",
+   "predictability"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "A token, nonce or key comes from time, a weak PRNG, or a seed reused across processes.",
+  "test": "Collect many outputs. Check the seed source. Try to predict the next value from the timestamp or PID.",
+  "proof": "A predicted token accepted by the server.",
+  "failure": "A random-looking string is not proof. Check the generator and the seed."
+ },
+ {
+  "path": "knowledge/detection-beacon.md",
+  "body": "# A beacon is a timing pattern, not a single request\n\n## Claim\n\nPeriodic connections with jitter and a stable destination. One request looks normal; the series does not.\n\n## Test\n\nGroup flows by destination and interval. Compute the gaps. Compare with a baseline.\n\n## Proof\n\nA repeatable interval or jitter pattern to the same endpoint.\n\n## Failure modes\n\nA CDN or update check is periodic too. Exclude known services.",
+  "id": "detection-beacon",
+  "title": "A beacon is a timing pattern, not a single request",
+  "tags": [
+   "detection",
+   "beacon",
+   "network"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "Periodic connections with jitter and a stable destination. One request looks normal; the series does not.",
+  "test": "Group flows by destination and interval. Compute the gaps. Compare with a baseline.",
+  "proof": "A repeatable interval or jitter pattern to the same endpoint.",
+  "failure": "A CDN or update check is periodic too. Exclude known services."
+ },
+ {
   "path": "knowledge/detection-sigma.md",
   "body": "# A Sigma rule needs a logsource, a selection and a false-positive note\n\n## Claim\n\nThe rule matches a behavior, not a product string, and states the expected noise.\n\n## Test\n\nWrite the logsource and fields. Test against one true positive and one normal day. Add a condition that narrows it.\n\n## Proof\n\nA rule that fires on the true positive and not the baseline.\n\n## Failure modes\n\nA rule that fires on everything is a report. A rule with no logsource cannot deploy.",
   "id": "detection-sigma",
@@ -312,6 +642,28 @@
   "test": "Write the logsource and fields. Test against one true positive and one normal day. Add a condition that narrows it.",
   "proof": "A rule that fires on the true positive and not the baseline.",
   "failure": "A rule that fires on everything is a report. A rule with no logsource cannot deploy."
+ },
+ {
+  "path": "knowledge/electron-context-isolation.md",
+  "body": "# Electron is Node with a browser attached\n\n## Claim\n\nnodeIntegration is on, contextIsolation is off, or the preload exposes a broad bridge.\n\n## Test\n\nRead BrowserWindow options and the preload. Load an attacker page. Call the exposed API.\n\n## Proof\n\nA Node or file action from a remote page.\n\n## Failure modes\n\nA sandboxed renderer with a narrow preload is safer. A local file page is a different origin.",
+  "id": "electron-context-isolation",
+  "title": "Electron is Node with a browser attached",
+  "tags": [
+   "electron",
+   "desktop",
+   "context-isolation"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "nodeIntegration is on, contextIsolation is off, or the preload exposes a broad bridge.",
+  "test": "Read BrowserWindow options and the preload. Load an attacker page. Call the exposed API.",
+  "proof": "A Node or file action from a remote page.",
+  "failure": "A sandboxed renderer with a narrow preload is safer. A local file page is a different origin."
  },
  {
   "path": "knowledge/exploit-rop-argument-registers.md",
@@ -383,6 +735,50 @@
   "failure": "A reflected parameter is not injection. The command must run."
  },
  {
+  "path": "knowledge/firmware-jtag.md",
+  "body": "# JTAG and SWD are identified by pinout and IDCODE\n\n## Claim\n\nThe board exposes a debug header. The TAP or SWD IDCODE identifies the target and allows a flash dump.\n\n## Test\n\nFind TMS/TCK/TDI/TDO or SWDIO/SWCLK. Use OpenOCD with a target config. Read the IDCODE before dumping.\n\n## Proof\n\nA flash dump that matches a second read.\n\n## Failure modes\n\nA header that looks like JTAG can be unpopulated or disabled. Read the chip datasheet.",
+  "id": "firmware-jtag",
+  "title": "JTAG and SWD are identified by pinout and IDCODE",
+  "tags": [
+   "firmware",
+   "hardware",
+   "jtag"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/firmware-iot.md"
+  ],
+  "status": "active",
+  "claim": "The board exposes a debug header. The TAP or SWD IDCODE identifies the target and allows a flash dump.",
+  "test": "Find TMS/TCK/TDI/TDO or SWDIO/SWCLK. Use OpenOCD with a target config. Read the IDCODE before dumping.",
+  "proof": "A flash dump that matches a second read.",
+  "failure": "A header that looks like JTAG can be unpopulated or disabled. Read the chip datasheet."
+ },
+ {
+  "path": "knowledge/firmware-spi.md",
+  "body": "# SPI flash reads need two matching dumps\n\n## Claim\n\nThe firmware lives on an SPI NOR chip. A bad clip or voltage gives a corrupt image.\n\n## Test\n\nUse a SOIC clip and a programmer. Read twice and compare hashes. Identify the chip before writing.\n\n## Proof\n\nTwo identical dumps and a mounted filesystem.\n\n## Failure modes\n\nA single read can look valid and still be corrupt. Do not write without a backup.",
+  "id": "firmware-spi",
+  "title": "SPI flash reads need two matching dumps",
+  "tags": [
+   "firmware",
+   "hardware",
+   "spi"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/firmware-iot.md"
+  ],
+  "status": "active",
+  "claim": "The firmware lives on an SPI NOR chip. A bad clip or voltage gives a corrupt image.",
+  "test": "Use a SOIC clip and a programmer. Read twice and compare hashes. Identify the chip before writing.",
+  "proof": "Two identical dumps and a mounted filesystem.",
+  "failure": "A single read can look valid and still be corrupt. Do not write without a backup."
+ },
+ {
   "path": "knowledge/firmware-uart.md",
   "body": "# UART is found by idle levels and confirmed by baud\n\n## Claim\n\nA board exposes TX, RX and GND pads, often labeled or near the SoC. The console may drop to a shell.\n\n## Test\n\nUse a multimeter and logic analyzer. Find the idle-high TX pad. Try common baud rates. Do not connect VCC first.\n\n## Proof\n\nA console prompt or boot log on the serial line.\n\n## Failure modes\n\nA pad that looks like UART can be SWD. Wrong baud gives garbage. TX and RX are often crossed.",
   "id": "firmware-uart",
@@ -425,6 +821,95 @@
   "test": "Read the updater. Check the verify flag. Rebuild a modified image. Try an older version.",
   "proof": "A modified rootfs accepted by the update path.",
   "failure": "A signature that covers only the header is bypassable. A version floor may block downgrade."
+ },
+ {
+  "path": "knowledge/ir-memory.md",
+  "body": "# Memory is the most volatile evidence\n\n## Claim\n\nRunning processes, keys and network state disappear on shutdown. Capture memory before disk if the system is live.\n\n## Test\n\nRecord the order. Capture memory with a known tool. Hash it. Capture disk after.\n\n## Proof\n\nA memory image with a hash and a process list that matches the host.\n\n## Failure modes\n\nA memory image from a different build is hard to symbolize. Do not reboot first.",
+  "id": "ir-memory",
+  "title": "Memory is the most volatile evidence",
+  "tags": [
+   "ir",
+   "memory",
+   "forensics"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "Running processes, keys and network state disappear on shutdown. Capture memory before disk if the system is live.",
+  "test": "Record the order. Capture memory with a known tool. Hash it. Capture disk after.",
+  "proof": "A memory image with a hash and a process list that matches the host.",
+  "failure": "A memory image from a different build is hard to symbolize. Do not reboot first."
+ },
+ {
+  "path": "knowledge/ir-timeline.md",
+  "body": "# An incident timeline needs three independent clocks\n\n## Claim\n\nLogs, disk artifacts and memory have different times and retention. One source is not a timeline.\n\n## Test\n\nCollect the three sources. Normalize to UTC. Order events and mark gaps.\n\n## Proof\n\nA sequence with sources and confidence for each event.\n\n## Failure modes\n\nA file mtime can be changed. A log can be incomplete.",
+  "id": "ir-timeline",
+  "title": "An incident timeline needs three independent clocks",
+  "tags": [
+   "ir",
+   "timeline",
+   "forensics"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "Logs, disk artifacts and memory have different times and retention. One source is not a timeline.",
+  "test": "Collect the three sources. Normalize to UTC. Order events and mark gaps.",
+  "proof": "A sequence with sources and confidence for each event.",
+  "failure": "A file mtime can be changed. A log can be incomplete."
+ },
+ {
+  "path": "knowledge/key-management.md",
+  "body": "# Key management is where crypto bugs become data bugs\n\n## Claim\n\nKeys are in source, in env, in a world-readable file, or reused across environments. Rotation is manual or absent.\n\n## Test\n\nFind every key path. Check file permissions, env exposure and git history. Test a rotated key.\n\n## Proof\n\nA key readable by a lower-privilege principal, or an old key still valid.\n\n## Failure modes\n\nA public key is not a secret. A key in a secret manager with narrow access is the goal.",
+  "id": "key-management",
+  "title": "Key management is where crypto bugs become data bugs",
+  "tags": [
+   "crypto",
+   "keys",
+   "storage"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "Keys are in source, in env, in a world-readable file, or reused across environments. Rotation is manual or absent.",
+  "test": "Find every key path. Check file permissions, env exposure and git history. Test a rotated key.",
+  "proof": "A key readable by a lower-privilege principal, or an old key still valid.",
+  "failure": "A public key is not a secret. A key in a secret manager with narrow access is the goal."
+ },
+ {
+  "path": "knowledge/linux-cron-systemd.md",
+  "body": "# Scheduled jobs inherit a weak PATH or writable unit\n\n## Claim\n\nA root cron job runs a script from a writable directory, or a systemd unit points to a writable binary.\n\n## Test\n\nList cron, timers and units. Check file ownership and PATH. Wait for the schedule or trigger the timer.\n\n## Proof\n\nA root command from a file you control.\n\n## Failure modes\n\nA writable script that root never runs is not a finding. Check the schedule.",
+  "id": "linux-cron-systemd",
+  "title": "Scheduled jobs inherit a weak PATH or writable unit",
+  "tags": [
+   "linux",
+   "privesc",
+   "cron",
+   "systemd"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "A root cron job runs a script from a writable directory, or a systemd unit points to a writable binary.",
+  "test": "List cron, timers and units. Check file ownership and PATH. Wait for the schedule or trigger the timer.",
+  "proof": "A root command from a file you control.",
+  "failure": "A writable script that root never runs is not a finding. Check the schedule."
  },
  {
   "path": "knowledge/linux-suid.md",
@@ -472,6 +957,50 @@
   "failure": "An exported launcher activity is normal. The bug needs a valuable method or data."
  },
  {
+  "path": "knowledge/mobile-flutter.md",
+  "body": "# Flutter hides logic in libapp.so and pins in Dart\n\n## Claim\n\nThe Dart snapshot is not readable Java, and pinning can live in Dart or native code. Standard Java hooks miss it.\n\n## Test\n\nUse reFlutter or Blutter. Hook BoringSSL and the Dart socket layer. Compare with a Java-only bypass.\n\n## Proof\n\nA decrypted request or a recovered Dart symbol.\n\n## Failure modes\n\nA successful pinning bypass on a rooted device does not prove a server-side issue.",
+  "id": "mobile-flutter",
+  "title": "Flutter hides logic in libapp.so and pins in Dart",
+  "tags": [
+   "mobile",
+   "flutter",
+   "dart"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/mobile-reverse.md"
+  ],
+  "status": "active",
+  "claim": "The Dart snapshot is not readable Java, and pinning can live in Dart or native code. Standard Java hooks miss it.",
+  "test": "Use reFlutter or Blutter. Hook BoringSSL and the Dart socket layer. Compare with a Java-only bypass.",
+  "proof": "A decrypted request or a recovered Dart symbol.",
+  "failure": "A successful pinning bypass on a rooted device does not prove a server-side issue."
+ },
+ {
+  "path": "knowledge/mobile-ios-ats.md",
+  "body": "# ATS exceptions are domain-scoped trust decisions\n\n## Claim\n\nNSAllowsArbitraryLoads or a per-domain exception permits HTTP, or a WKWebView bridge trusts any loaded page.\n\n## Test\n\nRead Info.plist. Proxy the app. Test an HTTP host and a bridge method from an attacker page.\n\n## Proof\n\nPlaintext traffic or a bridge call from an untrusted origin.\n\n## Failure modes\n\nAn exception for a local host may be intended. ATS does not cover every framework.",
+  "id": "mobile-ios-ats",
+  "title": "ATS exceptions are domain-scoped trust decisions",
+  "tags": [
+   "mobile",
+   "ios",
+   "ats"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/mobile-reverse.md"
+  ],
+  "status": "active",
+  "claim": "NSAllowsArbitraryLoads or a per-domain exception permits HTTP, or a WKWebView bridge trusts any loaded page.",
+  "test": "Read Info.plist. Proxy the app. Test an HTTP host and a bridge method from an attacker page.",
+  "proof": "Plaintext traffic or a bridge call from an untrusted origin.",
+  "failure": "An exception for a local host may be intended. ATS does not cover every framework."
+ },
+ {
   "path": "knowledge/mobile-provider-paths.md",
   "body": "# An exported provider with a broad path leaks files\n\n## Claim\n\nA FileProvider is exported and its paths include a wide directory such as external storage root.\n\n## Test\n\nRead the provider XML. Request a path outside the intended directory with a content resolver.\n\n## Proof\n\nA file read through the provider that the app did not intend to share.\n\n## Failure modes\n\nA provider with grantUriPermissions and narrow paths is safer. A non-exported provider needs a grant.",
   "id": "mobile-provider-paths",
@@ -492,6 +1021,28 @@
   "test": "Read the provider XML. Request a path outside the intended directory with a content resolver.",
   "proof": "A file read through the provider that the app did not intend to share.",
   "failure": "A provider with grantUriPermissions and narrow paths is safer. A non-exported provider needs a grant."
+ },
+ {
+  "path": "knowledge/process-duplicate-search.md",
+  "body": "# Search duplicates before writing a report\n\n## Claim\n\nA valid bug can be a duplicate. The search needs the endpoint, the parameter and the class, not the title only.\n\n## Test\n\nSearch the program, disclosed reports, changelog and issue tracker. Check the fix and the date.\n\n## Proof\n\nA duplicate check with sources and a decision to proceed or drop.\n\n## Failure modes\n\nA closed report can still be a new variant. A different endpoint can be the same root cause.",
+  "id": "process-duplicate-search",
+  "title": "Search duplicates before writing a report",
+  "tags": [
+   "process",
+   "triage",
+   "duplicate"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/claude-bughunter.md"
+  ],
+  "status": "active",
+  "claim": "A valid bug can be a duplicate. The search needs the endpoint, the parameter and the class, not the title only.",
+  "test": "Search the program, disclosed reports, changelog and issue tracker. Check the fix and the date.",
+  "proof": "A duplicate check with sources and a decision to proceed or drop.",
+  "failure": "A closed report can still be a new variant. A different endpoint can be the same root cause."
  },
  {
   "path": "knowledge/process-recall-before-research.md",
@@ -515,6 +1066,50 @@
   "test": "Run recall with the target and class. If the decision is USE, answer from the card and test it. If REFRESH, verify one claim. If RESEARCH, collect.",
   "proof": "A card id and its proof, or a deliberate gap.",
   "failure": "A card can be stale. Check the date and the source before trusting it."
+ },
+ {
+  "path": "knowledge/process-scope-parse.md",
+  "body": "# Scope is a list of rules, not a domain\n\n## Claim\n\nWildcards, exclusions, acquisitions and third-party hosts change what is in scope. A subdomain is not automatically owned.\n\n## Test\n\nParse the program brief into allow and deny rules. Resolve every asset. Check the ownership evidence.\n\n## Proof\n\nAn asset with a scope citation before the first request.\n\n## Failure modes\n\nA shared CDN or cloud IP belongs to many customers. A parent domain does not imply a sibling.",
+  "id": "process-scope-parse",
+  "title": "Scope is a list of rules, not a domain",
+  "tags": [
+   "process",
+   "scope",
+   "recon"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "docs/break-my-app.md"
+  ],
+  "status": "active",
+  "claim": "Wildcards, exclusions, acquisitions and third-party hosts change what is in scope. A subdomain is not automatically owned.",
+  "test": "Parse the program brief into allow and deny rules. Resolve every asset. Check the ownership evidence.",
+  "proof": "An asset with a scope citation before the first request.",
+  "failure": "A shared CDN or cloud IP belongs to many customers. A parent domain does not imply a sibling."
+ },
+ {
+  "path": "knowledge/race-idempotency.md",
+  "body": "# A unique constraint is the cheapest race fix\n\n## Claim\n\nThe app checks for an existing row, then inserts. Two requests pass the check. A unique index or idempotency key closes it.\n\n## Test\n\nSend the same create request twice in parallel. Check the row count. Add a unique index and repeat.\n\n## Proof\n\nOne row after the fix, two before it.\n\n## Failure modes\n\nA transaction without a unique constraint can still race at a higher isolation level. Test the real DB.",
+  "id": "race-idempotency",
+  "title": "A unique constraint is the cheapest race fix",
+  "tags": [
+   "web",
+   "race",
+   "database"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "The app checks for an existing row, then inserts. Two requests pass the check. A unique index or idempotency key closes it.",
+  "test": "Send the same create request twice in parallel. Check the row count. Add a unique index and repeat.",
+  "proof": "One row after the fix, two before it.",
+  "failure": "A transaction without a unique constraint can still race at a higher isolation level. Test the real DB."
  },
  {
   "path": "knowledge/re-crash-triage-primitive.md",
@@ -674,6 +1269,50 @@
   "failure": "A public client key may be intended. A revoked key is a false positive."
  },
  {
+  "path": "knowledge/supply-lockfile.md",
+  "body": "# A lockfile is an integrity contract\n\n## Claim\n\nThe lockfile is missing, unpinned, or resolved from a different registry than the source. Builds drift.\n\n## Test\n\nCheck lockfile presence and registry URLs. Diff a clean install. Look for git or file dependencies.\n\n## Proof\n\nA dependency source that differs from the intended registry.\n\n## Failure modes\n\nA lockfile with integrity hashes is not automatically safe if the registry is compromised.",
+  "id": "supply-lockfile",
+  "title": "A lockfile is an integrity contract",
+  "tags": [
+   "supply-chain",
+   "lockfile",
+   "reproducible"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "The lockfile is missing, unpinned, or resolved from a different registry than the source. Builds drift.",
+  "test": "Check lockfile presence and registry URLs. Diff a clean install. Look for git or file dependencies.",
+  "proof": "A dependency source that differs from the intended registry.",
+  "failure": "A lockfile with integrity hashes is not automatically safe if the registry is compromised."
+ },
+ {
+  "path": "knowledge/supply-sigstore.md",
+  "body": "# Signatures are only useful when verified\n\n## Claim\n\nArtifacts are signed but the consumer does not verify, or verifies identity without policy.\n\n## Test\n\nCheck the signature, the certificate identity and the transparency entry. Test a tampered artifact.\n\n## Proof\n\nThe verifier rejects a modified artifact and accepts the expected identity.\n\n## Failure modes\n\nA signature from an unexpected identity is not trust. A self-signed artifact proves nothing.",
+  "id": "supply-sigstore",
+  "title": "Signatures are only useful when verified",
+  "tags": [
+   "supply-chain",
+   "sigstore",
+   "provenance"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "Artifacts are signed but the consumer does not verify, or verifies identity without policy.",
+  "test": "Check the signature, the certificate identity and the transparency entry. Test a tampered artifact.",
+  "proof": "The verifier rejects a modified artifact and accepts the expected identity.",
+  "failure": "A signature from an unexpected identity is not trust. A self-signed artifact proves nothing."
+ },
+ {
   "path": "knowledge/supply-typosquat.md",
   "body": "# A package name one character off is a supply-chain bug\n\n## Claim\n\nA dependency resolves to a name that resembles a popular package, or an internal name resolves from the public registry.\n\n## Test\n\nCompare the name with the popular package. Check the publisher, age, install count and install scripts.\n\n## Proof\n\nThe resolved tarball differs from the intended package.\n\n## Failure modes\n\nA fork with the same name can be legitimate. Check the lockfile hash.",
   "id": "supply-typosquat",
@@ -694,6 +1333,50 @@
   "test": "Compare the name with the popular package. Check the publisher, age, install count and install scripts.",
   "proof": "The resolved tarball differs from the intended package.",
   "failure": "A fork with the same name can be legitimate. Check the lockfile hash."
+ },
+ {
+  "path": "knowledge/tls-config-review.md",
+  "body": "# TLS is a version, a chain and a policy\n\n## Claim\n\nOld protocols, weak ciphers, an incomplete chain or a hostname mismatch. A padlock is not a policy.\n\n## Test\n\nUse openssl s_client with each version. Check the chain, SAN and expiry. Test a wrong hostname.\n\n## Proof\n\nA protocol or chain failure with a clear client impact.\n\n## Failure modes\n\nA modern browser may hide the chain issue. A self-signed cert in a lab is expected.",
+  "id": "tls-config-review",
+  "title": "TLS is a version, a chain and a policy",
+  "tags": [
+   "crypto",
+   "tls",
+   "certificate"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/tooling.md"
+  ],
+  "status": "active",
+  "claim": "Old protocols, weak ciphers, an incomplete chain or a hostname mismatch. A padlock is not a policy.",
+  "test": "Use openssl s_client with each version. Check the chain, SAN and expiry. Test a wrong hostname.",
+  "proof": "A protocol or chain failure with a clear client impact.",
+  "failure": "A modern browser may hide the chain issue. A self-signed cert in a lab is expected."
+ },
+ {
+  "path": "knowledge/web-cache-deception.md",
+  "body": "# Cache deception dresses a private page as a static file\n\n## Claim\n\nThe cache stores an authenticated response because the path looks static, then serves it to an unauthenticated user. Poisoning changes the content; deception leaks it.\n\n## Test\n\nRequest /account with a static-looking suffix such as /account.css or /account/%2e.css. Request the same URL without cookies. Compare.\n\n## Proof\n\nAn unauthenticated request returns the victim's private page from cache.\n\n## Failure modes\n\nA cache hit for your own cookie is not global. The origin must return the private content for the disguised path.",
+  "id": "web-cache-deception",
+  "title": "Cache deception dresses a private page as a static file",
+  "tags": [
+   "web",
+   "cache",
+   "deception"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "The cache stores an authenticated response because the path looks static, then serves it to an unauthenticated user. Poisoning changes the content; deception leaks it.",
+  "test": "Request /account with a static-looking suffix such as /account.css or /account/%2e.css. Request the same URL without cookies. Compare.",
+  "proof": "An unauthenticated request returns the victim's private page from cache.",
+  "failure": "A cache hit for your own cookie is not global. The origin must return the private content for the disguised path."
  },
  {
   "path": "knowledge/web-cache-key-unkeyed-input.md",
@@ -738,6 +1421,28 @@
   "test": "Send Origin: https://evil.lab and Origin: null. Check ACAO and ACAC. Read a private endpoint from a cross-origin page.",
   "proof": "A browser fetch returns private data for a logged-in victim.",
   "failure": "Wildcard ACAO with ACAC true is invalid. A public endpoint with no credentials is not a finding."
+ },
+ {
+  "path": "knowledge/web-csp-bypass.md",
+  "body": "# CSP is bypassed by a trusted script source, not by a weak directive alone\n\n## Claim\n\nA JSONP endpoint, an allowlisted CDN with a gadget, a base tag, or a reusable nonce gives the attacker script under the policy.\n\n## Test\n\nRead the policy. List every allowed host and scheme. Look for JSONP, Angular, script gadgets and base-uri. Inject a script from an allowed source.\n\n## Proof\n\nScript execution while the CSP header stays unchanged.\n\n## Failure modes\n\nA report-only policy does not block. A missing CSP is a different finding.",
+  "id": "web-csp-bypass",
+  "title": "CSP is bypassed by a trusted script source, not by a weak directive alone",
+  "tags": [
+   "web",
+   "csp",
+   "xss"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "A JSONP endpoint, an allowlisted CDN with a gadget, a base tag, or a reusable nonce gives the attacker script under the policy.",
+  "test": "Read the policy. List every allowed host and scheme. Look for JSONP, Angular, script gadgets and base-uri. Inject a script from an allowed source.",
+  "proof": "Script execution while the CSP header stays unchanged.",
+  "failure": "A report-only policy does not block. A missing CSP is a different finding."
  },
  {
   "path": "knowledge/web-csrf-samesite.md",
@@ -852,6 +1557,28 @@
   "failure": "A reflected host in the page is not the same as a host used in email. Proxies normalize."
  },
  {
+  "path": "knowledge/web-http2-downgrade.md",
+  "body": "# HTTP/2 adds a second parser for the same request\n\n## Claim\n\nPseudo-headers, header casing, HPACK and a downgrade to HTTP/1.1 can create a disagreement between front and back ends.\n\n## Test\n\nSend duplicate or malformed pseudo-headers. Test header names with spaces and connection-specific headers. Compare with an HTTP/1.1 client.\n\n## Proof\n\nA desync, a request split, or a response for another user.\n\n## Failure modes\n\nA 400 from the edge does not prove safety. Not every proxy downgrades.",
+  "id": "web-http2-downgrade",
+  "title": "HTTP/2 adds a second parser for the same request",
+  "tags": [
+   "web",
+   "http2",
+   "smuggling"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "Pseudo-headers, header casing, HPACK and a downgrade to HTTP/1.1 can create a disagreement between front and back ends.",
+  "test": "Send duplicate or malformed pseudo-headers. Test header names with spaces and connection-specific headers. Compare with an HTTP/1.1 client.",
+  "proof": "A desync, a request split, or a response for another user.",
+  "failure": "A 400 from the edge does not prove safety. Not every proxy downgrades."
+ },
+ {
   "path": "knowledge/web-idor-owner-check.md",
   "body": "# IDOR is a missing owner check, not a hidden id\n\n## Claim\n\nAn object id from the request is used without comparing the object owner to the session user. Hiding the id in a UUID does not add a check.\n\n## Test\n\nCreate two accounts at the same role. Capture an object id from A. Request it with B. Repeat for read, update, delete and export.\n\n## Proof\n\nB receives or changes A's object, with both sessions and the ids in the log.\n\n## Failure modes\n\nA public object, a 200 with an empty body, or an admin bypass is not the same bug. Check the data, not the status.",
   "id": "web-idor-owner-check",
@@ -898,6 +1625,29 @@
   "failure": "A decoded payload is not a finding. A 401 with a different body can still be a bypass on a sibling route."
  },
  {
+  "path": "knowledge/web-ldap-xpath.md",
+  "body": "# LDAP and XPath injection are filter syntax bugs\n\n## Claim\n\nUser input is concatenated into an LDAP filter or XPath expression, so a wildcard or boolean changes the match set.\n\n## Test\n\nTry *)(uid=*, admin*, and boolean pairs. For XPath, try ' or 1=1 or '1'='1 and count nodes.\n\n## Proof\n\nA login bypass or extra node in the result.\n\n## Failure modes\n\nAn LDAP bind that parses the filter safely is not vulnerable. Escaping differs by library.",
+  "id": "web-ldap-xpath",
+  "title": "LDAP and XPath injection are filter syntax bugs",
+  "tags": [
+   "web",
+   "ldap",
+   "xpath",
+   "injection"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "User input is concatenated into an LDAP filter or XPath expression, so a wildcard or boolean changes the match set.",
+  "test": "Try *)(uid=*, admin*, and boolean pairs. For XPath, try ' or 1=1 or '1'='1 and count nodes.",
+  "proof": "A login bypass or extra node in the result.",
+  "failure": "An LDAP bind that parses the filter safely is not vulnerable. Escaping differs by library."
+ },
+ {
   "path": "knowledge/web-oauth-redirect-binding.md",
   "body": "# OAuth redirect matching is prefix logic under pressure\n\n## Claim\n\nThe authorization server compares redirect URIs with loose rules. Path traversal, a subdomain, an open redirect or a fragment can move the code.\n\n## Test\n\nMap every redirect URI and the matching rule. Test path, query, fragment, subdomain, case and open redirect on an allowed host. Reuse state and nonce.\n\n## Proof\n\nA code or token delivered to an attacker-controlled origin, then exchanged for a session.\n\n## Failure modes\n\nA login CSRF needs a victim action. A code for your own account is not account takeover.",
   "id": "web-oauth-redirect-binding",
@@ -941,6 +1691,28 @@
   "test": "Test absolute, //host, backslash, encoded and userinfo forms. Put the redirect in an OAuth flow.",
   "proof": "A code or token delivered to an attacker origin.",
   "failure": "A redirect to the same host is not open. A 302 without a token can still be low."
+ },
+ {
+  "path": "knowledge/web-postmessage.md",
+  "body": "# postMessage is a bug when the receiver trusts any origin or sends to any origin\n\n## Claim\n\nA listener does not check event.origin, or a sender uses targetOrigin '*'. A cross-origin page can read or trigger an action.\n\n## Test\n\nFind listeners. Send a message from an attacker page with a distinctive payload. Try targetOrigin '*' on the sender.\n\n## Proof\n\nA cross-origin message changes state or leaks data.\n\n## Failure modes\n\nA listener that validates the origin is safe. A message with no sensitive action is low.",
+  "id": "web-postmessage",
+  "title": "postMessage is a bug when the receiver trusts any origin or sends to any origin",
+  "tags": [
+   "web",
+   "postmessage",
+   "client-side"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "A listener does not check event.origin, or a sender uses targetOrigin '*'. A cross-origin page can read or trigger an action.",
+  "test": "Find listeners. Send a message from an attacker page with a distinctive payload. Try targetOrigin '*' on the sender.",
+  "proof": "A cross-origin message changes state or leaks data.",
+  "failure": "A listener that validates the origin is safe. A message with no sensitive action is low."
  },
  {
   "path": "knowledge/web-prototype-pollution.md",
@@ -1169,6 +1941,28 @@
   "failure": "An XML parser with entities disabled is not vulnerable. JSON endpoints are out of scope."
  },
  {
+  "path": "knowledge/win-credential-stores.md",
+  "body": "# Windows keeps credentials in more than one place\n\n## Claim\n\nDPAPI blobs, Credential Manager, browser stores and Wi-Fi profiles hold secrets tied to the user or machine.\n\n## Test\n\nEnumerate vaults and DPAPI blobs. Decrypt with the user context or the backup key. Check browser stores.\n\n## Proof\n\nA recovered credential used for a new access.\n\n## Failure modes\n\nA blob without the master key is not readable. Machine and user scopes differ.",
+  "id": "win-credential-stores",
+  "title": "Windows keeps credentials in more than one place",
+  "tags": [
+   "windows",
+   "credentials",
+   "dpapi"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "DPAPI blobs, Credential Manager, browser stores and Wi-Fi profiles hold secrets tied to the user or machine.",
+  "test": "Enumerate vaults and DPAPI blobs. Decrypt with the user context or the backup key. Check browser stores.",
+  "proof": "A recovered credential used for a new access.",
+  "failure": "A blob without the master key is not readable. Machine and user scopes differ."
+ },
+ {
   "path": "knowledge/win-service-acl.md",
   "body": "# A weak service ACL is local privilege escalation\n\n## Claim\n\nA service binary or its directory is writable by a low-privilege user, or the service path is unquoted.\n\n## Test\n\nCheck service ACLs and binary paths. Look for unquoted paths with spaces. Replace the binary and restart if allowed.\n\n## Proof\n\nA shell as the service account, usually SYSTEM.\n\n## Failure modes\n\nA writable directory is not enough if the binary is signed and locked. Restart rights matter.",
   "id": "win-service-acl",
@@ -1189,5 +1983,27 @@
   "test": "Check service ACLs and binary paths. Look for unquoted paths with spaces. Replace the binary and restart if allowed.",
   "proof": "A shell as the service account, usually SYSTEM.",
   "failure": "A writable directory is not enough if the binary is signed and locked. Restart rights matter."
+ },
+ {
+  "path": "knowledge/win-token-privileges.md",
+  "body": "# Windows token privileges are the privesc surface\n\n## Claim\n\nA token holds SeImpersonate, SeAssignPrimaryToken, SeBackup, SeRestore or SeDebug. A service account with one of them can escalate.\n\n## Test\n\nRun whoami /priv. Match the privilege to a technique: potato, backup, debug. Use a known tool in a lab.\n\n## Proof\n\nA SYSTEM shell or a sensitive file read.\n\n## Failure modes\n\nAn enabled privilege on an admin token may be expected. The starting user matters.",
+  "id": "win-token-privileges",
+  "title": "Windows token privileges are the privesc surface",
+  "tags": [
+   "windows",
+   "token",
+   "privesc"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "A token holds SeImpersonate, SeAssignPrimaryToken, SeBackup, SeRestore or SeDebug. A service account with one of them can escalate.",
+  "test": "Run whoami /priv. Match the privilege to a technique: potato, backup, debug. Use a known tool in a lab.",
+  "proof": "A SYSTEM shell or a sensitive file read.",
+  "failure": "An enabled privilege on an admin token may be expected. The starting user matters."
  }
 ]

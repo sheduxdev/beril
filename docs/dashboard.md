@@ -29,7 +29,7 @@ Five sidebar sections. Work, Intel and Lab hold tabs, so the sidebar never grows
 | Activity | Jobs, labs, scans and journal in one stream | Open context |
 | Jobs | Every job with actor, model, tokens and cost | Create, finish, inspect |
 | Costs | Spend today/week/month, by model and type | Set the budget |
-| Memory | 53 durable cards, confidence and freshness | Open a card |
+| Memory | 90 durable cards, confidence and freshness | Open a card |
 | Threads | Every harvested thread with source filter and search | Open the source |
 | Experts | Profiles, focus, work count | Open the profile |
 | Tools | Core shelf and RE/offense shelf, search | Open the repo |

@@ -59,8 +59,8 @@
   "gap": "Cache deception versus poisoning, extension confusion",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "web-cache-deception",
+  "status": "covered"
  },
  {
   "id": "web-prototype-pollution",
@@ -95,8 +95,8 @@
   "gap": "LDAP and XPath injection syntax and blind variants",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "web-ldap-xpath",
+  "status": "covered"
  },
  {
   "id": "api-grpc",
@@ -104,8 +104,8 @@
   "gap": "gRPC reflection, proto exposure, per-method auth",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "api-grpc",
+  "status": "covered"
  },
  {
   "id": "api-mass-assignment",
@@ -140,8 +140,8 @@
   "gap": "Docker socket, root container, image digest and build secrets",
   "priority": "medium",
   "source": "labs/cloud",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "cloud-docker",
+  "status": "covered"
  },
  {
   "id": "cloud-terraform",
@@ -149,8 +149,8 @@
   "gap": "Terraform public resources, state secrets and provider trust",
   "priority": "medium",
   "source": "labs/cloud",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "cloud-terraform",
+  "status": "covered"
  },
  {
   "id": "supply-typosquat",
@@ -167,8 +167,8 @@
   "gap": "Lockfile integrity, registry pinning and reproducible builds",
   "priority": "medium",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "supply-lockfile",
+  "status": "covered"
  },
  {
   "id": "supply-sigstore",
@@ -176,8 +176,8 @@
   "gap": "Signing, provenance and verification of build artifacts",
   "priority": "medium",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "supply-sigstore",
+  "status": "covered"
  },
  {
   "id": "cicd-pr-target",
@@ -203,8 +203,8 @@
   "gap": "iOS ATS exceptions and WKWebView bridges",
   "priority": "medium",
   "source": "references/mobile-reverse.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "mobile-ios-ats",
+  "status": "covered"
  },
  {
   "id": "mobile-android-provider",
@@ -221,8 +221,8 @@
   "gap": "Flutter Dart snapshots, SSL pinning and reFlutter",
   "priority": "medium",
   "source": "references/mobile-reverse.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "mobile-flutter",
+  "status": "covered"
  },
  {
   "id": "firmware-uart",
@@ -239,8 +239,8 @@
   "gap": "JTAG and SWD identification and flash dump",
   "priority": "medium",
   "source": "references/firmware-iot.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "firmware-jtag",
+  "status": "covered"
  },
  {
   "id": "firmware-spi",
@@ -248,8 +248,8 @@
   "gap": "SPI flash read, verification and recovery",
   "priority": "medium",
   "source": "references/firmware-iot.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "firmware-spi",
+  "status": "covered"
  },
  {
   "id": "firmware-update-sign",
@@ -275,8 +275,8 @@
   "gap": "Token privileges, impersonation and potato family",
   "priority": "high",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "win-token",
+  "status": "covered"
  },
  {
   "id": "win-credential",
@@ -284,8 +284,8 @@
   "gap": "DPAPI, Credential Manager and browser stores",
   "priority": "medium",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "win-credential",
+  "status": "covered"
  },
  {
   "id": "linux-suid",
@@ -302,8 +302,8 @@
   "gap": "Cron, systemd unit and PATH privilege paths",
   "priority": "medium",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "linux-cron-systemd",
+  "status": "covered"
  },
  {
   "id": "container-escape",
@@ -311,8 +311,8 @@
   "gap": "Container escape primitives and host mounts",
   "priority": "high",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "container-escape",
+  "status": "covered"
  },
  {
   "id": "browser-extension",
@@ -320,8 +320,8 @@
   "gap": "Extension permissions, content scripts and message passing",
   "priority": "medium",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "browser-extension",
+  "status": "covered"
  },
  {
   "id": "electron-context",
@@ -329,8 +329,8 @@
   "gap": "Electron context isolation, preload and nodeIntegration",
   "priority": "medium",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "electron-context",
+  "status": "covered"
  },
  {
   "id": "detection-sigma",
@@ -347,8 +347,8 @@
   "gap": "Beaconing detection from flow timing and jitter",
   "priority": "medium",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "detection-beacon",
+  "status": "covered"
  },
  {
   "id": "ir-timeline",
@@ -356,8 +356,8 @@
   "gap": "Incident timeline from logs, disk and memory",
   "priority": "medium",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "ir-timeline",
+  "status": "covered"
  },
  {
   "id": "ir-memory",
@@ -365,8 +365,8 @@
   "gap": "Memory capture order and volatile evidence",
   "priority": "medium",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "ir-memory",
+  "status": "covered"
  },
  {
   "id": "ai-agent-tool",
@@ -383,8 +383,8 @@
   "gap": "Agent memory poisoning and later action",
   "priority": "high",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "ai-memory-poison",
+  "status": "covered"
  },
  {
   "id": "ai-mcp",
@@ -401,8 +401,8 @@
   "gap": "Token budget, loop control and cost caps for agents",
   "priority": "medium",
   "source": "docs/dashboard.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "ai-cost",
+  "status": "covered"
  },
  {
   "id": "report-cvss",
@@ -428,8 +428,8 @@
   "gap": "TLS versions, ciphers, certificate chain and pinning",
   "priority": "medium",
   "source": "references/tooling.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "tls-config",
+  "status": "covered"
  },
  {
   "id": "key-management",
@@ -437,8 +437,8 @@
   "gap": "Key storage, rotation and envelope encryption",
   "priority": "medium",
   "source": "references/vulnerability-research.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "key-management",
+  "status": "covered"
  },
  {
   "id": "webhook-signature",
@@ -446,8 +446,8 @@
   "gap": "Webhook HMAC, timestamp and replay",
   "priority": "high",
   "source": "references/techniques.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "api-webhook-signature",
+  "status": "covered"
  },
  {
   "id": "race-db",
@@ -455,6 +455,276 @@
   "gap": "Database isolation, unique constraints and idempotency keys",
   "priority": "medium",
   "source": "references/techniques.md",
+  "covered_by": "race-db",
+  "status": "covered"
+ },
+ {
+  "id": "web-csp-bypass",
+  "domain": "web",
+  "gap": "CSP bypass: JSONP, base-uri, script gadgets and nonce reuse",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "web-csp-bypass",
+  "status": "covered"
+ },
+ {
+  "id": "web-dom-clobbering",
+  "domain": "web",
+  "gap": "DOM clobbering and named element collisions",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "web-postmessage",
+  "domain": "web",
+  "gap": "postMessage origin and target origin checks",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "web-postmessage",
+  "status": "covered"
+ },
+ {
+  "id": "web-http2",
+  "domain": "web",
+  "gap": "HTTP/2 pseudo-header, HPACK and downgrade behavior",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "web-http2",
+  "status": "covered"
+ },
+ {
+  "id": "web-jsonp",
+  "domain": "web",
+  "gap": "JSONP and callback injection",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "web-client-path",
+  "domain": "web",
+  "gap": "Client-side path traversal in routers and file pickers",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "api-oauth-device",
+  "domain": "api",
+  "gap": "OAuth device code flow and code phishing",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "api-sse",
+  "domain": "api",
+  "gap": "Server-sent events auth, replay and cross-user leakage",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "api-rate-limit",
+  "domain": "api",
+  "gap": "Rate limit keying and bypass through identity, IP and route",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "api-rate-limit",
+  "status": "covered"
+ },
+ {
+  "id": "cloud-azure",
+  "domain": "cloud",
+  "gap": "Azure AD, managed identity and role assignment paths",
+  "priority": "high",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "cloud-azure",
+  "status": "covered"
+ },
+ {
+  "id": "cloud-gcp",
+  "domain": "cloud",
+  "gap": "GCP service accounts, workload identity and bucket IAM",
+  "priority": "high",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "cloud-gcp",
+  "status": "covered"
+ },
+ {
+  "id": "cloud-serverless",
+  "domain": "cloud",
+  "gap": "Lambda and Cloud Functions event injection and role scope",
+  "priority": "medium",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "cloud-eks",
+  "domain": "cloud",
+  "gap": "EKS IRSA, aws-auth and node role paths",
+  "priority": "medium",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "binary-kernel",
+  "domain": "binary",
+  "gap": "Kernel drivers, IOCTL buffers and object lifetime",
+  "priority": "high",
+  "source": "references/reverse-engineering.md",
+  "covered_by": "binary-kernel",
+  "status": "covered"
+ },
+ {
+  "id": "binary-browser",
+  "domain": "binary",
+  "gap": "Browser exploitation: JIT, GC and renderer sandbox",
+  "priority": "high",
+  "source": "references/exploit-development.md",
+  "covered_by": "binary-browser",
+  "status": "covered"
+ },
+ {
+  "id": "binary-jit",
+  "domain": "binary",
+  "gap": "JIT spraying, RWX pages and code generation bugs",
+  "priority": "medium",
+  "source": "references/exploit-development.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "re-go",
+  "domain": "re",
+  "gap": "Go symbols, pclntab, goroutines and interface calls",
+  "priority": "medium",
+  "source": "references/reverse-engineering.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "re-dotnet-aot",
+  "domain": "re",
+  "gap": ".NET Native AOT metadata and method recovery",
+  "priority": "medium",
+  "source": "references/reverse-engineering.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "re-swift",
+  "domain": "re",
+  "gap": "Swift mangling, witness tables and value types",
+  "priority": "medium",
+  "source": "references/reverse-engineering.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "ai-model-extraction",
+  "domain": "ai",
+  "gap": "Model extraction and membership inference",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "ai-data-poison",
+  "domain": "ai",
+  "gap": "Training and RAG data poisoning",
+  "priority": "high",
+  "source": "references/techniques.md",
+  "covered_by": "ai-data-poison",
+  "status": "covered"
+ },
+ {
+  "id": "ai-embedding",
+  "domain": "ai",
+  "gap": "Embedding inversion and vector store access",
+  "priority": "medium",
+  "source": "references/techniques.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "detection-edr",
+  "domain": "detection",
+  "gap": "EDR telemetry and process tree detection",
+  "priority": "medium",
+  "source": "labs/detection",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "ir-disk",
+  "domain": "ir",
+  "gap": "Disk artifacts: MFT, USN, registry and prefetch",
+  "priority": "medium",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "process-duplicate",
+  "domain": "process",
+  "gap": "Duplicate search before writing a report",
+  "priority": "high",
+  "source": "references/claude-bughunter.md",
+  "covered_by": "process-duplicate",
+  "status": "covered"
+ },
+ {
+  "id": "process-scope",
+  "domain": "process",
+  "gap": "Scope parsing and out-of-scope asset checks",
+  "priority": "high",
+  "source": "docs/break-my-app.md",
+  "covered_by": "process-scope",
+  "status": "covered"
+ },
+ {
+  "id": "crypto-random",
+  "domain": "crypto",
+  "gap": "Weak randomness, predictability and seed reuse",
+  "priority": "high",
+  "source": "references/vulnerability-research.md",
+  "covered_by": "crypto-random",
+  "status": "covered"
+ },
+ {
+  "id": "mobile-swift",
+  "domain": "mobile",
+  "gap": "Swift runtime, Objective-C bridging and Swift hooks",
+  "priority": "medium",
+  "source": "references/mobile-reverse.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "firmware-radio",
+  "domain": "firmware",
+  "gap": "BLE, Zigbee and sub-GHz capture and replay",
+  "priority": "medium",
+  "source": "references/firmware-iot.md",
+  "covered_by": "",
+  "status": "open"
+ },
+ {
+  "id": "hardware-sidechannel",
+  "domain": "hardware",
+  "gap": "Power, timing and EM side channels",
+  "priority": "low",
+  "source": "references/firmware-iot.md",
   "covered_by": "",
   "status": "open"
  }
