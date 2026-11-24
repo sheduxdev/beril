@@ -32,6 +32,14 @@ Beril is a cybersecurity intelligence and assessment skill. Claude Code loads th
 ./beril validate
 ```
 
+## Recall before research
+
+```bash
+./beril recall "class or target" --decide
+```
+
+Use a fresh high or medium card instead of a new search. Refresh stale cards. Add a card after a new lesson with `./beril remember add`. See `docs/memory.md`.
+
 ## Workflow
 
 1. Ask for the target, authorization, passive or active, and the proof needed.

@@ -1,0 +1,621 @@
+[
+ {
+  "path": "knowledge/ad-acl-path.md",
+  "body": "# AD compromise is an edge path, not a single bug\n\n## Claim\n\nA user has a right over an object that leads to another right, then to a session on a high-value host.\n\n## Test\n\nCollect with BloodHound. Read the ACL edges. Pick the shortest path to the objective and prove one edge.\n\n## Proof\n\nA password reset, ticket or session that grants the next node, with the path in BloodHound.\n\n## Failure modes\n\nA roastable account with a strong password is not a finding until cracked. A path that needs DA to start is circular.",
+  "id": "ad-acl-path",
+  "title": "AD compromise is an edge path, not a single bug",
+  "tags": [
+   "ad",
+   "windows",
+   "acl"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md",
+   "labs/ad"
+  ],
+  "status": "active",
+  "claim": "A user has a right over an object that leads to another right, then to a session on a high-value host.",
+  "test": "Collect with BloodHound. Read the ACL edges. Pick the shortest path to the objective and prove one edge.",
+  "proof": "A password reset, ticket or session that grants the next node, with the path in BloodHound.",
+  "failure": "A roastable account with a strong password is not a finding until cracked. A path that needs DA to start is circular."
+ },
+ {
+  "path": "knowledge/ad-adcs-esc1.md",
+  "body": "# ESC1 is an enrollable SAN on a client-auth template\n\n## Claim\n\nA template lets a low-privilege principal enroll and supply a subject alternative name for another identity.\n\n## Test\n\nRead the template flags. Enroll with an arbitrary UPN. Use the certificate for PKINIT or Schannel.\n\n## Proof\n\nA TGT or session as the target user from the crafted certificate.\n\n## Failure modes\n\nA template with approval or no client auth is not ESC1. Check the CA and the version.",
+  "id": "ad-adcs-esc1",
+  "title": "ESC1 is an enrollable SAN on a client-auth template",
+  "tags": [
+   "ad",
+   "adcs",
+   "certificate"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "labs/ad",
+   "references/vulnerability-research.md"
+  ],
+  "status": "active",
+  "claim": "A template lets a low-privilege principal enroll and supply a subject alternative name for another identity.",
+  "test": "Read the template flags. Enroll with an arbitrary UPN. Use the certificate for PKINIT or Schannel.",
+  "proof": "A TGT or session as the target user from the crafted certificate.",
+  "failure": "A template with approval or no client auth is not ESC1. Check the CA and the version."
+ },
+ {
+  "path": "knowledge/ai-indirect-injection-tool.md",
+  "body": "# Indirect injection turns a document into an instruction\n\n## Claim\n\nA retrieved chunk contains instructions that the model follows, especially when a tool can send data out.\n\n## Test\n\nPlant an instruction in a document. Ask a normal question. Watch for a tool call with attacker arguments.\n\n## Proof\n\nA tool call or output that crosses the boundary without a user instruction.\n\n## Failure modes\n\nA prompt that says ignore previous instructions is not impact until the tool acts.",
+  "id": "ai-indirect-injection-tool",
+  "title": "Indirect injection turns a document into an instruction",
+  "tags": [
+   "ai",
+   "llm",
+   "prompt-injection"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "labs/llm",
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "A retrieved chunk contains instructions that the model follows, especially when a tool can send data out.",
+  "test": "Plant an instruction in a document. Ask a normal question. Watch for a tool call with attacker arguments.",
+  "proof": "A tool call or output that crosses the boundary without a user instruction.",
+  "failure": "A prompt that says ignore previous instructions is not impact until the tool acts."
+ },
+ {
+  "path": "knowledge/ai-rag-tenant-filter.md",
+  "body": "# RAG leaks when retrieval ignores the tenant\n\n## Claim\n\nThe retriever ranks chunks across users and filters after generation, or not at all.\n\n## Test\n\nCreate two users with distinct documents. Query as A and inspect the retrieved sources and the answer.\n\n## Proof\n\nA document from user B appears in A's answer or source list.\n\n## Failure modes\n\nA shared public doc is not a leak. A model hallucination is not retrieval.",
+  "id": "ai-rag-tenant-filter",
+  "title": "RAG leaks when retrieval ignores the tenant",
+  "tags": [
+   "ai",
+   "llm",
+   "rag"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "labs/llm",
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "The retriever ranks chunks across users and filters after generation, or not at all.",
+  "test": "Create two users with distinct documents. Query as A and inspect the retrieved sources and the answer.",
+  "proof": "A document from user B appears in A's answer or source list.",
+  "failure": "A shared public doc is not a leak. A model hallucination is not retrieval."
+ },
+ {
+  "path": "knowledge/cloud-metadata-role.md",
+  "body": "# Cloud metadata is a credential endpoint\n\n## Claim\n\nA workload can reach the metadata service. The returned role may have more permission than the app needs.\n\n## Test\n\nQuery the metadata endpoint. Get the role and temporary credentials. Call get-caller-identity. Test read-only permissions.\n\n## Proof\n\nA read-only API response that proves the role's effective access.\n\n## Failure modes\n\nA role name is not a permission. IMDSv2 blocks naive requests.",
+  "id": "cloud-metadata-role",
+  "title": "Cloud metadata is a credential endpoint",
+  "tags": [
+   "cloud",
+   "ssrf",
+   "iam"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md",
+   "labs/cloud"
+  ],
+  "status": "active",
+  "claim": "A workload can reach the metadata service. The returned role may have more permission than the app needs.",
+  "test": "Query the metadata endpoint. Get the role and temporary credentials. Call get-caller-identity. Test read-only permissions.",
+  "proof": "A read-only API response that proves the role's effective access.",
+  "failure": "A role name is not a permission. IMDSv2 blocks naive requests."
+ },
+ {
+  "path": "knowledge/cost-job-ledger.md",
+  "body": "# Every job has an actor and a cost\n\n## Claim\n\nWork without a ledger cannot be budgeted. A job records type, actor, model, tokens, cost and status.\n\n## Test\n\nStart a job, do the work, finish it with tokens or a cost. Review the monthly total against the budget.\n\n## Proof\n\nA job row with a cost and a finished timestamp.\n\n## Failure modes\n\nA model without a price is zero. Add the rate before trusting the total.",
+  "id": "cost-job-ledger",
+  "title": "Every job has an actor and a cost",
+  "tags": [
+   "process",
+   "cost",
+   "jobs"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "data/llm_prices.json",
+   "docs/dashboard.md"
+  ],
+  "status": "active",
+  "claim": "Work without a ledger cannot be budgeted. A job records type, actor, model, tokens, cost and status.",
+  "test": "Start a job, do the work, finish it with tokens or a cost. Review the monthly total against the budget.",
+  "proof": "A job row with a cost and a finished timestamp.",
+  "failure": "A model without a price is zero. Add the rate before trusting the total."
+ },
+ {
+  "path": "knowledge/exploit-rop-argument-registers.md",
+  "body": "# x86_64 ROP needs the argument registers\n\n## Claim\n\nThe first six arguments are rdi, rsi, rdx, rcx, r8, r9. A chain needs pop gadgets or a function that sets them.\n\n## Test\n\nFind pop rdi; ret. Put /bin/sh in a writable location. Call system or execve through a PLT or libc leak.\n\n## Proof\n\nA shell or a controlled call with the arguments visible in the debugger.\n\n## Failure modes\n\nA chain that assumes NX off fails on the target. libc offsets differ by build.",
+  "id": "exploit-rop-argument-registers",
+  "title": "x86_64 ROP needs the argument registers",
+  "tags": [
+   "exploit",
+   "rop",
+   "linux"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/exploit-development.md",
+   "labs/binary"
+  ],
+  "status": "active",
+  "claim": "The first six arguments are rdi, rsi, rdx, rcx, r8, r9. A chain needs pop gadgets or a function that sets them.",
+  "test": "Find pop rdi; ret. Put /bin/sh in a writable location. Call system or execve through a PLT or libc leak.",
+  "proof": "A shell or a controlled call with the arguments visible in the debugger.",
+  "failure": "A chain that assumes NX off fails on the target. libc offsets differ by build."
+ },
+ {
+  "path": "knowledge/exploit-uaf-reallocate.md",
+  "body": "# UAF becomes control when the freed slot is reallocated\n\n## Claim\n\nA stale pointer is used after free. Reallocating the same size with controlled bytes replaces the object.\n\n## Test\n\nFree the object. Allocate the same size and fill it. Trigger the stale method. If it is a vtable, point it at a fake table.\n\n## Proof\n\nA controlled callback or write from the stale object.\n\n## Failure modes\n\nA UAF crash without reallocation is not control. Allocator behavior differs by version.",
+  "id": "exploit-uaf-reallocate",
+  "title": "UAF becomes control when the freed slot is reallocated",
+  "tags": [
+   "exploit",
+   "uaf",
+   "heap"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/exploit-development.md",
+   "labs/binary"
+  ],
+  "status": "active",
+  "claim": "A stale pointer is used after free. Reallocating the same size with controlled bytes replaces the object.",
+  "test": "Free the object. Allocate the same size and fill it. Trigger the stale method. If it is a vtable, point it at a fake table.",
+  "proof": "A controlled callback or write from the stale object.",
+  "failure": "A UAF crash without reallocation is not control. Allocator behavior differs by version."
+ },
+ {
+  "path": "knowledge/firmware-cgi-injection.md",
+  "body": "# Firmware CGI builds a shell string from the query\n\n## Claim\n\nA CGI passes QUERY_STRING into a shell command without quoting or validation. Root execution is common on embedded systems.\n\n## Test\n\nExtract the rootfs. Read the CGI. Call it with a separator and a command. Confirm with id.\n\n## Proof\n\nCommand output in the HTTP response or a callback.\n\n## Failure modes\n\nA reflected parameter is not injection. The command must run.",
+  "id": "firmware-cgi-injection",
+  "title": "Firmware CGI builds a shell string from the query",
+  "tags": [
+   "firmware",
+   "iot",
+   "command"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/firmware-iot.md",
+   "labs/firmware"
+  ],
+  "status": "active",
+  "claim": "A CGI passes QUERY_STRING into a shell command without quoting or validation. Root execution is common on embedded systems.",
+  "test": "Extract the rootfs. Read the CGI. Call it with a separator and a command. Confirm with id.",
+  "proof": "Command output in the HTTP response or a callback.",
+  "failure": "A reflected parameter is not injection. The command must run."
+ },
+ {
+  "path": "knowledge/mobile-deep-link-bridge.md",
+  "body": "# A deep link plus a JS bridge is a chain\n\n## Claim\n\nAn exported activity loads an attacker URL into a WebView that exposes a JavaScript bridge. The page can call native methods.\n\n## Test\n\nRead the manifest. Start the deep link with an attacker URL. From the page, call each bridge method and log the result.\n\n## Proof\n\nA token or native action triggered from the attacker page.\n\n## Failure modes\n\nAn exported launcher activity is normal. The bug needs a valuable method or data.",
+  "id": "mobile-deep-link-bridge",
+  "title": "A deep link plus a JS bridge is a chain",
+  "tags": [
+   "mobile",
+   "android",
+   "deep-link"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/mobile-reverse.md",
+   "labs/mobile"
+  ],
+  "status": "active",
+  "claim": "An exported activity loads an attacker URL into a WebView that exposes a JavaScript bridge. The page can call native methods.",
+  "test": "Read the manifest. Start the deep link with an attacker URL. From the page, call each bridge method and log the result.",
+  "proof": "A token or native action triggered from the attacker page.",
+  "failure": "An exported launcher activity is normal. The bug needs a valuable method or data."
+ },
+ {
+  "path": "knowledge/process-recall-before-research.md",
+  "body": "# Recall before searching\n\n## Claim\n\nRepeated research is waste. Check the knowledge index first, then refresh only a stale or low-confidence card.\n\n## Test\n\nRun recall with the target and class. If the decision is USE, answer from the card and test it. If REFRESH, verify one claim. If RESEARCH, collect.\n\n## Proof\n\nA card id and its proof, or a deliberate gap.\n\n## Failure modes\n\nA card can be stale. Check the date and the source before trusting it.",
+  "id": "process-recall-before-research",
+  "title": "Recall before searching",
+  "tags": [
+   "process",
+   "memory",
+   "research"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "docs/memory.md",
+   "SKILL.md"
+  ],
+  "status": "active",
+  "claim": "Repeated research is waste. Check the knowledge index first, then refresh only a stale or low-confidence card.",
+  "test": "Run recall with the target and class. If the decision is USE, answer from the card and test it. If REFRESH, verify one claim. If RESEARCH, collect.",
+  "proof": "A card id and its proof, or a deliberate gap.",
+  "failure": "A card can be stale. Check the date and the source before trusting it."
+ },
+ {
+  "path": "knowledge/re-crash-triage-primitive.md",
+  "body": "# A crash is a lead; the primitive is the finding\n\n## Claim\n\nA crash becomes a finding when you can name the controlled bytes, the fault address, the instruction pointer and the blocking mitigation.\n\n## Test\n\nReproduce outside the fuzzer. Read registers and stack. Classify the fault. Minimize. Check mitigations.\n\n## Proof\n\nA controlled address or RIP, or a bounded leak, with a repeatable input.\n\n## Failure modes\n\nA null dereference is low. A crash under ASAN only can still be real but needs reachability.",
+  "id": "re-crash-triage-primitive",
+  "title": "A crash is a lead; the primitive is the finding",
+  "tags": [
+   "re",
+   "triage",
+   "crash"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/vulnerability-research.md",
+   "labs/binary"
+  ],
+  "status": "active",
+  "claim": "A crash becomes a finding when you can name the controlled bytes, the fault address, the instruction pointer and the blocking mitigation.",
+  "test": "Reproduce outside the fuzzer. Read registers and stack. Classify the fault. Minimize. Check mitigations.",
+  "proof": "A controlled address or RIP, or a bounded leak, with a repeatable input.",
+  "failure": "A null dereference is low. A crash under ASAN only can still be real but needs reachability."
+ },
+ {
+  "path": "knowledge/re-ghidrust-vs-ghidra.md",
+  "body": "# GhidRust is a paused Ghidra plugin, not Ghidrust\n\n## Claim\n\nDMaroo/GhidRust is a Ghidra extension for Rust binaries. oofz/Ghidrust is a separate Rust-native platform. Ghidra upstream Rust support is now better than the plugin.\n\n## Test\n\nCheck the repo. Use GhidRust for its libstd FunctionID only when the Rust version matches. Use Ghidrust when you need a headless CLI/MCP.\n\n## Proof\n\nA function named by FunctionID, or a clean build from source.\n\n## Failure modes\n\nThe C-to-Rust view is flaky. Do not present it as source.",
+  "id": "re-ghidrust-vs-ghidra",
+  "title": "GhidRust is a paused Ghidra plugin, not Ghidrust",
+  "tags": [
+   "re",
+   "ghidra",
+   "rust"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/ghidra-ecosystem.md",
+   "references/rust-reverse.md"
+  ],
+  "status": "active",
+  "claim": "DMaroo/GhidRust is a Ghidra extension for Rust binaries. oofz/Ghidrust is a separate Rust-native platform. Ghidra upstream Rust support is now better than the plugin.",
+  "test": "Check the repo. Use GhidRust for its libstd FunctionID only when the Rust version matches. Use Ghidrust when you need a headless CLI/MCP.",
+  "proof": "A function named by FunctionID, or a clean build from source.",
+  "failure": "The C-to-Rust view is flaky. Do not present it as source."
+ },
+ {
+  "path": "knowledge/re-rust-layout.md",
+  "body": "# Rust types are not C types\n\n## Claim\n\nA slice is pointer plus length. A trait object is data plus vtable. Option uses a null niche. Async is a state machine.\n\n## Test\n\nBefore reading a method, name the two-field structs and the function-pointer pairs. Map the state enum for async.\n\n## Proof\n\nA recovered prototype or struct that explains the call site.\n\n## Failure modes\n\nA C-string view truncates a &str. Monomorphized copies are not separate features.",
+  "id": "re-rust-layout",
+  "title": "Rust types are not C types",
+  "tags": [
+   "re",
+   "rust",
+   "layout"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/rust-reverse.md"
+  ],
+  "status": "active",
+  "claim": "A slice is pointer plus length. A trait object is data plus vtable. Option uses a null niche. Async is a state machine.",
+  "test": "Before reading a method, name the two-field structs and the function-pointer pairs. Map the state enum for async.",
+  "proof": "A recovered prototype or struct that explains the call site.",
+  "failure": "A C-string view truncates a &str. Monomorphized copies are not separate features."
+ },
+ {
+  "path": "knowledge/report-impact-chain.md",
+  "body": "# A report is a chain a triager can rerun\n\n## Claim\n\nThe finding needs attacker position, precondition, minimal reproduction, observed result, impact, root cause and fix.\n\n## Test\n\nWrite the chain before CVSS. Use the smallest request. Separate confirmed from inferred. List what was not tested.\n\n## Proof\n\nA report another tester can reproduce in five minutes.\n\n## Failure modes\n\nA scanner hit is not a finding. A theoretical chain is not impact.",
+  "id": "report-impact-chain",
+  "title": "A report is a chain a triager can rerun",
+  "tags": [
+   "process",
+   "report",
+   "impact"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "docs/break-my-app.md",
+   "references/dossier-template.md"
+  ],
+  "status": "active",
+  "claim": "The finding needs attacker position, precondition, minimal reproduction, observed result, impact, root cause and fix.",
+  "test": "Write the chain before CVSS. Use the smallest request. Separate confirmed from inferred. List what was not tested.",
+  "proof": "A report another tester can reproduce in five minutes.",
+  "failure": "A scanner hit is not a finding. A theoretical chain is not impact."
+ },
+ {
+  "path": "knowledge/web-cache-key-unkeyed-input.md",
+  "body": "# Cache poisoning is an unkeyed input that changes the response\n\n## Claim\n\nA header, cookie or query changes the response but not the cache key. A shared cache then serves it to another user.\n\n## Test\n\nMap the key. Change one unkeyed input. Poison with a unique value and request from a clean session.\n\n## Proof\n\nA clean request returns the attacker value, with cache headers showing a hit.\n\n## Failure modes\n\nA hit for your own cookie is not global. Vary and normalization can invalidate the result.",
+  "id": "web-cache-key-unkeyed-input",
+  "title": "Cache poisoning is an unkeyed input that changes the response",
+  "tags": [
+   "web",
+   "cache",
+   "cdn"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "A header, cookie or query changes the response but not the cache key. A shared cache then serves it to another user.",
+  "test": "Map the key. Change one unkeyed input. Poison with a unique value and request from a clean session.",
+  "proof": "A clean request returns the attacker value, with cache headers showing a hit.",
+  "failure": "A hit for your own cookie is not global. Vary and normalization can invalidate the result."
+ },
+ {
+  "path": "knowledge/web-desync-parser-disagreement.md",
+  "body": "# Desync needs two HTTP parsers and an ambiguous length\n\n## Claim\n\nA front end and back end disagree about where a request ends, usually through Content-Length, Transfer-Encoding or HTTP/2 downgrade.\n\n## Test\n\nSend ambiguous requests. Try CL.TE, TE.CL, TE.TE, CRLF header injection and HTTP/2 pseudo-header tricks. Confirm with timing and a second client.\n\n## Proof\n\nA second clean client receives the wrong response, or a repeatable timing signal.\n\n## Failure modes\n\nOne 400 does not prove desync. Shared proxies make results non-deterministic.",
+  "id": "web-desync-parser-disagreement",
+  "title": "Desync needs two HTTP parsers and an ambiguous length",
+  "tags": [
+   "web",
+   "http",
+   "smuggling"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md",
+   "references/ghidra-ecosystem.md"
+  ],
+  "status": "active",
+  "claim": "A front end and back end disagree about where a request ends, usually through Content-Length, Transfer-Encoding or HTTP/2 downgrade.",
+  "test": "Send ambiguous requests. Try CL.TE, TE.CL, TE.TE, CRLF header injection and HTTP/2 pseudo-header tricks. Confirm with timing and a second client.",
+  "proof": "A second clean client receives the wrong response, or a repeatable timing signal.",
+  "failure": "One 400 does not prove desync. Shared proxies make results non-deterministic."
+ },
+ {
+  "path": "knowledge/web-graphql-field-auth.md",
+  "body": "# GraphQL authorization is per field, not per endpoint\n\n## Claim\n\nThe gateway checks the query but resolvers do not check the object, field or mutation. Introspection is a map, not a finding.\n\n## Test\n\nTest each field and mutation with two roles. Test node lookups, nested fields, aliases, batching and cost limits.\n\n## Proof\n\nA restricted field or mutation returns data for a lower-privilege account.\n\n## Failure modes\n\nIntrospection enabled is not a bug. HTTP 200 with GraphQL errors is not success.",
+  "id": "web-graphql-field-auth",
+  "title": "GraphQL authorization is per field, not per endpoint",
+  "tags": [
+   "web",
+   "graphql",
+   "api"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md",
+   "references/bug-method-matrix.md"
+  ],
+  "status": "active",
+  "claim": "The gateway checks the query but resolvers do not check the object, field or mutation. Introspection is a map, not a finding.",
+  "test": "Test each field and mutation with two roles. Test node lookups, nested fields, aliases, batching and cost limits.",
+  "proof": "A restricted field or mutation returns data for a lower-privilege account.",
+  "failure": "Introspection enabled is not a bug. HTTP 200 with GraphQL errors is not success."
+ },
+ {
+  "path": "knowledge/web-idor-owner-check.md",
+  "body": "# IDOR is a missing owner check, not a hidden id\n\n## Claim\n\nAn object id from the request is used without comparing the object owner to the session user. Hiding the id in a UUID does not add a check.\n\n## Test\n\nCreate two accounts at the same role. Capture an object id from A. Request it with B. Repeat for read, update, delete and export.\n\n## Proof\n\nB receives or changes A's object, with both sessions and the ids in the log.\n\n## Failure modes\n\nA public object, a 200 with an empty body, or an admin bypass is not the same bug. Check the data, not the status.",
+  "id": "web-idor-owner-check",
+  "title": "IDOR is a missing owner check, not a hidden id",
+  "tags": [
+   "web",
+   "idor",
+   "access-control"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "1",
+  "sources": [
+   "references/techniques.md",
+   "docs/break-my-app.md"
+  ],
+  "status": "active",
+  "claim": "An object id from the request is used without comparing the object owner to the session user. Hiding the id in a UUID does not add a check.",
+  "test": "Create two accounts at the same role. Capture an object id from A. Request it with B. Repeat for read, update, delete and export.",
+  "proof": "B receives or changes A's object, with both sessions and the ids in the log.",
+  "failure": "A public object, a 200 with an empty body, or an admin bypass is not the same bug. Check the data, not the status."
+ },
+ {
+  "path": "knowledge/web-jwt-signature-trust.md",
+  "body": "# JWT bugs are claim trust, not base64\n\n## Claim\n\nThe verifier trusts an algorithm, key or claim it should not. Decoding is not verification.\n\n## Test\n\nTest alg none, algorithm confusion, weak HMAC keys, kid injection, jku/x5u, claim type confusion and expiry handling.\n\n## Proof\n\nA forged token accepted by a protected endpoint.\n\n## Failure modes\n\nA decoded payload is not a finding. A 401 with a different body can still be a bypass on a sibling route.",
+  "id": "web-jwt-signature-trust",
+  "title": "JWT bugs are claim trust, not base64",
+  "tags": [
+   "web",
+   "jwt",
+   "identity"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md",
+   "references/claude-bughunter.md"
+  ],
+  "status": "active",
+  "claim": "The verifier trusts an algorithm, key or claim it should not. Decoding is not verification.",
+  "test": "Test alg none, algorithm confusion, weak HMAC keys, kid injection, jku/x5u, claim type confusion and expiry handling.",
+  "proof": "A forged token accepted by a protected endpoint.",
+  "failure": "A decoded payload is not a finding. A 401 with a different body can still be a bypass on a sibling route."
+ },
+ {
+  "path": "knowledge/web-oauth-redirect-binding.md",
+  "body": "# OAuth redirect matching is prefix logic under pressure\n\n## Claim\n\nThe authorization server compares redirect URIs with loose rules. Path traversal, a subdomain, an open redirect or a fragment can move the code.\n\n## Test\n\nMap every redirect URI and the matching rule. Test path, query, fragment, subdomain, case and open redirect on an allowed host. Reuse state and nonce.\n\n## Proof\n\nA code or token delivered to an attacker-controlled origin, then exchanged for a session.\n\n## Failure modes\n\nA login CSRF needs a victim action. A code for your own account is not account takeover.",
+  "id": "web-oauth-redirect-binding",
+  "title": "OAuth redirect matching is prefix logic under pressure",
+  "tags": [
+   "web",
+   "oauth",
+   "identity"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md",
+   "references/claude-bughunter.md"
+  ],
+  "status": "active",
+  "claim": "The authorization server compares redirect URIs with loose rules. Path traversal, a subdomain, an open redirect or a fragment can move the code.",
+  "test": "Map every redirect URI and the matching rule. Test path, query, fragment, subdomain, case and open redirect on an allowed host. Reuse state and nonce.",
+  "proof": "A code or token delivered to an attacker-controlled origin, then exchanged for a session.",
+  "failure": "A login CSRF needs a victim action. A code for your own account is not account takeover."
+ },
+ {
+  "path": "knowledge/web-race-single-packet.md",
+  "body": "# A race is a check and a write without one lock\n\n## Claim\n\nThe invariant is checked before a write, with no transaction or unique constraint. Parallel requests pass the same check.\n\n## Test\n\nIdentify the invariant. Send parallel requests, ideally in one packet on HTTP/2. Compare successes with the intended limit.\n\n## Proof\n\nTwo successes where one was allowed, with timestamps and request ids.\n\n## Failure modes\n\nA retry looks like a race. Server deduplication may hide it on a later request.",
+  "id": "web-race-single-packet",
+  "title": "A race is a check and a write without one lock",
+  "tags": [
+   "web",
+   "race",
+   "logic"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md",
+   "references/claude-bughunter.md"
+  ],
+  "status": "active",
+  "claim": "The invariant is checked before a write, with no transaction or unique constraint. Parallel requests pass the same check.",
+  "test": "Identify the invariant. Send parallel requests, ideally in one packet on HTTP/2. Compare successes with the intended limit.",
+  "proof": "Two successes where one was allowed, with timestamps and request ids.",
+  "failure": "A retry looks like a race. Server deduplication may hide it on a later request."
+ },
+ {
+  "path": "knowledge/web-saml-signature-wrapping.md",
+  "body": "# SAML trusts the assertion, not the signature\n\n## Claim\n\nThe service provider reads an assertion that the signature does not cover, or resolves an ID to a different node than the signer.\n\n## Test\n\nCapture a valid response. Move or duplicate the signed assertion. Change unsigned identity fields and test attribute pollution.\n\n## Proof\n\nA fresh session as the target user from a response signed for another.\n\n## Failure modes\n\nA decoded assertion is not a bypass. XML canonicalization changes can break the test.",
+  "id": "web-saml-signature-wrapping",
+  "title": "SAML trusts the assertion, not the signature",
+  "tags": [
+   "web",
+   "saml",
+   "identity"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md",
+   "references/experts.md"
+  ],
+  "status": "active",
+  "claim": "The service provider reads an assertion that the signature does not cover, or resolves an ID to a different node than the signer.",
+  "test": "Capture a valid response. Move or duplicate the signed assertion. Change unsigned identity fields and test attribute pollution.",
+  "proof": "A fresh session as the target user from a response signed for another.",
+  "failure": "A decoded assertion is not a bypass. XML canonicalization changes can break the test."
+ },
+ {
+  "path": "knowledge/web-sqli-parameterized.md",
+  "body": "# SQL injection is a string-built query at a boundary\n\n## Claim\n\nUser input reaches a query without a parameter binding. Escaping can fail when the charset, collation or parser changes.\n\n## Test\n\nEstablish true and false baselines. Test quote, comment and parenthesis behavior. Move to time or OOB only when union and error are blocked.\n\n## Proof\n\nA bounded extraction of a value the tester should not see, with request and response.\n\n## Failure modes\n\nA WAF block looks like a false condition. Network jitter looks like a time delay. Do not dump the database.",
+  "id": "web-sqli-parameterized",
+  "title": "SQL injection is a string-built query at a boundary",
+  "tags": [
+   "web",
+   "sqli",
+   "database"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md",
+   "references/bug-method-matrix.md"
+  ],
+  "status": "active",
+  "claim": "User input reaches a query without a parameter binding. Escaping can fail when the charset, collation or parser changes.",
+  "test": "Establish true and false baselines. Test quote, comment and parenthesis behavior. Move to time or OOB only when union and error are blocked.",
+  "proof": "A bounded extraction of a value the tester should not see, with request and response.",
+  "failure": "A WAF block looks like a false condition. Network jitter looks like a time delay. Do not dump the database."
+ },
+ {
+  "path": "knowledge/web-ssrf-parser-differential.md",
+  "body": "# SSRF hides in URL parser disagreement\n\n## Claim\n\nOne component validates a URL and another fetches it. Different parsers disagree about host, scheme, userinfo or path.\n\n## Test\n\nUse a listener to confirm the fetch. Test http:///host, backslashes, userinfo, encoded delimiters, IPv4-mapped IPv6, decimal IPs, redirects and DNS rebinding.\n\n## Proof\n\nA callback from the target, or a response body from an internal service.\n\n## Failure modes\n\nDNS-only SSRF is weak without exfiltration. A hit on your listener does not prove the response reaches the attacker.",
+  "id": "web-ssrf-parser-differential",
+  "title": "SSRF hides in URL parser disagreement",
+  "tags": [
+   "web",
+   "ssrf",
+   "parser"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md",
+   "references/rust-reverse.md"
+  ],
+  "status": "active",
+  "claim": "One component validates a URL and another fetches it. Different parsers disagree about host, scheme, userinfo or path.",
+  "test": "Use a listener to confirm the fetch. Test http:///host, backslashes, userinfo, encoded delimiters, IPv4-mapped IPv6, decimal IPs, redirects and DNS rebinding.",
+  "proof": "A callback from the target, or a response body from an internal service.",
+  "failure": "DNS-only SSRF is weak without exfiltration. A hit on your listener does not prove the response reaches the attacker."
+ },
+ {
+  "path": "knowledge/web-traversal-canonical-path.md",
+  "body": "# Traversal is a join before canonicalization\n\n## Claim\n\nThe app joins a user path to a root without resolving and checking the result. Encoded separators and absolute second arguments bypass naive filters.\n\n## Test\n\nTry ../, ..%2f, double encoding, absolute paths, null bytes and Windows separators. Compare the served file with the intended root.\n\n## Proof\n\nA file outside the intended directory is returned or written.\n\n## Failure modes\n\nReflected filenames are not traversal. A 404 with the path in the body proves nothing.",
+  "id": "web-traversal-canonical-path",
+  "title": "Traversal is a join before canonicalization",
+  "tags": [
+   "web",
+   "file",
+   "traversal"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md",
+   "references/firmware-iot.md"
+  ],
+  "status": "active",
+  "claim": "The app joins a user path to a root without resolving and checking the result. Encoded separators and absolute second arguments bypass naive filters.",
+  "test": "Try ../, ..%2f, double encoding, absolute paths, null bytes and Windows separators. Compare the served file with the intended root.",
+  "proof": "A file outside the intended directory is returned or written.",
+  "failure": "Reflected filenames are not traversal. A 404 with the path in the body proves nothing."
+ },
+ {
+  "path": "knowledge/web-xss-parser-differential.md",
+  "body": "# XSS survives when two parsers disagree\n\n## Claim\n\nA sanitizer, template engine or WAF reads the input with a different parser than the browser. The gap is the payload space.\n\n## Test\n\nMap the sanitizer and the sink. Try mXSS, namespace changes, comment tricks, attribute boundaries and encoding that normalizes late.\n\n## Proof\n\nScript execution in the target origin, with the exact input and browser.\n\n## Failure modes\n\nA payload that fires in an innerHTML test may not fire in the page. A CSP report without execution is not a finding.",
+  "id": "web-xss-parser-differential",
+  "title": "XSS survives when two parsers disagree",
+  "tags": [
+   "web",
+   "xss",
+   "parser"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-24",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md",
+   "references/ghidra-ecosystem.md"
+  ],
+  "status": "active",
+  "claim": "A sanitizer, template engine or WAF reads the input with a different parser than the browser. The gap is the payload space.",
+  "test": "Map the sanitizer and the sink. Try mXSS, namespace changes, comment tricks, attribute boundaries and encoding that normalizes late.",
+  "proof": "Script execution in the target origin, with the exact input and browser.",
+  "failure": "A payload that fires in an innerHTML test may not fire in the page. A CSP report without execution is not a finding."
+ }
+]

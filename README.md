@@ -273,6 +273,17 @@ GITHUB_TOKEN=$(gh auth token) ./scripts/github_sweep.py --out data/github_atlas.
 make github
 ```
 
+## Memory
+
+Beril recalls before it researches. `knowledge/` holds 27 testable cards; `knowledge/INDEX.md` is the entry point. A fresh high or medium card closes a decision for 180 or 90 days. Stale cards are refreshed, missing ones are researched and added.
+
+```bash
+./beril recall "idor owner check" --decide
+./beril remember add --title "..." --claim "..." --test "..." --proof "..." --failure "..." --tags web,idor
+```
+
+See `docs/memory.md`.
+
 ## Dashboard
 
 ![dashboard](assets/dashboard.png)

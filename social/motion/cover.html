@@ -1,0 +1,43 @@
+<!doctype html><meta charset=utf-8>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1080px;height:1920px;background:#030504;overflow:hidden;font-family:'Noto Sans',sans-serif;color:#eaf5ee;position:relative}
+.mono{font-family:'JetBrainsMono Nerd Font Mono',monospace}
+canvas{position:absolute;inset:0}
+#glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(127,227,164,.22),transparent 38%),radial-gradient(circle at 70% 30%,rgba(255,183,213,.10),transparent 30%),radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.75))}
+#clock{position:absolute;top:300px;left:0;right:0;text-align:center}
+#clock span{display:inline-block;font-size:40px;letter-spacing:.14em;padding:14px 34px;border:2px solid #1c3a2a;border-radius:40px;background:rgba(9,17,12,.8)}
+#av{position:absolute;left:50%;top:420px;width:560px;height:560px;margin-left:-280px;border-radius:50%;background:url(avatar.png) center 40%/118% auto;border:6px solid #7fe3a4;box-shadow:0 0 0 18px rgba(127,227,164,.08),0 0 90px rgba(127,227,164,.45)}
+svg{position:absolute;left:0;top:0}
+#h{position:absolute;top:1040px;left:0;right:0;text-align:center;font-size:118px;line-height:1.02;font-weight:800;letter-spacing:-.02em}
+#h .r{color:#ff6b6b;text-shadow:5px 0 rgba(255,107,139,.55),-5px 0 rgba(143,232,255,.55)}
+#s{position:absolute;top:1330px;left:0;right:0;text-align:center;font-size:46px;color:#7fe3a4}
+#b{position:absolute;top:1450px;left:0;right:0;text-align:center}
+#b .w{font-size:62px;font-weight:800;letter-spacing:.32em}
+#b .t{font-size:28px;color:#7a9886;letter-spacing:.12em;margin-top:6px}
+</style>
+<body>
+<canvas id=cv width=1080 height=1920></canvas><div id=glow></div>
+<svg width=1080 height=1920 fill=none>
+ <circle cx=540 cy=700 r=350 stroke=#1c3a2a stroke-width=2 />
+ <circle cx=540 cy=700 r=410 stroke=#13261c stroke-width=2 stroke-dasharray="6 14"/>
+ <path d="M540 700 L890 700 A350 350 0 0 0 843 525 Z" fill="rgba(127,227,164,.16)"/>
+ <path d="M540 350 A350 350 0 0 1 890 700" stroke=#7fe3a4 stroke-width=5 stroke-linecap=round />
+ <circle cx=200 cy=560 r=13 fill=#ff6b6b /><circle cx=200 cy=560 r=30 stroke=#ff6b6b stroke-width=3 opacity=.5 />
+ <circle cx=905 cy=905 r=11 fill=#ff6b6b /><circle cx=905 cy=905 r=26 stroke=#ff6b6b stroke-width=3 opacity=.5 />
+ <circle cx=860 cy=420 r=10 fill=#ffb7d5 />
+</svg>
+<div id=clock class=mono><span>☾ 03:12</span></div>
+<div id=av></div>
+<div id=h></div><div id=s class=mono></div>
+<div id=b><div class='w mono'>BERIL</div><div class='t mono' id=t></div></div>
+<script>
+const L=location.hash.slice(1)||'tr';
+const X={tr:['Biri kapını<br><span class=r>yokluyor.</span>','önce sen dene ♡','açık kaynak · siber güvenlik bekçin'],
+en:['Someone is<br><span class=r>at your door.</span>','try it first ♡','open source · your security guard']}[L];
+h.innerHTML=X[0];s.textContent=X[1];t.textContent=X[2];
+const c=cv.getContext('2d');function r(i){const x=Math.sin(i*127.1+311.7)*43758.5;return x-Math.floor(x)}
+c.font="22px 'JetBrainsMono Nerd Font Mono',monospace";const G='01ABCDEF#$%&<>/?=+*';
+for(let k=0;k<27;k++)for(let j=0;j<60;j++){const a=r(k*99+j)*.09;c.fillStyle=`rgba(127,227,164,${a})`;c.fillText(G[Math.floor(r(k*7+j*3)*G.length)],k*40+8,j*32+20)}
+c.font='30px sans-serif';for(let i=0;i<18;i++){c.fillStyle=i%2?'rgba(255,183,213,.45)':'rgba(127,227,164,.4)';c.fillText('✦',r(i)*1080,r(i+40)*1920)}
+</script>

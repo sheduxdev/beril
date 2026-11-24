@@ -85,7 +85,7 @@ tbody tr[data-job]{cursor:pointer}
 .reveal{animation:reveal linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
 @keyframes reveal{from{opacity:.001;transform:translateY(10px)}to{opacity:1;transform:none}}
 .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:var(--s3)}
-.posture-card{display:grid;grid-row:span 4;grid-template-rows:subgrid;gap:var(--s1);border:1px solid var(--line);background:var(--surface);padding:var(--s3);border-radius:var(--r2)}
+.posture-card{display:grid;grid-row:span 4;grid-template-rows:subgrid;gap:var(--s1);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:var(--s3);border-radius:var(--r2)}
 .posture-card h3{font:600 13px/1.3 var(--font-body);margin:0}
 .posture-card p{margin:0;color:var(--muted);font-size:12px}
 .faq{border:1px solid var(--line);border-radius:var(--r2);background:var(--surface);margin-top:var(--s2)}
@@ -137,6 +137,7 @@ pre{background:var(--bg);border:1px solid var(--line);border-radius:var(--r1);pa
     <a href="#activity" data-page="activity"><span>Activity</span></a>
     <a href="#jobs" data-page="jobs"><span>Jobs</span></a>
     <a href="#costs" data-page="costs"><span>Costs</span></a>
+    <a href="#memory" data-page="memory"><span>Memory</span><b id="nMemory"></b></a>
     <div class="group">intel</div>
     <a href="#threads" data-page="threads"><span>Threads</span><b id="nThreads"></b></a>
     <a href="#experts" data-page="experts"><span>Experts</span></a>
@@ -182,14 +183,14 @@ function table(items,cols){if(!items.length)return '<div class="empty">Nothing h
 
 async function overview(){
   const d=await get('/api/overview'), s=d.stats, c=d.costs, t=d.training;
-  $('#nThreads').textContent=s.threads; $('#nJobs').textContent=d.activity.filter(x=>x.status==='running').length||'';
+  $('#nThreads').textContent=s.threads; $('#nJobs').textContent=d.activity.filter(x=>x.status==='running').length||''; $('#nMemory').textContent=s.memory;
   const spend=c.month, budget=Number(c.budget.monthly_usd||25), pct=Math.min(100, spend/budget*100);
   view.innerHTML=`<div class="head"><h1>Workspace</h1><p>Every catalog, job and cost on this machine. One ledger, loopback only.</p></div>
   <div class="ledger"><div class="panel"><div class="pad"><p class="label">Spend this month against the ${money(budget)} budget</p><div class="big">${money(spend)}</div><div class="bar"><i style="width:${pct}%"></i></div><p class="sub">${money(c.today)} today · ${money(c.week)} this week · ${pct.toFixed(0)}% of budget</p></div>
   <div class="stats"><div class="stat"><b>${s.threads}</b><span>threads</span></div><div class="stat"><b>${s.tools}</b><span>tools</span></div><div class="stat"><b>${s.atlas}</b><span>repos indexed</span></div><div class="stat"><b>${t.done}/${t.total}</b><span>training tasks</span></div></div>
   <div class="pad" style="padding-top:var(--s4);padding-bottom:var(--s2)"><p class="label">Ledger</p></div>${table(d.activity,[['Time',r=>`<span class="num">${when(r.at)}</span>`],['Kind',r=>esc(r.type||r.kind)],['Work',r=>`<span class="title">${esc(r.title)}</span>`],['Actor',r=>`<span class="meta">${esc(r.actor||'')}</span>`],['Cost',r=>`<span class="num">${money(r.cost)}</span>`],['State',r=>`<span class="status ${esc(r.status)}">${esc(r.status)}</span>`]])}</div>
   <div class="rail"><section class="panel pad"><p class="label">Next training</p>${t.next.map(n=>`<div class="event" style="grid-template-columns:minmax(0,1fr) auto"><span>week ${n.week} · ${esc(n.text)}</span><button class="btn" onclick="done('${n.key}')">done</button></div>`).join('')||'<p class="sub">Queue clear.</p>'}</section>
-  <section class="panel pad"><p class="label">Coverage</p>${[['experts',s.experts],['methods',s.methods],['sources',s.sources]].map(x=>`<div class="bar-row"><span>${x[0]}</span><div class="track"><i style="width:${Math.min(100,x[1]/6)}%"></i></div><span class="num">${x[1]}</span></div>`).join('')}</section>
+  <section class="panel pad"><p class="label">Coverage</p>${[['memory',s.memory],['experts',s.experts],['methods',s.methods]].map(x=>`<div class="bar-row"><span>${x[0]}</span><div class="track"><i style="width:${Math.min(100,x[1]/6)}%"></i></div><span class="num">${x[1]}</span></div>`).join('')}</section>
   <section class="panel pad"><p class="label">Latest scans</p>${d.scans.map(x=>`<div class="event" style="grid-template-columns:minmax(0,1fr)"><a class="link" href="#" onclick="openReport('${x.name}');return false">${esc(x.name)}</a></div>`).join('')||'<p class="sub">No reports.</p>'}</section><section class="panel pad"><p class="label">How to read this</p><details class="faq" name="faq"><summary>What does the score mean?</summary><p>Severity times confidence, with verified and KEV boosts. It orders work, it is not CVSS.</p></details><details class="faq" name="faq"><summary>Why is a scan clean but the app risky?</summary><p>The scan covers a short check list. Logged-in flows, business logic and authorization stay manual.</p></details><details class="faq" name="faq"><summary>Where do reports live?</summary><p>Under scans/ on this machine. The Posture page aggregates them without uploading anything.</p></details></section></div></div>`;
 }
 async function activity(){const d=await get('/api/activity?limit=120');
@@ -219,6 +220,9 @@ async function openJob(id){const d=await get('/api/jobs?q='+id);const r=d.find(x
 }
 function closeDrawer(){scrim.classList.remove('open');drawer.classList.remove('open')}
 async function finishJob(id,status){await post('/api/jobs/finish',{id,status});closeDrawer();route()}
+async function memory(){const d=await get('/api/memory?q='+encodeURIComponent($('#q').value));
+  view.innerHTML=`<div class="head"><h1>Memory</h1><p>${d.length} durable cards. Recall before a search; refresh when stale.</p></div><div class="panel">${d.map(c=>`<div class="event" style="grid-template-columns:minmax(0,1fr) 90px 90px 70px"><a class="link" href="#" onclick="openCard('${c.id}');return false">${esc(c.title)}</a><span class="meta">${esc((c.tags||[]).join(', '))}</span><span class="status ${c.confidence==='high'?'done':c.confidence==='low'?'cancelled':'note'}">${esc(c.confidence)}</span><span class="num">${esc(c.updated)}</span></div>`).join('')||'<div class="empty">No cards.</div>'}</div>`;}
+async function openCard(id){const r=await get('/api/memory/card?id='+encodeURIComponent(id));scrim.classList.add('open');drawer.classList.add('open');drawer.innerHTML=`<div style="display:flex;align-items:center"><span class="label" style="margin:0">${esc(id)}</span><div class="grow"></div><button class="btn" onclick="closeDrawer()">close</button></div><div style="margin-top:18px">${r.html||r.error}</div>`;}
 async function costs(){const c=await get('/api/costs');const max=Math.max(1,...Object.values(c.daily));
   view.innerHTML=`<div class="head"><h1>Costs</h1><p>Tokens priced from data/llm_prices.json. Scans and labs are zero.</p></div>
   <div class="ledger"><div class="panel pad"><p class="label">Total spend</p><div class="big">${money(c.total)}</div><p class="sub">${money(c.today)} today · ${money(c.week)} this week · ${money(c.month)} this month</p>
@@ -249,7 +253,7 @@ async function scans(){const d=await get('/api/scans');shell('Scans','Passive by
 async function doScan(e){e.preventDefault();const b=e.target.querySelector('button'),t=e.target.target.value.trim();if(!t)return;b.disabled=true;b.textContent='Running';const d=await post('/api/scan/run',{target:t});const o=$('#scanout');o.textContent=d.output;o.classList.remove('hidden');b.disabled=false;b.textContent='Run scan';if(d.report)openReport(d.report);}
 async function openReport(name){const d=await get('/api/report?name='+encodeURIComponent(name));$('#report').innerHTML=`<h2 class="label" style="margin-top:24px">${esc(name)}</h2><div class="panel pad">${d.html||d.error}</div>`;scrollTo(0,0)}
 async function sources(){const d=await get('/api/sources');shell('Sources','Harvested rows by source. One row is a gap.',table(d.map(x=>({name:x[0],n:x[1]})),[['Source',r=>esc(r.name)],['Rows',r=>`<span class="num">${r.n}</span>`]]),`<section class="panel pad"><p class="label">Coverage</p><p class="sub">${d.length} sources seen. Add a source in references/forums.md.</p></section>`);}
-async function route(){closeDrawer();if(page==='overview')return overview();if(page==='activity')return activity();if(page==='jobs')return jobs();if(page==='costs')return costs();if(page==='threads')return threads();if(page==='experts')return experts();if(page==='tools')return tools();if(page==='methods')return methods();if(page==='atlas')return atlas();if(page==='labs')return labs();if(page==='training')return training();if(page==='posture')return posture();if(page==='scans')return scans();if(page==='sources')return sources();}
+async function route(){closeDrawer();if(page==='overview')return overview();if(page==='activity')return activity();if(page==='jobs')return jobs();if(page==='costs')return costs();if(page==='memory')return memory();if(page==='threads')return threads();if(page==='experts')return experts();if(page==='tools')return tools();if(page==='methods')return methods();if(page==='atlas')return atlas();if(page==='labs')return labs();if(page==='training')return training();if(page==='posture')return posture();if(page==='scans')return scans();if(page==='sources')return sources();}
 addEventListener('hashchange',()=>{const p=location.hash.slice(1).split('?')[0];if(p)nav(p)});
 if(location.hash)nav(location.hash.slice(1).split('?')[0]);else overview();
 </script></body></html>"""

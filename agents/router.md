@@ -3,6 +3,14 @@
 Read this before a task. It maps a request to the right line and keeps the
 agent from scanning blind.
 
+## Recall first
+
+```bash
+./beril recall "<target and class>" --decide
+```
+
+A fresh high or medium card wins over a new search. Refresh a stale card. Store a new lesson.
+
 ## Intake
 
 Ask only what you cannot infer:

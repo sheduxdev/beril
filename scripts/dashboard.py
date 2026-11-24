@@ -464,6 +464,18 @@ class Handler(BaseHTTPRequestHandler):
                     "activity": activity(8),
                 }
             )
+        if path == "/api/memory":
+            mp = os.path.join(ROOT, "knowledge", "index.json")
+            items = json.load(open(mp)) if os.path.exists(mp) else []
+            return self.json(filter_rows(items, q.get("q", [""])[0], 200, 0))
+        if path == "/api/memory/card":
+            cid = q.get("id", [""])[0]
+            if not re.match(r"^[a-z0-9-]+$", cid):
+                return self.json({"error": "bad id"}, 400)
+            p2 = os.path.join(ROOT, "knowledge", cid + ".md")
+            if not os.path.exists(p2):
+                return self.json({"error": "not found"}, 404)
+            return self.json({"id": cid, "html": md_render(open(p2, encoding="utf-8").read())})
         if path == "/api/jobs":
             items = jobmod.load()
             st = q.get("status", [""])[0]

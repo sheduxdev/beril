@@ -1,0 +1,357 @@
+<!doctype html><meta charset=utf-8>
+<style>
+:root{--g:#7fe3a4;--bg:#030504;--p:#09110c;--ln:#1c3a2a;--tx:#eaf5ee;--dim:#7a9886;--warn:#ffd27a;--pk:#ffb7d5;--cy:#8fe8ff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1080px;height:1920px;background:var(--bg);overflow:hidden;font-family:'Noto Sans','DejaVu Sans',sans-serif;color:var(--tx);position:relative}
+.mono{font-family:'JetBrainsMono Nerd Font Mono','DejaVu Sans Mono',monospace}
+canvas{position:absolute;left:0;top:0}
+#glow{position:absolute;width:1100px;height:1100px;border-radius:50%;background:radial-gradient(circle,rgba(127,227,164,.12),rgba(255,183,213,.04) 45%,transparent 68%)}
+#scan{position:absolute;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,rgba(127,227,164,.28),transparent)}
+#chap{position:absolute;top:148px;left:56px;font-size:27px;letter-spacing:.14em;color:var(--pk)}
+#mas{position:absolute;left:56px;top:1390px;display:flex;align-items:center;gap:20px;opacity:0}
+#av{width:112px;height:112px;border-radius:50%;border:3px solid var(--g);background:url(hero.png) -150px -28px/520px auto;box-shadow:0 0 30px rgba(127,227,164,.35)}
+#bb{background:rgba(255,183,213,.95);color:#2a0f1b;font-size:29px;font-weight:700;padding:14px 24px;border-radius:24px 24px 24px 6px;white-space:nowrap}
+.gl{background:linear-gradient(160deg,rgba(22,40,30,.88),rgba(9,17,12,.92))}
+#s2,#s8{zoom:1.1}#s5{zoom:1.04}#s6,#s7,#s10{zoom:1.12}
+#vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.65))}
+#prog{position:absolute;top:104px;left:56px;height:5px;background:linear-gradient(90deg,var(--g),var(--pk));border-radius:3px;width:0}
+#progbg{position:absolute;top:104px;left:56px;right:56px;height:5px;background:#10211a;border-radius:3px}
+.scene{position:absolute;left:56px;right:56px;top:290px;height:1260px;opacity:0;visibility:hidden}
+.win{background:rgba(9,17,12,.92);border:2px solid var(--ln);border-radius:28px;overflow:hidden;box-shadow:0 0 70px rgba(127,227,164,.08)}
+.bar{height:62px;display:flex;align-items:center;gap:12px;padding:0 26px;border-bottom:2px solid var(--ln);font-size:24px;color:var(--dim)}
+.dt{width:17px;height:17px;border-radius:50%}
+.g{color:var(--g)}.dim{color:var(--dim)}.w{color:var(--warn)}.pk{color:var(--pk)}.cy{color:var(--cy)}
+.term{padding:28px 32px;font-size:33px;line-height:1.62;white-space:pre}
+.chip{border:2px solid var(--ln);background:#0c1812;border-radius:18px;padding:16px 22px;font-size:30px}
+.card{background:rgba(9,17,12,.92);border:2px solid var(--ln);border-radius:28px;padding:30px 34px}
+.cur{display:inline-block;width:.58em;height:1.05em;background:var(--g);vertical-align:-.15em}
+.abs{position:absolute}
+.hl{font-size:98px;line-height:1.08;font-weight:800;letter-spacing:-.015em}
+.sw{width:92px;height:50px;border-radius:25px;background:#16241c;border:2px solid var(--ln);position:relative;flex:none}
+.sw i{position:absolute;top:5px;left:5px;width:36px;height:36px;border-radius:50%;background:#52665a}
+</style>
+<body>
+<canvas id=cv width=1080 height=1920></canvas><div id=glow></div><div id=scan></div><div id=vig></div>
+<div id=progbg></div><div id=prog></div>
+<div id=chap class=mono></div><div id=mas><div id=av></div><div id=bb class=mono></div></div>
+<div id=root></div>
+<script>
+const $=id=>document.getElementById(id);
+const ez=x=>{x=Math.min(1,Math.max(0,x));return 1-Math.pow(1-x,3)};
+const eo=x=>{x=Math.min(1,Math.max(0,x));return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const TX={
+tr:{hook:'Uygulamanı başkası<br><span class=g>denemeden önce sen dene.</span>',hs:'üç komutla başla ♡',tagl:'yanında çalışan güvenlik asistanın ♡',ac:'SIZMA DENEMESİ',own:'sahiplik doğrulandı',pn:['tırnak','işaret','yönlendirme','dizin gezintisi'],pp:["id=1'",'q=beril7f3a','next=//example.org','file=../'],ch:['AÇILIŞ','BERİL','37 KOMUT','PASİF TARAMA','SIZMA DENEMESİ','İKİLİ ANALİZ','SIRLAR VE BAĞIMLILIK','YAPAY ZEKÂ ÇAĞI','İSTİHBARAT','RAPOR','LAB VE EĞİTİM','KAPILAR','BAŞLA'],bub:['merhaba ♡','ben Beril ♡','hepsi burada ✦','sessizce bakıyorum','şimdi deniyorum','çalıştırmadan okurum','anahtarlar maskeli ♡','yeni tehditler de var','hepsi kaynaklı ✦','çözümü de yazarım','birlikte öğrenelim ♡','iznin yoksa dokunmam','hep yanındayım ♡'],
+ cmdt:'komut,<br>tek çatı altında',ex:'örnek çıktı',stat:'çalıştırılmaz · statik inceleme',opt:'isteğe bağlı',secT:'GİZLİ ANAHTAR',steps:['iptal et','yenile','geçmişi temizle'],depT:'BAĞIMLILIK',aiT:'MCP AYARI',aiF:['sabitlenmemiş','düz anahtar','docker.sock'],vibeT:'YAPAY ZEKÂYLA YAZILAN UYGULAMA',nosrv:'sunucu başlatılmaz',
+ intelL:['konu','uzman','araç','yöntem','depo','kaynak'],camo:'403 ya da boş JS sayfası → metin ✓',rdesc:['mühendis: teknik ayrıntı + çözüm','bug bounty: kanıt + etki','KOBİ: tek sayfa, trafik ışığı','bakımcı: yeniden üretim','CRA: AB uyum notu','JSON: makine çıktısı','SARIF: IDE ve CI'],
+ labsT:'10 LAB',weeksT:'25 HAFTA',ph:['kurulum','temel','keşif+web','kod+binary','sömürü+altyapı','uzman','ustalık'],lead:'ipucu',clean:'temiz',tg:['site','uygulama','depo','APK'],tgl:'hedef',pl:['oku','anla','kır','çöz'],sbxc:['ağ: kapalı','salt okunur','yetkiler kısıtlı'],lnote:'ipucu bulgu değildir: elle doğrularsın',chips:['yerel','açık kaynak','MIT'],bubble:'selam, ben Beril ♡',
+ radar:'TARAMA',checks:['başlıklar','CSP','çerezler','CORS','TLS','SPF · DKIM · DMARC','açık yollar','8 port','sırlar'],
+ rep:'RAPOR',f1:'CSP eksik',f2:'HTTP, HTTPS\'e yönlendirmiyor',conf:'güven: yüksek',c1:'✦ çöz: uygulamana uyan bir CSP ekle',c2:'✦ çöz: kalıcı yönlendirme + HSTS',nt:'TEST EDİLMEDİ',nts:['girişli sayfalar','iş mantığı','IDOR'],sevn:['orta','düşük','bilgi'],
+ gt:'KAPILAR',rows:['sahiplik kaydı · 30 gün','kapsam dosyası','2 istek/sn · en çok 250','robots.txt uyumu','sırlar maskeli','telemetri'],on:['AÇIK','AÇIK','AÇIK','AÇIK','AÇIK','KAPALI'],up:'giden veri',loop:'yalnızca loopback · bilgisayarında kalır',
+ power:'Güçlü olan<br><span class=g>sensin.</span>',pw2:'Beril sadece yanında ♡',warn:'Sadece sahibi olduğun hedefleri test et.'},
+en:{hook:'Break into your<br><span class=g>own app first.</span>',hs:'before someone else does ♡',ac:'BREAK-IN ATTEMPT',own:'ownership verified',pn:['quote','marker','redirect','traversal'],pp:["id=1'",'q=beril7f3a','next=//example.org','file=../'],ch:['COLD OPEN','BERIL','37 COMMANDS','PASSIVE SCAN','BREAK-IN ATTEMPT','BINARY ANALYSIS','SECRETS & DEPS','AI ERA','INTELLIGENCE','REPORT','LABS & TRAINING','GATES','START'],bub:['hello ♡','i\'m Beril ♡','all in here ✦','looking quietly','now i try','i read, never run','keys stay masked ♡','new threats too','every one sourced ✦','i write the fix too','let\'s learn together ♡','no permission, no touch','always beside you ♡'],
+ cmdt:'commands,<br>one roof',ex:'sample output',stat:'never executed · static review',opt:'optional',secT:'SECRET',steps:['revoke','rotate','clean history'],depT:'DEPENDENCIES',aiT:'MCP CONFIG',aiF:['unpinned','plaintext key','docker.sock'],vibeT:'AI-WRITTEN APP',nosrv:'server is never started',
+ intelL:['threads','experts','tools','methods','repos','sources'],camo:'403 or empty JS shell → text ✓',rdesc:['engineer: technical detail + fix','bug bounty: proof + impact','SMB: one page, traffic light','maintainer: reproduction','CRA: EU compliance note','JSON: machine output','SARIF: IDE and CI'],
+ labsT:'10 LABS',weeksT:'25 WEEKS',ph:['setup','basics','recon+web','code+binary','exploit+infra','expert','mastery'],lead:'lead',clean:'clean',tg:['site','app','repo','APK'],tgl:'target',pl:['read','map','break','fix'],sbxc:['network: off','read-only','caps dropped'],lnote:'a lead is not a finding: you confirm by hand',tagl:'your powerful little security sidekick ♡',chips:['local','open source','MIT'],bubble:'hi, i\'m Beril ♡',
+ radar:'SCAN',checks:['headers','CSP','cookies','CORS','TLS','SPF · DKIM · DMARC','34 paths','8 ports','secrets'],
+ rep:'REPORT',f1:'CSP missing',f2:'HTTP does not force HTTPS',conf:'confidence: high',c1:'✦ fix: add a CSP that fits your app',c2:'✦ fix: permanent redirect + HSTS',nt:'NOT TESTED',nts:['pages behind login','business logic','IDOR'],sevn:['medium','low','info'],
+ gt:'GATES',rows:['ownership record · 30 days','scope file','2 req/s · 250 max','robots.txt respected','secrets masked','telemetry'],on:['ON','ON','ON','ON','ON','OFF'],up:'uploaded',loop:'loopback only · stays on your machine',
+ power:'You are the<br><span class=g>powerful one.</span>',pw2:'Beril is just beside you ♡',warn:'Only test targets you own.'}};
+let T,S,TOTAL,LANG;
+const CMDS=['git clone github.com/sheduxdev/beril','./install.sh','./beril scan --target <url>'];
+const ESC=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function typed(s,u,t0,cps){return s.slice(0,Math.floor(cl((u-t0)*cps,0,s.length)))}
+function rnd(i){const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)}
+const GL='01ABCDEF#$%&<>/\\|?=+*';
+function decode(str,u,t0,dur,seedBase){ // html-safe: only for plain strings
+  const p=cl((u-t0)/dur);let o='';
+  for(let i=0;i<str.length;i++){const c=str[i];if(c===' '||c==='\n'){o+=c;continue}
+   const lock=i/str.length*.8+.1;
+   if(p>=lock+.1)o+=c;else if(p<=0)o+=' ';else o+=GL[Math.floor(rnd(i*7+Math.floor(u*24)+seedBase)*GL.length)];}
+  return o}
+function init(lang,starts,total){LANG=lang;S=starts;TOTAL=total;T=TX[lang];
+window.CM=['scan', 'verify', 'secrets', 'mcp', 'jar', 'vibe', 'deps', 'sbom', 'guard', 'priority', 'run', 'ingest', 'watch', 'infra', 'image', 'netcheck', 'bgp', 'health', 'benchmark', 'hunt', 'triage', 're', 'harvest', 'extract', 'dossier', 'feeds', 'github', 'current', 'incidents', 'evidence', 'validate', 'train', 'labs', 'reflect', 'report', 'dashboard', 'job'];
+const dots='<span class=dt style=background:#ff6b8b></span><span class=dt style=background:#ffd27a></span><span class=dt style=background:#7fe3a4></span>';
+$('root').innerHTML=`
+<div class=scene id=s0>
+ <div id=hk class=hl style="margin-top:20px;min-height:230px"></div>
+ <div class='mono pk' id=hs style="font-size:36px;margin:8px 0 34px"></div>
+ <div class=win><div class='bar mono'>${dots}&nbsp;~/beril</div><div class='term mono' id=t0 style="height:560px"></div></div>
+</div>
+<div class=scene id=s1>
+ <div class=win style="height:430px;position:relative;border-radius:34px">
+  <div id=himg class=abs style="inset:0;background:url(hero.png) 62% center/cover"></div>
+  <div class=abs style="inset:0;background:linear-gradient(transparent 50%,#09110c)"></div>
+  <div id=hscan class=abs style="left:0;right:0;height:4px;background:var(--g);box-shadow:0 0 28px var(--g);opacity:.75"></div>
+  <div id=bub class='abs mono' style="right:30px;top:26px;background:rgba(255,183,213,.95);color:#2a0f1b;font-size:30px;font-weight:700;padding:16px 26px;border-radius:26px 26px 6px 26px"></div>
+ </div>
+ <div id=logo class=mono style="font-size:165px;line-height:1.05;font-weight:800;margin-top:20px;letter-spacing:-.02em"></div>
+ <div class='mono g' id=tg style="font-size:33px;margin:6px 0 34px;min-height:44px"></div>
+ <div style="display:flex;gap:16px">${[0,1,2].map(i=>`<div class='chip mono' id=ch${i} style="flex:1;text-align:center;font-size:30px">${['✦','♡','◈'][i]} ${T.chips[i]}</div>`).join('')}</div>
+ <div style="display:flex;gap:16px;margin-top:22px">${[['37',{tr:'komut',en:'commands'}],['189',{tr:'test',en:'tests'}],['10',{tr:'lab',en:'labs'}],['25',{tr:'hafta',en:'weeks'}]].map((x,i)=>`<div class=card style="flex:1;text-align:center;padding:20px 8px" id=st${i}><b class=g style="display:block;font-size:68px;line-height:1.1" id=sn${i}>0</b><span class=dim style="font-size:25px">${x[1][lang]}</span></div>`).join('')}</div>
+</div>
+<div class=scene id=s2>
+ <div style="display:flex;align-items:center;gap:26px"><div id=cn class='mono g' style="font-size:190px;line-height:1;font-weight:800">0</div><div style="font-size:56px;font-weight:800;line-height:1.1">${T.cmdt}</div></div>
+ <div style="display:flex;flex-wrap:wrap;gap:11px;margin-top:30px">${CM.map((c,k)=>`<span id=cm${k} class='chip mono' style="font-size:26px;padding:9px 16px">${c}</span>`).join('')}</div>
+ <div class=win style="margin-top:26px"><div class='bar mono'>${dots}&nbsp;beril</div><div class='term mono' id=t_pal style="font-size:29px;height:96px;line-height:1.5"></div></div>
+</div>
+<div class=scene id=s5>
+ <div style="display:flex;gap:10px;margin-bottom:20px">${['APK','IPA','EXE','ELF','JAR'].map((x,k)=>`<div class='chip mono' id=ft${k} style="flex:1;text-align:center;font-size:30px;padding:12px 4px">${x}</div>`).join('')}</div>
+ ${[['ELF',['PIE','NX','RELRO','canary'],['✓','✓','▲ partial','✗']],['APK',['debuggable','exported','cleartext','backup'],['▲ true','▲ 3','▲ true','✓ false']]].map((c,i)=>`<div class='card gl' id=rc${i} style="margin-bottom:18px;padding:24px 30px"><div style="display:flex;justify-content:space-between"><b class='mono g' style="font-size:34px">${c[0]}</b><span class='mono dim' style="font-size:22px">${T.ex}</span></div>${c[1].map((r,k)=>`<div class=mono id=rr${i}${k} style="display:flex;justify-content:space-between;font-size:30px;line-height:1.7"><span>${r}</span><span id=rv${i}${k}></span></div>`).join('')}</div>`).join('')}
+ <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;align-items:center"><span class='mono dim' style="font-size:24px">${T.opt}:</span>${['capa','FLOSS','rizin','YARA','Ghidra'].map((x,k)=>`<span id=tl${k} class='chip mono' style="font-size:26px;padding:9px 16px">${x}</span>`).join('')}</div>
+ <div id=stt class='chip mono' style="margin-top:20px;font-size:27px;color:var(--cy);border-color:#1d4a55">🔒 ${T.stat}</div>
+</div>
+<div class=scene id=s6>
+ <div class='card gl' style="padding:26px 30px;margin-bottom:18px" id=sa><div style="display:flex;justify-content:space-between"><b class='mono pk' style="font-size:30px;letter-spacing:.12em">${T.secT}</b><span class='mono dim' style="font-size:22px">git history</span></div>
+  <div class='mono' style="font-size:28px;line-height:1.7;margin:10px 0 14px;white-space:pre"><span class=dim>3f2a91c</span> <span class=g>+</span>AWS_ACCESS_KEY_ID=<span id=mk class=pk></span>\n<span class=dim>b71d0e4</span> <span class=g>+</span>token=<span class=pk>ghp_••••••••••••9xQ2</span></div>
+  <div style="display:flex;gap:10px;align-items:center">${T.steps.map((x,k)=>`<div id=sp${k} class='chip mono' style="flex:1;text-align:center;font-size:26px;padding:12px 4px">${k+1} · ${x}</div>`).join('')}</div></div>
+ <div class='card gl' style="padding:26px 30px;margin-bottom:18px" id=sb><div style="display:flex;justify-content:space-between"><b class='mono w' style="font-size:30px;letter-spacing:.12em">${T.depT}</b><span class='mono dim' style="font-size:22px">${T.ex}</span></div>
+  ${[['lib-a 1.2.0','KEV',.94,'reachable'],['lib-b 4.0.1','',.31,'not-found'],['lib-c 0.9.3','KEV',.62,'unknown']].map((r,k)=>`<div id=dr${k} class=mono style="display:flex;align-items:center;gap:14px;font-size:26px;margin-top:14px"><span style="width:230px">${r[0]}</span><span style="width:70px;color:${r[1]?'#ff6b8b':'#7a9886'}">${r[1]||'–'}</span><span style="flex:1;height:12px;border-radius:6px;background:#10211a"><i id=eb${k} style="display:block;height:12px;border-radius:6px;background:linear-gradient(90deg,#7fe3a4,#ffb7d5);width:0"></i></span><span class=dim style="width:150px;text-align:right;font-size:22px">${r[3]}</span></div>`).join('')}</div>
+ <div style="display:flex;gap:10px;flex-wrap:wrap">${['CycloneDX 1.5','SPDX 2.3','OpenVEX 0.2'].map((x,k)=>`<span id=sx${k} class='chip mono cy' style="font-size:26px;border-color:#1d4a55">${x}</span>`).join('')}</div>
+</div>
+<div class=scene id=s7>
+ <div class='card gl' style="padding:24px 30px;margin-bottom:18px"><div class='mono cy' style="font-size:28px;letter-spacing:.12em;margin-bottom:8px">${T.aiT}</div>
+  <div class=mono style="font-size:27px;line-height:1.75;white-space:pre"><span class=dim>"command":</span> "npx"<span id=ai0 class=pk></span>\n<span class=dim>"args":</span> ["-y", "some-mcp-server"]\n<span class=dim>"env":</span> {"API_KEY": "sk-••••"}<span id=ai1 class=pk></span>\n<span class=dim>"volumes":</span> ["/var/run/docker.sock"]<span id=ai2 class=pk></span></div></div>
+ <div class='card gl' style="padding:24px 30px;margin-bottom:18px"><div class='mono pk' style="font-size:28px;letter-spacing:.1em;margin-bottom:14px">${T.vibeT}</div>
+  <div style="display:flex;flex-wrap:wrap;gap:10px">${['rls-missing','public-bucket','service-role-client','public-secret','vite-secret','dangerous-html','cors-star-credentials','firebase-open','route-no-auth'].map((x,k)=>`<span id=vb${k} class='chip mono' style="font-size:25px;padding:9px 14px">${x}</span>`).join('')}</div></div>
+ <div id=nsv class='chip mono' style="font-size:27px;color:var(--cy);border-color:#1d4a55">🔒 ${T.nosrv}</div>
+</div>
+<div class=scene id=s8>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">${[[556,0],[94,1],[88,2],[191,3],[2064,4],[20,5]].map((x,k)=>`<div class='card gl' id=ic${k} style="padding:22px 26px"><div class='mono g' id=in${k} style="font-size:84px;line-height:1.05;font-weight:800">0</div><div class='mono dim' style="font-size:26px">${T.intelL[k]}</div></div>`).join('')}</div>
+ <div style="overflow:hidden;white-space:nowrap;margin:24px 0 16px;border-top:2px solid var(--ln);border-bottom:2px solid var(--ln);padding:14px 0"><div id=tick class=mono style="display:inline-block;font-size:30px;color:var(--cy)"></div></div>
+ <div id=cam class='chip mono' style="font-size:27px;color:var(--warn);border-color:#5a4a1d">🦊 Camoufox · ${T.camo}</div>
+</div>
+<div class=scene id=s10>
+ <div class='mono g' style="font-size:30px;letter-spacing:.14em;margin-bottom:14px">${T.labsT}</div>
+ <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px">${['web','binary','fuzz','re','mobile','firmware','cloud','ad','llm','detection'].map((x,k)=>`<div id=lb${k} class='card gl mono' style="padding:20px 6px;text-align:center;font-size:25px;border-radius:20px">${x}</div>`).join('')}</div>
+ <div class='mono pk' style="font-size:30px;letter-spacing:.14em;margin:34px 0 14px">${T.weeksT}</div>
+ <div style="position:relative"><div style="display:flex;gap:6px">${[[1,0],[4,1],[5,2],[5,3],[5,4],[4,5],[1,6]].map((p,k)=>`<div id=ph${k} style="flex:${p[0]};height:34px;border-radius:10px;background:#16241c;border:2px solid var(--ln)"></div>`).join('')}</div>
+  <div id=head style="position:absolute;top:-10px;left:0;width:6px;height:54px;background:var(--pk);border-radius:3px;box-shadow:0 0 18px var(--pk)"></div></div>
+ <div style="display:flex;gap:6px;margin-top:10px">${[[1,0],[4,1],[5,2],[5,3],[5,4],[4,5],[1,6]].map((p,k)=>`<div id=pt${k} class='mono dim' style="flex:${p[0]};font-size:19px;text-align:center;overflow:hidden">${p[0]>=4?T.ph[k]:''}</div>`).join('')}</div>
+ <div id=wk class='mono g' style="font-size:60px;margin-top:26px;font-weight:800"></div>
+</div>
+<div class=scene id=s3>
+ <div style="display:flex;gap:22px;align-items:stretch">
+  <div class=card style="width:420px;height:420px;padding:0;position:relative;border-radius:50%;overflow:hidden;flex:none">
+   <svg width=420 height=420 viewBox="-210 -210 420 420" class=abs style="left:0;top:0">
+    <circle r=60 fill=none stroke=#1c3a2a stroke-width=2 /><circle r=120 fill=none stroke=#1c3a2a stroke-width=2 /><circle r=180 fill=none stroke=#1c3a2a stroke-width=2 />
+    <path d="M-210 0H210M0-210V210" stroke=#1c3a2a stroke-width=2 />
+    <g id=sweep><path d="M0 0L200 0A200 200 0 0 0 173 -100z" fill="rgba(127,227,164,.28)" /><path d="M0 0H200" stroke=#7fe3a4 stroke-width=3 /></g>
+    <g id=blips>${[[80,-60],[-110,40],[40,120],[-60,-130],[140,50],[-30,70],[100,-120],[-150,-60],[10,-40]].map((p,i)=>`<circle id=bl${i} cx=${p[0]} cy=${p[1]} r=9 fill=#ffb7d5 />`).join('')}</g>
+   </svg></div>
+  <div style="flex:1;display:flex;flex-direction:column;gap:16px;justify-content:space-between">
+   <div class=card style="padding:22px 26px"><div class='mono dim' style="font-size:24px">${T.radar}</div><div class='mono g' style="font-size:78px;line-height:1.1" id=pc>0%</div><div style="height:12px;border-radius:6px;background:#10211a;margin-top:8px"><div id=pb style="height:12px;border-radius:6px;background:linear-gradient(90deg,#7fe3a4,#ffb7d5);width:0"></div></div></div>
+   <div class=card style="padding:22px 26px"><div class='mono dim' style="font-size:24px">checks</div><div class='mono cy' style="font-size:70px;line-height:1.1" id=ck>0/9</div></div>
+  </div></div>
+ <div class=win style="margin-top:24px;height:540px"><div class='bar mono'>${dots}&nbsp;beril scan · passive</div><div class='term mono' id=t2 style="font-size:31px;line-height:1.7"></div></div>
+</div>
+<div class=scene id=s4>
+ <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+  <div class='mono pk' style="font-size:34px;letter-spacing:.16em">◎ ${T.ac}</div>
+  <div id=own class='chip mono g' style="font-size:26px;border-color:var(--g)">✓ ${T.own}</div></div>
+ <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px"><span class='mono dim' style="font-size:24px">${T.tgl}:</span>${T.tg.map(x=>`<span class='chip mono' style="font-size:25px;padding:8px 16px">${x}</span>`).join('')}</div>
+ <div style="display:flex;gap:8px;align-items:center;margin-bottom:20px">${T.pl.map((x,k)=>`<div id=pp${k} class='chip mono' style="flex:1;text-align:center;font-size:30px;padding:14px 4px">${x}</div>${k<3?'<span class="mono dim" style="font-size:26px">›</span>':''}`).join('')}</div>
+ <div class=win><div class='bar mono'>${dots}&nbsp;beril scan · active</div><div class='term mono' id=ac_t style="font-size:29px;height:112px;line-height:1.5;white-space:pre-wrap"></div></div>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px">
+  ${[0,1,2,3].map(k=>`<div class=card id=pr${k} style="padding:14px 22px"><div style="font-size:32px;font-weight:700">${T.pn[k]}</div><div class='mono dim' style="font-size:23px;margin:6px 0 14px">${T.pp[k]}</div><div class=mono id=ps${k} style="font-size:28px;min-height:38px"></div></div>`).join('')}</div>
+ <div id=sbx class=card style="margin-top:22px;border-color:var(--cy)"><div class='mono cy' style="font-size:26px;letter-spacing:.14em;margin-bottom:12px">SANDBOX · hunt</div><div style="display:flex;gap:12px;flex-wrap:wrap">${T.sbxc.map(x=>`<div class='chip mono' style="font-size:26px">${x}</div>`).join('')}</div></div>
+ <div id=lnote class='mono dim' style="margin-top:18px;font-size:27px">♡ ${T.lnote}</div>
+</div>
+<div class=scene id=s9>
+ <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">${['engineer','bugbounty','smb','maintainer','cra','json','sarif'].map((x,k)=>`<span id=rt${k} class='chip mono' style="font-size:24px;padding:8px 14px">${x}</span>`).join('')}</div><div id=rtd class='mono g' style="font-size:28px;margin-bottom:14px;min-height:40px"></div>
+ <div class=win><div class='bar mono'>${dots}&nbsp;${T.rep}.md</div><div style="padding:26px 30px">
+  <div style="display:flex;gap:14px;margin-bottom:22px">${[['w',2],['pk',4],['cy',3]].map((x,i)=>`<div class=card style="flex:1;padding:18px 20px" id=sv${i}><div class='mono dim' style="font-size:23px">${T.sevn[i].toUpperCase()}</div><div class='${x[0]}' style="font-size:74px;font-weight:800;line-height:1.1" id=sc${i}>0</div></div>`).join('')}</div>
+  ${[T.f1,T.f2].map((f,i)=>`<div class=card id=fd${i} style="margin-bottom:16px;padding:22px 26px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:38px;font-weight:700"><span class=w>▲</span> ${f}</span><span class='mono dim' style="font-size:24px">medium</span></div><div class='mono g' style="font-size:25px;margin:8px 0 10px">${T.conf}</div><div class='mono dim' style="font-size:26px" id=cm${i}></div></div>`).join('')}
+ </div></div>
+ <div class=card id=nt style="margin-top:20px;border-color:#5a4a1d"><div class='mono w' style="font-size:27px;letter-spacing:.14em;margin-bottom:12px">${T.nt}</div><div style="display:flex;flex-wrap:wrap;gap:12px">${T.nts.map(x=>`<div class='chip mono' style="font-size:27px">${x}</div>`).join('')}</div></div>
+</div>
+<div class=scene id=s11>
+ <div class='mono g' style="font-size:36px;letter-spacing:.2em;margin-bottom:22px">🔒 ${T.gt}</div>
+ ${T.rows.map((r,i)=>`<div class=card id=gr${i} style="display:flex;justify-content:space-between;align-items:center;padding:24px 32px;margin-bottom:14px"><span style="font-size:37px">${r}</span><span style="display:flex;align-items:center;gap:18px"><span class='mono dim' style="font-size:26px;width:130px;text-align:right" id=gl${i}>…</span><span class=sw id=sw${i}><i></i></span></span></div>`).join('')}
+ <div style="display:flex;gap:16px;margin-top:22px">
+  <div class=card style="flex:1;display:flex;align-items:center;gap:18px" id=srv><div style="display:flex;flex-direction:column;gap:9px"><div style="width:80px;height:20px;border-radius:5px;background:#16241c;position:relative"><i id=l0 style="position:absolute;right:7px;top:5px;width:10px;height:10px;border-radius:50%;background:#7fe3a4;display:block"></i></div><div style="width:80px;height:20px;border-radius:5px;background:#16241c;position:relative"><i id=l1 style="position:absolute;right:7px;top:5px;width:10px;height:10px;border-radius:50%;background:#ffb7d5;display:block"></i></div><div style="width:80px;height:20px;border-radius:5px;background:#16241c;position:relative"><i id=l2 style="position:absolute;right:7px;top:5px;width:10px;height:10px;border-radius:50%;background:#8fe8ff;display:block"></i></div></div><div><div class='mono' style="font-size:30px">127.0.0.1</div><div class='mono dim' style="font-size:22px">${T.loop}</div></div></div>
+  <div class=card style="width:300px;text-align:center" id=upc><div class='mono dim' style="font-size:23px">${T.up}</div><div class='mono g' style="font-size:60px;line-height:1.2">0 B</div></div>
+ </div>
+</div>
+<div class=scene id=s12>
+ <div id=pw class=hl style="margin-top:10px;min-height:230px"></div>
+ <div class='mono pk' id=pw2 style="font-size:40px;margin:10px 0 28px"></div>
+ <div class=win><div class='bar mono'>${dots}&nbsp;zsh</div><div class='term mono' id=t5 style="font-size:31px;height:250px;line-height:1.6"></div></div>
+ <div id=gh class=card style="margin-top:24px;display:flex;align-items:center;gap:26px;border-color:var(--g);position:relative">
+  <svg width=92 height=92 viewBox="0 0 16 16" fill=#7fe3a4><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 014 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+  <div><div class=mono style="font-size:46px;font-weight:700">sheduxdev/beril</div><div class='mono dim' style="font-size:27px">★ open source · MIT</div></div></div>
+ <div class=chip id=wn style="margin-top:18px;font-size:31px;color:var(--warn);border-color:#5a4a1d">⚠ ${T.warn}</div>
+</div>`;}
+
+// ---- timing constants shared by seek() and events()
+const TY0=.35,TYC=36;           // scene0 command typing
+const CMD0='./beril scan --target your-app';const ACMD='./beril scan --target https://your-app.example --active';const ACPS=42;
+function D(i){return (i<12?S[i+1]:TOTAL+1)-S[i]}
+function events(){const ev=[];const add=(t,k,v)=>ev.push([t,k,v||1]);
+ for(let i=0;i<CMD0.length;i++)add(S[0]+TY0+i/TYC,'key');
+ for(let k=0;k<3;k++)add(S[0]+1.3+k*.42,'tick');
+ for(let i=1;i<13;i++)add(S[i]-.05,'whoosh');
+ add(S[1]+1.3,'pop');const tg=T.tagl;for(let i=0;i<tg.length;i++)add(S[1]+1.9+i/34,'key');
+ for(let k=0;k<7;k++)add(S[1]+2.6+k*.25,'pop');
+ const d2=D(2);for(let k=0;k<37;k++)add(S[2]+.8+k*(d2*.58/37),'tick');
+ const d3=D(3),st3=Math.max(.5,(d3*.62)/9);for(let k=0;k<9;k++)add(S[3]+.7+k*st3+st3*.8,'tick');
+ const d4=D(4);for(let i=0;i<ACMD.length;i++)add(S[4]+.6+i/ACPS,'key');
+ for(let k=0;k<4;k++)add(S[4]+d4*(.28+k*.1)+.55,'tick');add(S[4]+d4*.74,'pop');
+ const d5=D(5);for(let c=0;c<2;c++)for(let r=0;r<4;r++)add(S[5]+.5+c*d5*.3+.5+r*.35,'tick');for(let k=0;k<5;k++)add(S[5]+d5*.62+k*.22,'pop');
+ const d6=D(6);for(let k=0;k<3;k++)add(S[6]+d6*(.3+k*.08),'switch');for(let k=0;k<3;k++)add(S[6]+d6*.42+k*.2,'tick');
+ const d7=D(7);for(let k=0;k<3;k++)add(S[7]+d7*(.2+k*.1),'pop');for(let k=0;k<9;k++)add(S[7]+d7*.45+k*.1,'tick');
+ const d8=D(8);for(let k=0;k<6;k++)add(S[8]+.3+k*.25,'pop');
+ const d9=D(9);for(let k=0;k<7;k++)add(S[9]+k*d9/7,'tick');add(S[9]+d9*.2,'pop');add(S[9]+d9*.5,'pop');
+ const d10=D(10);for(let k=0;k<10;k++)add(S[10]+.4+k*d10*.4/10,'tick');
+ const d11=D(11);for(let k=0;k<6;k++)add(S[11]+.7+k*((d11-2.6)/6)+.3,'switch');
+ let t0=S[12]+1.6;for(let k=0;k<3;k++){for(let i=0;i<CMDS[k].length;i++)add(t0+i/30,'key');t0+=CMDS[k].length/30+.4}
+ return ev}
+
+// ---- background canvas: hex rain + sparkles
+const cv=$('cv'),cx=cv.getContext('2d');
+const COLS=27;
+function bg(t,phase){cx.clearRect(0,0,1080,1920);cx.font="22px 'JetBrainsMono Nerd Font Mono',monospace";
+ for(let c=0;c<COLS;c++){const x=c*40+8,sp=60+rnd(c)*120,off=rnd(c+50)*2000;
+  for(let r=0;r<22;r++){const y=((t*sp+off-r*30)%2100)-60;const a=(1-r/22)*.12*(.4+.6*rnd(c*9+r));
+   if(a<.01)continue;cx.fillStyle=`rgba(127,227,164,${a})`;cx.fillText(GL[Math.floor(rnd(c*13+r+Math.floor(t*3))*GL.length)],x,y)}}
+ // sparkles
+ for(let i=0;i<14;i++){const x=(rnd(i)*1080+30*Math.sin(t*.6+i))%1080,y=1920-((t*40+rnd(i+30)*1920)%1920);const a=.25+.25*Math.sin(t*2+i);
+  cx.fillStyle=i%2?`rgba(255,183,213,${a})`:`rgba(127,227,164,${a})`;cx.font='28px sans-serif';cx.fillText('✦',x,y)}}
+const SC=['s0','s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12'];
+function floor(t){cx.strokeStyle='rgba(127,227,164,.13)';cx.lineWidth=1.5;const vy=1560;
+ for(let k=0;k<14;k++){const p=((k+t*.5)%14)/14;const y=vy+(1920-vy)*p*p;cx.beginPath();cx.moveTo(0,y);cx.lineTo(1080,y);cx.stroke()}
+ for(let k=-10;k<=10;k++){cx.beginPath();cx.moveTo(540+k*10,vy);cx.lineTo(540+k*160,1920);cx.stroke()}}
+function seek(t){
+ $('prog').style.width=(968*cl(t/TOTAL))+'px';
+ $('scan').style.top=((t*230)%1920)+'px';
+ $('glow').style.left=(540-550+280*Math.sin(t*.35))+'px';$('glow').style.top=(860-550+200*Math.cos(t*.28))+'px';
+ bg(t);floor(t);
+ const n=13;
+ for(let i=0;i<n;i++){const s0=S[i],s1=i<n-1?S[i+1]:TOTAL+1,e=$(SC[i]);
+  const a=i==0?1:ez((t-s0)/.4),o=i<n-1?ez((t-(s1-.28))/.28):0,op=t<s0-.01?0:a*(1-o);
+  e.style.opacity=op;e.style.transform=`translateY(${(1-a)*60-o*50}px) scale(${1-.03*o})`;e.style.visibility=op<=0?'hidden':'visible';
+  if(op>0){scene(i,t-s0,s1-s0);$('chap').textContent=String(i+1).padStart(2,'0')+' / 13 · '+T.ch[i];$('bb').textContent=T.bub[i];$('mas').style.opacity=a*(1-o);$('mas').style.transform=`translateY(${(1-a)*20}px)`}}
+}
+function glitch(el,u,t0,dur){const p=u-t0;if(p>0&&p<dur&&Math.floor(p*30)%3!=1){const k=(1-p/dur)*8;el.style.textShadow=`${k}px 0 rgba(255,107,139,.8),${-k}px 0 rgba(143,232,255,.8)`}else el.style.textShadow='none'}
+function scene(i,u,d){
+ if(i==0){
+  $('hk').innerHTML=(()=>{const full=T.hook;const p=ez(u/.9);return `<span style="opacity:${p};display:inline-block;transform:translateY(${(1-p)*30}px)">${full}</span>`})();
+  glitch($('hk'),u,0,.7);
+  $('hs').textContent=typed(T.hs,u,.9,26);
+  const ty=typed(CMD0,u,TY0,TYC);
+  let out='<span class=pk>~</span> <span class=g>$</span> '+ty+(ty.length<CMD0.length?'<span class=cur></span>':'');
+  const L=['git clone github.com/sheduxdev/beril','./install.sh','./beril scan --target &lt;url&gt;'];
+  const t1=1.3;
+  if(u>t1-.2&&ty.length>=CMD0.length){out+='\n\n';
+   L.forEach((l,k)=>{const a=u>t1+k*.42;if(a)out+=`<span class=g>0${k+1}</span> <span class=dim>›</span> ${l}  <span class=g>✓</span>\n`})}
+  if(u>t1+1.4&&d>2.6)out+='\n<span class=pk>♡</span> <span class=dim>ready</span>';
+  $('t0').innerHTML=out;
+ }
+ if(i==1){
+  $('hscan').style.top=((u*380)%590)+'px';$('himg').style.transform=`scale(${1+.06*cl(u/d)})`;
+  const b=ez((u-1.3)/.35);$('bub').style.opacity=b;$('bub').style.transform=`scale(${.6+.4*b})`;$('bub').textContent=T.bubble;
+  const dec=decode('BERIL',u,.5,.9,3);$('logo').textContent=dec;glitch($('logo'),u,.5,1.1);
+  const lg=ez((u-.4)/.3);$('logo').style.opacity=lg;
+  const tg=typed(T.tagl,u,1.9,34);$('tg').innerHTML=tg+(tg.length<T.tagl.length?'<span class=cur></span>':'');
+  [0,1,2].forEach(k=>{const a=ez((u-2.6-k*.25)/.4);$('ch'+k).style.opacity=a;$('ch'+k).style.transform=`translateY(${(1-a)*24}px)`;
+   });[0,1,2,3].forEach(k=>{const a2=ez((u-3.4-k*.25)/.4);$('st'+k).style.opacity=a2;$('st'+k).style.transform=`translateY(${(1-a2)*24}px)`;$('sn'+k).textContent=Math.round([37,189,10,25][k]*ez((u-3.5-k*.25)/1.1));});
+ }
+ if(i==2){
+  $('cn').textContent=Math.round(37*ez(u/1.2));
+  const G={scan:0,verify:0,secrets:0,mcp:0,jar:0,vibe:0,deps:0,sbom:0,guard:0,priority:0,run:0,ingest:0,watch:0,infra:0,image:0,netcheck:0,bgp:0,health:0,benchmark:0,hunt:1,triage:1,re:1,harvest:2,extract:2,dossier:2,feeds:2,github:2,current:2,incidents:2,evidence:2,validate:2,train:3,labs:3,reflect:3,report:4,dashboard:4,job:4};
+  const COL=['#7fe3a4','#ffb7d5','#8fe8ff','#ffd27a','#eaf5ee'];
+  CM.forEach((c,k)=>{const t0=.8+k*(d*.58/37);const a=ez((u-t0)/.3),e=$('cm'+k);e.style.opacity=a;const hot=u>t0&&u<t0+.35;e.style.color=hot?'#ffb7d5':COL[G[c]];e.style.borderColor=hot?'#ffb7d5':COL[G[c]]+'55';e.style.transform=`scale(${.85+.15*a})`});
+  const cs=['./beril scan --target https://your-app.example','./beril hunt --target ./repo --sandbox','./beril re --target ./sample --capa --floss','./beril report --profile smb'];
+  const k=Math.min(3,Math.floor(u/(d/4)));const ty=typed(cs[k],u-k*(d/4),.2,38);
+  $('t_pal').innerHTML='<span class=g>$</span> '+ESC(ty)+'<span class=cur></span>';
+ }
+ if(i==5){
+  const act=Math.min(4,Math.floor(u/(d/5)));
+  for(let k=0;k<5;k++){const e=$('ft'+k);const on=(k==3&&u<d*.5)||(k==0&&u>=d*.5)||k==act&&false;e.style.borderColor=on?'#ffb7d5':'#1c3a2a';e.style.color=on?'#ffb7d5':'#eaf5ee';e.style.opacity=ez((u-.1-k*.08)/.3)}
+  [0,1].forEach(c=>{const t0=.5+c*d*.3,a=ez((u-t0)/.5);const e=$('rc'+c);e.style.opacity=a;e.style.transform=`translateY(${(1-a)*40}px)`;
+   const R=[['✓','✓','▲ partial','✗'],['▲ true','▲ 3','▲ true','✓ false']][c];
+   for(let r=0;r<4;r++){const tr=t0+.5+r*.35;const on=u>tr;$('rv'+c+r).textContent=on?R[r]:'…';$('rv'+c+r).style.color=!on?'#7a9886':(R[r].startsWith('✓')?'#7fe3a4':(R[r].startsWith('✗')||R[r].startsWith('▲ t')?'#ffb7d5':'#ffd27a'))}});
+  for(let k=0;k<5;k++){const t0=d*.62+k*.22;const a=ez((u-t0)/.3);const e=$('tl'+k);e.style.opacity=a;e.style.color=u>t0&&u<t0+.4?'#ffb7d5':'#eaf5ee'}
+  $('stt').style.opacity=ez((u-d*.82)/.4);
+ }
+ if(i==6){
+  const a=ez((u-.2)/.4);$('sa').style.opacity=a;$('sa').style.transform=`translateY(${(1-a)*40}px)`;
+  const m='AKIA••••••••MNOP';$('mk').textContent=m.slice(0,Math.floor(cl((u-.9)*20,0,m.length)));
+  const act=u<d*.3?-1:u<d*.38?0:u<d*.46?1:2;
+  for(let k=0;k<3;k++){const e=$('sp'+k);const on=u>d*(.3+k*.08);e.style.borderColor=on?'#7fe3a4':'#1c3a2a';e.style.color=on?'#7fe3a4':'#7a9886'}
+  const b=ez((u-d*.36)/.5);$('sb').style.opacity=b;$('sb').style.transform=`translateY(${(1-b)*40}px)`;
+  [.94,.31,.62].forEach((v,k)=>{$('eb'+k).style.width=(100*v*ez((u-d*.42-k*.2)/.8))+'%';$('dr'+k).style.opacity=ez((u-d*.4-k*.2)/.3)});
+  for(let k=0;k<3;k++)$('sx'+k).style.opacity=ez((u-d*.7-k*.2)/.3);
+ }
+ if(i==7){
+  $('ai0').textContent=u>d*.2?'  ▲ '+T.aiF[0]:'';$('ai1').textContent=u>d*.3?'  ▲ '+T.aiF[1]:'';$('ai2').textContent=u>d*.4?'  ▲ '+T.aiF[2]:'';
+  const hot=[0,2,3,5,7];
+  for(let k=0;k<9;k++){const e=$('vb'+k);const t0=d*.45+k*.07*d*.6/ (9*.07);const a=ez((u-(d*.45+k*.1))/.3);const flag=[0,2,3].includes(k);e.style.opacity=.25+.75*a;e.style.borderColor=a>.6&&flag?'#ffb7d5':'#1c3a2a';e.style.color=a>.6&&flag?'#ffb7d5':'#eaf5ee';e.style.boxShadow=a>.6&&flag?'0 0 16px rgba(255,183,213,.45)':'none'}
+  $('nsv').style.opacity=ez((u-d*.82)/.4);
+ }
+ if(i==8){
+  [556,94,88,191,2064,20].forEach((v,k)=>{const a=ez((u-.3-k*.25)/1.1);$('in'+k).textContent=Math.round(v*a).toLocaleString('en-US');const e=$('ic'+k);const o=ez((u-.2-k*.25)/.4);e.style.opacity=o;e.style.transform=`translateY(${(1-o)*30}px)`});
+  const SRC='HackerOne · Hacker News · PortSwigger · HTB · 0x00sec · Intigriti · Trail of Bits · Lobsters · infosec.exchange · Reddit · ';
+  $('tick').textContent=SRC+SRC;$('tick').style.transform=`translateX(${-(u*180)%(SRC.length*17.5)}px)`;
+  $('cam').style.opacity=ez((u-d*.7)/.4);
+ }
+ if(i==10){
+  for(let k=0;k<10;k++){const t0=.4+k*(d*.4/10);const a=ez((u-t0)/.3);const e=$('lb'+k);e.style.opacity=a;e.style.transform=`scale(${.8+.2*a})`;const hot=u>t0&&u<t0+.4;e.style.borderColor=hot?'#ffb7d5':'#1c3a2a';e.style.color=hot?'#ffb7d5':'#eaf5ee'}
+  const p=cl((u-d*.45)/(d*.5));const W=968;$('head').style.left=(p*W-3)+'px';const wk=Math.round(p*25);
+  $('wk').textContent=u>d*.45?(LANG=='tr'?'hafta ':'week ')+wk+' / 25':'';
+  [[1,0],[4,1],[5,2],[5,3],[5,4],[4,5],[1,6]].forEach((q,k)=>{const st=[0,1,5,10,15,20,24][k];const on=wk>=st&&u>d*.45;const e=$('ph'+k);e.style.background=on?'linear-gradient(90deg,#7fe3a4,#ffb7d5)':'#16241c';e.style.borderColor=on?'#7fe3a4':'#1c3a2a'});
+ }
+ if(i==3){
+  $('sweep').setAttribute('transform',`rotate(${(u*220)%360})`);
+  for(let k=0;k<9;k++){const bt=.7+k*(d*.62/9)+.4;$('bl'+k).style.opacity=u>bt?(.55+.45*Math.sin((u-bt)*5)):0;$('bl'+k).setAttribute('r',u>bt?9+6*Math.max(0,1-(u-bt)*2):9)}
+  const step=Math.max(.5,(d*.62)/9);let out='',done=0;
+  const ST=['ok','warn','ok','ok','ok','ok','ok','ok','ok'];
+  T.checks.forEach((c,k)=>{const t0=.7+k*step;if(u<t0)return;const fin=u>t0+step*.8;if(fin)done++;
+   const mark=ST[k]=='ok'?'<span class=g>✓</span>':'<span class=w>▲</span>';
+   const ts=(Math.floor((t0)*10)/10).toFixed(1).padStart(4,'0');
+   out+=`<span class=dim>[${ts}s]</span> `+(fin?mark:'<span class=cy>'+'⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'[Math.floor(u*14+k)%10]+'</span>')+' '+c+'\n'});
+  $('t2').innerHTML=out;
+  const p=cl((u-.5)/(d*.7));$('pc').textContent=Math.floor(p*100)+'%';$('pb').style.width=(p*100)+'%';$('ck').textContent=done+'/9';
+ }
+
+ if(i==4){
+  const ty=typed(ACMD,u,.6,ACPS);$('ac_t').innerHTML='<span class=g>$</span> '+ESC(ty)+(ty.length<ACMD.length?'<span class=cur></span>':'');
+  $('own').style.opacity=ez((u-.15)/.4);
+  const act=u<d*.15?0:u<d*.28?1:u<d*.74?2:3;
+  for(let k=0;k<4;k++){const e=$('pp'+k);const done=k<act,on=k==act;e.style.borderColor=on?'#ffb7d5':(done?'#7fe3a4':'#1c3a2a');e.style.color=on?'#ffb7d5':(done?'#7fe3a4':'#7a9886');e.style.boxShadow=on?'0 0 '+(14+10*Math.sin(u*8))+'px rgba(255,183,213,.5)':'none';e.textContent=(done?'✓ ':'')+T.pl[k]}
+  for(let k=0;k<4;k++){const t0=d*(.28+k*.1),a=ez((u-t0+.2)/.4);const e=$('pr'+k);e.style.opacity=a;e.style.transform=`translateY(${(1-a)*30}px)`;
+   const done=u>t0+.55;$('ps'+k).innerHTML=done?(k==1?'<b class=pk>◆ '+T.lead+'</b>':'<b class=g>✓ '+T.clean+'</b>'):(u>t0-.2?'<span class=cy>'+'⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'[Math.floor(u*14+k)%10]+'</span>':'');
+   e.style.borderColor=(done&&k==1)?'#ffb7d5':'#1c3a2a'}
+  const b=ez((u-d*.74)/.5);$('sbx').style.opacity=b;$('sbx').style.transform=`translateY(${(1-b)*30}px)`;
+  $('lnote').style.opacity=ez((u-d*.86)/.4);
+ }
+ if(i==9){
+  {const pi=Math.min(6,Math.floor(cl(u/d,0,.999)*7));for(let k=0;k<7;k++){const e=$('rt'+k);e.style.borderColor=k==pi?'#7fe3a4':'#1c3a2a';e.style.color=k==pi?'#7fe3a4':'#7a9886'}$('rtd').textContent=typed(T.rdesc[pi],u-pi*d/7,.05,45)}
+  [2,4,3].forEach((v,k)=>{const a=ez((u-.2-k*.2)/.7);$('sc'+k).textContent=Math.round(v*a);$('sv'+k).style.opacity=cl((u-.1-k*.2)*3)});
+  [0,1].forEach(k=>{const t0=d*(.2+k*.33),a=ez((u-t0)/.5);$('fd'+k).style.opacity=a;$('fd'+k).style.transform=`translateX(${(1-a)*70}px)`;
+   const c=[T.c1,T.c2][k];$('cm'+k).textContent=typed(c,u,t0+.5,34)});
+  const a=ez((u-d*.74)/.5);$('nt').style.opacity=a;$('nt').style.transform=`translateY(${(1-a)*30}px)`;
+ }
+ if(i==11){
+  const step=(d-2.6)/T.rows.length;
+  T.rows.forEach((r,k)=>{const t0=.7+k*step;const a=ez((u-t0)/.4);const g=$('gr'+k);g.style.opacity=a;g.style.transform=`translateX(${(1-a)*60}px)`;
+   const on=u>t0+.3;const isOff=T.on[k]==(LANG=='tr'?'KAPALI':'OFF');
+   $('gl'+k).textContent=on?T.on[k]:'…';$('gl'+k).style.color=on?(isOff?'#ffb7d5':'#7fe3a4'):'#7a9886';
+   const sw=$('sw'+k);sw.style.background=on&&!isOff?'#7fe3a4':'#16241c';sw.firstChild.style.left=(on&&!isOff?47:5)+'px';sw.firstChild.style.background=on&&!isOff?'#04120a':'#52665a'});
+  const a=ez((u-d*.62)/.5);$('srv').style.opacity=a;$('upc').style.opacity=ez((u-d*.7)/.5);
+  ['l0','l1','l2'].forEach((x,k)=>$(x).style.opacity=.3+.7*(Math.sin(u*(7+k*3)+k)>0?1:.2));
+ }
+ if(i==12){
+  const dd=decode(LANG=='tr'?'Güçlü olan sensin.':'You are the powerful one.',u,.1,.8,9);
+  $('pw').innerHTML=(LANG=='tr'?'Güçlü olan<br><span class=g>sensin.</span>':'You are the<br><span class=g>powerful one.</span>');
+  const p=ez(u/.6);$('pw').style.opacity=p;$('pw').style.transform=`scale(${.92+.08*p})`;glitch($('pw'),u,0,.6);
+  $('pw2').textContent=typed(T.pw2,u,.9,30);
+  let t0=1.6,out='';
+  for(let k=0;k<3;k++){const ty=typed(CMDS[k],u,t0,30);if(u>=t0)out+='<span class=g>$</span> '+ESC(ty)+(ty.length<CMDS[k].length?'<span class=cur></span>':'')+'\n';t0+=CMDS[k].length/30+.4}
+  if(u>t0)out+='<span class=pk>♡</span> <span class=g>report ready</span>';
+  $('t5').innerHTML=out;
+  const a=ez((u-d*.5)/.5);const gh=$('gh');gh.style.opacity=a;gh.style.transform=`scale(${.9+.1*a})`;gh.style.boxShadow=`0 0 ${30+25*Math.sin(u*4)}px rgba(127,227,164,.35)`;
+  $('wn').style.opacity=ez((u-d*.68)/.5);
+ }
+}
+</script>

@@ -55,6 +55,8 @@ COMMANDS = {
     "github": "github_sweep.py",
     "dashboard": "dashboard.py",
     "job": "job.py",
+    "recall": "recall.py",
+    "remember": "remember.py",
 }
 
 

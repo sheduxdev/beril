@@ -41,6 +41,14 @@ line and an attack/hunt line. This file is the entry point for any coding agent.
 ./beril validate
 ```
 
+## Recall before research
+
+```bash
+./beril recall "class or target" --decide
+```
+
+`USE` means answer from the card. `REFRESH` means verify and update. `RESEARCH` means collect, then `./beril remember add`. Read `docs/memory.md`.
+
 ## Default workflow
 
 1. Intake. Target, authorization, passive or active, proof needed.

@@ -18,6 +18,7 @@ It binds `127.0.0.1:8788` and opens the browser. Use `--port` to change and `--n
 | Activity | Jobs, labs, scans and journal in one stream | Open context |
 | Jobs | Every job with actor, model, tokens and cost | Create, finish, inspect |
 | Costs | Spend today/week/month, by model and type | Set the budget |
+| Memory | 27 durable cards, confidence and freshness | Open a card |
 | Threads | Every harvested thread with source filter and search | Open the source |
 | Experts | Profiles, focus, work count | Open the profile |
 | Tools | Core shelf and RE/offense shelf, search | Open the repo |

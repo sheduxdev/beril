@@ -83,6 +83,23 @@ traversal per parameter, plus OPTIONS and TRACE. Artifact scans are static.
 Walkthroughs: `docs/attacking.md`, `docs/defending.md`, `docs/verification.md`,
 `docs/bug-hunt.md`.
 
+## Recall before research
+
+The distilled layer is `knowledge/`. Before a web search:
+
+```bash
+./beril recall "target class" --decide
+```
+
+`USE` answers from a fresh high or medium card. `REFRESH` verifies one claim and updates the card. `RESEARCH` means no card, so collect and then add one.
+
+```bash
+./beril remember add --title "..." --claim "..." --test "..." --proof "..." \
+  --failure "..." --tags web,idor --sources references/techniques.md --confidence high
+```
+
+Rules are in `docs/memory.md`. Read `knowledge/INDEX.md` before opening individual cards. Do not repeat a search when a high card is under 180 days old.
+
 ## Ten-minute run
 
 ```bash
@@ -441,6 +458,8 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `docs/training.md` | How to run the training loop |
 | `docs/agents.md` | Entry files for Claude, Cursor, Gemini, Copilot and others |
 | `docs/dashboard.md` | Local tracking dashboard and its limits |
+| `docs/memory.md` | Durable cards, recall decisions, freshness |
+| `knowledge/INDEX.md` | Card index to read before a search |
 | `agents/` | Forum, expert, tool, method, RE, crash, fuzzing and firmware prompts |
 
 ## Legal and ethical bounds

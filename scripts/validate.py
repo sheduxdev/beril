@@ -110,7 +110,7 @@ def main() -> None:
     # Prose checks from the humanizer rules.
     paths = glob.glob(os.path.join(args.docs, "*.md"))
     paths += glob.glob(os.path.join(args.docs, "docs", "*.md"))
-    paths += glob.glob(os.path.join(args.docs, "references", "*.md"))
+    paths += glob.glob(os.path.join(args.docs, "references", "*.md")) + glob.glob(os.path.join(args.docs, "knowledge", "*.md"))
     for path in paths:
         with open(path, encoding="utf-8") as handle:
             text = handle.read()

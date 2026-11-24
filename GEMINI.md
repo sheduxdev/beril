@@ -25,6 +25,10 @@ Beril is a cybersecurity intelligence and assessment skill for Gemini CLI.
 ./beril train --next
 ```
 
+## Memory
+
+Run `./beril recall "<query>" --decide` before a search. `USE` answers from a card, `REFRESH` verifies, `RESEARCH` collects and then adds.
+
 ## Loop
 
 1. Confirm target and authorization.

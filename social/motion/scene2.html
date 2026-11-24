@@ -1,0 +1,232 @@
+<!doctype html><meta charset=utf-8>
+<style>
+:root{--g:#7fe3a4;--bg:#030504;--p:#09110c;--ln:#1c3a2a;--tx:#eaf5ee;--dim:#7a9886;--warn:#ffd27a;--pk:#ffb7d5;--cy:#8fe8ff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1080px;height:1920px;background:var(--bg);overflow:hidden;font-family:'Noto Sans','DejaVu Sans',sans-serif;color:var(--tx);position:relative}
+.mono{font-family:'JetBrainsMono Nerd Font Mono','DejaVu Sans Mono',monospace}
+canvas{position:absolute;left:0;top:0}
+#glow{position:absolute;width:1100px;height:1100px;border-radius:50%;background:radial-gradient(circle,rgba(127,227,164,.12),rgba(255,183,213,.04) 45%,transparent 68%)}
+#scan{position:absolute;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,rgba(127,227,164,.28),transparent)}
+#vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.65))}
+#prog{position:absolute;top:104px;left:56px;height:5px;background:linear-gradient(90deg,var(--g),var(--pk));border-radius:3px;width:0}
+#progbg{position:absolute;top:104px;left:56px;right:56px;height:5px;background:#10211a;border-radius:3px}
+.scene{position:absolute;left:56px;right:56px;top:290px;height:1260px;opacity:0;visibility:hidden}
+.win{background:rgba(9,17,12,.92);border:2px solid var(--ln);border-radius:28px;overflow:hidden;box-shadow:0 0 70px rgba(127,227,164,.08)}
+.bar{height:62px;display:flex;align-items:center;gap:12px;padding:0 26px;border-bottom:2px solid var(--ln);font-size:24px;color:var(--dim)}
+.dt{width:17px;height:17px;border-radius:50%}
+.g{color:var(--g)}.dim{color:var(--dim)}.w{color:var(--warn)}.pk{color:var(--pk)}.cy{color:var(--cy)}
+.term{padding:28px 32px;font-size:33px;line-height:1.62;white-space:pre}
+.chip{border:2px solid var(--ln);background:#0c1812;border-radius:18px;padding:16px 22px;font-size:30px}
+.card{background:rgba(9,17,12,.92);border:2px solid var(--ln);border-radius:28px;padding:30px 34px}
+.cur{display:inline-block;width:.58em;height:1.05em;background:var(--g);vertical-align:-.15em}
+.abs{position:absolute}
+.hl{font-size:98px;line-height:1.08;font-weight:800;letter-spacing:-.015em}
+.sw{width:92px;height:50px;border-radius:25px;background:#16241c;border:2px solid var(--ln);position:relative;flex:none}
+.sw i{position:absolute;top:5px;left:5px;width:36px;height:36px;border-radius:50%;background:#52665a}
+</style>
+<body>
+<canvas id=cv width=1080 height=1920></canvas><div id=glow></div><div id=scan></div><div id=vig></div>
+<div id=progbg></div><div id=prog></div>
+<div id=root></div>
+<script>
+const $=id=>document.getElementById(id);
+const ez=x=>{x=Math.min(1,Math.max(0,x));return 1-Math.pow(1-x,3)};
+const eo=x=>{x=Math.min(1,Math.max(0,x));return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const TX={
+tr:{hook:'Kendi uygulamanı<br><span class=g>kendin test et.</span>',hs:'üç komut yeter ♡',tagl:'senin yanında çalışan güçlü küçük asistan ♡',chips:['yerel','açık kaynak','MIT'],bubble:'selam, ben Beril ♡',
+ radar:'TARAMA',checks:['başlıklar','CSP','çerezler','CORS','TLS','SPF · DKIM · DMARC','35 yol','8 port','sırlar'],
+ rep:'RAPOR',f1:'CSP eksik',f2:'HTTP, HTTPS\'e yönlendirmiyor',conf:'güven: yüksek',c1:'# düzelt: uygulamana uyan bir CSP ekle',c2:'# düzelt: kalıcı yönlendirme + HSTS',nt:'TEST EDİLMEDİ',nts:['girişli sayfalar','iş mantığı','IDOR'],sevn:['orta','düşük','bilgi'],
+ gt:'KAPILAR',rows:['sahiplik kaydı','kapsam dosyası','istek bütçesi + hız sınırı','sırlar maskeli','telemetri'],on:['AÇIK','AÇIK','AÇIK','AÇIK','KAPALI'],up:'yüklenen',loop:'yalnızca loopback · bilgisayarında kalır',
+ power:'Güçlü olan<br><span class=g>sensin.</span>',pw2:'Beril sadece yanında ♡',warn:'Sadece sahibi olduğun hedefleri test et.'},
+en:{hook:'Test your own app,<br><span class=g>yourself.</span>',hs:'three commands are enough ♡',tagl:'your powerful little security sidekick ♡',chips:['local','open source','MIT'],bubble:'hi, i\'m Beril ♡',
+ radar:'SCAN',checks:['headers','CSP','cookies','CORS','TLS','SPF · DKIM · DMARC','35 paths','8 ports','secrets'],
+ rep:'REPORT',f1:'CSP missing',f2:'HTTP does not force HTTPS',conf:'confidence: high',c1:'# fix: add a CSP that fits your app',c2:'# fix: permanent redirect + HSTS',nt:'NOT TESTED',nts:['pages behind login','business logic','IDOR'],sevn:['medium','low','info'],
+ gt:'GATES',rows:['ownership record','scope file','request budget + rate limit','secrets masked','telemetry'],on:['ON','ON','ON','ON','OFF'],up:'uploaded',loop:'loopback only · stays on your machine',
+ power:'You are the<br><span class=g>powerful one.</span>',pw2:'Beril is just beside you ♡',warn:'Only test targets you own.'}};
+let T,S,TOTAL,LANG;
+const CMDS=['git clone github.com/sheduxdev/beril','./install.sh','./beril scan --target <url>'];
+const ESC=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function typed(s,u,t0,cps){return s.slice(0,Math.floor(cl((u-t0)*cps,0,s.length)))}
+function rnd(i){const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)}
+const GL='01ABCDEF#$%&<>/\\|?=+*';
+function decode(str,u,t0,dur,seedBase){ // html-safe: only for plain strings
+  const p=cl((u-t0)/dur);let o='';
+  for(let i=0;i<str.length;i++){const c=str[i];if(c===' '||c==='\n'){o+=c;continue}
+   const lock=i/str.length*.8+.1;
+   if(p>=lock+.1)o+=c;else if(p<=0)o+=' ';else o+=GL[Math.floor(rnd(i*7+Math.floor(u*24)+seedBase)*GL.length)];}
+  return o}
+function init(lang,starts,total){LANG=lang;S=starts;TOTAL=total;T=TX[lang];
+const dots='<span class=dt style=background:#ff6b8b></span><span class=dt style=background:#ffd27a></span><span class=dt style=background:#7fe3a4></span>';
+$('root').innerHTML=`
+<div class=scene id=s0>
+ <div id=hk class=hl style="margin-top:20px;min-height:230px"></div>
+ <div class='mono pk' id=hs style="font-size:36px;margin:8px 0 34px"></div>
+ <div class=win><div class='bar mono'>${dots}&nbsp;~/beril</div><div class='term mono' id=t0 style="height:560px"></div></div>
+</div>
+<div class=scene id=s1>
+ <div class=win style="height:590px;position:relative;border-radius:34px">
+  <div id=himg class=abs style="inset:0;background:url(hero.png) 62% center/cover"></div>
+  <div class=abs style="inset:0;background:linear-gradient(transparent 50%,#09110c)"></div>
+  <div id=hscan class=abs style="left:0;right:0;height:4px;background:var(--g);box-shadow:0 0 28px var(--g);opacity:.75"></div>
+  <div id=bub class='abs mono' style="right:30px;top:26px;background:rgba(255,183,213,.95);color:#2a0f1b;font-size:30px;font-weight:700;padding:16px 26px;border-radius:26px 26px 6px 26px"></div>
+ </div>
+ <div id=logo class=mono style="font-size:200px;line-height:1.05;font-weight:800;margin-top:26px;letter-spacing:-.02em"></div>
+ <div class='mono g' id=tg style="font-size:33px;margin:6px 0 34px;min-height:44px"></div>
+ <div style="display:flex;gap:16px">${[0,1,2].map(i=>`<div class='chip mono' id=ch${i} style="flex:1;text-align:center;font-size:30px">${['✦','♡','◈'][i]} ${T.chips[i]}</div>`).join('')}</div>
+ <div style="display:flex;gap:16px;margin-top:22px">${[['65',{tr:'test',en:'tests'}],['10',{tr:'pratik lab',en:'labs'}],['25',{tr:'haftalık plan',en:'week plan'}]].map((x,i)=>`<div class=card style="flex:1;text-align:center;padding:20px 8px" id=st${i}><b class=g style="display:block;font-size:68px;line-height:1.1" id=sn${i}>0</b><span class=dim style="font-size:25px">${x[1][lang]}</span></div>`).join('')}</div>
+</div>
+<div class=scene id=s2>
+ <div style="display:flex;gap:22px;align-items:stretch">
+  <div class=card style="width:420px;height:420px;padding:0;position:relative;border-radius:50%;overflow:hidden;flex:none">
+   <svg width=420 height=420 viewBox="-210 -210 420 420" class=abs style="left:0;top:0">
+    <circle r=60 fill=none stroke=#1c3a2a stroke-width=2 /><circle r=120 fill=none stroke=#1c3a2a stroke-width=2 /><circle r=180 fill=none stroke=#1c3a2a stroke-width=2 />
+    <path d="M-210 0H210M0-210V210" stroke=#1c3a2a stroke-width=2 />
+    <g id=sweep><path d="M0 0L200 0A200 200 0 0 0 173 -100z" fill="rgba(127,227,164,.28)" /><path d="M0 0H200" stroke=#7fe3a4 stroke-width=3 /></g>
+    <g id=blips>${[[80,-60],[-110,40],[40,120],[-60,-130],[140,50],[-30,70],[100,-120],[-150,-60],[10,-40]].map((p,i)=>`<circle id=bl${i} cx=${p[0]} cy=${p[1]} r=9 fill=#ffb7d5 />`).join('')}</g>
+   </svg></div>
+  <div style="flex:1;display:flex;flex-direction:column;gap:16px;justify-content:space-between">
+   <div class=card style="padding:22px 26px"><div class='mono dim' style="font-size:24px">${T.radar}</div><div class='mono g' style="font-size:78px;line-height:1.1" id=pc>0%</div><div style="height:12px;border-radius:6px;background:#10211a;margin-top:8px"><div id=pb style="height:12px;border-radius:6px;background:linear-gradient(90deg,#7fe3a4,#ffb7d5);width:0"></div></div></div>
+   <div class=card style="padding:22px 26px"><div class='mono dim' style="font-size:24px">checks</div><div class='mono cy' style="font-size:70px;line-height:1.1" id=ck>0/9</div></div>
+  </div></div>
+ <div class=win style="margin-top:24px;height:780px"><div class='bar mono'>${dots}&nbsp;beril scan · passive</div><div class='term mono' id=t2 style="font-size:31px;line-height:1.7"></div></div>
+</div>
+<div class=scene id=s3>
+ <div class=win><div class='bar mono'>${dots}&nbsp;${T.rep}.md</div><div style="padding:26px 30px">
+  <div style="display:flex;gap:14px;margin-bottom:22px">${[['w',2],['pk',4],['cy',3]].map((x,i)=>`<div class=card style="flex:1;padding:18px 20px" id=sv${i}><div class='mono dim' style="font-size:23px">${T.sevn[i].toUpperCase()}</div><div class='${x[0]}' style="font-size:74px;font-weight:800;line-height:1.1" id=sc${i}>0</div></div>`).join('')}</div>
+  ${[T.f1,T.f2].map((f,i)=>`<div class=card id=fd${i} style="margin-bottom:16px;padding:22px 26px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:38px;font-weight:700"><span class=w>▲</span> ${f}</span><span class='mono dim' style="font-size:24px">medium</span></div><div class='mono g' style="font-size:25px;margin:8px 0 10px">${T.conf}</div><div class='mono dim' style="font-size:26px" id=cm${i}></div></div>`).join('')}
+ </div></div>
+ <div class=card id=nt style="margin-top:20px;border-color:#5a4a1d"><div class='mono w' style="font-size:27px;letter-spacing:.14em;margin-bottom:12px">${T.nt}</div><div style="display:flex;flex-wrap:wrap;gap:12px">${T.nts.map(x=>`<div class='chip mono' style="font-size:27px">${x}</div>`).join('')}</div></div>
+</div>
+<div class=scene id=s4>
+ <div class='mono g' style="font-size:36px;letter-spacing:.2em;margin-bottom:22px">🔒 ${T.gt}</div>
+ ${T.rows.map((r,i)=>`<div class=card id=gr${i} style="display:flex;justify-content:space-between;align-items:center;padding:24px 32px;margin-bottom:14px"><span style="font-size:37px">${r}</span><span style="display:flex;align-items:center;gap:18px"><span class='mono dim' style="font-size:26px;width:130px;text-align:right" id=gl${i}>…</span><span class=sw id=sw${i}><i></i></span></span></div>`).join('')}
+ <div style="display:flex;gap:16px;margin-top:22px">
+  <div class=card style="flex:1;display:flex;align-items:center;gap:18px" id=srv><div style="display:flex;flex-direction:column;gap:9px"><div style="width:80px;height:20px;border-radius:5px;background:#16241c;position:relative"><i id=l0 style="position:absolute;right:7px;top:5px;width:10px;height:10px;border-radius:50%;background:#7fe3a4;display:block"></i></div><div style="width:80px;height:20px;border-radius:5px;background:#16241c;position:relative"><i id=l1 style="position:absolute;right:7px;top:5px;width:10px;height:10px;border-radius:50%;background:#ffb7d5;display:block"></i></div><div style="width:80px;height:20px;border-radius:5px;background:#16241c;position:relative"><i id=l2 style="position:absolute;right:7px;top:5px;width:10px;height:10px;border-radius:50%;background:#8fe8ff;display:block"></i></div></div><div><div class='mono' style="font-size:30px">127.0.0.1</div><div class='mono dim' style="font-size:22px">${T.loop}</div></div></div>
+  <div class=card style="width:300px;text-align:center" id=upc><div class='mono dim' style="font-size:23px">${T.up}</div><div class='mono g' style="font-size:60px;line-height:1.2">0 B</div></div>
+ </div>
+</div>
+<div class=scene id=s5>
+ <div id=pw class=hl style="margin-top:10px;min-height:230px"></div>
+ <div class='mono pk' id=pw2 style="font-size:40px;margin:10px 0 28px"></div>
+ <div class=win><div class='bar mono'>${dots}&nbsp;zsh</div><div class='term mono' id=t5 style="font-size:31px;height:250px;line-height:1.6"></div></div>
+ <div id=gh class=card style="margin-top:24px;display:flex;align-items:center;gap:26px;border-color:var(--g);position:relative">
+  <svg width=92 height=92 viewBox="0 0 16 16" fill=#7fe3a4><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 014 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+  <div><div class=mono style="font-size:46px;font-weight:700">sheduxdev/beril</div><div class='mono dim' style="font-size:27px">★ open source · MIT</div></div></div>
+ <div class=chip id=wn style="margin-top:18px;font-size:31px;color:var(--warn);border-color:#5a4a1d">⚠ ${T.warn}</div>
+</div>`;}
+
+// ---- timing constants shared by seek() and events()
+const TY0=.35,TYC=36;           // scene0 command typing
+const CMD0='./beril scan --target your-app';
+function D(i){return (i<5?S[i+1]:TOTAL+1)-S[i]}
+function events(){const ev=[];const add=(t,k,v)=>ev.push([t,k,v||1]);
+ // scene0 typing
+ for(let i=0;i<CMD0.length;i++)add(S[0]+TY0+i/TYC,'key');
+ add(S[0]+.1,'ping');
+ for(let k=0;k<3;k++)add(S[0]+1.3+k*.42,'tick');
+ for(let i=1;i<6;i++)add(S[i]-.05,'whoosh');
+ // scene1
+ add(S[1]+.5,'ping');add(S[1]+1.3,'pop');
+ const tg=T.tagl;for(let i=0;i<tg.length;i++)add(S[1]+1.9+i/34,'key');
+ for(let k=0;k<3;k++)add(S[1]+3.0+k*.3,'pop');
+ // scene2 checks
+ const d2=D(2),step=Math.max(.5,(d2*.62)/9);for(let k=0;k<9;k++)add(S[2]+.7+k*step+step*.8,'tick');
+ add(S[2]+d2*.8,'chime');
+ // scene3
+ const d3=D(3);add(S[3]+d3*.18,'pop');add(S[3]+d3*.36,'pop');add(S[3]+d3*.55,'pop');add(S[3]+d3*.78,'pop');
+ // scene4
+ const d4=D(4);for(let k=0;k<5;k++)add(S[4]+.7+k*((d4-2.6)/5)+.3,'switch');
+ // scene5
+ add(S[5]+.2,'ping');let t0=S[5]+1.6;for(let k=0;k<3;k++){for(let i=0;i<CMDS[k].length;i++)add(t0+i/30,'key');t0+=CMDS[k].length/30+.4}
+ add(S[5]+D(5)*.55,'chime');
+ return ev}
+
+// ---- background canvas: hex rain + sparkles
+const cv=$('cv'),cx=cv.getContext('2d');
+const COLS=27;
+function bg(t,phase){cx.clearRect(0,0,1080,1920);cx.font="22px 'JetBrainsMono Nerd Font Mono',monospace";
+ for(let c=0;c<COLS;c++){const x=c*40+8,sp=60+rnd(c)*120,off=rnd(c+50)*2000;
+  for(let r=0;r<22;r++){const y=((t*sp+off-r*30)%2100)-60;const a=(1-r/22)*.12*(.4+.6*rnd(c*9+r));
+   if(a<.01)continue;cx.fillStyle=`rgba(127,227,164,${a})`;cx.fillText(GL[Math.floor(rnd(c*13+r+Math.floor(t*3))*GL.length)],x,y)}}
+ // sparkles
+ for(let i=0;i<14;i++){const x=(rnd(i)*1080+30*Math.sin(t*.6+i))%1080,y=1920-((t*40+rnd(i+30)*1920)%1920);const a=.25+.25*Math.sin(t*2+i);
+  cx.fillStyle=i%2?`rgba(255,183,213,${a})`:`rgba(127,227,164,${a})`;cx.font='28px sans-serif';cx.fillText('✦',x,y)}}
+const SC=['s0','s1','s2','s3','s4','s5'];
+function seek(t){
+ $('prog').style.width=(968*cl(t/TOTAL))+'px';
+ $('scan').style.top=((t*230)%1920)+'px';
+ $('glow').style.left=(540-550+280*Math.sin(t*.35))+'px';$('glow').style.top=(860-550+200*Math.cos(t*.28))+'px';
+ bg(t);
+ const n=6;
+ for(let i=0;i<n;i++){const s0=S[i],s1=i<n-1?S[i+1]:TOTAL+1,e=$(SC[i]);
+  const a=i==0?1:ez((t-s0)/.4),o=i<n-1?ez((t-(s1-.28))/.28):0,op=t<s0-.01?0:a*(1-o);
+  e.style.opacity=op;e.style.transform=`translateY(${(1-a)*60-o*50}px) scale(${1-.03*o})`;e.style.visibility=op<=0?'hidden':'visible';
+  if(op>0)scene(i,t-s0,s1-s0);}
+}
+function glitch(el,u,t0,dur){const p=u-t0;if(p>0&&p<dur&&Math.floor(p*30)%3!=1){const k=(1-p/dur)*8;el.style.textShadow=`${k}px 0 rgba(255,107,139,.8),${-k}px 0 rgba(143,232,255,.8)`}else el.style.textShadow='none'}
+function scene(i,u,d){
+ if(i==0){
+  $('hk').innerHTML=(()=>{const full=T.hook;const p=ez(u/.9);return `<span style="opacity:${p};display:inline-block;transform:translateY(${(1-p)*30}px)">${full}</span>`})();
+  glitch($('hk'),u,0,.7);
+  $('hs').textContent=typed(T.hs,u,.9,26);
+  const ty=typed(CMD0,u,TY0,TYC);
+  let out='<span class=pk>~</span> <span class=g>$</span> '+ty+(ty.length<CMD0.length?'<span class=cur></span>':'');
+  const L=['git clone github.com/sheduxdev/beril','./install.sh','./beril scan --target &lt;url&gt;'];
+  const t1=1.3;
+  if(u>t1-.2&&ty.length>=CMD0.length){out+='\n\n';
+   L.forEach((l,k)=>{const a=u>t1+k*.42;if(a)out+=`<span class=g>0${k+1}</span> <span class=dim>›</span> ${l}  <span class=g>✓</span>\n`})}
+  if(u>t1+1.4&&d>2.6)out+='\n<span class=pk>♡</span> <span class=dim>ready</span>';
+  $('t0').innerHTML=out;
+ }
+ if(i==1){
+  $('hscan').style.top=((u*380)%590)+'px';$('himg').style.transform=`scale(${1+.06*cl(u/d)})`;
+  const b=ez((u-1.3)/.35);$('bub').style.opacity=b;$('bub').style.transform=`scale(${.6+.4*b})`;$('bub').textContent=T.bubble;
+  const dec=decode('BERIL',u,.5,.9,3);$('logo').textContent=dec;glitch($('logo'),u,.5,1.1);
+  const lg=ez((u-.4)/.3);$('logo').style.opacity=lg;
+  const tg=typed(T.tagl,u,1.9,34);$('tg').innerHTML=tg+(tg.length<T.tagl.length?'<span class=cur></span>':'');
+  [0,1,2].forEach(k=>{const a=ez((u-3.0-k*.3)/.4);$('ch'+k).style.opacity=a;$('ch'+k).style.transform=`translateY(${(1-a)*24}px)`;
+   const a2=ez((u-3.9-k*.3)/.4);$('st'+k).style.opacity=a2;$('st'+k).style.transform=`translateY(${(1-a2)*24}px)`;
+   $('sn'+k).textContent=Math.round([65,10,25][k]*ez((u-4-k*.3)/1.1));});
+ }
+ if(i==2){
+  $('sweep').setAttribute('transform',`rotate(${(u*220)%360})`);
+  for(let k=0;k<9;k++){const bt=.7+k*(d*.62/9)+.4;$('bl'+k).style.opacity=u>bt?(.55+.45*Math.sin((u-bt)*5)):0;$('bl'+k).setAttribute('r',u>bt?9+6*Math.max(0,1-(u-bt)*2):9)}
+  const step=Math.max(.5,(d*.62)/9);let out='',done=0;
+  const ST=['ok','warn','ok','ok','ok','ok','ok','ok','ok'];
+  T.checks.forEach((c,k)=>{const t0=.7+k*step;if(u<t0)return;const fin=u>t0+step*.8;if(fin)done++;
+   const mark=ST[k]=='ok'?'<span class=g>✓</span>':'<span class=w>▲</span>';
+   const ts=(Math.floor((t0)*10)/10).toFixed(1).padStart(4,'0');
+   out+=`<span class=dim>[${ts}s]</span> `+(fin?mark:'<span class=cy>'+'⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'[Math.floor(u*14+k)%10]+'</span>')+' '+c+'\n'});
+  $('t2').innerHTML=out;
+  const p=cl((u-.5)/(d*.7));$('pc').textContent=Math.floor(p*100)+'%';$('pb').style.width=(p*100)+'%';$('ck').textContent=done+'/9';
+ }
+ if(i==3){
+  [2,4,3].forEach((v,k)=>{const a=ez((u-.2-k*.2)/.7);$('sc'+k).textContent=Math.round(v*a);$('sv'+k).style.opacity=cl((u-.1-k*.2)*3)});
+  [0,1].forEach(k=>{const t0=d*(.2+k*.33),a=ez((u-t0)/.5);$('fd'+k).style.opacity=a;$('fd'+k).style.transform=`translateX(${(1-a)*70}px)`;
+   const c=[T.c1,T.c2][k];$('cm'+k).textContent=typed(c,u,t0+.5,34)});
+  const a=ez((u-d*.74)/.5);$('nt').style.opacity=a;$('nt').style.transform=`translateY(${(1-a)*30}px)`;
+ }
+ if(i==4){
+  const step=(d-2.6)/5;
+  T.rows.forEach((r,k)=>{const t0=.7+k*step;const a=ez((u-t0)/.4);const g=$('gr'+k);g.style.opacity=a;g.style.transform=`translateX(${(1-a)*60}px)`;
+   const on=u>t0+.3;const isOff=T.on[k]==(LANG=='tr'?'KAPALI':'OFF');
+   $('gl'+k).textContent=on?T.on[k]:'…';$('gl'+k).style.color=on?(isOff?'#ffb7d5':'#7fe3a4'):'#7a9886';
+   const sw=$('sw'+k);sw.style.background=on&&!isOff?'#7fe3a4':'#16241c';sw.firstChild.style.left=(on&&!isOff?47:5)+'px';sw.firstChild.style.background=on&&!isOff?'#04120a':'#52665a'});
+  const a=ez((u-d*.62)/.5);$('srv').style.opacity=a;$('upc').style.opacity=ez((u-d*.7)/.5);
+  ['l0','l1','l2'].forEach((x,k)=>$(x).style.opacity=.3+.7*(Math.sin(u*(7+k*3)+k)>0?1:.2));
+ }
+ if(i==5){
+  const dd=decode(LANG=='tr'?'Güçlü olan sensin.':'You are the powerful one.',u,.1,.8,9);
+  $('pw').innerHTML=(LANG=='tr'?'Güçlü olan<br><span class=g>sensin.</span>':'You are the<br><span class=g>powerful one.</span>');
+  const p=ez(u/.6);$('pw').style.opacity=p;$('pw').style.transform=`scale(${.92+.08*p})`;glitch($('pw'),u,0,.6);
+  $('pw2').textContent=typed(T.pw2,u,.9,30);
+  let t0=1.6,out='';
+  for(let k=0;k<3;k++){const ty=typed(CMDS[k],u,t0,30);if(u>=t0)out+='<span class=g>$</span> '+ESC(ty)+(ty.length<CMDS[k].length?'<span class=cur></span>':'')+'\n';t0+=CMDS[k].length/30+.4}
+  if(u>t0)out+='<span class=pk>♡</span> <span class=g>report ready</span>';
+  $('t5').innerHTML=out;
+  const a=ez((u-d*.5)/.5);const gh=$('gh');gh.style.opacity=a;gh.style.transform=`scale(${.9+.1*a})`;gh.style.boxShadow=`0 0 ${30+25*Math.sin(u*4)}px rgba(127,227,164,.35)`;
+  $('wn').style.opacity=ez((u-d*.68)/.5);
+ }
+}
+</script>
