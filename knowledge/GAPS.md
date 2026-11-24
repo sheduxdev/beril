@@ -174,30 +174,30 @@
 | 168 | distributed | Network partitions and split-brain behavior | high | `references/engineering-mastery.md` | covered by `dist-partition` |
 | 169 | distributed | Clock skew, logical clocks and causality | high | `references/engineering-mastery.md` | covered by `dist-clock` |
 | 170 | distributed | CRDTs and conflict-free merge | high | `references/engineering-mastery.md` | covered by `dist-crdt` |
-| 171 | distributed | Gossip membership and failure detection | medium | `references/engineering-mastery.md` | open |
+| 171 | distributed | Gossip membership and failure detection | medium | `references/engineering-mastery.md` | covered by `dist-gossip` |
 | 172 | distributed | Message ordering, dedup and exactly-once myth | high | `references/engineering-mastery.md` | covered by `dist-ordering` |
-| 173 | distributed | Safe backfills and read repair | medium | `references/engineering-mastery.md` | open |
-| 174 | distributed | Quorum reads, sticky reads and monotonicity | medium | `references/engineering-mastery.md` | open |
+| 173 | distributed | Safe backfills and read repair | medium | `references/engineering-mastery.md` | covered by `dist-backfill` |
+| 174 | distributed | Quorum reads, sticky reads and monotonicity | medium | `references/engineering-mastery.md` | covered by `dist-quorum-read` |
 | 175 | compilers | SSA form, phi nodes and dataflow | high | `references/engineering-mastery.md` | covered by `comp-ssa` |
-| 176 | compilers | Register allocation and spilling | medium | `references/engineering-mastery.md` | open |
+| 176 | compilers | Register allocation and spilling | medium | `references/engineering-mastery.md` | covered by `comp-regalloc` |
 | 177 | compilers | JIT tiers, deopt and code cache | high | `references/engineering-mastery.md` | covered by `comp-jit` |
-| 178 | compilers | Type checking, inference and soundness | medium | `references/engineering-mastery.md` | open |
-| 179 | compilers | Optimization passes and semantic preservation | medium | `references/engineering-mastery.md` | open |
+| 178 | compilers | Type checking, inference and soundness | medium | `references/engineering-mastery.md` | covered by `comp-type-check` |
+| 179 | compilers | Optimization passes and semantic preservation | medium | `references/engineering-mastery.md` | covered by `comp-optimizer` |
 | 180 | storage | Write-ahead log, fsync and crash consistency | high | `references/engineering-mastery.md` | covered by `storage-wal` |
-| 181 | storage | Compaction policy, tombstones and write stalls | medium | `references/engineering-mastery.md` | open |
-| 182 | storage | Checksums, bit rot and scrub | medium | `references/engineering-mastery.md` | open |
+| 181 | storage | Compaction policy, tombstones and write stalls | medium | `references/engineering-mastery.md` | covered by `storage-compaction` |
+| 182 | storage | Checksums, bit rot and scrub | medium | `references/engineering-mastery.md` | covered by `storage-checksum` |
 | 183 | storage | Replication lag, failover and data loss windows | high | `references/engineering-mastery.md` | covered by `storage-replication` |
 | 184 | organization | Conway's law and service ownership | high | `references/engineering-mastery.md` | covered by `org-conway` |
 | 185 | organization | On-call load, escalation and handoff | high | `references/engineering-mastery.md` | covered by `org-oncall` |
-| 186 | organization | Delegation, decision rights and DACI | medium | `references/engineering-mastery.md` | open |
-| 187 | organization | Architecture decision records and durable context | medium | `references/engineering-mastery.md` | open |
-| 188 | organization | Headcount, maintenance and innovation budget | medium | `references/engineering-mastery.md` | open |
-| 189 | organization | Incentives, metrics and local optimization | medium | `references/engineering-mastery.md` | open |
+| 186 | organization | Delegation, decision rights and DACI | medium | `references/engineering-mastery.md` | covered by `org-delegation` |
+| 187 | organization | Architecture decision records and durable context | medium | `references/engineering-mastery.md` | covered by `org-adr` |
+| 188 | organization | Headcount, maintenance and innovation budget | medium | `references/engineering-mastery.md` | covered by `org-budget` |
+| 189 | organization | Incentives, metrics and local optimization | medium | `references/engineering-mastery.md` | covered by `org-incentives` |
 | 190 | engineering | Backup, restore and the untested backup | high | `references/engineering-mastery.md` | covered by `eng-backup-restore` |
 | 191 | engineering | RTO, RPO and disaster exercises | high | `references/engineering-mastery.md` | covered by `eng-disaster-recovery` |
-| 192 | engineering | Chaos experiments and steady-state hypothesis | medium | `references/engineering-mastery.md` | open |
-| 193 | engineering | Load models, open vs closed loop and saturation | medium | `references/engineering-mastery.md` | open |
-| 194 | engineering | Capacity models and headroom | medium | `references/engineering-mastery.md` | open |
-| 195 | engineering | Data retention, archival and deletion | medium | `references/engineering-mastery.md` | open |
+| 192 | engineering | Chaos experiments and steady-state hypothesis | medium | `references/engineering-mastery.md` | covered by `eng-chaos` |
+| 193 | engineering | Load models, open vs closed loop and saturation | medium | `references/engineering-mastery.md` | covered by `eng-load-test` |
+| 194 | engineering | Capacity models and headroom | medium | `references/engineering-mastery.md` | covered by `eng-capacity` |
+| 195 | engineering | Data retention, archival and deletion | medium | `references/engineering-mastery.md` | covered by `eng-retention` |
 
 Close a gap with `./beril remember add`, then `./beril gaps --cover <gap> --card <id>`.

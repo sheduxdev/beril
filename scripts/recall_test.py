@@ -43,6 +43,22 @@ CASES = [
     ("on-call page noise rotation", "org-oncall"),
     ("backup restore measured RTO", "eng-backup-restore"),
     ("RTO RPO disaster rehearsal", "eng-disaster-recovery"),
+    ("gossip membership failure detection", "dist-gossip"),
+    ("backfill throttle replica", "dist-backfill"),
+    ("quorum read overlap write", "dist-quorum-read"),
+    ("register allocation spill interference", "comp-regalloc"),
+    ("type checker soundness", "comp-type-check"),
+    ("optimizer semantic preservation", "comp-optimizer"),
+    ("LSM compaction write stall", "storage-compaction", 2),
+    ("checksum bit rot repair", "storage-checksum"),
+    ("delegation DACI decision right", "org-delegation"),
+    ("architecture decision record consequences", "org-adr"),
+    ("team budget maintenance innovation", "org-budget"),
+    ("incentive metric local optimum", "org-incentives"),
+    ("chaos steady state hypothesis", "eng-chaos"),
+    ("open loop load test saturation", "eng-load-test"),
+    ("capacity model headroom", "eng-capacity"),
+    ("retention deletion clock", "eng-retention"),
 ]
 
 

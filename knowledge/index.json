@@ -1303,6 +1303,50 @@
   "failure": "A JIT bug can appear only after warmup. Code cache invalidation matters."
  },
  {
+  "path": "knowledge/comp-optimizer.md",
+  "body": "# An optimization must preserve semantics\n\n## Claim\n\nConstant folding, inlining and loop transforms change the shape, not the result. A test oracle is required.\n\n## Test\n\nRun a randomized program corpus with and without the pass. Compare output.\n\n## Proof\n\nIdentical output across the corpus.\n\n## Failure modes\n\nUndefined behavior lets an optimizer do surprising things. A pass without a test is a guess.",
+  "id": "comp-optimizer",
+  "title": "An optimization must preserve semantics",
+  "tags": [
+   "compiler",
+   "optimizer",
+   "semantics"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Constant folding, inlining and loop transforms change the shape, not the result. A test oracle is required.",
+  "test": "Run a randomized program corpus with and without the pass. Compare output.",
+  "proof": "Identical output across the corpus.",
+  "failure": "Undefined behavior lets an optimizer do surprising things. A pass without a test is a guess."
+ },
+ {
+  "path": "knowledge/comp-regalloc.md",
+  "body": "# Register allocation maps live ranges to finite registers\n\n## Claim\n\nLive ranges compete for a small register file. A spill moves a value to the stack.\n\n## Test\n\nBuild an interference graph. Compare a graph-coloring and a linear-scan allocator.\n\n## Proof\n\nA correct allocation with a bounded spill count.\n\n## Failure modes\n\nA spill in a hot loop is a large slowdown. A coalescing bug miscompiles.",
+  "id": "comp-regalloc",
+  "title": "Register allocation maps live ranges to finite registers",
+  "tags": [
+   "compiler",
+   "regalloc",
+   "spill"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Live ranges compete for a small register file. A spill moves a value to the stack.",
+  "test": "Build an interference graph. Compare a graph-coloring and a linear-scan allocator.",
+  "proof": "A correct allocation with a bounded spill count.",
+  "failure": "A spill in a hot loop is a large slowdown. A coalescing bug miscompiles."
+ },
+ {
   "path": "knowledge/comp-ssa.md",
   "body": "# SSA makes each definition single and explicit\n\n## Claim\n\nStatic single assignment gives every value one definition and uses phi nodes at joins. Dataflow becomes a graph walk.\n\n## Test\n\nConvert a small CFG to SSA. Name the phi nodes. Check the def-use chains.\n\n## Proof\n\nA correct SSA form with no duplicate defs.\n\n## Failure modes\n\nA phi missing at a join is a miscompile. Dominance matters.",
   "id": "comp-ssa",
@@ -1323,6 +1367,28 @@
   "test": "Convert a small CFG to SSA. Name the phi nodes. Check the def-use chains.",
   "proof": "A correct SSA form with no duplicate defs.",
   "failure": "A phi missing at a join is a miscompile. Dominance matters."
+ },
+ {
+  "path": "knowledge/comp-type-check.md",
+  "body": "# Type checking proves a property before runtime\n\n## Claim\n\nThe checker rejects programs that violate the type rules. Soundness means no well-typed program gets stuck.\n\n## Test\n\nWrite a bad program. Check the error location. Compare with a gradual type escape.\n\n## Proof\n\nA rejection with a rule and a location.\n\n## Failure modes\n\nAn `any` escape moves the proof to runtime. An unsound cast hides it.",
+  "id": "comp-type-check",
+  "title": "Type checking proves a property before runtime",
+  "tags": [
+   "compiler",
+   "types",
+   "soundness"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The checker rejects programs that violate the type rules. Soundness means no well-typed program gets stuck.",
+  "test": "Write a bad program. Check the error location. Compare with a gradual type escape.",
+  "proof": "A rejection with a rule and a location.",
+  "failure": "An `any` escape moves the proof to runtime. An unsound cast hides it."
  },
  {
   "path": "knowledge/container-escape.md",
@@ -1634,6 +1700,28 @@
   "failure": "A proxy or library changes the fingerprint. A match is not proof of malware."
  },
  {
+  "path": "knowledge/dist-backfill.md",
+  "body": "# A backfill is a throttled repair stream\n\n## Claim\n\nMissing data is replayed from a source while live traffic continues. A throttle and a checkpoint keep it safe.\n\n## Test\n\nBackfill a lagging replica. Measure the source and the replica load. Stop and resume.\n\n## Proof\n\nA caught-up replica without a source overload.\n\n## Failure modes\n\nAn unthrottled backfill competes with live traffic. A checkpoint that is not durable repeats work.",
+  "id": "dist-backfill",
+  "title": "A backfill is a throttled repair stream",
+  "tags": [
+   "distributed",
+   "backfill",
+   "repair"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Missing data is replayed from a source while live traffic continues. A throttle and a checkpoint keep it safe.",
+  "test": "Backfill a lagging replica. Measure the source and the replica load. Stop and resume.",
+  "proof": "A caught-up replica without a source overload.",
+  "failure": "An unthrottled backfill competes with live traffic. A checkpoint that is not durable repeats work."
+ },
+ {
   "path": "knowledge/dist-clock.md",
   "body": "# Physical clocks skew; logical clocks order events\n\n## Claim\n\nTwo machines disagree about time. Lamport clocks, vector clocks and version vectors encode causality.\n\n## Test\n\nWrite on two nodes. Compare timestamps and versions. Check the merge rule.\n\n## Proof\n\nA causal order that survives clock skew.\n\n## Failure modes\n\nTimestamp ordering can drop a concurrent write. NTP reduces skew, not causality.",
   "id": "dist-clock",
@@ -1678,6 +1766,28 @@
   "failure": "A CRDT can lose intent: a remove-wins set loses an add. The type choice matters."
  },
  {
+  "path": "knowledge/dist-gossip.md",
+  "body": "# Gossip spreads state in logarithmic rounds\n\n## Claim\n\nEach node forwards rumors to a few peers. Membership and failure detection converge without a central registry.\n\n## Test\n\nSimulate node loss and message loss. Measure convergence time and false failure rate.\n\n## Proof\n\nA stable membership view after churn.\n\n## Failure modes\n\nA slow gossip interval delays failover. A short one floods the network.",
+  "id": "dist-gossip",
+  "title": "Gossip spreads state in logarithmic rounds",
+  "tags": [
+   "distributed",
+   "gossip",
+   "membership"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Each node forwards rumors to a few peers. Membership and failure detection converge without a central registry.",
+  "test": "Simulate node loss and message loss. Measure convergence time and false failure rate.",
+  "proof": "A stable membership view after churn.",
+  "failure": "A slow gossip interval delays failover. A short one floods the network."
+ },
+ {
   "path": "knowledge/dist-ordering.md",
   "body": "# Exactly-once is at-least-once plus dedup\n\n## Claim\n\nThe network duplicates and reorders. The consumer must dedup and tolerate order.\n\n## Test\n\nRedeliver and reorder messages. Check the consumer and the state.\n\n## Proof\n\nOne effect per message id with a bounded dedup store.\n\n## Failure modes\n\nAn unbounded dedup set is a leak. A sequence number without a gap policy is a stall.",
   "id": "dist-ordering",
@@ -1720,6 +1830,28 @@
   "test": "Partition a replica. Read and write on both sides. Check the consistency and the error.",
   "proof": "A documented choice with the read/write behavior under partition.",
   "failure": "A system that claims both without a partition story is marketing."
+ },
+ {
+  "path": "knowledge/dist-quorum-read.md",
+  "body": "# A quorum read must overlap the write quorum\n\n## Claim\n\nR + W > N gives overlap. A read from fewer nodes can miss the latest write.\n\n## Test\n\nWrite with a quorum. Read with different R values. Compare the value and the version.\n\n## Proof\n\nThe latest value at the documented quorum.\n\n## Failure modes\n\nA sticky read hides a weak quorum. A repair without a version is a guess.",
+  "id": "dist-quorum-read",
+  "title": "A quorum read must overlap the write quorum",
+  "tags": [
+   "distributed",
+   "quorum",
+   "read"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "R + W > N gives overlap. A read from fewer nodes can miss the latest write.",
+  "test": "Write with a quorum. Read with different R values. Compare the value and the version.",
+  "proof": "The latest value at the documented quorum.",
+  "failure": "A sticky read hides a weak quorum. A repair without a version is a guess."
  },
  {
   "path": "knowledge/electron-context-isolation.md",
@@ -1923,6 +2055,50 @@
   "test": "Name the placement. Test a miss storm and a write.",
   "proof": "A stampede guard and a clear invalidation.",
   "failure": "A local cache without pub/sub is stale by design."
+ },
+ {
+  "path": "knowledge/eng-capacity.md",
+  "body": "# Capacity is a model with headroom\n\n## Claim\n\nArrival rate, service time and headroom predict saturation. A 2x headroom is a starting rule, not a law.\n\n## Test\n\nMeasure the service time. Compute the saturation point. Set the headroom.\n\n## Proof\n\n A capacity model with a clear limit.\n\n## Failure modes\n\nA CPU average hides a queue. A single hot shard sets the limit.",
+  "id": "eng-capacity",
+  "title": "Capacity is a model with headroom",
+  "tags": [
+   "engineering",
+   "capacity",
+   "planning"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Arrival rate, service time and headroom predict saturation. A 2x headroom is a starting rule, not a law.",
+  "test": "Measure the service time. Compute the saturation point. Set the headroom.",
+  "proof": "A capacity model with a clear limit.",
+  "failure": "A CPU average hides a queue. A single hot shard sets the limit."
+ },
+ {
+  "path": "knowledge/eng-chaos.md",
+  "body": "# A chaos experiment has a steady-state hypothesis\n\n## Claim\n\nThe hypothesis names the expected behavior. The experiment injects one fault and measures.\n\n## Test\n\nWrite the hypothesis. Inject a latency or a pod kill. Compare.\n\n## Proof\n\nA confirmed or refuted hypothesis with evidence.\n\n## Failure modes\n\nA random kill without a hypothesis is a demo. Production needs a blast-radius limit.",
+  "id": "eng-chaos",
+  "title": "A chaos experiment has a steady-state hypothesis",
+  "tags": [
+   "engineering",
+   "chaos",
+   "reliability"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The hypothesis names the expected behavior. The experiment injects one fault and measures.",
+  "test": "Write the hypothesis. Inject a latency or a pod kill. Compare.",
+  "proof": "A confirmed or refuted hypothesis with evidence.",
+  "failure": "A random kill without a hypothesis is a demo. Production needs a blast-radius limit."
  },
  {
   "path": "knowledge/eng-code-review.md",
@@ -2629,6 +2805,28 @@
   "failure": "A big-bang rewrite loses the edge cases the old code encodes."
  },
  {
+  "path": "knowledge/eng-load-test.md",
+  "body": "# A load model needs an open or closed loop\n\n## Claim\n\nOpen-loop arrival rate exposes queueing. Closed-loop users hide latency behind think time.\n\n## Test\n\nChoose the model. Ramp to saturation. Measure latency and error rate.\n\n## Proof\n\nA saturation point and a latency curve.\n\n## Failure modes\n\nA closed loop at fixed concurrency understates queueing. A test from one host saturates the host first.",
+  "id": "eng-load-test",
+  "title": "A load model needs an open or closed loop",
+  "tags": [
+   "engineering",
+   "load",
+   "testing"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Open-loop arrival rate exposes queueing. Closed-loop users hide latency behind think time.",
+  "test": "Choose the model. Ramp to saturation. Measure latency and error rate.",
+  "proof": "A saturation point and a latency curve.",
+  "failure": "A closed loop at fixed concurrency understates queueing. A test from one host saturates the host first."
+ },
+ {
   "path": "knowledge/eng-logging.md",
   "body": "# Log the decision, not the whole world\n\n## Claim\n\nA log line should answer what happened and what to do. Request ids, actor, resource and outcome make it useful.\n\n## Test\n\nRead a log from a failed request. Can you reconstruct the decision?\n\n## Proof\n\nA log that reconstructs the request without the source.\n\n## Failure modes\n\nPII in logs is a liability. Unstructured logs are hard to query.",
   "id": "eng-logging",
@@ -3067,6 +3265,28 @@
   "test": "Write one sentence with actor, action and outcome. List what is out of scope. Ask what would make it fail.",
   "proof": "A builder and a reviewer can agree on the acceptance test before code.",
   "failure": "A requirement that cannot fail is a slogan."
+ },
+ {
+  "path": "knowledge/eng-retention.md",
+  "body": "# Retention is a deletion clock with an owner\n\n## Claim\n\nEach dataset has a legal and product lifetime. Archival is not deletion.\n\n## Test\n\nList datasets and retention. Check the archive and the delete job.\n\n## Proof\n\nA deletion after the window with evidence.\n\n## Failure modes\n\nAn archive nobody can read is not retention. A backup keeps deleted data alive.",
+  "id": "eng-retention",
+  "title": "Retention is a deletion clock with an owner",
+  "tags": [
+   "engineering",
+   "retention",
+   "data"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Each dataset has a legal and product lifetime. Archival is not deletion.",
+  "test": "List datasets and retention. Check the archive and the delete job.",
+  "proof": "A deletion after the window with evidence.",
+  "failure": "An archive nobody can read is not retention. A backup keeps deleted data alive."
  },
  {
   "path": "knowledge/eng-roadmap.md",
@@ -3935,6 +4155,50 @@
   "failure": "A hidden button is not a server-side control. Test the API."
  },
  {
+  "path": "knowledge/org-adr.md",
+  "body": "# An ADR records why, not only what\n\n## Claim\n\nThe context, options, decision and consequences survive the people. A stale ADR is superseded, not deleted.\n\n## Test\n\nWrite an ADR for one choice. Link the superseded record.\n\n## Proof\n\nA reader can reconstruct the tradeoff.\n\n## Failure modes\n\nA decision log without consequences is a changelog.",
+  "id": "org-adr",
+  "title": "An ADR records why, not only what",
+  "tags": [
+   "organization",
+   "adr",
+   "documentation"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "The context, options, decision and consequences survive the people. A stale ADR is superseded, not deleted.",
+  "test": "Write an ADR for one choice. Link the superseded record.",
+  "proof": "A reader can reconstruct the tradeoff.",
+  "failure": "A decision log without consequences is a changelog."
+ },
+ {
+  "path": "knowledge/org-budget.md",
+  "body": "# A team budget is maintenance plus a bet\n\n## Claim\n\nMaintenance, on-call and debt consume capacity. Innovation without a protected slice starves.\n\n## Test\n\nMeasure maintenance share. Protect a bet slice. Review monthly.\n\n## Proof\n\nA capacity plan that names both.\n\n## Failure modes\n\nA 100% feature plan hides the maintenance tax.",
+  "id": "org-budget",
+  "title": "A team budget is maintenance plus a bet",
+  "tags": [
+   "organization",
+   "budget",
+   "planning"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Maintenance, on-call and debt consume capacity. Innovation without a protected slice starves.",
+  "test": "Measure maintenance share. Protect a bet slice. Review monthly.",
+  "proof": "A capacity plan that names both.",
+  "failure": "A 100% feature plan hides the maintenance tax."
+ },
+ {
   "path": "knowledge/org-conway.md",
   "body": "# The org chart leaks into the architecture\n\n## Claim\n\nConway's law says teams ship their communication structure. A boundary with three owners becomes a distributed monolith.\n\n## Test\n\nMap services to teams. Find a service with more than one owner or a team with ten services.\n\n## Proof\n\nOne owner and one on-call per boundary.\n\n## Failure modes\n\nA platform team can own a shared capability. A matrix org blurs it.",
   "id": "org-conway",
@@ -3958,6 +4222,50 @@
   "test": "Map services to teams. Find a service with more than one owner or a team with ten services.",
   "proof": "One owner and one on-call per boundary.",
   "failure": "A platform team can own a shared capability. A matrix org blurs it."
+ },
+ {
+  "path": "knowledge/org-delegation.md",
+  "body": "# Delegation needs a decision right and a boundary\n\n## Claim\n\nA delegated decision names the owner, the consulted, the informed and the limit.\n\n## Test\n\nWrite a DACI for one decision. Check the limit and the escalation path.\n\n## Proof\n\nA decision made at the right level without a round trip.\n\n## Failure modes\n\nDelegation without a limit is abdication. A consulted list that is too large stalls.",
+  "id": "org-delegation",
+  "title": "Delegation needs a decision right and a boundary",
+  "tags": [
+   "organization",
+   "delegation",
+   "daci"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A delegated decision names the owner, the consulted, the informed and the limit.",
+  "test": "Write a DACI for one decision. Check the limit and the escalation path.",
+  "proof": "A decision made at the right level without a round trip.",
+  "failure": "Delegation without a limit is abdication. A consulted list that is too large stalls."
+ },
+ {
+  "path": "knowledge/org-incentives.md",
+  "body": "# An incentive shapes the local optimum\n\n## Claim\n\nA team optimizes what it is measured on. A deploy count can beat reliability.\n\n## Test\n\nList the top metric per team. Find a behavior it discourages.\n\n## Proof\n\nA metric pair that balances speed and stability.\n\n## Failure modes\n\nA single metric is gamed. A metric with no owner is ignored.",
+  "id": "org-incentives",
+  "title": "An incentive shapes the local optimum",
+  "tags": [
+   "organization",
+   "incentives",
+   "metrics"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A team optimizes what it is measured on. A deploy count can beat reliability.",
+  "test": "List the top metric per team. Find a behavior it discourages.",
+  "proof": "A metric pair that balances speed and stability.",
+  "failure": "A single metric is gamed. A metric with no owner is ignored."
  },
  {
   "path": "knowledge/org-oncall.md",
@@ -4512,6 +4820,53 @@
   "test": "Identify the provider. Call a read-only identity or list endpoint. Check the scope and expiry.",
   "proof": "A successful read-only API response with the key's permissions.",
   "failure": "A public client key may be intended. A revoked key is a false positive."
+ },
+ {
+  "path": "knowledge/storage-checksum.md",
+  "body": "# A checksum detects corruption, it does not repair it\n\n## Claim\n\nPer-block checksums catch bit rot on read. Repair needs a replica or a parity block.\n\n## Test\n\nCorrupt a block. Read it. Check the checksum and the repair source.\n\n## Proof\n\nA detected corruption and a repaired read.\n\n## Failure modes\n\nA checksum over the wrong range misses the corruption. A scrub finds it before a read.",
+  "id": "storage-checksum",
+  "title": "A checksum detects corruption, it does not repair it",
+  "tags": [
+   "storage",
+   "checksum",
+   "corruption"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Per-block checksums catch bit rot on read. Repair needs a replica or a parity block.",
+  "test": "Corrupt a block. Read it. Check the checksum and the repair source.",
+  "proof": "A detected corruption and a repaired read.",
+  "failure": "A checksum over the wrong range misses the corruption. A scrub finds it before a read."
+ },
+ {
+  "path": "knowledge/storage-compaction.md",
+  "body": "# Compaction trades space and read speed for write stalls\n\n## Claim\n\nMerging sorted runs removes tombstones and stale versions. The write path stalls when compaction falls behind.\n\n## Test\n\nMeasure write stall and read amplification under a steady write load.\n\n## Proof\n\nA compaction policy that keeps stalls under the budget.\n\n## Failure modes\n\nA full compaction on a large store takes hours. A tombstone dropped too early resurrects data.",
+  "id": "storage-compaction",
+  "title": "Compaction trades space and read speed for write stalls",
+  "tags": [
+   "storage",
+   "compaction",
+   "lsm",
+   "write",
+   "stall",
+   "sorted-runs"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/engineering-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Merging sorted runs removes tombstones and stale versions. The write path stalls when compaction falls behind.",
+  "test": "Measure write stall and read amplification under a steady write load.",
+  "proof": "A compaction policy that keeps stalls under the budget.",
+  "failure": "A full compaction on a large store takes hours. A tombstone dropped too early resurrects data."
  },
  {
   "path": "knowledge/storage-replication.md",

@@ -1,6 +1,6 @@
 # Knowledge index
 
-246 durable cards. Read this before a web search; open a card only when it matches.
+262 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -62,7 +62,10 @@
 | `cloud-terraform-state` | Terraform state is a secret store | cloud, terraform, state | medium | 2026-11-24 |
 | `cloud-vmware` | VMware appliances are a chain of SSO and service bugs | cloud, vmware, vcenter | high | 2026-11-25 |
 | `comp-jit` | A JIT has tiers, guards and a code cache | compiler, jit, deopt | high | 2026-11-25 |
+| `comp-optimizer` | An optimization must preserve semantics | compiler, optimizer, semantics | medium | 2026-11-25 |
+| `comp-regalloc` | Register allocation maps live ranges to finite registers | compiler, regalloc, spill | medium | 2026-11-25 |
 | `comp-ssa` | SSA makes each definition single and explicit | compiler, ssa, dataflow | high | 2026-11-25 |
+| `comp-type-check` | Type checking proves a property before runtime | compiler, types, soundness | medium | 2026-11-25 |
 | `container-escape` | A container escape is a host resource exposed to the container | container, escape, kubernetes | high | 2026-11-24 |
 | `crypto-kdf` | A password hash is a cost parameter | crypto, kdf, password | medium | 2026-11-25 |
 | `key-management` | Key management is where crypto bugs become data bugs | crypto, keys, storage | medium | 2026-11-24 |
@@ -79,8 +82,11 @@
 | `detection-tls` | TLS fingerprints identify a client stack, not a person | detection, tls, ja3 | medium | 2026-11-25 |
 | `detection-threatintel` | Threat intel ages and IOCs are easy to rotate | detection, intel, ioc | medium | 2026-11-24 |
 | `dist-crdt` | A CRDT merges without coordination | distributed, crdt, merge | high | 2026-11-25 |
+| `dist-backfill` | A backfill is a throttled repair stream | distributed, backfill, repair | medium | 2026-11-25 |
 | `dist-partition` | A partition forces a choice between availability and consistency | distributed, partition, cap | high | 2026-11-25 |
+| `dist-quorum-read` | A quorum read must overlap the write quorum | distributed, quorum, read | medium | 2026-11-25 |
 | `dist-ordering` | Exactly-once is at-least-once plus dedup | distributed, ordering, dedup | high | 2026-11-25 |
+| `dist-gossip` | Gossip spreads state in logarithmic rounds | distributed, gossip, membership | medium | 2026-11-25 |
 | `dist-clock` | Physical clocks skew; logical clocks order events | distributed, clock, causality | high | 2026-11-25 |
 | `electron-context-isolation` | Electron is Node with a browser attached | electron, desktop, context-isolation | medium | 2026-11-24 |
 | `eng-gc` | A GC trades throughput for pause and space | engineering, gc, allocation | medium | 2026-11-25 |
@@ -88,9 +94,11 @@
 | `eng-repro-build` | A build should be reproducible from a clean checkout | engineering, build, reproducible | high | 2026-11-25 |
 | `eng-cache-invalidation` | A cache needs a key, a TTL and an invalidation path | engineering, cache, invalidation | high | 2026-11-25 |
 | `eng-timeouts` | A call without a deadline can hang a pool | engineering, timeouts, reliability | high | 2026-11-25 |
+| `eng-chaos` | A chaos experiment has a steady-state hypothesis | engineering, chaos, reliability | medium | 2026-11-25 |
 | `eng-compiler` | A compiler is a pipeline of representations | engineering, compiler, parsing | low | 2026-11-25 |
 | `eng-communication` | A decision nobody understands is a future incident | engineering, communication, writing | high | 2026-11-25 |
 | `eng-feature-flags` | A feature flag is a temporary branch with an owner | engineering, feature-flag, release | medium | 2026-11-25 |
+| `eng-load-test` | A load model needs an open or closed loop | engineering, load, testing | medium | 2026-11-25 |
 | `eng-migrations` | A migration is expand, backfill, switch, contract | engineering, database, migration | high | 2026-11-25 |
 | `eng-platform` | A platform is a paved road, not a gate | engineering, platform, dx | medium | 2026-11-25 |
 | `eng-postmortem` | A postmortem is blameless and actionable | engineering, postmortem, learning | high | 2026-11-25 |
@@ -114,6 +122,7 @@
 | `eng-debug-bisect` | Bisect the space, not the code | engineering, debugging, bisect | high | 2026-11-25 |
 | `eng-cqrs` | CQRS separates the write model from the read model | engineering, cqrs, read-model | medium | 2026-11-25 |
 | `eng-cache-topology` | Cache placement decides the failure mode | engineering, cache, topology | medium | 2026-11-25 |
+| `eng-capacity` | Capacity is a model with headroom | engineering, capacity, planning | medium | 2026-11-25 |
 | `eng-frontend-state` | Client state and server state are different caches | engineering, frontend, state | medium | 2026-11-25 |
 | `eng-compliance` | Compliance is evidence of a control | engineering, compliance, soc2 | medium | 2026-11-25 |
 | `eng-concurrency` | Concurrency bugs are about shared state and ordering | engineering, concurrency, locks | high | 2026-11-25 |
@@ -141,6 +150,7 @@
 | `eng-property-tests` | Property tests find the input you did not imagine | engineering, testing, property | medium | 2026-11-25 |
 | `eng-refactor-small` | Refactor in small, behavior-preserving steps | engineering, refactor, testing | high | 2026-11-25 |
 | `eng-requirements` | Requirements are a decision, not a transcript | engineering, requirements, product | high | 2026-11-25 |
+| `eng-retention` | Retention is a deletion clock with an owner | engineering, retention, data | medium | 2026-11-25 |
 | `eng-code-review` | Review the change, not the author | engineering, review, quality | high | 2026-11-25 |
 | `eng-schema-evolution` | Schema changes must be compatible in both directions | engineering, schema, evolution, deploy, migration | high | 2026-11-25 |
 | `eng-security-design` | Security is a property of the design | engineering, security, design | high | 2026-11-25 |
@@ -181,6 +191,10 @@
 | `mobile-flutter` | Flutter hides logic in libapp.so and pins in Dart | mobile, flutter, dart | medium | 2026-11-24 |
 | `mobile-swift` | Swift hooks need mangled names or a bridge | mobile, ios, swift | medium | 2026-11-24 |
 | `mobile-swiftui-state` | SwiftUI state is not a security boundary | mobile, ios, swiftui | low | 2026-11-24 |
+| `org-budget` | A team budget is maintenance plus a bet | organization, budget, planning | medium | 2026-11-25 |
+| `org-adr` | An ADR records why, not only what | organization, adr, documentation | medium | 2026-11-25 |
+| `org-incentives` | An incentive shapes the local optimum | organization, incentives, metrics | medium | 2026-11-25 |
+| `org-delegation` | Delegation needs a decision right and a boundary | organization, delegation, daci | medium | 2026-11-25 |
 | `org-oncall` | On-call load is a reliability input | organization, oncall, reliability | high | 2026-11-25 |
 | `org-conway` | The org chart leaks into the architecture | organization, conway, law, ownership, service, teams | high | 2026-11-25 |
 | `process-retest` | A fix is not a fix until the same request fails | process, retest, regression | high | 2026-11-24 |
@@ -206,7 +220,9 @@
 | `re-dotnet-aot` | Native AOT is not IL | re, dotnet, aot | medium | 2026-11-24 |
 | `re-rust-layout` | Rust types are not C types | re, rust, layout | high | 2026-11-24 |
 | `re-swift` | Swift uses witness tables and value types | re, swift, ios | medium | 2026-11-24 |
+| `storage-checksum` | A checksum detects corruption, it does not repair it | storage, checksum, corruption | medium | 2026-11-25 |
 | `storage-wal` | A write-ahead log makes the write durable before the page | storage, wal, durability | high | 2026-11-25 |
+| `storage-compaction` | Compaction trades space and read speed for write stalls | storage, compaction, lsm, write, stall, sorted-runs | medium | 2026-11-25 |
 | `storage-replication` | Replication has a lag and a loss window | storage, replication, failover | high | 2026-11-25 |
 | `supply-lockfile` | A lockfile is an integrity contract | supply-chain, lockfile, reproducible | medium | 2026-11-24 |
 | `supply-typosquat` | A package name one character off is a supply-chain bug | supply-chain, package, typosquat | high | 2026-11-24 |

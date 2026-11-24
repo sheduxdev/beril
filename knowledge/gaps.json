@@ -1535,8 +1535,8 @@
   "gap": "Gossip membership and failure detection",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "dist-gossip",
+  "status": "covered"
  },
  {
   "id": "dist-ordering",
@@ -1553,8 +1553,8 @@
   "gap": "Safe backfills and read repair",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "dist-backfill",
+  "status": "covered"
  },
  {
   "id": "dist-quorum-read",
@@ -1562,8 +1562,8 @@
   "gap": "Quorum reads, sticky reads and monotonicity",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "dist-quorum-read",
+  "status": "covered"
  },
  {
   "id": "comp-ssa",
@@ -1580,8 +1580,8 @@
   "gap": "Register allocation and spilling",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "comp-regalloc",
+  "status": "covered"
  },
  {
   "id": "comp-jit",
@@ -1598,8 +1598,8 @@
   "gap": "Type checking, inference and soundness",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "comp-type-check",
+  "status": "covered"
  },
  {
   "id": "comp-optimizer",
@@ -1607,8 +1607,8 @@
   "gap": "Optimization passes and semantic preservation",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "comp-optimizer",
+  "status": "covered"
  },
  {
   "id": "storage-wal",
@@ -1625,8 +1625,8 @@
   "gap": "Compaction policy, tombstones and write stalls",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "storage-compaction",
+  "status": "covered"
  },
  {
   "id": "storage-checksum",
@@ -1634,8 +1634,8 @@
   "gap": "Checksums, bit rot and scrub",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "storage-checksum",
+  "status": "covered"
  },
  {
   "id": "storage-replication",
@@ -1670,8 +1670,8 @@
   "gap": "Delegation, decision rights and DACI",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "org-delegation",
+  "status": "covered"
  },
  {
   "id": "org-adr",
@@ -1679,8 +1679,8 @@
   "gap": "Architecture decision records and durable context",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "org-adr",
+  "status": "covered"
  },
  {
   "id": "org-budget",
@@ -1688,8 +1688,8 @@
   "gap": "Headcount, maintenance and innovation budget",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "org-budget",
+  "status": "covered"
  },
  {
   "id": "org-incentives",
@@ -1697,8 +1697,8 @@
   "gap": "Incentives, metrics and local optimization",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "org-incentives",
+  "status": "covered"
  },
  {
   "id": "eng-backup-restore",
@@ -1724,8 +1724,8 @@
   "gap": "Chaos experiments and steady-state hypothesis",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-chaos",
+  "status": "covered"
  },
  {
   "id": "eng-load-test",
@@ -1733,8 +1733,8 @@
   "gap": "Load models, open vs closed loop and saturation",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-load-test",
+  "status": "covered"
  },
  {
   "id": "eng-capacity",
@@ -1742,8 +1742,8 @@
   "gap": "Capacity models and headroom",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-capacity",
+  "status": "covered"
  },
  {
   "id": "eng-retention",
@@ -1751,7 +1751,7 @@
   "gap": "Data retention, archival and deletion",
   "priority": "medium",
   "source": "references/engineering-mastery.md",
-  "covered_by": "",
-  "status": "open"
+  "covered_by": "eng-retention",
+  "status": "covered"
  }
 ]
