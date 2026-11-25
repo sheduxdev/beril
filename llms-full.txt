@@ -8433,7 +8433,7 @@ A crash is a lead. A controlled register is a primitive. A working chain is an e
 
 # Training with Beril
 
-Beril has a 25-week curriculum and thirteen local labs. It is a practice system, not a reading list.
+Beril has a 25-week curriculum and fourteen local labs. It is a practice system, not a reading list.
 
 ## Start
 
@@ -8464,6 +8464,7 @@ Mark tasks:
 | `rce` | command injection, eval, pickle, upload to exec |
 | `auth` | session fixation, MFA skip, reset token, JWT none |
 | `crypto` | ECB, padding oracle, CTR reuse |
+| `api` | BOLA, mass assignment, GraphQL alias, SSRF |
 | `binary` | stack, format string, UAF, integer |
 | `fuzz` | libFuzzer and crash triage |
 | `re` | stripped binary reconstruction |
@@ -9021,7 +9022,7 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 
 # Knowledge index
 
-770 durable cards. Read this before a web search; open a card only when it matches.
+902 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -9075,6 +9076,19 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `alloc-numa` | NUMA locality is decided by first touch | allocator, numa, memory | medium | 2026-11-25 |
 | `alloc-size-class` | Size classes trade internal fragmentation for speed | allocator, size-class, fragmentation | medium | 2026-11-25 |
 | `alloc-tcache` | Thread caches reduce contention and create remote frees | allocator, tcache, threads | high | 2026-11-25 |
+| `a-webview-is-a-browser-inside-the-app` | A WebView is a browser inside the app | android, webview, bridge | high | 2026-11-26 |
+| `a-content-provider-is-a-sql-surface` | A content provider is a SQL surface | android, provider, sql | high | 2026-11-26 |
+| `a-split-apk-is-one-app-in-several-files` | A split APK is one app in several files | android, split, packaging | medium | 2026-11-26 |
+| `android-keystore-is-a-key-without-export` | Android Keystore is a key without export | android, keystore, key | medium | 2026-11-26 |
+| `binder-is-the-android-ipc-and-identity` | Binder is the Android IPC and identity | android, binder, ipc | high | 2026-11-26 |
+| `dynamic-code-loading-needs-a-write-path-and-a-loader` | Dynamic code loading needs a write path and a loader | android, dynamic-code, loader | medium | 2026-11-26 |
+| `jni-is-a-native-boundary-with-a-type-contract` | JNI is a native boundary with a type contract | android, jni, native | high | 2026-11-26 |
+| `magisk-is-a-user-space-root-with-a-module-system` | Magisk is a user space root with a module system | android, magisk, root | high | 2026-11-26 |
+| `play-integrity-is-a-signed-verdict` | Play Integrity is a signed verdict | android, integrity, play | medium | 2026-11-26 |
+| `root-detection-is-a-set-of-checks` | Root detection is a set of checks | android, root, detection | high | 2026-11-26 |
+| `selinux-is-the-android-mandatory-control` | SELinux is the Android mandatory control | android, selinux, policy | high | 2026-11-26 |
+| `strongbox-is-a-separate-secure-cpu` | StrongBox is a separate secure CPU | android, strongbox, hardware | medium | 2026-11-26 |
+| `verified-boot-binds-the-image-to-the-key` | Verified boot binds the image to the key | android, verified-boot, boot | high | 2026-11-26 |
 | `api-batch` | A batch endpoint checks the envelope, not each item | api, batch, auth | medium | 2026-11-25 |
 | `a-nested-object-id-often-checks-the-parent-only` | A nested object id often checks the parent only | api, bola, authorization | high | 2026-11-26 |
 | `api-webhook-signature` | A webhook without HMAC is an unauthenticated write | api, webhook, hmac | high | 2026-11-24 |
@@ -9116,6 +9130,15 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `saml-signature-wrapping-moves-the-assertion-not-the-signatur` | SAML signature wrapping moves the assertion, not the signature | auth, saml, xsw | medium | 2026-11-26 |
 | `session-id-must-rotate-at-login` | Session id must rotate at login | auth, session, fixation | high | 2026-11-26 |
 | `webauthn-trusts-the-rp-id-and-origin-pair` | WebAuthn trusts the RP ID and origin pair | auth, passkey, webauthn | medium | 2026-11-26 |
+| `an-ecu-is-a-computer-with-a-bootloader` | An ECU is a computer with a bootloader | auto, ecu, bootloader | medium | 2026-11-26 |
+| `an-ota-update-is-a-server-and-a-signature` | An OTA update is a server and a signature | auto, ota, update | medium | 2026-11-26 |
+| `doip-puts-uds-on-ethernet` | DoIP puts UDS on Ethernet | auto, doip, ethernet | medium | 2026-11-26 |
+| `ev-charging-uses-a-power-line-protocol` | EV charging uses a power line protocol | auto, charging, plc | low | 2026-11-26 |
+| `keyless-entry-is-a-radio-and-a-crypto-challenge` | Keyless entry is a radio and a crypto challenge | auto, keyless, radio | medium | 2026-11-26 |
+| `obd-is-a-legal-diagnostic-port` | OBD is a legal diagnostic port | auto, obd, diagnostic | high | 2026-11-26 |
+| `telematics-is-a-cellular-linux-box` | Telematics is a cellular Linux box | auto, telematics, cellular | medium | 2026-11-26 |
+| `the-central-gateway-is-the-network-boundary` | The central gateway is the network boundary | auto, gateway, network | medium | 2026-11-26 |
+| `uds-is-the-automotive-diagnostic-protocol` | UDS is the automotive diagnostic protocol | auto, uds, diagnostic | high | 2026-11-26 |
 | `an-ecs-task-role-is-a-container-credential` | An ECS task role is a container credential | aws, ecs, role | high | 2026-11-26 |
 | `an-s3-acl-is-a-separate-grant-from-the-bucket-policy` | An S3 ACL is a separate grant from the bucket policy | aws, s3, acl | high | 2026-11-26 |
 | `lambda-environment-variables-are-plaintext-at-rest` | Lambda environment variables are plaintext at rest | aws, lambda, secret | high | 2026-11-26 |
@@ -9444,14 +9467,54 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `a-public-cloud-function-is-an-unauthenticated-entry` | A public Cloud Function is an unauthenticated entry | gcp, function, auth | high | 2026-11-26 |
 | `a-public-gcs-object-ignores-the-bucket-iam` | A public GCS object ignores the bucket IAM | gcp, storage, acl | high | 2026-11-26 |
 | `gcp-workload-identity-binds-a-kubernetes-subject` | GCP workload identity binds a Kubernetes subject | gcp, workload-identity, k8s | high | 2026-11-26 |
+| `a-can-transceiver-is-a-one-wire-pair-tap` | A CAN transceiver is a one wire pair tap | hardware, can, automotive | medium | 2026-11-26 |
+| `a-pcb-trace-is-a-test-point` | A PCB trace is a test point | hardware, pcb, trace | medium | 2026-11-26 |
+| `a-tpm-is-a-measured-boot-and-a-sealed-secret` | A TPM is a measured boot and a sealed secret | hardware, tpm, boot | high | 2026-11-26 |
+| `a-uart-console-is-a-boot-log-and-often-a-shell` | A UART console is a boot log and often a shell | hardware, uart, console | high | 2026-11-26 |
+| `a-debug-port-needs-the-pinout-before-the-probe` | A debug port needs the pinout before the probe | hardware, jtag, debug | high | 2026-11-26 |
 | `hw-firmware-update` | A firmware update needs A/B slots and a rollback | hardware, firmware, rollback | medium | 2026-11-25 |
+| `a-logic-analyzer-is-the-protocol-decoder` | A logic analyzer is the protocol decoder | hardware, logic-analyzer, protocol | medium | 2026-11-26 |
+| `a-power-trace-leaks-the-branch-and-the-key` | A power trace leaks the branch and the key | hardware, side-channel, power | medium | 2026-11-26 |
+| `a-secure-boot-fuse-is-one-way` | A secure boot fuse is one way | hardware, secure-boot, fuse | high | 2026-11-26 |
+| `a-secure-element-holds-the-key-and-the-counter` | A secure element holds the key and the counter | hardware, secure-element, key | medium | 2026-11-26 |
+| `a-voltage-glitch-skips-a-check` | A voltage glitch skips a check | hardware, glitch, fault | medium | 2026-11-26 |
+| `an-i2c-eeprom-is-a-small-config-store` | An I2C EEPROM is a small config store | hardware, i2c, eeprom | medium | 2026-11-26 |
 | `hw-irq` | An interrupt handler must be short and defer the rest | hardware, interrupt, latency | medium | 2026-11-25 |
 | `hw-endian` | Byte order is part of the wire format | hardware, endian, layout | medium | 2026-11-25 |
+| `chip-off-is-the-last-resort-for-a-read-protected-flash` | Chip off is the last resort for a read protected flash | hardware, emmc, chip-off | medium | 2026-11-26 |
 | `hw-dma` | DMA bypasses the CPU cache and needs ownership rules | hardware, dma, coherency | high | 2026-11-25 |
 | `hw-mmio` | MMIO needs volatile access and barriers | hardware, mmio, barriers | high | 2026-11-25 |
+| `rfid-and-nfc-have-a-key-and-a-clone` | RFID and NFC have a key and a clone | hardware, rfid, nfc | medium | 2026-11-26 |
+| `sdr-demodulates-a-nearby-radio` | SDR demodulates a nearby radio | hardware, sdr, radio | medium | 2026-11-26 |
+| `spi-flash-holds-the-boot-image-and-the-keys` | SPI flash holds the boot image and the keys | hardware, spi, flash | high | 2026-11-26 |
 | `hardware-sidechannel` | Side channels leak through power, timing or EM | hardware, sidechannel | low | 2026-11-24 |
 | `hci-fitts` | Fitts's law sizes a target by distance and width | hci, fitts, target | medium | 2026-11-25 |
 | `hci-error-prevention` | Prevent the error before the confirmation | hci, error-prevention, undo | high | 2026-11-25 |
+| `a-device-model-is-the-host-attack-surface` | A device model is the host attack surface | hv, device-model, qemu | high | 2026-11-26 |
+| `a-hypervisor-escape-is-a-chain-not-a-bug` | A hypervisor escape is a chain, not a bug | hv, escape, chain | medium | 2026-11-26 |
+| `a-shared-folder-is-a-host-path-in-the-guest` | A shared folder is a host path in the guest | hv, shared-folder, path | medium | 2026-11-26 |
+| `a-snapshot-keeps-the-memory-and-the-disk-state` | A snapshot keeps the memory and the disk state | hv, snapshot, forensics | medium | 2026-11-26 |
+| `an-iommu-bounds-device-dma` | An IOMMU bounds device DMA | hv, iommu, dma | medium | 2026-11-26 |
+| `hypervisor-introspection-reads-the-guest-from-outside` | Hypervisor introspection reads the guest from outside | hv, introspection, forensics | medium | 2026-11-26 |
+| `nested-virtualization-exposes-the-l1-hypervisor` | Nested virtualization exposes the L1 hypervisor | hv, nested, vmcs | medium | 2026-11-26 |
+| `sev-and-tdx-encrypt-the-guest-memory` | SEV and TDX encrypt the guest memory | hv, sev, tdx | medium | 2026-11-26 |
+| `the-vmcs-is-the-control-structure-of-a-vm` | The VMCS is the control structure of a VM | hv, vmcs, cpu | medium | 2026-11-26 |
+| `virtio-is-a-shared-ring-between-guest-and-host` | Virtio is a shared ring between guest and host | hv, virtio, ring | medium | 2026-11-26 |
+| `a-service-principal-is-a-non-human-identity` | A service principal is a non human identity | idp, service-principal, secret | high | 2026-11-26 |
+| `adfs-metadata-is-a-trust-document` | ADFS metadata is a trust document | idp, adfs, saml | medium | 2026-11-26 |
+| `an-okta-admin-role-is-a-tenant-key` | An Okta admin role is a tenant key | idp, okta, admin | high | 2026-11-26 |
+| `app-consent-phishing-is-a-scope-grant` | App consent phishing is a scope grant | idp, consent-phishing, oauth | high | 2026-11-26 |
+| `conditional-access-is-the-policy-engine` | Conditional access is the policy engine | idp, conditional-access, policy | high | 2026-11-26 |
+| `device-trust-is-an-idp-claim` | Device trust is an IdP claim | idp, device-trust, claim | medium | 2026-11-26 |
+| `entra-app-consent-is-a-grant-to-a-third-party` | Entra app consent is a grant to a third party | idp, entra, consent | high | 2026-11-26 |
+| `saml-metadata-can-carry-a-redirect-and-a-key` | SAML metadata can carry a redirect and a key | idp, saml, metadata | medium | 2026-11-26 |
+| `scim-is-a-provisioning-api-with-a-token` | SCIM is a provisioning API with a token | idp, scim, token | high | 2026-11-26 |
+| `token-protection-binds-a-token-to-a-device` | Token protection binds a token to a device | idp, token-protection, binding | medium | 2026-11-26 |
+| `an-app-container-is-a-data-boundary` | An app container is a data boundary | ios, container, data | high | 2026-11-26 |
+| `an-ios-entitlement-is-a-right-on-a-binary` | An iOS entitlement is a right on a binary | ios, entitlement, right | medium | 2026-11-26 |
+| `the-secure-enclave-holds-the-ios-key-hierarchy` | The Secure Enclave holds the iOS key hierarchy | ios, secure-enclave, key | high | 2026-11-26 |
+| `the-dyld-cache-is-shared-and-huge` | The dyld cache is shared and huge | ios, dyld, cache | medium | 2026-11-26 |
+| `iboot-verifies-the-next-stage` | iBoot verifies the next stage | ios, iboot, boot | medium | 2026-11-26 |
 | `a-timeline-is-only-as-good-as-the-clock` | A timeline is only as good as the clock | ir, timeline, clock | high | 2026-11-26 |
 | `ir-timeline` | An incident timeline needs three independent clocks | ir, timeline, forensics | medium | 2026-11-24 |
 | `ir-cloud` | Cloud audit logs are the timeline | ir, cloud, logs | medium | 2026-11-24 |
@@ -9495,6 +9558,18 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `terraform-plan-is-the-effective-cloud-change` | Terraform plan is the effective cloud change | lang, terraform, cloud | high | 2026-11-26 |
 | `yaml-tags-are-object-constructors` | YAML tags are object constructors | lang, yaml, deser | high | 2026-11-26 |
 | `a-safe-harbor-claim-needs-the-program-text` | A safe harbor claim needs the program text | legal, safe-harbor, scope | high | 2026-11-26 |
+| `a-cgroup-escape-is-a-shared-kernel-bug` | A cgroup escape is a shared kernel bug | link, cgroup, container | medium | 2026-11-26 |
+| `a-kprobe-is-a-runtime-hook` | A kprobe is a runtime hook | link, kprobe, trace | high | 2026-11-26 |
+| `a-netns-is-a-network-stack-copy` | A netns is a network stack copy | link, netns, network | high | 2026-11-26 |
+| `fuse-is-a-user-space-filesystem` | FUSE is a user space filesystem | link, fuse, filesystem | medium | 2026-11-26 |
+| `kaslr-is-a-random-base-and-a-leak-target` | KASLR is a random base and a leak target | link, kaslr, leak | high | 2026-11-26 |
+| `overlayfs-is-a-merge-of-layers` | Overlayfs is a merge of layers | link, overlayfs, container | high | 2026-11-26 |
+| `slub-is-a-per-cpu-cache` | SLUB is a per CPU cache | link, slub, heap | medium | 2026-11-26 |
+| `the-ebpf-verifier-is-the-program-contract` | The eBPF verifier is the program contract | link, ebpf, verifier | medium | 2026-11-26 |
+| `the-keyring-is-a-per-user-secret-store` | The keyring is a per user secret store | link, keyring, secret | medium | 2026-11-26 |
+| `io-uring-is-a-shared-ring` | io_uring is a shared ring | link, io-uring, kernel | medium | 2026-11-26 |
+| `nftables-is-a-rule-evaluation-path` | nftables is a rule evaluation path | link, nftables, network | medium | 2026-11-26 |
+| `userfaultfd-moves-a-page-fault-to-user-space` | userfaultfd moves a page fault to user space | link, userfaultfd, fault | medium | 2026-11-26 |
 | `linux-suid` | A SUID binary is a path, not a finding | linux, privesc, suid | high | 2026-11-24 |
 | `a-suid-binary-is-only-useful-with-a-path` | A SUID binary is only useful with a path | linux, suid, privilege | high | 2026-11-26 |
 | `a-file-capability-is-a-narrower-suid` | A file capability is a narrower SUID | linux, capabilities, privilege | high | 2026-11-26 |
@@ -9508,6 +9583,16 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `linux-cron-systemd` | Scheduled jobs inherit a weak PATH or writable unit | linux, privesc, cron, systemd | medium | 2026-11-24 |
 | `the-docker-socket-is-host-root` | The Docker socket is host root | linux, docker, socket | high | 2026-11-26 |
 | `ptrace-on-a-privileged-process-reads-its-memory` | ptrace on a privileged process reads its memory | linux, ptrace, memory | medium | 2026-11-26 |
+| `a-launchd-job-is-persistence-and-privilege` | A launchd job is persistence and privilege | macos, launchd, persistence | high | 2026-11-26 |
+| `an-entitlement-is-the-macos-capability` | An entitlement is the macOS capability | macos, entitlement, capability | high | 2026-11-26 |
+| `code-signing-is-a-chain-and-an-entitlement-set` | Code signing is a chain and an entitlement set | macos, codesign, entitlement | high | 2026-11-26 |
+| `endpoint-security-is-the-edr-feed-on-macos` | Endpoint Security is the EDR feed on macOS | macos, endpoint-security, edr | medium | 2026-11-26 |
+| `mdm-is-a-configuration-and-a-bootstrap-token` | MDM is a configuration and a bootstrap token | macos, mdm, management | medium | 2026-11-26 |
+| `notarization-is-a-malware-scan-not-a-trust-proof` | Notarization is a malware scan, not a trust proof | macos, notarization, gatekeeper | high | 2026-11-26 |
+| `sip-is-a-kernel-enforced-macos-boundary` | SIP is a kernel enforced macOS boundary | macos, sip, boundary | high | 2026-11-26 |
+| `tcc-is-the-privacy-consent-database` | TCC is the privacy consent database | macos, tcc, privacy | high | 2026-11-26 |
+| `the-dyld-shared-cache-is-a-map-of-every-library` | The dyld shared cache is a map of every library | macos, dyld, library | medium | 2026-11-26 |
+| `xpc-is-a-mach-message-interface` | XPC is a mach message interface | macos, xpc, ipc | medium | 2026-11-26 |
 | `a-dkim-selector-is-a-public-key-with-a-revocation-path` | A DKIM selector is a public key with a revocation path | mail, dkim, selector | medium | 2026-11-26 |
 | `a-catch-all-address-hides-user-enumeration` | A catch all address hides user enumeration | mail, catch-all, enumeration | high | 2026-11-26 |
 | `a-header-newline-is-a-message-filter-bypass` | A header newline is a message filter bypass | mail, header-injection, smtp | high | 2026-11-26 |
@@ -9532,6 +9617,22 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `ransomware-is-a-key-and-a-deletion-race` | Ransomware is a key and a deletion race | malware, ransomware, recovery | high | 2026-11-26 |
 | `shellcode-needs-the-loader-contract` | Shellcode needs the loader contract | malware, shellcode, loader | medium | 2026-11-26 |
 | `static-malware-triage-starts-with-the-hash-and-the-header` | Static malware triage starts with the hash and the header | malware, static, triage | high | 2026-11-26 |
+| `a-medical-device-update-is-a-signed-package` | A medical device update is a signed package | med, update, signature | medium | 2026-11-26 |
+| `an-fda-premarket-submission-includes-the-cyber-file` | An FDA premarket submission includes the cyber file | med, fda, submission | low | 2026-11-26 |
+| `an-infusion-pump-has-a-dose-and-a-library` | An infusion pump has a dose and a library | med, infusion, dose | low | 2026-11-26 |
+| `dicom-is-a-medical-image-and-a-network-protocol` | DICOM is a medical image and a network protocol | med, dicom, pacs | medium | 2026-11-26 |
+| `fhir-is-a-rest-api-with-a-scope` | FHIR is a REST API with a scope | med, fhir, api | medium | 2026-11-26 |
+| `hl7-v2-is-a-pipe-delimited-message` | HL7 v2 is a pipe delimited message | med, hl7, interface | medium | 2026-11-26 |
+| `iec-62304-is-a-software-lifecycle` | IEC 62304 is a software lifecycle | med, iec62304, process | low | 2026-11-26 |
+| `medical-mqtt-is-a-device-bus` | Medical MQTT is a device bus | med, mqtt, device | medium | 2026-11-26 |
+| `apf-is-the-authorized-program-list` | APF is the authorized program list | mf, apf, library | low | 2026-11-26 |
+| `cics-is-a-transaction-server` | CICS is a transaction server | mf, cics, transaction | low | 2026-11-26 |
+| `db2-on-z-os-uses-the-racf-identity` | DB2 on z/OS uses the RACF identity | mf, db2, access | low | 2026-11-26 |
+| `jcl-is-a-batch-program-and-a-dataset-list` | JCL is a batch program and a dataset list | mf, jcl, batch | low | 2026-11-26 |
+| `jes-is-the-job-entry-and-the-spool` | JES is the job entry and the spool | mf, jes, spool | low | 2026-11-26 |
+| `racf-is-the-mainframe-access-control` | RACF is the mainframe access control | mf, racf, access | medium | 2026-11-26 |
+| `tso-is-an-interactive-mainframe-session` | TSO is an interactive mainframe session | mf, tso, session | medium | 2026-11-26 |
+| `z-os-has-a-console-and-a-system-data-set` | z/OS has a console and a system data set | mf, zos, console | low | 2026-11-26 |
 | `a-javascript-bridge-is-a-native-api-in-the-page` | A JavaScript bridge is a native API in the page | mobile, webview, bridge | high | 2026-11-26 |
 | `a-deep-link-parameter-is-untrusted-input` | A deep link parameter is untrusted input | mobile, deeplink, input | high | 2026-11-26 |
 | `mobile-deep-link-bridge` | A deep link plus a JS bridge is a chain | mobile, android, deep-link | high | 2026-11-24 |
@@ -9601,6 +9702,18 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `zigbee-needs-the-network-key` | Zigbee needs the network key | ot, zigbee, iot | medium | 2026-11-26 |
 | `perf-latency-percentile` | A percentile hides the shape and coordinated omission | performance, latency, percentile | high | 2026-11-25 |
 | `perf-profiling` | Sampling measures where time goes; instrumentation measures counts | performance, profiling, flamegraph | high | 2026-11-25 |
+| `a-docker-image-tag-is-mutable` | A Docker image tag is mutable | pkg, docker, tag | high | 2026-11-26 |
+| `a-helm-chart-can-run-a-hook` | A Helm chart can run a hook | pkg, helm, hook | medium | 2026-11-26 |
+| `a-vs-code-extension-is-node-in-the-editor` | A VS Code extension is Node in the editor | pkg, vscode, extension | high | 2026-11-26 |
+| `cargo-build-scripts-run-before-the-crate` | Cargo build scripts run before the crate | pkg, cargo, build-script | high | 2026-11-26 |
+| `composer-scripts-run-after-install` | Composer scripts run after install | pkg, composer, script | high | 2026-11-26 |
+| `go-modules-can-use-a-replace-and-a-proxy` | Go modules can use a replace and a proxy | pkg, gomod, proxy | medium | 2026-11-26 |
+| `maven-build-plugins-execute-in-the-reactor` | Maven build plugins execute in the reactor | pkg, maven, plugin | medium | 2026-11-26 |
+| `nuget-install-scripts-run-in-the-project` | NuGet install scripts run in the project | pkg, nuget, script | medium | 2026-11-26 |
+| `pypi-source-distributions-run-a-build` | PyPI source distributions run a build | pkg, pypi, build | high | 2026-11-26 |
+| `rubygems-extensions-build-native-code` | RubyGems extensions build native code | pkg, rubygems, extension | medium | 2026-11-26 |
+| `terraform-providers-are-downloaded-code` | Terraform providers are downloaded code | pkg, terraform, provider | high | 2026-11-26 |
+| `npm-lifecycle-scripts-are-the-install-surface` | npm lifecycle scripts are the install surface | pkg, npm, postinstall | high | 2026-11-26 |
 | `collect-the-minimum-personal-data` | Collect the minimum personal data | privacy, data-minimization, gdpr | high | 2026-11-26 |
 | `logs-are-a-personal-data-store` | Logs are a personal data store | privacy, logs, pii | high | 2026-11-26 |
 | `process-retest` | A fix is not a fix until the same request fails | process, retest, regression | high | 2026-11-24 |
@@ -9678,6 +9791,14 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `runtime-exception` | Exception tables describe where a throw may land | runtime, exceptions, unwind | medium | 2026-11-25 |
 | `runtime-tls` | Thread-local storage has a model and a destructor order | runtime, tls, threads | medium | 2026-11-25 |
 | `runtime-stack-unwind` | Unwinding runs cleanups between throw and catch | runtime, unwind, exceptions | high | 2026-11-25 |
+| `a-ground-station-is-the-satellite-gateway` | A ground station is the satellite gateway | sat, ground, gateway | medium | 2026-11-26 |
+| `an-ota-command-needs-a-checksum-and-a-window` | An OTA command needs a checksum and a window | sat, ota, window | low | 2026-11-26 |
+| `ccsds-is-the-space-packet-format` | CCSDS is the space packet format | sat, ccsds, packet | low | 2026-11-26 |
+| `gps-spoofing-is-a-time-and-position-attack` | GPS spoofing is a time and position attack | sat, gps, spoof | low | 2026-11-26 |
+| `satellite-firmware-is-a-long-lived-image` | Satellite firmware is a long lived image | sat, firmware, update | low | 2026-11-26 |
+| `tt-c-is-the-command-and-telemetry-link` | TT&C is the command and telemetry link | sat, ttc, command | low | 2026-11-26 |
+| `telemetry-is-a-data-product` | Telemetry is a data product | sat, telemetry, data | low | 2026-11-26 |
+| `the-space-link-is-a-budget` | The space link is a budget | sat, link, budget | low | 2026-11-26 |
 | `store-inverted-index` | An inverted index maps a term to postings | search, index, postings | high | 2026-11-25 |
 | `a-clean-scan-is-not-a-certificate` | A clean scan is not a certificate | senior, scan, honesty | high | 2026-11-26 |
 | `a-fix-must-close-the-class-not-the-string` | A fix must close the class, not the string | senior, fix, verification | high | 2026-11-26 |
@@ -9795,6 +9916,18 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `win-service-acl` | A weak service ACL is local privilege escalation | windows, privesc, service | high | 2026-11-24 |
 | `win-credential-stores` | Windows keeps credentials in more than one place | windows, credentials, dpapi | medium | 2026-11-24 |
 | `win-token-privileges` | Windows token privileges are the privesc surface | windows, token, privesc | high | 2026-11-24 |
+| `a-driver-ioctl-is-a-user-to-kernel-parser` | A driver IOCTL is a user to kernel parser | wink, driver, ioctl | high | 2026-11-26 |
+| `a-pool-overflow-is-a-kernel-heap-bug` | A pool overflow is a kernel heap bug | wink, pool, overflow | high | 2026-11-26 |
+| `alpc-is-a-local-message-port` | ALPC is a local message port | wink, alpc, ipc | medium | 2026-11-26 |
+| `an-irp-is-the-request-object` | An IRP is the request object | wink, irp, driver | high | 2026-11-26 |
+| `credential-guard-isolates-the-secrets` | Credential Guard isolates the secrets | wink, credential-guard, lsass | high | 2026-11-26 |
+| `dma-bypasses-the-cpu-and-the-os` | DMA bypasses the CPU and the OS | wink, dma, hardware | medium | 2026-11-26 |
+| `etw-is-the-windows-event-fabric` | ETW is the Windows event fabric | wink, etw, telemetry | high | 2026-11-26 |
+| `hvci-runs-the-kernel-in-a-virtual-layer` | HVCI runs the kernel in a virtual layer | wink, hvci, virtualization | medium | 2026-11-26 |
+| `kd-is-the-kernel-debugger-transport` | KD is the kernel debugger transport | wink, kd, debug | high | 2026-11-26 |
+| `patchguard-is-a-kernel-integrity-check` | PatchGuard is a kernel integrity check | wink, patchguard, kernel | medium | 2026-11-26 |
+| `the-object-manager-is-a-namespace-with-a-dacl` | The object manager is a namespace with a DACL | wink, object-manager, acl | medium | 2026-11-26 |
+| `wfp-is-the-windows-packet-filter` | WFP is the Windows packet filter | wink, wfp, network | medium | 2026-11-26 |
 
 
 <!-- ===== knowledge/GAPS.md ===== -->

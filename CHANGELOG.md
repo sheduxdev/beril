@@ -27,7 +27,7 @@ All notable changes. Beril uses semantic versioning.
 - `references/senior-bar.md` and `docs/specialist.md`: ten axis senior rubric,
   track order and portfolio rules.
 - Eight recall cards for senior judgment, from threat model to peer review.
-- 344 recall cards across the twelve tracks, from OAuth state to firmware UART,
+- 476 recall cards across the twelve tracks, from OAuth state to firmware UART,
   AD ACL edges, cache deception, heap primitives, detection baselines, supply
   chain provenance, agent tool trust, browser side channels, Windows and Linux
   privilege paths, cloud providers, K8s, mail, fuzzing, malware, threat intel,
@@ -36,6 +36,7 @@ All notable changes. Beril uses semantic versioning.
   upload to execution, with smoke tests and answers.
 - `labs/auth` and `labs/crypto`: session fixation, MFA skip, reset token, JWT
   none, ECB, CBC padding oracle and CTR nonce reuse.
+- `labs/api`: BOLA, mass assignment, GraphQL alias batching and SSRF.
 - Five RCE method cards in `references/techniques.md`.
 - Renamed `research_notes/Beril genişleme alanları` to
   `research_notes/beril-expansion-areas`, translated the Turkish market note to

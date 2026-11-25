@@ -8,6 +8,7 @@ Small local targets. Each has a README, tasks, a smoke test, and an answer key.
 | `rce` | command injection, eval, pickle, traversal, upload to exec | `./labs/rce/tests.sh` |
 | `auth` | session fixation, MFA skip, reset token, JWT none | `./labs/auth/tests.sh` |
 | `crypto` | ECB, CBC padding oracle, CTR reuse, length extension | `./labs/crypto/tests.sh` |
+| `api` | BOLA, mass assignment, GraphQL alias, SSRF | `./labs/api/tests.sh` |
 | `binary` | stack, format string, UAF, integer, mitigations | `./labs/binary/tests.sh` |
 | `fuzz` | libFuzzer harness and crash triage | `make -C labs/fuzz run` |
 | `re` | stripped binary, static reconstruction | `./labs/re/tests.sh` |

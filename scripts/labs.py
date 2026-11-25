@@ -19,6 +19,7 @@ LABS = {
     "rce": ["bash", "labs/rce/tests.sh"],
     "auth": ["bash", "labs/auth/tests.sh"],
     "crypto": ["bash", "labs/crypto/tests.sh"],
+    "api": ["bash", "labs/api/tests.sh"],
     "binary": ["bash", "labs/binary/tests.sh"],
     "re": ["bash", "labs/re/tests.sh"],
     "mobile": ["bash", "labs/mobile/tests.sh"],
