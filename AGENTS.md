@@ -17,6 +17,7 @@ line and an attack/hunt line. This file is the entry point for any coding agent.
 ./install.sh --dev           # ruff, pyright and pytest
 
 ./beril scan --target <url-or-path>              # passive defense scan
+./beril recon --target <domain>                  # passive subdomain and origin recon
 ./beril scan --target <url> --profile smb        # one-page SMB report
 ./beril secrets --target <dir> --history         # masked, revoke-first
 ./beril mcp --target <dir>                       # MCP config linter
@@ -88,6 +89,7 @@ conditions. `docs/attacking.md` and `docs/bug-hunt.md` cover the offensive line.
 | "Did we leak a key" | `secrets --history`, revoke first |
 | "Is my MCP config safe" | `mcp`, then review permissions |
 | "Is this plugin malicious" | `jar`, then decompile hits |
+| "Map my subdomains" | `recon --target <domain>`, then read high-value hosts |
 | "Firmware" | unblob, rootfs map, update path |
 | "Write the report" | evidence first, then the right profile |
 | "Teach me" | `./beril train`, one week at a time |

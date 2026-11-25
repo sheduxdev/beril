@@ -1,6 +1,6 @@
 # Knowledge index
 
-404 durable cards. Read this before a web search; open a card only when it matches.
+408 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -341,6 +341,10 @@
 | `re-dotnet-aot` | Native AOT is not IL | re, dotnet, aot | medium | 2026-11-24 |
 | `re-rust-layout` | Rust types are not C types | re, rust, layout | high | 2026-11-24 |
 | `re-swift` | Swift uses witness tables and value types | re, swift, ios | medium | 2026-11-24 |
+| `a-dangling-cname-is-a-takeover-lead-not-a-finding` | A dangling CNAME is a takeover lead, not a finding | recon, dns, takeover | high | 2026-11-25 |
+| `a-technology-fingerprint-needs-two-independent-sources` | A technology fingerprint needs two independent sources | recon, fingerprint, tech | high | 2026-11-25 |
+| `origin-ip-scoring-needs-a-direct-response-check` | Origin IP scoring needs a direct-response check | recon, cdn, origin | medium | 2026-11-25 |
+| `wildcard-dns-invalidates-brute-force-hits` | Wildcard DNS invalidates brute-force hits | recon, dns, wildcard | high | 2026-11-25 |
 | `runtime-gc-safepoint` | A safepoint is where the runtime can move or scan | runtime, gc, safepoint | high | 2026-11-25 |
 | `runtime-dynload` | Dynamic loading runs initializers before main | runtime, dynload, init-order | medium | 2026-11-25 |
 | `runtime-exception` | Exception tables describe where a throw may land | runtime, exceptions, unwind | medium | 2026-11-25 |

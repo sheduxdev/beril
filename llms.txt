@@ -27,6 +27,7 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 - [docs/report-format.md](docs/report-format.md): finding schema and profiles
 - [docs/prompt-injection.md](docs/prompt-injection.md): Beril's own attack surface
 - [docs/legal.md](docs/legal.md): Turkey, TCK, KVKK, responsible use
+- [docs/recon.md](docs/recon.md): passive subdomain and origin recon
 
 ## Assessment
 
@@ -46,6 +47,7 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 - [references/github-atlas.md](references/github-atlas.md): 2,064 security repos
 - [references/claude-bughunter.md](references/claude-bughunter.md): bounty bundle
 - [references/artex.md](references/artex.md): autonomous runner
+- [references/artex-flask.md](references/artex-flask.md): Flask recon extract
 
 ## Training
 
@@ -60,6 +62,7 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 
 ```bash
 ./beril scan --target <url-or-path>
+./beril recon --target <domain>
 ./beril scan --target <web> --profile smb
 ./beril secrets --target <dir> --history
 ./beril mcp --target <dir>

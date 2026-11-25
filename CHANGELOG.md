@@ -4,6 +4,17 @@ All notable changes. Beril uses semantic versioning.
 
 ## Unreleased
 
+### Added
+
+- `beril recon`: passive subdomain collection from crt.sh, Cert Spotter,
+  HackerTarget and DNS Dumpster, a local wordlist, wildcard check, HTTP and
+  HTTPS probe, technology fingerprint, takeover markers, origin IP scoring,
+  auth surface and email collection. Inventory JSON plus Markdown. The seed
+  data came from the ARTEX Flask app and is documented in
+  `references/artex-flask.md`.
+- 27 exposed paths from the same source, 16 more common ports, and an HSTS
+  `includeSubDomains` check.
+
 ### Security
 
 - Require `soupsieve>=4.1.3` and Python 3.11.5 or newer. The three open soupsieve

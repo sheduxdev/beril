@@ -1,5 +1,49 @@
 [
  {
+  "path": "knowledge/a-dangling-cname-is-a-takeover-lead-not-a-finding.md",
+  "body": "# A dangling CNAME is a takeover lead, not a finding\n\n## Claim\n\nA CNAME to a service plus that service's unclaimed-page marker means the hostname can be claimed by someone else. The CNAME alone only proves the pointer.\n\n## Test\n\nResolve CNAME, fetch the host, compare the body with the service marker, then try to claim the resource at the provider. A 404 with the marker is the strong case.\n\n## Proof\n\nCNAME to the service and its exact unclaimed page on the hostname, confirmed by a claim attempt.\n\n## Failure modes\n\nA live but parked service looks the same. A custom domain already attached at the provider stays claimed. Wildcard DNS hides the CNAME.",
+  "id": "a-dangling-cname-is-a-takeover-lead-not-a-finding",
+  "title": "A dangling CNAME is a takeover lead, not a finding",
+  "tags": [
+   "recon",
+   "dns",
+   "takeover"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/artex-flask.md"
+  ],
+  "status": "active",
+  "claim": "A CNAME to a service plus that service's unclaimed-page marker means the hostname can be claimed by someone else. The CNAME alone only proves the pointer.",
+  "test": "Resolve CNAME, fetch the host, compare the body with the service marker, then try to claim the resource at the provider. A 404 with the marker is the strong case.",
+  "proof": "CNAME to the service and its exact unclaimed page on the hostname, confirmed by a claim attempt.",
+  "failure": "A live but parked service looks the same. A custom domain already attached at the provider stays claimed. Wildcard DNS hides the CNAME."
+ },
+ {
+  "path": "knowledge/a-technology-fingerprint-needs-two-independent-sources.md",
+  "body": "# A technology fingerprint needs two independent sources\n\n## Claim\n\nOne header, cookie or body string is weak. A stack claim needs two independent markers, and a version claim needs a version string in the same product context.\n\n## Test\n\nMatch header, cookie, meta and body separately. Require two categories before naming the stack. Confirm the version in the banner, not in a changelog link.\n\n## Proof\n\nTwo markers from different response parts, or a banner with product and version.\n\n## Failure modes\n\nShared hosts and reverse proxies copy headers. A stock 404 page carries the framework name. A CDN adds its own cookies.",
+  "id": "a-technology-fingerprint-needs-two-independent-sources",
+  "title": "A technology fingerprint needs two independent sources",
+  "tags": [
+   "recon",
+   "fingerprint",
+   "tech"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/artex-flask.md"
+  ],
+  "status": "active",
+  "claim": "One header, cookie or body string is weak. A stack claim needs two independent markers, and a version claim needs a version string in the same product context.",
+  "test": "Match header, cookie, meta and body separately. Require two categories before naming the stack. Confirm the version in the banner, not in a changelog link.",
+  "proof": "Two markers from different response parts, or a banner with product and version.",
+  "failure": "Shared hosts and reverse proxies copy headers. A stock 404 page carries the framework name. A CDN adds its own cookies."
+ },
+ {
   "path": "knowledge/a11y-contrast.md",
   "body": "# Contrast is a ratio, and color is not the only cue\n\n## Claim\n\nText needs 4.5:1 for normal size. A chart needs a pattern or a label, not only hue.\n\n## Test\n\nMeasure the ratio. Convert to grayscale. Check the non-color cue.\n\n## Proof\n\nA passing ratio and a second cue.\n\n## Failure modes\n\nA large text threshold is lower, not optional. A border can carry the cue.",
   "id": "a11y-contrast",
@@ -6303,6 +6347,28 @@
   "failure": "A matrix that is stale lies. A backup who never practices is not coverage."
  },
  {
+  "path": "knowledge/origin-ip-scoring-needs-a-direct-response-check.md",
+  "body": "# Origin IP scoring needs a direct-response check\n\n## Claim\n\nMX hosts, IP disclosure headers, certificate transparency and subdomain A records can expose an origin behind a CDN. Rank by method reliability, then prove the address answers with the right Host header.\n\n## Test\n\nCollect candidates, drop private and CDN ranges, check an open web port, then send a request to the IP with Host set to the target. Compare the body and certificate with the edge.\n\n## Proof\n\nThe IP serves the same application with the target Host header and is not in a CDN range.\n\n## Failure modes\n\nShared hosting returns a neighbour site. A second CDN node looks like an origin. The apex address leaks into its own candidate set.",
+  "id": "origin-ip-scoring-needs-a-direct-response-check",
+  "title": "Origin IP scoring needs a direct-response check",
+  "tags": [
+   "recon",
+   "cdn",
+   "origin"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/artex-flask.md"
+  ],
+  "status": "active",
+  "claim": "MX hosts, IP disclosure headers, certificate transparency and subdomain A records can expose an origin behind a CDN. Rank by method reliability, then prove the address answers with the right Host header.",
+  "test": "Collect candidates, drop private and CDN ranges, check an open web port, then send a request to the IP with Host set to the target. Compare the body and certificate with the edge.",
+  "proof": "The IP serves the same application with the target Host header and is not in a CDN range.",
+  "failure": "Shared hosting returns a neighbour site. A second CDN node looks like an origin. The apex address leaks into its own candidate set."
+ },
+ {
   "path": "knowledge/os-cgroups.md",
   "body": "# A cgroup is a resource boundary with pressure signals\n\n## Claim\n\nCPU, memory and IO limits apply to the group. The OOM killer acts on the group, not only the process.\n\n## Test\n\nSet a memory limit. Exceed it. Check the OOM scope and the pressure file.\n\n## Proof\n\nA bounded group with a clear OOM event.\n\n## Failure modes\n\nA limit on the parent is shared by children. A swap setting changes the failure.",
   "id": "os-cgroups",
@@ -8876,6 +8942,28 @@
   "test": "Read the contract and the call graph. Test a reentrancy path in a fork. Check owner functions and price feeds.",
   "proof": "A state change or fund movement an attacker can repeat.",
   "failure": "A testnet-only issue may not matter. Check the deployed bytecode and proxy."
+ },
+ {
+  "path": "knowledge/wildcard-dns-invalidates-brute-force-hits.md",
+  "body": "# Wildcard DNS invalidates brute-force hits\n\n## Claim\n\nWhen a random label resolves, every wordlist hit also resolves. A hit counts only after an HTTP or content check separates the default app from a real host.\n\n## Test\n\nResolve a random 12 character label first. If it answers, compare the address and body of each wordlist hit with the wildcard baseline.\n\n## Proof\n\nA different address or a clearly different body and title.\n\n## Failure modes\n\nA catch-all app can serve unique content per name. The wildcard check then produces false negatives, not false positives.",
+  "id": "wildcard-dns-invalidates-brute-force-hits",
+  "title": "Wildcard DNS invalidates brute-force hits",
+  "tags": [
+   "recon",
+   "dns",
+   "wildcard"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-25",
+  "uses": "0",
+  "sources": [
+   "references/artex-flask.md"
+  ],
+  "status": "active",
+  "claim": "When a random label resolves, every wordlist hit also resolves. A hit counts only after an HTTP or content check separates the default app from a real host.",
+  "test": "Resolve a random 12 character label first. If it answers, compare the address and body of each wordlist hit with the wildcard baseline.",
+  "proof": "A different address or a clearly different body and title.",
+  "failure": "A catch-all app can serve unique content per name. The wildcard check then produces false negatives, not false positives."
  },
  {
   "path": "knowledge/win-credential-stores.md",

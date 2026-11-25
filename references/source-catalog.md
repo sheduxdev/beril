@@ -190,7 +190,7 @@ The build downloaded 44 public repositories into `sources/` with shallow clones.
 | `yogeshojha/rengine` | Recon and vulnerability management |
 | `zan8in/afrog` | Vulnerability scanner |
 
-Bug bounty material came from `elementalsouls/Claude-BugHunter`. Autonomous execution architecture came from `BaaRai/ARTEX`.
+Bug bounty material came from `elementalsouls/Claude-BugHunter`. Autonomous execution architecture came from `BaaRai/ARTEX`. Passive recon seeds, port weights and takeover markers came from the separate Flask app `IlyassCODEX/ARTEX`, noted in `references/artex-flask.md`; that repo has no license file.
 
 GhidRust material came from `DMaroo/GhidRust` and `oofz/Ghidrust`. Plugin inventory came from GitHub topic and search results, then folded into `data/re_tools.jsonl`.
 

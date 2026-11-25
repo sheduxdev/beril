@@ -27,6 +27,14 @@ That installs the ProjectDiscovery tools, ffuf, gau, waybackurls, assetfinder, g
 ./beril scan --target https://your-app.example --profile smb
 ```
 
+If the scope is a whole domain, map it first:
+
+```bash
+./beril recon --target your-app.example
+```
+
+The recon pass collects passive subdomains, probes them, ranks admin and database hosts, and checks takeover and origin candidates. Guide: `recon.md`.
+
 The same command works on local artifacts:
 
 ```bash
@@ -66,9 +74,9 @@ The scanner makes read-only requests:
 - the page itself, its headers, and its title;
 - TLS version, issuer, and certificate expiry;
 - security headers, CSP content, cookie flags and CORS;
-- 35 paths that are often left exposed, from `.git` and `.env` to admin panels and backups;
+- 62 paths that are often left exposed, from `.git` and `.env` to admin panels and backups;
 - SPF, DKIM and DMARC records;
-- common database and cache ports;
+- 24 common database, remote access and cache ports;
 - HTML fingerprints, SQL error signatures, debug traces and directory listings.
 
 It does not log in, fuzz, brute force, write, or execute a local binary. Run it only on an app you own or are authorized to test.

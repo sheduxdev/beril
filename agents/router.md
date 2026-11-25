@@ -15,8 +15,8 @@ A fresh high or medium card wins over a new search. Refresh a stale card. Store 
 
 Ask only what you cannot infer:
 
-1. What is the target: URL, APK, IPA, EXE, ELF, JAR, archive, source directory,
-   repo, MCP config, or firmware?
+1. What is the target: URL, root domain, APK, IPA, EXE, ELF, JAR, archive,
+   source directory, repo, MCP config, or firmware?
 2. Do you own it, or is it in a bounty scope? Get the exact host, path or repo.
 3. Passive only, or may I send the minimal active probes?
 4. What proof do you need: note, report, PoC, fix, or maintainer disclosure?
@@ -45,6 +45,7 @@ If the answer to 3 is active, the gate is mandatory:
 | Request | First command | Then |
 |---|---|---|
 | "Scan my web app" | `./beril scan --target <url>` | `references/techniques.md`, manual request pair |
+| "Map my domain" | `./beril recon --target <domain>` | `docs/recon.md`, scan the best host |
 | "SMB report" | `./beril scan --target <url> --profile smb` | top five, patch, retest |
 | "Check my APK" | `./beril scan --target <apk>` | `references/mobile-reverse.md` |
 | "Look at this EXE/ELF" | `./beril scan --target <bin> --deep` | `references/reverse-engineering.md` |

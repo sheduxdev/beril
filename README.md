@@ -40,7 +40,8 @@ Beril was built from 44 public security skill repositories and a live collection
 | Extract structure | Records headings, intro, code block count and table count so a method can be separated from a news item. | `./beril extract` |
 | Build a dossier | Merges the catalogs into a ranked brief with links and explicit gaps. | `./beril dossier` |
 | Map the tool shelf | Sweeps GitHub topics for security repositories with stars, language, license and last push. | `./beril github` |
-| Scan your web app | Passive checks for headers, CSP, cookies, CORS, 35 exposed paths, TLS, SPF/DKIM/DMARC, 8 common ports and fingerprints. Request budget and robots.txt respect. | `./beril scan --target https://your-app.example` |
+| Scan your web app | Passive checks for headers, CSP, cookies, CORS, 62 exposed paths, TLS, SPF/DKIM/DMARC, 24 common ports and fingerprints. Request budget and robots.txt respect. | `./beril scan --target https://your-app.example` |
+| Map a domain | Passive subdomains from CT and passive DNS, takeover markers, origin candidates, host scoring, auth surface and emails. | `./beril recon --target your-app.example` |
 | Prioritize known bugs | KEV, EPSS and CVSS joined to dependency findings, with import reachability as a first filter. | `./beril deps --target ./repo --reachability` |
 | Scan secrets | Provider patterns, context filters, git history and masked output. Revocation link per hit, revoke-first order. Optional live check. | `./beril secrets --target ./repo --history` |
 | Audit MCP configs | Unpinned packages, plaintext keys, broad filesystem access, privileged containers, plain HTTP, tool-description instructions. | `./beril mcp --target .` |
@@ -179,10 +180,10 @@ Other install paths: `pipx install .`, a wheel, a pinned container image and a c
 | Headers | HSTS and max-age, CSP presence and weak directives, XCTO, frame, referrer, permissions, COOP, CORP, banner leaks |
 | Cookies | `Secure`, `HttpOnly`, `SameSite`, per cookie |
 | CORS | `*` plus credentials, origin reflection, `null` |
-| Paths | 35 paths: `.git`, `.env` and variants, VCS metadata, backups, SQL dumps, server-status, phpinfo, `.DS_Store`, manifests, Actuator, Swagger/OpenAPI, GraphQL, phpMyAdmin, Adminer, WordPress/Joomla/Drupal admin and login, security.txt, robots.txt, sitemap |
+| Paths | 62 paths: `.git`, `.env` and variants, VCS metadata, backups, SQL dumps, server-status, phpinfo, `.DS_Store`, manifests, Compose and Dockerfile, app config, admin/storage/api `.env` and logs, Actuator, Swagger/OpenAPI, GraphQL, phpMyAdmin, Adminer, WordPress/Joomla/Drupal admin and login, security.txt, robots.txt, sitemap |
 | Transport | TLS version, issuer, subject, expiry, SAN list, HTTP to HTTPS |
 | Mail | SPF presence and policy, DMARC presence and policy, common DKIM selectors |
-| Network | 3306, 5432, 27017, 6379, 9200, 11211, 2375, 8080 with banner |
+| Network | 3306, 5432, 27017, 6379, 9200, 11211, 2375 and 17 more ports with banner |
 | Page | Status, title, generator and framework hints, SQL error signatures, debug traces, directory listing, password form over HTTP, source map hints |
 | Soft 404 | Two random paths calibrate the baseline so a friendly 404 is not a finding |
 
@@ -211,6 +212,7 @@ Per discovered parameter: one quote for SQL error signatures, one `<beril9f7z>` 
 | Command | What it does |
 |---|---|
 | `./beril scan --target <url-or-path>` | Passive web or static artifact scan |
+| `./beril recon --target <domain>` | Passive subdomain, takeover and origin recon |
 | `./beril scan ... --fail-on high` | Exit 1 when a finding is at or above the threshold |
 | `./beril scan ... --baseline old.json` | Suppress findings already in the baseline |
 | `./beril scan ... --suppress .berilignore` | Apply reviewed ignores with a reason and expiry |

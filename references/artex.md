@@ -1,5 +1,10 @@
 # ARTEX
 
+Two public repositories use this name. This file covers the autonomous Go
+platform (`BaaRai/ARTEX`, upstream `Autumn-27/ARTEX`). The Flask recon app by
+IlyassCODEX is in `references/artex-flask.md`. They share a name and little
+else.
+
 Repo: https://github.com/BaaRai/ARTEX  
 Upstream: `Autumn-27/ARTEX`  
 License: AGPL-3.0  

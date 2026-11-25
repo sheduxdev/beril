@@ -23,6 +23,7 @@ lead.
 ## When to use
 
 - A bounty program starts and you want the current tools and methods for its stack.
+- The scope names a root domain and you need the host inventory before choosing a target.
 - A security site returns 403, a Cloudflare challenge, or an empty JavaScript shell to curl.
 - You need to turn scattered forum posts and disclosures into a ranked reading list.
 - You want to compare experts by what they publish, not by follower count.
@@ -57,6 +58,7 @@ Defense first. Passive is the default and needs no gate.
 ```bash
 ./install.sh
 ./beril scan --target https://your-app.example
+./beril recon --target your-app.example
 ./beril scan --target https://your-app.example --profile smb
 ./beril scan --target ./build/app.apk
 ./beril scan --target ./source --tools --vibe
@@ -405,6 +407,7 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `references/dossier-template.md` | Output structure and section prompts |
 | `references/scoring.md` | Ranking and keep/drop rules |
 | `docs/one-click.md` | Install, scan and troubleshoot without the terminal |
+| `docs/recon.md` | Passive subdomain, takeover and origin recon |
 | `docs/scan-artifacts.md` | APK, IPA, PE, ELF, JAR, archive and source review |
 | `docs/break-my-app.md` | Intake, per-artifact steps, report block, stop conditions |
 | `docs/attacking.md` | Ownership gate, active workflow, evidence levels |
