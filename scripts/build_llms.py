@@ -7,6 +7,7 @@ FILES = [
     "OPENAI.md",
     "SKILL.md",
     "agents/router.md",
+    "agents/front-desk.md",
     "agents/reverse-engineer.md",
     "agents/crash-triager.md",
     "agents/fuzzing-engineer.md",

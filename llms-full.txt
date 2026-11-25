@@ -15,7 +15,8 @@ line and an attack/hunt line. This file is the entry point for any coding agent.
 
 1. `SKILL.md` for the loop, output contract and quality gates.
 2. `agents/router.md` for intake and routing.
-3. The matching reference for the artifact.
+3. `agents/front-desk.md` for conversational triggers and the first action.
+4. The matching reference for the artifact.
 
 ## Commands
 
@@ -58,10 +59,25 @@ line and an attack/hunt line. This file is the entry point for any coding agent.
 
 `USE` means answer from the card. `REFRESH` means verify and update. `RESEARCH` means collect, then `./beril remember add`. Read `docs/memory.md`.
 
+## Direct request
+
+When the target is in the sentence, act. Do not run the four-question intake.
+
+| User says | First command |
+|---|---|
+| "kır", "break this", "açık bul" | `./beril scan --target <target>` |
+| "harita", "recon", "subdomain" | `./beril recon --target <domain>` |
+| "secret", "key", "sızma" | `./beril secrets --target <dir> --history` |
+| "bu repo", "review this" | `./beril scan --target <dir> --tools --vibe` |
+| "bu repoda açık bul" | `./beril hunt --target <repo> --sandbox` |
+
+Ask only for data you cannot infer. Passive needs no gate. Behavior:
+`agents/front-desk.md`.
+
 ## Default workflow
 
-1. Intake. Target, authorization, passive or active, proof needed.
-2. Detect. URL, local artifact, source tree, JAR, MCP config, or firmware.
+1. Read the request. If the target is present, start with the matching command.
+2. Detect. URL, domain, local artifact, source tree, JAR, MCP config, or firmware.
 3. Gate. Active needs a verification record or `--owned`; scope file if given.
 4. Scan passive first.
 5. Read. Open the top findings and the matching method cards.
@@ -131,6 +147,7 @@ Beril is a cybersecurity intelligence and assessment skill. Claude Code loads th
 ./install.sh
 ./install.sh --tools --re
 ./beril scan --target <url-or-path>
+./beril recon --target <domain>
 ./beril scan --target <url> --profile smb
 ./beril secrets --target <dir> --history
 ./beril mcp --target <dir>
@@ -159,14 +176,15 @@ Use a fresh high or medium card instead of a new search. Refresh stale cards. Ad
 
 ## Workflow
 
-1. Ask for the target, authorization, passive or active, and the proof needed.
-2. Detect the artifact type.
-3. For active work, check the ownership record and the scope file.
-4. Run the passive scan.
-5. Read the top findings and the matching card in `references/techniques.md`.
-6. Confirm by hand with a minimal request or input.
-7. Report with the profile that fits the reader.
-8. State what you did not test.
+1. Read the sentence and act. If the target is present, the first step is a command, not an interview. Behavior: `agents/front-desk.md`.
+2. Ask for authorization and proof only when the next step needs them.
+3. Detect the artifact type.
+4. For active work, check the ownership record and the scope file.
+5. Run the passive scan.
+6. Read the top findings and the matching card in `references/techniques.md`.
+7. Confirm by hand with a minimal request or input.
+8. Report with the profile that fits the reader.
+9. State what you did not test.
 
 ## Rules
 
@@ -207,16 +225,20 @@ Use the finding block in `agents/router.md`. Answer in the user's language.
 
 Beril is a cybersecurity intelligence and assessment skill for Gemini CLI.
 
+If the user names a target, act. "Kır" or "açık bul" means scan, then one manual class. Behavior: `agents/front-desk.md`.
+
 ## Read
 
 - `SKILL.md`
 - `agents/router.md`
+- `agents/front-desk.md`
 - the reference for the artifact under test
 
 ## Commands
 
 ```bash
 ./beril scan --target <url-or-path>
+./beril recon --target <domain>
 ./beril scan --target <url> --profile smb
 ./beril secrets --target <dir> --history
 ./beril mcp --target <dir>
@@ -267,8 +289,12 @@ Use `AGENTS.md` as the main instruction file. Codex loads it automatically.
 Short loop: confirm scope, passive scan, matching method card, minimal replay,
 report, gaps.
 
+If the user names a target, run the matching command first. "Kır" or "açık bul"
+means scan then one manual class. Behavior: `agents/front-desk.md`.
+
 ```bash
 ./beril scan --target <url-or-path>
+./beril recon --target <domain>
 ./beril scan --target <url> --active --owned
 ./beril hunt --target <repo> --sandbox
 ```
@@ -287,7 +313,7 @@ The request-to-report flow is in `docs/break-my-app.md`. Offensive workflow:
 
 ---
 name: beril
-description: Build and refresh a cybersecurity intelligence base with Camoufox and run two working lines on top of it. The defense line scans an app, repository, artifact, MCP config or Minecraft plugin you own and returns a ranked fix list. The attack line hunts bugs in open source with an ownership gate, minimal active probes, a networkless sandbox and maintainer reports. Use for bug bounty recon, pentest planning, threat research, expert tracking, tool selection, application security checks, secret scanning, dependency priorities, vibe-coded app review, or when a security site blocks ordinary scraping.
+description: Build and refresh a cybersecurity intelligence base with Camoufox and run two working lines on top of it. The defense line scans an app, repository, artifact, MCP config or Minecraft plugin you own and returns a ranked fix list. The attack line hunts bugs in open source with an ownership gate, minimal active probes, a networkless sandbox and maintainer reports. Use for bug bounty recon, pentest planning, threat research, expert tracking, tool selection, application security checks, secret scanning, dependency priorities, vibe-coded app review, or when a security site blocks ordinary scraping. Use when the user says "break this", "find a bug", "scan this", "kır", "açık bul", "recon" or "harita", or names a target and expects work.
 ---
 
 # Beril
@@ -337,6 +363,24 @@ Run everything from the skill directory:
 cd skills/beril
 python scripts/validate.py
 ```
+
+## Talk to it
+
+The user should not have to learn the commands. These all route to the same
+loop:
+
+```text
+selam beril, şu siteyi kırar mısın: https://app.example
+beril, bu repoda açık bul: ./repo
+bunu bir haritala: example.com
+bu apk'ya bak: ./app.apk
+sızma var mı: ./source
+```
+
+When the target is in the sentence, the first tool call is a command, not an
+intake form. Passive runs immediately. Active needs one ownership signal. The
+behavior file is `agents/front-desk.md`; the classification table is
+`agents/router.md`.
 
 ## One-click scan
 
@@ -750,6 +794,7 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `docs/dashboard.md` | Local tracking dashboard and its limits |
 | `docs/memory.md` | Durable cards, recall decisions, freshness |
 | `knowledge/INDEX.md` | Card index to read before a search |
+| `agents/front-desk.md` | Direct phrases, first action, ownership reading |
 | `agents/` | Forum, expert, tool, method, RE, crash, fuzzing and firmware prompts |
 
 ## Legal and ethical bounds
@@ -788,6 +833,23 @@ agent from scanning blind.
 
 A fresh high or medium card wins over a new search. Refresh a stale card. Store a new lesson.
 
+## Direct action
+
+If the user names a target, act. The four-question intake is for an ambiguous
+request, not for "selam beril, şunu kır: example.com". Full behavior is in
+`agents/front-desk.md`.
+
+| User says | First command |
+|---|---|
+| "kır", "break this", "açık bul" | `./beril scan --target <target>` |
+| "harita", "recon", "subdomain" | `./beril recon --target <domain>` |
+| "secret", "key", "sızma" | `./beril secrets --target <dir> --history` |
+| "bu repo", "review this" | `./beril scan --target <dir> --tools --vibe` |
+| "bu repoda açık bul" | `./beril hunt --target <repo> --sandbox` |
+
+When the request needs a proof rather than a scan, read the top findings, pick
+one class, and replay it. Passive first, one payload class only.
+
 ## Intake
 
 Ask only what you cannot infer:
@@ -822,6 +884,7 @@ If the answer to 3 is active, the gate is mandatory:
 | Request | First command | Then |
 |---|---|---|
 | "Scan my web app" | `./beril scan --target <url>` | `references/techniques.md`, manual request pair |
+| "Kır / açık bul" | `./beril scan --target <url>` | one class, replay, proof |
 | "Map my domain" | `./beril recon --target <domain>` | `docs/recon.md`, scan the best host |
 | "SMB report" | `./beril scan --target <url> --profile smb` | top five, patch, retest |
 | "Check my APK" | `./beril scan --target <apk>` | `references/mobile-reverse.md` |
@@ -879,6 +942,147 @@ next test.
 - The scan needs credentials you do not have.
 - An artifact is packed, encrypted, or split and needs another part.
 - A finding could break production and the user has not approved a window.
+
+
+<!-- ===== agents/front-desk.md ===== -->
+
+# Beril front desk
+
+The user should be able to type "selam beril, şunu kırar mısın" and get work in
+the first reply. This file is the conversational layer. `router.md` is the
+classification table; this file is the behavior.
+
+## Rule zero
+
+When the target is in the sentence, the first tool call is a command, not a
+question. Ask only for data you cannot infer.
+
+| Bad first reply | Good first reply |
+|---|---|
+| "What is the target, do you own it, passive or active, what proof?" | "Hedef example.com, pasif tarama başlıyor." then `./beril scan --target example.com` |
+| "Please provide more context." | Run the obvious pass, then state the one assumption you made |
+
+## Read the sentence
+
+| User says | Intent | First command |
+|---|---|---|
+| "kır", "break this", "bunu kır", "açık bul", "find a bug", "bak" | Assess | `./beril scan --target <target>` |
+| "harita", "recon", "subdomain", "neler var", "map this domain" | Map | `./beril recon --target <domain>` |
+| "sızma", "leak", "key", "secret", "anahtar" | Secret leak | `./beril secrets --target <dir> --history` |
+| "bu apk", "bu exe", "bu jar", "this binary" | Artifact | `./beril scan --target <path> --deep` |
+| "bu repo", "source", "kod", "review this" | Source review | `./beril scan --target <dir> --tools --vibe` |
+| "bu repoda açık bul", "hunt this repo" | Local hunt | `./beril hunt --target <repo> --sandbox` |
+| "mcp", "agent config" | Config | `./beril mcp --target <dir>` |
+| "plugin", "minecraft" | JAR triage | `./beril jar --target <jar-or-dir>` |
+| "bağımlılık", "dependency", "CVE" | Dependency risk | `./beril deps --target <dir> --reachability` |
+| "rapor", "report", "yaz" | Report | `./beril report --input <json> --profile <reader>` |
+
+Target detection:
+
+| Target shape | Treat as |
+|---|---|
+| `https://`, `http://` | Web app |
+| Bare domain with a dot | Domain. Run `recon` for a map intent, `scan` for an assess intent |
+| Existing directory with `.git` | Repository |
+| Existing directory without `.git` | Source tree |
+| Existing file | Artifact. `scan` picks APK, IPA, PE, ELF, JAR or archive |
+| Image name like `nginx:1.27` | Container image |
+| CIDR | BGP prefix |
+| Nothing | Ask one question: "Hedef ne?" |
+
+## Ownership
+
+Read the phrase, not the mood.
+
+- "benim", "bizim", "my app", "our site", "kendi projem" means the user claims
+  the target. Record `--owned` when an active step is needed.
+- A bounty scope or a client name means the gate is a verification record. If
+  none exists, run passive first and ask for the record only before a payload.
+- No ownership signal means passive only. Say what active would add, in one
+  line, and continue with the passive pass. Do not block the work on a question
+  the passive pass does not need.
+
+Never invent permission. Never treat a scan target as an owned target.
+
+## The first reply
+
+When target and intent are clear:
+
+1. State the target and the pass in one line.
+2. Run the command.
+3. Read the output before writing prose.
+4. Return the top three findings with evidence, one next manual test, and what
+   was not tested.
+5. Save the report path.
+
+Do not paste the whole JSON. Do not list all 40 info findings. Do not call the
+scanner output a vulnerability.
+
+## When the request is "kır" or "açık bul"
+
+"Break this" is a request for a proven bug, not a request for a header report.
+
+1. Passive scan first.
+2. Pick one class from `references/techniques.md` that fits the stack.
+3. If the class needs a payload, check the gate. With a record or an explicit
+   ownership claim, send the minimal active probe. Without one, return the
+   ranked leads and ask the single permission question.
+4. Replay the hit by hand. A scanner signature stays a lead.
+5. Stop at the first reproducible proof and write it with the request pair.
+6. If nothing reproduces, say what you ruled out and the next test.
+
+## Two readers
+
+The same evidence has two audiences, and the ARTEX owner/hunter split is a good
+reminder. Do not mix them.
+
+| Reader | Profile | Emphasis |
+|---|---|---|
+| Owner or developer | `smb` or `engineer` | fix order, exposure, verification step |
+| Program triage or hunter | `bugbounty` | request pair, impact, CVSS, reproduction |
+
+A hunter view names the next promising host and class. An owner view names the
+first fix and the retest. The JSON evidence is shared.
+
+## Answer shape
+
+```markdown
+Hedef: <target>. Pass: <passive/active/hunt>. Rapor: <path>.
+
+## İlk üç
+1. <finding> (<severity>, confidence <level>)
+   Kanıt: <request line or file:line>
+2. ...
+3. ...
+
+## Sıradaki test
+<one manual class and the exact request or input>
+
+## Test edilmeyen
+- <the honest gap that matters for this target>
+```
+
+Answer in the user's language. Keep commands and paths in their original form.
+
+## Do not
+
+- Do not run the four-question intake when the target is present.
+- Do not ask "passive or active" before the passive pass. Passive needs no gate.
+- Do not announce a plan for three paragraphs before the first command.
+- Do not use the same template for a domain, a repo and a binary.
+- Do not claim a vulnerability from a scanner line.
+- Do not hide a failed source or a spent budget.
+- Do not answer a Turkish request in English unless the user did.
+
+## Stop and ask
+
+- The target is ambiguous or shared hosting.
+- Active work has no ownership signal and the next step needs a payload.
+- The test needs a write, a restart, a paid API or credentials.
+- An artifact is packed, encrypted or split.
+- A finding could break production and no window was agreed.
+
+One question per stop, not four.
 
 
 <!-- ===== agents/reverse-engineer.md ===== -->
@@ -5603,6 +5807,8 @@ a new technique.
   headers, tech, wordlist, categories and score weights.
 - `web_checks.py`: 25 extra exposed paths, 16 extra ports, an HSTS subdomain
   check.
+- `agents/front-desk.md`: the owner and hunter split turned into a direct
+  conversational entry, with a profile per reader.
 - Knowledge cards for origin discovery, takeover and fingerprinting.
 - `docs/recon.md` as the user guide.
 
@@ -6983,6 +7189,7 @@ Beril ships an entry file for the common coding agents. Each one is a short rout
 | GitHub Copilot | `.github/copilot-instructions.md` | repository instructions |
 | Aider | `.aider.conf.yml` | read list |
 | LLM crawlers | `llms.txt`, `llms-full.txt` | `llms.txt` convention |
+| Conversational entry | `agents/front-desk.md` | read after `agents/router.md` |
 
 ## Use inside Beril
 
@@ -6996,7 +7203,12 @@ No setup. The files are at the repository root and load when the agent opens the
 
 `--agents all` copies every file. The script refuses to overwrite without `--force`. It adds the absolute Beril path to the top of each file so the agent knows where `./beril` lives.
 
-The request-to-report flow is in `docs/break-my-app.md`. The plugin package is in `plugin/` with a Claude marketplace file, a Codex file and a Gemini manifest. Install it with `./scripts/install_plugin.py`. The two lines are in
+The request-to-report flow is in `docs/break-my-app.md`. The conversational
+entry, including Turkish trigger phrases, is `agents/front-desk.md`. The dual
+owner and hunter view came from the ARTEX AI analyst prompts and maps to the
+`smb` and `bugbounty` profiles. The plugin
+package is in `plugin/` with a Claude marketplace file, a Codex file and a
+Gemini manifest. Install it with `./scripts/install_plugin.py`. The two lines are in
 `docs/defending.md` and `docs/attacking.md`; the output contract is in
 `docs/report-format.md`.
 
@@ -7016,6 +7228,22 @@ When the workflow changes, edit `AGENTS.md` first, then mirror the change in the
 A runbook for the common request: "I have X on my machine, find the hole and report it."
 
 The agent confirms scope, runs the read-only pass, picks one class, proves it, and writes the report. It does not spray.
+
+## Direct phrases
+
+If the target is in the sentence, the first tool call is a command. These mean
+the same thing:
+
+```text
+selam beril, şunu kırar mısın: https://app.example
+bunu bir kır
+açık var mı, bak: https://app.example
+break this, find a bug
+```
+
+Passive starts immediately. "Benim" or "my app" allows `--owned`. Without an
+ownership signal, the agent runs passive, returns the leads and asks one
+permission question before a payload. Behavior file: `agents/front-desk.md`.
 
 ## Intake
 

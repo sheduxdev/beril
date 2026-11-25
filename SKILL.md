@@ -1,6 +1,6 @@
 ---
 name: beril
-description: Build and refresh a cybersecurity intelligence base with Camoufox and run two working lines on top of it. The defense line scans an app, repository, artifact, MCP config or Minecraft plugin you own and returns a ranked fix list. The attack line hunts bugs in open source with an ownership gate, minimal active probes, a networkless sandbox and maintainer reports. Use for bug bounty recon, pentest planning, threat research, expert tracking, tool selection, application security checks, secret scanning, dependency priorities, vibe-coded app review, or when a security site blocks ordinary scraping.
+description: Build and refresh a cybersecurity intelligence base with Camoufox and run two working lines on top of it. The defense line scans an app, repository, artifact, MCP config or Minecraft plugin you own and returns a ranked fix list. The attack line hunts bugs in open source with an ownership gate, minimal active probes, a networkless sandbox and maintainer reports. Use for bug bounty recon, pentest planning, threat research, expert tracking, tool selection, application security checks, secret scanning, dependency priorities, vibe-coded app review, or when a security site blocks ordinary scraping. Use when the user says "break this", "find a bug", "scan this", "kır", "açık bul", "recon" or "harita", or names a target and expects work.
 ---
 
 # Beril
@@ -50,6 +50,24 @@ Run everything from the skill directory:
 cd skills/beril
 python scripts/validate.py
 ```
+
+## Talk to it
+
+The user should not have to learn the commands. These all route to the same
+loop:
+
+```text
+selam beril, şu siteyi kırar mısın: https://app.example
+beril, bu repoda açık bul: ./repo
+bunu bir haritala: example.com
+bu apk'ya bak: ./app.apk
+sızma var mı: ./source
+```
+
+When the target is in the sentence, the first tool call is a command, not an
+intake form. Passive runs immediately. Active needs one ownership signal. The
+behavior file is `agents/front-desk.md`; the classification table is
+`agents/router.md`.
 
 ## One-click scan
 
@@ -463,6 +481,7 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `docs/dashboard.md` | Local tracking dashboard and its limits |
 | `docs/memory.md` | Durable cards, recall decisions, freshness |
 | `knowledge/INDEX.md` | Card index to read before a search |
+| `agents/front-desk.md` | Direct phrases, first action, ownership reading |
 | `agents/` | Forum, expert, tool, method, RE, crash, fuzzing and firmware prompts |
 
 ## Legal and ethical bounds

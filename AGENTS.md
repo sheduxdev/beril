@@ -7,7 +7,8 @@ line and an attack/hunt line. This file is the entry point for any coding agent.
 
 1. `SKILL.md` for the loop, output contract and quality gates.
 2. `agents/router.md` for intake and routing.
-3. The matching reference for the artifact.
+3. `agents/front-desk.md` for conversational triggers and the first action.
+4. The matching reference for the artifact.
 
 ## Commands
 
@@ -50,10 +51,25 @@ line and an attack/hunt line. This file is the entry point for any coding agent.
 
 `USE` means answer from the card. `REFRESH` means verify and update. `RESEARCH` means collect, then `./beril remember add`. Read `docs/memory.md`.
 
+## Direct request
+
+When the target is in the sentence, act. Do not run the four-question intake.
+
+| User says | First command |
+|---|---|
+| "kır", "break this", "açık bul" | `./beril scan --target <target>` |
+| "harita", "recon", "subdomain" | `./beril recon --target <domain>` |
+| "secret", "key", "sızma" | `./beril secrets --target <dir> --history` |
+| "bu repo", "review this" | `./beril scan --target <dir> --tools --vibe` |
+| "bu repoda açık bul" | `./beril hunt --target <repo> --sandbox` |
+
+Ask only for data you cannot infer. Passive needs no gate. Behavior:
+`agents/front-desk.md`.
+
 ## Default workflow
 
-1. Intake. Target, authorization, passive or active, proof needed.
-2. Detect. URL, local artifact, source tree, JAR, MCP config, or firmware.
+1. Read the request. If the target is present, start with the matching command.
+2. Detect. URL, domain, local artifact, source tree, JAR, MCP config, or firmware.
 3. Gate. Active needs a verification record or `--owned`; scope file if given.
 4. Scan passive first.
 5. Read. Open the top findings and the matching method cards.

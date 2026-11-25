@@ -24,6 +24,22 @@ import scan_vibe
 import suppress
 from beril_model import load_report
 
+DOMAIN_TARGET_RE = re.compile(r"^[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?\.[A-Za-z]{2,63}(?::\d{1,5})?(?:[/?#].*)?$")
+
+
+def normalize_target(target: str) -> str:
+    """Add a scheme to a bare domain or a scheme-less URL.
+
+    Args:
+        target: Raw CLI target.
+
+    Returns:
+        URL when the value looks like a domain, otherwise the input.
+    """
+    if DOMAIN_TARGET_RE.match(target) and not os.path.exists(target):
+        return "https://" + target
+    return target
+
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -60,6 +76,7 @@ def main() -> None:
     target = args.target or input("URL or artifact path: ").strip()
     if not target:
         sys.exit("no target given")
+    target = normalize_target(target)
 
     slug = re.sub(r"[^a-zA-Z0-9._-]+", "_", target.replace("https://", "").replace("http://", "")).strip("_")[:80]
     out = args.out or os.path.join("scans", slug or "scan")

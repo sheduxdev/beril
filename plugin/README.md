@@ -17,6 +17,17 @@ The plugin exposes `/beril:scan`, `/beril:verify`, `/beril:hunt`,
 `/beril:report`, `/beril:run`, `/beril:watch`, `/beril:infra`,
 `/beril:image` and `/beril:bgp`.
 
+For a natural sentence, use `/beril:do`:
+
+```text
+/beril:do şu siteyi kır: https://app.example
+/beril:do bu repoda açık bul: ./repo
+/beril:do example.com haritasını çıkar
+```
+
+The plugin also ships the `beril-front-desk` agent for plain chat. Say "selam
+beril, bunu kır" with a target and it should run instead of interviewing.
+
 ## Codex
 
 Copy `plugin/codex/AGENTS.md` into the project or run:

@@ -12,6 +12,11 @@ All notable changes. Beril uses semantic versioning.
   auth surface and email collection. Inventory JSON plus Markdown. The seed
   data came from the ARTEX Flask app and is documented in
   `references/artex-flask.md`.
+- `agents/front-desk.md`: direct conversational entry. A named target starts
+  with a command instead of the four-question intake. Turkish and English
+  triggers for break, find, map, secrets and artifact requests.
+- `/beril:do` command and `beril-front-desk` plugin agent for natural sentences.
+- `beril scan` accepts a bare domain and adds the scheme.
 - 27 exposed paths from the same source, 16 more common ports, and an HSTS
   `includeSubDomains` check.
 

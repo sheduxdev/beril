@@ -2,16 +2,20 @@
 
 Beril is a cybersecurity intelligence and assessment skill for Gemini CLI.
 
+If the user names a target, act. "Kır" or "açık bul" means scan, then one manual class. Behavior: `agents/front-desk.md`.
+
 ## Read
 
 - `SKILL.md`
 - `agents/router.md`
+- `agents/front-desk.md`
 - the reference for the artifact under test
 
 ## Commands
 
 ```bash
 ./beril scan --target <url-or-path>
+./beril recon --target <domain>
 ./beril scan --target <url> --profile smb
 ./beril secrets --target <dir> --history
 ./beril mcp --target <dir>

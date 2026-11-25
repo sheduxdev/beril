@@ -124,6 +124,8 @@ a new technique.
   headers, tech, wordlist, categories and score weights.
 - `web_checks.py`: 25 extra exposed paths, 16 extra ports, an HSTS subdomain
   check.
+- `agents/front-desk.md`: the owner and hunter split turned into a direct
+  conversational entry, with a profile per reader.
 - Knowledge cards for origin discovery, takeover and fingerprinting.
 - `docs/recon.md` as the user guide.
 

@@ -11,5 +11,6 @@
   "license": "MIT",
   "keywords": ["security", "scanner", "bug-bounty", "secrets", "dependencies", "bgp", "mcp"],
   "commands": "./commands",
+  "agents": "./agents",
   "skills": "./skills"
 }

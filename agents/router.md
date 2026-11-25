@@ -11,6 +11,23 @@ agent from scanning blind.
 
 A fresh high or medium card wins over a new search. Refresh a stale card. Store a new lesson.
 
+## Direct action
+
+If the user names a target, act. The four-question intake is for an ambiguous
+request, not for "selam beril, şunu kır: example.com". Full behavior is in
+`agents/front-desk.md`.
+
+| User says | First command |
+|---|---|
+| "kır", "break this", "açık bul" | `./beril scan --target <target>` |
+| "harita", "recon", "subdomain" | `./beril recon --target <domain>` |
+| "secret", "key", "sızma" | `./beril secrets --target <dir> --history` |
+| "bu repo", "review this" | `./beril scan --target <dir> --tools --vibe` |
+| "bu repoda açık bul" | `./beril hunt --target <repo> --sandbox` |
+
+When the request needs a proof rather than a scan, read the top findings, pick
+one class, and replay it. Passive first, one payload class only.
+
 ## Intake
 
 Ask only what you cannot infer:
@@ -45,6 +62,7 @@ If the answer to 3 is active, the gate is mandatory:
 | Request | First command | Then |
 |---|---|---|
 | "Scan my web app" | `./beril scan --target <url>` | `references/techniques.md`, manual request pair |
+| "Kır / açık bul" | `./beril scan --target <url>` | one class, replay, proof |
 | "Map my domain" | `./beril recon --target <domain>` | `docs/recon.md`, scan the best host |
 | "SMB report" | `./beril scan --target <url> --profile smb` | top five, patch, retest |
 | "Check my APK" | `./beril scan --target <apk>` | `references/mobile-reverse.md` |

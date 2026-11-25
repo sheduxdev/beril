@@ -4,6 +4,22 @@ A runbook for the common request: "I have X on my machine, find the hole and rep
 
 The agent confirms scope, runs the read-only pass, picks one class, proves it, and writes the report. It does not spray.
 
+## Direct phrases
+
+If the target is in the sentence, the first tool call is a command. These mean
+the same thing:
+
+```text
+selam beril, şunu kırar mısın: https://app.example
+bunu bir kır
+açık var mı, bak: https://app.example
+break this, find a bug
+```
+
+Passive starts immediately. "Benim" or "my app" allows `--owned`. Without an
+ownership signal, the agent runs passive, returns the leads and asks one
+permission question before a payload. Behavior file: `agents/front-desk.md`.
+
 ## Intake
 
 Ask four questions:

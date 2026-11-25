@@ -9,7 +9,20 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 import priority  # noqa: E402
 import sbom  # noqa: E402
+import scan  # noqa: E402
 import scan_artifact  # noqa: E402
+
+
+def test_bare_domain_gets_a_scheme():
+    assert scan.normalize_target("example.com") == "https://example.com"
+    assert scan.normalize_target("example.com:8443/admin") == "https://example.com:8443/admin"
+    assert scan.normalize_target("https://example.com") == "https://example.com"
+
+
+def test_existing_path_keeps_its_name(tmp_path):
+    path = tmp_path / "app.py"
+    path.write_text("x")
+    assert scan.normalize_target(str(path)) == str(path)
 
 
 def test_priority_seed_marks_kev():

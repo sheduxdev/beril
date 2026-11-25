@@ -5,8 +5,12 @@ Use `AGENTS.md` as the main instruction file. Codex loads it automatically.
 Short loop: confirm scope, passive scan, matching method card, minimal replay,
 report, gaps.
 
+If the user names a target, run the matching command first. "Kır" or "açık bul"
+means scan then one manual class. Behavior: `agents/front-desk.md`.
+
 ```bash
 ./beril scan --target <url-or-path>
+./beril recon --target <domain>
 ./beril scan --target <url> --active --owned
 ./beril hunt --target <repo> --sandbox
 ```

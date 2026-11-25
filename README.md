@@ -29,13 +29,14 @@ Beril was built from 44 public security skill repositories and a live collection
 | Gates | Ownership record before active probes, scope file, request budget, rate limit, masked secrets, static-only artifacts. |
 | Catalogs | Dated JSONL for threads, experts, tools, methods and the GitHub atlas. |
 | Labs | Ten local targets with tasks, smoke tests and answer keys. |
-| Tests | 65 regression tests with local fixtures, a planted-secret repo and golden renderer output. |
+| Tests | 200+ regression tests with local fixtures, a planted-secret repo and golden renderer output. |
 | Dashboard | A loopback-only posture and workspace view with jobs, spend, scans, labs and every catalog. |
 
 ## What it does
 
 | Job | Behavior | Entry point |
 |---|---|---|
+| Talk to it | "selam beril, şunu kır" with a target starts the matching command, not an intake form. Turkish and English triggers. | `agents/front-desk.md` |
 | Collect public leads | Camoufox reads RSS, JSON, shadow DOM and challenge pages. Responses are cached by URL hash. | `./beril harvest forums`, `experts`, `tools`, `methods`, `all` |
 | Extract structure | Records headings, intro, code block count and table count so a method can be separated from a news item. | `./beril extract` |
 | Build a dossier | Merges the catalogs into a ranked brief with links and explicit gaps. | `./beril dossier` |

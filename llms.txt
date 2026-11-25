@@ -20,6 +20,7 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 ## Lines
 
 - [docs/defending.md](docs/defending.md): SMB and developer fix order
+- [agents/front-desk.md](agents/front-desk.md): direct phrases and first action
 - [docs/attacking.md](docs/attacking.md): ownership gate and active workflow
 - [docs/verification.md](docs/verification.md): DNS, file and meta tokens, scope files
 - [docs/secrets.md](docs/secrets.md): masking and revoke-first order

@@ -14,6 +14,7 @@ Beril is a cybersecurity intelligence and assessment skill. Claude Code loads th
 ./install.sh
 ./install.sh --tools --re
 ./beril scan --target <url-or-path>
+./beril recon --target <domain>
 ./beril scan --target <url> --profile smb
 ./beril secrets --target <dir> --history
 ./beril mcp --target <dir>
@@ -42,14 +43,15 @@ Use a fresh high or medium card instead of a new search. Refresh stale cards. Ad
 
 ## Workflow
 
-1. Ask for the target, authorization, passive or active, and the proof needed.
-2. Detect the artifact type.
-3. For active work, check the ownership record and the scope file.
-4. Run the passive scan.
-5. Read the top findings and the matching card in `references/techniques.md`.
-6. Confirm by hand with a minimal request or input.
-7. Report with the profile that fits the reader.
-8. State what you did not test.
+1. Read the sentence and act. If the target is present, the first step is a command, not an interview. Behavior: `agents/front-desk.md`.
+2. Ask for authorization and proof only when the next step needs them.
+3. Detect the artifact type.
+4. For active work, check the ownership record and the scope file.
+5. Run the passive scan.
+6. Read the top findings and the matching card in `references/techniques.md`.
+7. Confirm by hand with a minimal request or input.
+8. Report with the profile that fits the reader.
+9. State what you did not test.
 
 ## Rules
 
