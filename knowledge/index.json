@@ -1,5 +1,28 @@
 [
  {
+  "path": "knowledge/a-clean-scan-is-not-a-certificate.md",
+  "body": "# A clean scan is not a certificate\n\n## Claim\n\nA scanner covers a named set of checks. A clean pass says those checks found nothing. It does not say the app is safe.\n\n## Test\n\nRead the checked and not checked lists. Name one untested class that matches the stack. Do one manual request for it.\n\n## Proof\n\nA report with both lists and one manual check outside the scanner set.\n\n## Failure modes\n\nA scope too narrow to matter. A scanner that silently failed. A target behind a login.",
+  "id": "a-clean-scan-is-not-a-certificate",
+  "title": "A clean scan is not a certificate",
+  "tags": [
+   "senior",
+   "scan",
+   "honesty"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "docs/report-format.md",
+   "references/senior-bar.md"
+  ],
+  "status": "active",
+  "claim": "A scanner covers a named set of checks. A clean pass says those checks found nothing. It does not say the app is safe.",
+  "test": "Read the checked and not checked lists. Name one untested class that matches the stack. Do one manual request for it.",
+  "proof": "A report with both lists and one manual check outside the scanner set.",
+  "failure": "A scope too narrow to matter. A scanner that silently failed. A target behind a login."
+ },
+ {
   "path": "knowledge/a-dangling-cname-is-a-takeover-lead-not-a-finding.md",
   "body": "# A dangling CNAME is a takeover lead, not a finding\n\n## Claim\n\nA CNAME to a service plus that service's unclaimed-page marker means the hostname can be claimed by someone else. The CNAME alone only proves the pointer.\n\n## Test\n\nResolve CNAME, fetch the host, compare the body with the service marker, then try to claim the resource at the provider. A 404 with the marker is the strong case.\n\n## Proof\n\nCNAME to the service and its exact unclaimed page on the hostname, confirmed by a claim attempt.\n\n## Failure modes\n\nA live but parked service looks the same. A custom domain already attached at the provider stays claimed. Wildcard DNS hides the CNAME.",
   "id": "a-dangling-cname-is-a-takeover-lead-not-a-finding",
@@ -20,6 +43,29 @@
   "test": "Resolve CNAME, fetch the host, compare the body with the service marker, then try to claim the resource at the provider. A 404 with the marker is the strong case.",
   "proof": "CNAME to the service and its exact unclaimed page on the hostname, confirmed by a claim attempt.",
   "failure": "A live but parked service looks the same. A custom domain already attached at the provider stays claimed. Wildcard DNS hides the CNAME."
+ },
+ {
+  "path": "knowledge/a-fix-must-close-the-class-not-the-string.md",
+  "body": "# A fix must close the class, not the string\n\n## Claim\n\nBlocking one payload is a filter. A class level fix changes the sink, the parser or the trust boundary. Test the old payload and two variants after the fix.\n\n## Test\n\nRead the patch. Ask which transform changed. Send the original, a variant and a bypass attempt. Check the regression test.\n\n## Proof\n\nA patch at the sink or boundary and a passing regression test.\n\n## Failure modes\n\nA deny list. A WAF rule with no code change. A fix only on the tested endpoint.",
+  "id": "a-fix-must-close-the-class-not-the-string",
+  "title": "A fix must close the class, not the string",
+  "tags": [
+   "senior",
+   "fix",
+   "verification"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/senior-bar.md",
+   "docs/defending.md"
+  ],
+  "status": "active",
+  "claim": "Blocking one payload is a filter. A class level fix changes the sink, the parser or the trust boundary. Test the old payload and two variants after the fix.",
+  "test": "Read the patch. Ask which transform changed. Send the original, a variant and a bypass attempt. Check the regression test.",
+  "proof": "A patch at the sink or boundary and a passing regression test.",
+  "failure": "A deny list. A WAF rule with no code change. A fix only on the tested endpoint."
  },
  {
   "path": "knowledge/a-technology-fingerprint-needs-two-independent-sources.md",
@@ -5680,6 +5726,29 @@
   "failure": "A plain pointer read is optimized away. A missing barrier lets the write arrive late."
  },
  {
+  "path": "knowledge/impact-is-reachability-times-consequence.md",
+  "body": "# Impact is reachability times consequence\n\n## Claim\n\nThe same bug is critical on an internet facing admin and low on an isolated lab. Reachability, actor position and data value move severity more than the class name.\n\n## Test\n\nName the actor position, the reachable asset and the consequence. Compare two environments before choosing a severity.\n\n## Proof\n\nA severity sentence with actor, path and consequence.\n\n## Failure modes\n\nA CVSS vector with no environment. A theoretical actor. An asset with no data.",
+  "id": "impact-is-reachability-times-consequence",
+  "title": "Impact is reachability times consequence",
+  "tags": [
+   "senior",
+   "severity",
+   "impact"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/senior-bar.md",
+   "references/scoring.md"
+  ],
+  "status": "active",
+  "claim": "The same bug is critical on an internet facing admin and low on an isolated lab. Reachability, actor position and data value move severity more than the class name.",
+  "test": "Name the actor position, the reachable asset and the consequence. Compare two environments before choosing a severity.",
+  "proof": "A severity sentence with actor, path and consequence.",
+  "failure": "A CVSS vector with no environment. A theoretical actor. An asset with no data."
+ },
+ {
   "path": "knowledge/ir-cloud.md",
   "body": "# Cloud audit logs are the timeline\n\n## Claim\n\nCloudTrail, Activity Log or audit logs record the control plane. Data plane and identity events need separate sources.\n\n## Test\n\nCollect control plane, identity and network logs. Normalize to UTC. Correlate role assumption with resource access.\n\n## Proof\n\nA sequence from credential to action with source ids.\n\n## Failure modes\n\nA disabled or short-retention log leaves a gap. A resource event can have no control-plane event.",
   "id": "ir-cloud",
@@ -6632,6 +6701,29 @@
   "test": "Trace a mapping. Check the flags. Touch a read-only page.",
   "proof": "A fault on the protected access.",
   "failure": "A huge page changes the TLB cost. A stale TLB entry hides a permission change."
+ },
+ {
+  "path": "knowledge/peer-review-names-the-weak-link-not-the-style.md",
+  "body": "# Peer review names the weak link, not the style\n\n## Claim\n\nA useful review finds the assumed hop, the missing baseline and the overstated impact. Style comments come after the evidence.\n\n## Test\n\nRead the artifact against the ten axes. Ask one question on the lowest axis and require the evidence before a rewrite.\n\n## Proof\n\nA review note with the weak axis and the test that settles it.\n\n## Failure modes\n\nA review that only edits wording. A reviewer who trusts the tool output. A score with no anchor.",
+  "id": "peer-review-names-the-weak-link-not-the-style",
+  "title": "Peer review names the weak link, not the style",
+  "tags": [
+   "senior",
+   "review",
+   "teaching"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/senior-bar.md",
+   "agents/mentor.md"
+  ],
+  "status": "active",
+  "claim": "A useful review finds the assumed hop, the missing baseline and the overstated impact. Style comments come after the evidence.",
+  "test": "Read the artifact against the ten axes. Ask one question on the lowest axis and require the evidence before a rewrite.",
+  "proof": "A review note with the weak axis and the test that settles it.",
+  "failure": "A review that only edits wording. A reviewer who trusts the tool output. A score with no anchor."
  },
  {
   "path": "knowledge/perf-latency-percentile.md",
@@ -7630,6 +7722,29 @@
   "failure": "A dynamic TLS in a dlopen library has a slow path. A destructor that touches freed state crashes."
  },
  {
+  "path": "knowledge/scope-is-a-technical-control-not-paperwork.md",
+  "body": "# Scope is a technical control, not paperwork\n\n## Claim\n\nThe ownership record and scope file decide which host, path and method is legal. They belong in the test plan, not in a folder.\n\n## Test\n\nResolve the exact host, check the record, load the scope, and stop when a redirect leaves it. Record the check in the report.\n\n## Proof\n\nA scope line and an authorization record that match the request.\n\n## Failure modes\n\nA redirect to a sibling host. A CDN shared IP. A wildcard scope that hides a third party.",
+  "id": "scope-is-a-technical-control-not-paperwork",
+  "title": "Scope is a technical control, not paperwork",
+  "tags": [
+   "senior",
+   "scope",
+   "authorization"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "docs/verification.md",
+   "references/senior-bar.md"
+  ],
+  "status": "active",
+  "claim": "The ownership record and scope file decide which host, path and method is legal. They belong in the test plan, not in a folder.",
+  "test": "Resolve the exact host, check the record, load the scope, and stop when a redirect leaves it. Record the check in the report.",
+  "proof": "A scope line and an authorization record that match the request.",
+  "failure": "A redirect to a sibling host. A CDN shared IP. A wildcard scope that hides a third party."
+ },
+ {
   "path": "knowledge/secrets-verified.md",
   "body": "# A secret is a finding only after a read-only proof\n\n## Claim\n\nA key or token is in the repo, but its scope and liveness are unknown.\n\n## Test\n\nIdentify the provider. Call a read-only identity or list endpoint. Check the scope and expiry.\n\n## Proof\n\nA successful read-only API response with the key's permissions.\n\n## Failure modes\n\nA public client key may be intended. A revoked key is a false positive.",
   "id": "secrets-verified",
@@ -8293,6 +8408,75 @@
   "test": "Run mutations on a module. Read the surviving mutants.",
   "proof": "A mutation score with the survivors explained.",
   "failure": "Line coverage stays high while mutants survive. An equivalent mutant is a false alarm."
+ },
+ {
+  "path": "knowledge/test-the-weakest-chain-link-first.md",
+  "body": "# Test the weakest chain link first\n\n## Claim\n\nA chain is only as strong as its least proven hop. Testing the strongest link first hides the one that will fail under triage.\n\n## Test\n\nList every hop, mark the confidence, and test the lowest one before spending time on the payload at the end.\n\n## Proof\n\nEvery hop has a request or an input and the weak hop is named.\n\n## Failure modes\n\nA lab only chain. An assumed redirect. A credential you did not verify.",
+  "id": "test-the-weakest-chain-link-first",
+  "title": "Test the weakest chain link first",
+  "tags": [
+   "senior",
+   "chain",
+   "proof"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md",
+   "references/senior-bar.md"
+  ],
+  "status": "active",
+  "claim": "A chain is only as strong as its least proven hop. Testing the strongest link first hides the one that will fail under triage.",
+  "test": "List every hop, mark the confidence, and test the lowest one before spending time on the payload at the end.",
+  "proof": "Every hop has a request or an input and the weak hop is named.",
+  "failure": "A lab only chain. An assumed redirect. A credential you did not verify."
+ },
+ {
+  "path": "knowledge/the-untested-section-is-part-of-the-finding.md",
+  "body": "# The untested section is part of the finding\n\n## Claim\n\nWhat was not tested bounds the claim. A report without it invites the reader to assume full coverage.\n\n## Test\n\nWrite the untested list before the findings. Check that every finding's precondition appears in the tested list.\n\n## Proof\n\nA finding whose claim stays inside the tested set.\n\n## Failure modes\n\nA generic list copied across reports. An untested item that actually hides the main risk.",
+  "id": "the-untested-section-is-part-of-the-finding",
+  "title": "The untested section is part of the finding",
+  "tags": [
+   "senior",
+   "report",
+   "honesty"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/senior-bar.md",
+   "docs/report-format.md"
+  ],
+  "status": "active",
+  "claim": "What was not tested bounds the claim. A report without it invites the reader to assume full coverage.",
+  "test": "Write the untested list before the findings. Check that every finding's precondition appears in the tested list.",
+  "proof": "A finding whose claim stays inside the tested set.",
+  "failure": "A generic list copied across reports. An untested item that actually hides the main risk."
+ },
+ {
+  "path": "knowledge/threat-model-before-the-first-payload.md",
+  "body": "# Threat model before the first payload\n\n## Claim\n\nA named actor, asset, boundary and missing control turn payload guessing into a test. Write the expected failure before sending.\n\n## Test\n\nWrite one page with the path from input to boundary, the transform and the one check that would settle it. Send only the matching payload.\n\n## Proof\n\nA one page model and a request that tests the named boundary.\n\n## Failure modes\n\nEvery boundary mapped is a diagram. Pick the one that matters. A model can be stale after one response.",
+  "id": "threat-model-before-the-first-payload",
+  "title": "Threat model before the first payload",
+  "tags": [
+   "senior",
+   "threat-model",
+   "method"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/senior-bar.md",
+   "references/techniques.md"
+  ],
+  "status": "active",
+  "claim": "A named actor, asset, boundary and missing control turn payload guessing into a test. Write the expected failure before sending.",
+  "test": "Write one page with the path from input to boundary, the transform and the one check that would settle it. Send only the matching payload.",
+  "proof": "A one page model and a request that tests the named boundary.",
+  "failure": "Every boundary mapped is a diagram. Pick the one that matters. A model can be stale after one response."
  },
  {
   "path": "knowledge/tls-config-review.md",

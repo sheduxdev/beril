@@ -475,8 +475,11 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `references/artex-flask.md` | Flask recon app extract |
 | `references/rce-mastery.md` | RCE classes, proof ladder, report shape |
 | `references/rce-curriculum.md` | Six week RCE track |
+| `references/specialist-program.md` | Twelve four week specialist tracks |
+| `references/senior-bar.md` | Ten axis senior rubric |
+| `docs/specialist.md` | Track selection and review |
 | `references/curriculum.md` | 25-week training plan and grading |
-| `references/exercises.md` | 68 drills by domain |
+| `references/exercises.md` | 82 drills by domain |
 | `references/self-training.md` | Turn labs into durable method notes |
 | `references/books.md` | Reading canon by domain |
 | `docs/mastery.md` | Long-term specialist tracks |

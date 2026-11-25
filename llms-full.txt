@@ -118,6 +118,7 @@ conditions. `docs/attacking.md` and `docs/bug-hunt.md` cover the offensive line.
 | "Firmware" | unblob, rootfs map, update path |
 | "Write the report" | evidence first, then the right profile |
 | "Teach me" | `./beril train`, one week at a time |
+| "Uzmanlaşayım" | pick a track, `references/specialist-program.md` |
 
 ## Evidence
 
@@ -789,8 +790,11 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `references/artex-flask.md` | Flask recon app extract |
 | `references/rce-mastery.md` | RCE classes, proof ladder, report shape |
 | `references/rce-curriculum.md` | Six week RCE track |
+| `references/specialist-program.md` | Twelve four week specialist tracks |
+| `references/senior-bar.md` | Ten axis senior rubric |
+| `docs/specialist.md` | Track selection and review |
 | `references/curriculum.md` | 25-week training plan and grading |
-| `references/exercises.md` | 68 drills by domain |
+| `references/exercises.md` | 82 drills by domain |
 | `references/self-training.md` | Turn labs into durable method notes |
 | `references/books.md` | Reading canon by domain |
 | `docs/mastery.md` | Long-term specialist tracks |
@@ -903,6 +907,7 @@ If the answer to 3 is active, the gate is mandatory:
 | "Dependency risk" | `./beril deps --target <dir> --reachability` | KEV/EPSS order |
 | "Write the report" | existing evidence | `docs/report-format.md` |
 | "Teach me" | `./beril train --status` | `references/curriculum.md` |
+| "Uzmanlaşayım" | pick one track | `references/specialist-program.md`, `references/senior-bar.md` |
 | "Run the labs" | `./beril labs --run` | `labs/README.md` |
 
 ## Rules
@@ -982,6 +987,7 @@ question. Ask only for data you cannot infer.
 | "plugin", "minecraft" | JAR triage | `./beril jar --target <jar-or-dir>` |
 | "bağımlılık", "dependency", "CVE" | Dependency risk | `./beril deps --target <dir> --reachability` |
 | "rapor", "report", "yaz" | Report | `./beril report --input <json> --profile <reader>` |
+| "uzmanlaşayım", "track", "eğitim" | Study | `./beril train --status`, then a track from `references/specialist-program.md` |
 
 Target detection:
 
@@ -1915,6 +1921,26 @@ The cards assume written authorization for the target. A lab or a bounty program
 **Sources:** PortSwigger AI research, ProjectDiscovery Neo benchmark posts, OWASP LLM Top 10.
 
 ## RCE
+
+### 25. Threat model before a payload
+
+**When:** You have a target and a class, and the obvious payload failed.
+
+**Signal:** You are guessing rather than reading.
+
+**Method:**
+
+1. Name the actor, the asset, the boundary and the control that should exist.
+2. Write the shortest path from input to the boundary.
+3. List the transforms on that path and the one you can test without noise.
+4. Pick the class that matches the transform, not the class you like.
+5. Write the expected failure before you send anything.
+
+**Proof:** A one page model with the boundary and the test that would cross it.
+
+**Pitfalls:** A model that names every boundary is a diagram, not a model. Pick the one that matters.
+
+**Sources:** `references/senior-bar.md`, `docs/break-my-app.md`.
 
 ### 26. Prove execution before a shell
 
@@ -6549,6 +6575,518 @@ to the checklist. The field moves through dependencies and parsers, not through
 new separators.
 
 
+<!-- ===== references/specialist-program.md ===== -->
+
+# Specialist program
+
+A senior tester is not a person who knows every payload. It is a person who can
+enter an unfamiliar system, build a threat model, choose one class, prove it,
+explain the business impact and stop at the right time.
+
+This program turns the existing Beril material into twelve four week tracks.
+Each track ends with an artifact a client, a maintainer or a peer can review.
+`references/senior-bar.md` is the cross track rubric.
+
+## Rules
+
+1. One track at a time. One week per theme.
+2. Read the primary source before the lab.
+3. Every week has an artifact. A week without evidence is a read.
+4. The local lab comes first. External labs fill the classes the lab lacks.
+5. Redo one old track week each month.
+6. Keep a portfolio. Track artifacts are the portfolio.
+7. A track is done when a peer can rerun the exit proof from your notes.
+
+## How to choose
+
+| Your current work | Start with |
+|---|---|
+| Bounty programs on SaaS | Track 1, then 2 and 3 |
+| Enterprise internal pentest | Track 2, then 5 and 4 |
+| Product security at a vendor | Track 1, then 9 and 8 |
+| Cloud or platform team | Track 4, then 9 |
+| Malware or exploit research | Track 6, then 11 |
+| Mobile product | Track 7, then 3 |
+| SOC or IR | Track 8, then 5 and 4 |
+| AI product | Track 10, then 3 and 9 |
+
+Do not start with the track you already know. Use the entry drill to confirm
+the level, then move.
+
+## Weekly loop
+
+| Day | Work | Artifact |
+|---|---|---|
+| 1 | Read the primary source and write five questions | Question sheet |
+| 2 | First drill, no notes | Raw output |
+| 3 | Second drill, debug the failure | Debug log |
+| 4 | Lab, first pass | Request or input |
+| 5 | Exit proof, write it for a reviewer | One page |
+
+Two hours a day. Ten hours a week. A missed day is not a missed week.
+
+## The tracks
+
+### 1. Web application and business logic
+
+Outcome. You can find authorization, state machine and parser bugs that a
+scanner cannot see.
+
+Prerequisite. `labs/web`, ten PortSwigger labs, HTTP confidence.
+
+| Week | Focus | Drill | Artifact |
+|---|---|---|---|
+| 1 | Threat model the app and the money flow | Draw the objects, actors and state changes | Threat model |
+| 2 | Access control and IDOR | Two accounts, swap every id | Request pair |
+| 3 | Race and state machine | Parallel requests on one transition | Timing table |
+| 4 | Parser and cache differentials | Compare proxy, app and CDN parsing | Diff sheet |
+
+Key material. `references/techniques.md` cards 6, 7, 9, 14, 15, 16,
+`references/bug-method-matrix.md`, `labs/web`.
+
+Senior failure. Reporting a reflection as XSS, or an IDOR without the second
+account proof.
+
+Exit proof. One chain with a business impact and a fix a developer can apply.
+
+### 2. Identity, authentication and SSO
+
+Outcome. You can test OAuth, OIDC, SAML, JWT, session and MFA flows without
+breaking the login for everyone.
+
+Prerequisite. Track 1 week 2. Basic crypto and cookie handling.
+
+| Week | Focus | Drill | Artifact |
+|---|---|---|---|
+| 1 | Session model and cookie scope | Map every session transition | Session map |
+| 2 | OAuth and OIDC | Redirect binding, state, nonce, PKCE downgrade | Request chain |
+| 3 | SAML and JWT | Signature wrapping, algorithm confusion, claim trust | Forged assertion |
+| 4 | Reset, MFA and account recovery | Host header, token reuse, OTP race | Bypass chain |
+
+Key material. `references/techniques.md` card 17, `knowledge/web-saml-signature-wrapping.md`,
+`knowledge/web-jwt-signature-trust.md`, `knowledge/web-oauth-redirect-binding.md`,
+PortSwigger OAuth and SAML labs.
+
+Senior failure. Calling a decoded JWT a bypass, or testing MFA lockout on the
+only admin account.
+
+Exit proof. One account takeover path with two victims and a clean reset.
+
+### 3. API, GraphQL and mobile backends
+
+Outcome. You can test object, field and operation authorization across REST,
+GraphQL and WebSocket APIs.
+
+Prerequisite. Track 1. JSON and schema reading.
+
+| Week | Focus | Drill | Artifact |
+|---|---|---|---|
+| 1 | Inventory and schema | Diff the public schema against the calls | Schema diff |
+| 2 | BOLA and mass assignment | Change every object and field | Field matrix |
+| 3 | GraphQL depth and batching | Alias batching, depth limit, introspection | Query pair |
+| 4 | Rate limit and webhook trust | Bypass one quota, forge one signature | Bypass note |
+
+Key material. `references/techniques.md` cards 16 and 18, `knowledge/api-*`,
+`docs/scan-artifacts.md`.
+
+Senior failure. Introspection alone as a finding, or a batch query without the
+rate limit impact.
+
+Exit proof. One cross tenant read or write with a request pair.
+
+### 4. Cloud, container and Kubernetes
+
+Outcome. You can follow a role, a token and a workload to a blast radius and
+prove it read only.
+
+Prerequisite. Track 2. Linux and one cloud CLI.
+
+| Week | Focus | Drill | Artifact |
+|---|---|---|---|
+| 1 | Identity and metadata | Trace a role to its policies | Role graph |
+| 2 | Storage and secrets | Find one public or over broad path | Read only proof |
+| 3 | Container and pod | Socket, hostPath, service account | Escape path |
+| 4 | CI identity and trust | OIDC trust policy and subject claim | Trust diff |
+
+Key material. `labs/cloud`, `references/techniques.md` card 19,
+`knowledge/cloud-*`, `docs/network-runbook.md`.
+
+Senior failure. A wildcard policy without the reachable action, or a metadata
+read without the role's real permissions.
+
+Exit proof. A read only path from a low privilege workload to a named asset.
+
+### 5. Active Directory and Windows enterprise
+
+Outcome. You can map an AD path, choose the shortest edge and prove access
+without locking accounts.
+
+Prerequisite. Track 2. Windows basics and BloodHound.
+
+| Week | Focus | Drill | Artifact |
+|---|---|---|---|
+| 1 | Enumeration and ACL graph | Map users, groups and control edges | Graph path |
+| 2 | Kerberos | Kerberoast, AS REP roast, delegation | Ticket evidence |
+| 3 | ADCS and certificate paths | ESC1 and one other template flaw | Certificate proof |
+| 4 | Lateral movement | One hop with a clean log trail | Hop chain |
+
+Key material. `labs/ad`, `references/techniques.md` card 20,
+`knowledge/ad-*`, `knowledge/detection-identity.md`.
+
+Senior failure. Running a spray without the lockout policy, or calling an ACL
+edge exploitable without the write proof.
+
+Exit proof. A path from a normal user to a named high value group.
+
+### 6. Binary exploitation and exploit development
+
+Outcome. You can turn a crash into a primitive, then into a reliable PoC with
+mitigations accounted for.
+
+Prerequisite. C, assembly, `labs/binary`.
+
+| Week | Focus | Drill | Artifact |
+|---|---|---|---|
+| 1 | Crash triage | Classify five crashes by primitive | Triage sheet |
+| 2 | Stack and ROP | Build a chain on the NX binary | Chain and reliability |
+| 3 | Heap and UAF | Reallocate and control a pointer | Heap note |
+| 4 | Mitigation bypass | Leak, ASLR, canary, then a full PoC | PoC and limits |
+
+Key material. `labs/binary`, `labs/fuzz`, `references/exploit-development.md`,
+`knowledge/re-crash-triage-primitive.md`, `knowledge/binary-*`.
+
+Senior failure. A one shot PoC with no reliability number, or a crash called
+exploitable without control proof.
+
+Exit proof. A PoC that works 18 of 20 runs on the agreed build.
+
+### 7. Mobile and client side
+
+Outcome. You can test deep links, WebView bridges, storage and transport on a
+real device without losing the evidence.
+
+Prerequisite. Track 1. ADB or Xcode basics.
+
+| Week | Focus | Drill | Artifact |
+|---|---|---|---|
+| 1 | Manifest and surface | List exported components and schemes | Surface sheet |
+| 2 | Deep link to data | Drive one component with an external intent | Intent proof |
+| 3 | WebView and bridge | Reach a native method from page script | Bridge trace |
+| 4 | Storage, ATS and pinning | Extract one protected value | Extraction note |
+
+Key material. `labs/mobile`, `references/mobile-reverse.md`,
+`knowledge/mobile-*`, MASTG.
+
+Senior failure. A debuggable build as the only finding, or a hook that only
+works on a rooted device without saying so.
+
+Exit proof. One external entry to sensitive data or action, with device state.
+
+### 8. Detection, incident response and forensics
+
+Outcome. You can build a timeline, write a rule, measure false positives and
+explain containment order.
+
+Prerequisite. Track 5 or 4. Log reading.
+
+| Week | Focus | Drill | Artifact |
+|---|---|---|---|
+| 1 | Timeline and evidence | Order a five event incident | Timeline |
+| 2 | Sigma and logsource | Write and test one rule | Rule and match |
+| 3 | False positive analysis | Tune the rule against a clean day | FP table |
+| 4 | Containment and recovery | Write the order and the rollback | Runbook |
+
+Key material. `labs/detection`, `references/network-curriculum.md`,
+`knowledge/detection-*`, `docs/network-runbook.md`.
+
+Senior failure. A rule with no false positive measurement, or containment that
+destroys the evidence first.
+
+Exit proof. A rule with a measured false positive rate and a runbook.
+
+### 9. Supply chain, CI and build security
+
+Outcome. You can audit a build from source to artifact and find the trust
+boundary that actually matters.
+
+Prerequisite. Track 1. Git and CI.
+
+| Week | Focus | Drill | Artifact |
+|---|---|---|---|
+| 1 | Dependency and lockfile | Find one reachable vulnerable path | Reachability note |
+| 2 | CI permissions and triggers | Map token scope and fork rules | Permission table |
+| 3 | Artifact and provenance | Verify one SBOM and one signature | Verify log |
+| 4 | Publish and install path | Test one install hook or postinstall | Hook trace |
+
+Key material. `docs/secrets.md`, `knowledge/cicd-*`, `knowledge/build-*`,
+`data/osv_seed.json`, `scripts/deps.py`, `scripts/sbom.py`.
+
+Senior failure. A dependency CVE with no import reachability, or a pin that
+only moves the trust to an unpinned action.
+
+Exit proof. One build path with a named trust gap and a fix.
+
+### 10. AI, LLM and agent security
+
+Outcome. You can model the data, tool and tenant boundaries of an AI feature
+and prove one boundary crossing.
+
+Prerequisite. Track 3. Basic prompt and RAG reading.
+
+| Week | Focus | Drill | Artifact |
+|---|---|---|---|
+| 1 | Threat model | Map data, tools, tenants and memory | Boundary map |
+| 2 | Direct and indirect injection | Plant one instruction through content | Injection trace |
+| 3 | Tool and sandbox | Reach one tool side effect | Tool call proof |
+| 4 | RAG and memory isolation | Cross one tenant filter | Leak proof |
+
+Key material. `labs/llm`, `knowledge/ai-*`,
+`references/techniques.md` card 24, `docs/prompt-injection.md`.
+
+Senior failure. A system prompt leak as impact, or a tool call without a
+side effect.
+
+Exit proof. One boundary crossing with a reproducible prompt and result.
+
+### 11. Firmware, hardware and IoT
+
+Outcome. You can extract an image, map the boot path and prove one update or
+debug weakness.
+
+Prerequisite. Track 6. Linux and a UART adapter.
+
+| Week | Focus | Drill | Artifact |
+|---|---|---|---|
+| 1 | Extraction | Unblob the image and map the rootfs | File tree |
+| 2 | Services and CGI | Find and prove one injection | Request pair |
+| 3 | Update and signature | Check the verify path and rollback | Verify note |
+| 4 | Debug and boot | UART or JTAG access, secure boot state | Boot log |
+
+Key material. `labs/firmware`, `references/firmware-iot.md`,
+`knowledge/firmware-*`.
+
+Senior failure. A shadow hash as root proof, or a debug port on a production
+board without a recovery note.
+
+Exit proof. One command execution or boot control with a recovery path.
+
+### 12. Network, DNS, TLS and BGP
+
+Outcome. You can test segmentation, egress and routing without flooding the
+target.
+
+Prerequisite. Track 4 or 8. Packet reading.
+
+| Week | Focus | Drill | Artifact |
+|---|---|---|---|
+| 1 | Segmentation | Map allowed and denied paths | Matrix |
+| 2 | DNS and TLS | Test resolver and certificate trust | Trust note |
+| 3 | Egress and proxy | Find one allowed channel | Channel proof |
+| 4 | BGP and RPKI | Check one prefix and its ROA | Posture note |
+
+Key material. `references/network-curriculum.md`, `references/network-checklist.md`,
+`labs/netcheck`, `docs/bgp-runbook.md`, `knowledge/detection-dns.md`.
+
+Senior failure. A port scan as segmentation proof, or a BGP claim without the
+RPKI state.
+
+Exit proof. One closed bypass and one measured rule or route check.
+
+## Sequence
+
+| Months | Track | Why |
+|---|---|---|
+| 1 | 1 and 2 | Every other track depends on web and identity |
+| 2 | 3 and 4 | Modern product surface |
+| 3 | 5 or 6 | Choose enterprise or exploit depth |
+| 4 | 7 or 8 | Choose client or defense |
+| 5 | 9 and 10 | Current supply chain and AI risk |
+| 6 | 11 or 12 | Depth or infrastructure |
+
+Twelve tracks is a year. That is the point. A senior does not finish the
+program, they keep one track warm every month.
+
+## Assessment
+
+Score each track artifact on the senior bar. Twenty four or more is a pass,
+thirty or more is principal level. Below eighteen means repeat the exit proof
+with a new target.
+
+## Portfolio
+
+Keep one artifact per track. Redact client data. Publish the writeups that are
+allowed. A portfolio of twelve exit proofs beats a list of certificates.
+
+## Sources
+
+Every track uses a local lab, a reference and a knowledge card set. Add one
+primary source per week from `references/books.md` or the vendor docs. A track
+without an external primary source is a rehearsal, not a study.
+
+
+<!-- ===== references/senior-bar.md ===== -->
+
+# The senior bar
+
+A senior is judged by the decisions around the bug, not only by the bug. This
+file scores those decisions. Use it after every specialist track artifact and
+in peer review.
+
+## Levels
+
+| Level | Signal |
+|---|---|
+| Operator | Can run the tool and reproduce a known class with help |
+| Senior | Can model an unfamiliar target, choose the class, prove it and land the fix |
+| Principal | Changes how a team works, predicts failure, and the org trusts the call |
+
+A certificate can open a door. This bar decides whether you keep the room.
+
+## The ten axes
+
+Score each axis 0 to 3.
+
+### 1. Scope and threat model
+
+| Score | Anchor |
+|---|---|
+| 0 | Tests whatever looks interesting |
+| 1 | Reads the scope and the app entry points |
+| 2 | Names actors, assets and trust boundaries before a payload |
+| 3 | Predicts which boundary matters and writes the one page model |
+
+### 2. Evidence
+
+| Score | Anchor |
+|---|---|
+| 0 | A screenshot and a claim |
+| 1 | A request or a crash |
+| 2 | Minimal request pair, response and hash |
+| 3 | Reproducible from a clean machine with a timestamp and a baseline |
+
+### 3. Root cause
+
+| Score | Anchor |
+|---|---|
+| 0 | Names the symptom |
+| 1 | Names the function |
+| 2 | Names the missing check and the transform |
+| 3 | Shows the shortest source to sink path and the fix in code |
+
+### 4. Impact and business context
+
+| Score | Anchor |
+|---|---|
+| 0 | Copies a CVSS vector |
+| 1 | Names data or an action |
+| 2 | Shows who is harmed and what it costs |
+| 3 | Ranks the impact against the business and the threat actor that matters |
+
+### 5. Chain building
+
+| Score | Anchor |
+|---|---|
+| 0 | One step, assumed |
+| 1 | Two steps, one unproven |
+| 2 | Every link has a request or a proof |
+| 3 | The weakest link is tested first and the chain stops when the impact is clear |
+
+### 6. Tool judgment
+
+| Score | Anchor |
+|---|---|
+| 0 | Runs every tool and dumps the output |
+| 1 | Runs the standard tool for the class |
+| 2 | Picks the tool after the hypothesis and knows its noise |
+| 3 | Drops the tool when the manual request is faster and says why |
+
+### 7. Communication
+
+| Score | Anchor |
+|---|---|
+| 0 | Payload dump |
+| 1 | Steps in order |
+| 2 | A triager can rerun it and a developer can fix it |
+| 3 | The right profile for the reader, no oversell, the fix is verifiable |
+
+### 8. Judgment under uncertainty
+
+| Score | Anchor |
+|---|---|
+| 0 | Guesses and hides it |
+| 1 | Labels confirmed and inferred |
+| 2 | Names the assumption and the test that would settle it |
+| 3 | Stops when the risk of a wrong call is higher than the value of one more probe |
+
+### 9. Teaching and review
+
+| Score | Anchor |
+|---|---|
+| 0 | No notes |
+| 1 | Shares the command |
+| 2 | Reviews a peer and names the weak link |
+| 3 | Predicts the three mistakes a learner will make and builds the drill |
+
+### 10. Ethics and law
+
+| Score | Anchor |
+|---|---|
+| 0 | Scans first, asks later |
+| 1 | Checks ownership and avoids writes |
+| 2 | Keeps the gate, the scope and the production window |
+| 3 | Documents the legal basis, the data handled and the rollback |
+
+## Bands
+
+| Total | Meaning |
+|---:|---|
+| 0 to 9 | Operator |
+| 10 to 17 | Strong operator, not senior |
+| 18 to 23 | Senior track, needs one more artifact |
+| 24 to 29 | Senior |
+| 30 | Principal evidence |
+
+## Artifact floor
+
+No score above 1 on axes 2, 3 and 4 without the matching evidence. A perfect
+communication score cannot carry a thin proof.
+
+## Review questions
+
+1. What did the tester assume, and is it written down?
+2. Which link in the chain is weakest, and was it tested first?
+3. Could a different explanation produce the same response?
+4. Is the impact real for this business, not for a lab?
+5. Does the fix close the class, or only the string?
+6. What did the tester not test, and does it matter?
+7. Would a second run from a clean machine reproduce it?
+
+## Anti patterns
+
+| Pattern | What it hides |
+|---|---|
+| CVSS as the first sentence | No business thought |
+| Tool output as the report | No root cause |
+| Every class on every endpoint | No depth |
+| A screenshot with no request | No reproduction |
+| "Critical" in the title, info in the impact | Oversell |
+| A fix that blocks one payload | No class level fix |
+| A chain with an assumed hop | Theater |
+| No untested section | Dishonesty |
+
+## Use
+
+- Score your own artifact before sending.
+- Score a peer artifact every month.
+- Keep the two lowest axes as next month's drill.
+- Re score one old artifact after six months. The delta is your progress.
+
+## Honest limits
+
+The bar is a judgment tool. Two reviewers can differ by three points on one
+axis. Calibrate on the evidence, not on style.
+
+
 <!-- ===== references/curriculum.md ===== -->
 
 # Training curriculum
@@ -6645,6 +7183,9 @@ The track adds command injection, template and expression engines,
 deserialization, LFI, SQLi to execution, SSRF to internal RCE and upload to
 execution. Each week has a lab and a report. Use `labs/rce` and the PortSwigger
 labs. The full plan is `references/rce-curriculum.md`.
+
+For breadth after the base, `references/specialist-program.md` has twelve four
+week tracks and `references/senior-bar.md` is the review rubric.
 
 ### Code and binary, weeks 10 to 14
 
@@ -7261,7 +7802,7 @@ if proven.>
 
 # Mastery map
 
-The 25-week curriculum gets you to competent. This map is the longer climb. Pick one primary track, keep one secondary, and measure by artifacts, not courses.
+The 25-week curriculum gets you to competent. This map is the longer climb. Pick one primary track, keep one secondary, and measure by artifacts, not courses. `references/specialist-program.md` turns each track into four week blocks. `references/senior-bar.md` is the review rubric.
 
 ## Milestones
 
@@ -7697,6 +8238,90 @@ Refresh the seed lists in `data/recon.json` when a service changes its takeover
 page. Cloud CIDRs move. A stale range only lowers precision.
 
 
+<!-- ===== docs/specialist.md ===== -->
+
+# Specialist tracks
+
+Beril has twelve four week specialist tracks. Each has a threat model, drills,
+a local or external lab and an exit proof. The program is `references/specialist-program.md`.
+The scoring rubric is `references/senior-bar.md`.
+
+## Start
+
+Pick one track from the table in the program. Do not pick the one you already
+know. Run the entry drill, then decide whether to stay.
+
+```bash
+./beril labs --run web
+./beril labs --run rce
+./beril labs --run ad
+```
+
+Every Friday ends with one page. Every fourth week ends with an exit proof a
+peer can rerun.
+
+## Time
+
+Two hours a day, ten hours a week, four weeks. Twelve tracks is a year. Keep
+one track warm each month after that.
+
+## Choose by work
+
+| Work | First track |
+|---|---|
+| SaaS bounty | Web and business logic |
+| Internal enterprise | Identity and SSO |
+| API product | API and GraphQL |
+| Cloud team | Cloud and Kubernetes |
+| Windows estate | Active Directory |
+| Exploit research | Binary exploitation |
+| Mobile product | Mobile and client |
+| SOC | Detection and IR |
+| Build platform | Supply chain and CI |
+| AI product | AI and agent security |
+| Hardware | Firmware and IoT |
+| Network team | Network and BGP |
+
+## Evidence
+
+Each week has one artifact. A request pair, a crash, a rule with a false
+positive table, a trust diff, a timeline. Keep it in a folder named after the
+track. Redact client data before publishing.
+
+## Review
+
+Score the artifact on the ten axes. Eighteen or more moves on. Twenty four or
+more is senior. Below eighteen means repeat the exit proof with a new target.
+
+Ask a peer one question per axis. Write their answer down. The review is the
+lesson.
+
+## Relation to the 25 week curriculum
+
+The six week RCE track and these twelve tracks sit on top of `references/curriculum.md`.
+The 25 week plan gives the base. A track gives the depth. Do not run a track
+before the base week that it needs.
+
+| Track | Base week |
+|---|---|
+| Web, identity, API | Week 8 and 9 |
+| Cloud, AD | Week 18 and 19 |
+| Binary, mobile, firmware | Week 14 and 21 |
+| Detection, network | Week 20 |
+| AI | Week 23 |
+| Supply chain | Week 10 |
+
+## What does not count
+
+A tutorial watched at double speed. A tool install. A list of payloads. A
+certificate without an artifact. A track week without a file path.
+
+## Portfolio
+
+One artifact per track, twelve total. A short index page that links each one.
+The portfolio is the proof of the senior bar, not the track list.
+
+
 <!-- ===== docs/reverse-engineering.md ===== -->
 
 # Reverse engineering quick start
@@ -7882,6 +8507,8 @@ Read `mastery.md` for the track map and `references/books.md` for the canon.
 `references/curriculum.md` has the phases and capstone. `references/exercises.md` has 82 short drills by domain.
 
 For execution work, `references/rce-curriculum.md` is a six week track and `labs/rce` is its local target.
+
+For breadth, `references/specialist-program.md` has twelve four week tracks and `docs/specialist.md` explains the order.
 
 
 <!-- ===== docs/agents.md ===== -->
@@ -8389,7 +9016,7 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 
 # Knowledge index
 
-418 durable cards. Read this before a web search; open a card only when it matches.
+426 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -8750,6 +9377,14 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `runtime-tls` | Thread-local storage has a model and a destructor order | runtime, tls, threads | medium | 2026-11-25 |
 | `runtime-stack-unwind` | Unwinding runs cleanups between throw and catch | runtime, unwind, exceptions | high | 2026-11-25 |
 | `store-inverted-index` | An inverted index maps a term to postings | search, index, postings | high | 2026-11-25 |
+| `a-clean-scan-is-not-a-certificate` | A clean scan is not a certificate | senior, scan, honesty | high | 2026-11-26 |
+| `a-fix-must-close-the-class-not-the-string` | A fix must close the class, not the string | senior, fix, verification | high | 2026-11-26 |
+| `impact-is-reachability-times-consequence` | Impact is reachability times consequence | senior, severity, impact | medium | 2026-11-26 |
+| `peer-review-names-the-weak-link-not-the-style` | Peer review names the weak link, not the style | senior, review, teaching | high | 2026-11-26 |
+| `scope-is-a-technical-control-not-paperwork` | Scope is a technical control, not paperwork | senior, scope, authorization | high | 2026-11-26 |
+| `test-the-weakest-chain-link-first` | Test the weakest chain link first | senior, chain, proof | high | 2026-11-26 |
+| `the-untested-section-is-part-of-the-finding` | The untested section is part of the finding | senior, report, honesty | high | 2026-11-26 |
+| `threat-model-before-the-first-payload` | Threat model before the first payload | senior, threat-model, method | high | 2026-11-26 |
 | `sre-runbook` | A runbook is a tested procedure with a decision point | sre, runbook, toil | medium | 2026-11-25 |
 | `sre-incident-command` | Incident command separates the lead from the fixers | sre, incident, command | high | 2026-11-25 |
 | `storage-checksum` | A checksum detects corruption, it does not repair it | storage, checksum, corruption | medium | 2026-11-25 |

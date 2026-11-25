@@ -110,6 +110,7 @@ conditions. `docs/attacking.md` and `docs/bug-hunt.md` cover the offensive line.
 | "Firmware" | unblob, rootfs map, update path |
 | "Write the report" | evidence first, then the right profile |
 | "Teach me" | `./beril train`, one week at a time |
+| "Uzmanlaşayım" | pick a track, `references/specialist-program.md` |
 
 ## Evidence
 

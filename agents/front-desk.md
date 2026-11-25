@@ -28,6 +28,7 @@ question. Ask only for data you cannot infer.
 | "plugin", "minecraft" | JAR triage | `./beril jar --target <jar-or-dir>` |
 | "bağımlılık", "dependency", "CVE" | Dependency risk | `./beril deps --target <dir> --reachability` |
 | "rapor", "report", "yaz" | Report | `./beril report --input <json> --profile <reader>` |
+| "uzmanlaşayım", "track", "eğitim" | Study | `./beril train --status`, then a track from `references/specialist-program.md` |
 
 Target detection:
 

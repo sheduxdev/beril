@@ -93,6 +93,9 @@ deserialization, LFI, SQLi to execution, SSRF to internal RCE and upload to
 execution. Each week has a lab and a report. Use `labs/rce` and the PortSwigger
 labs. The full plan is `references/rce-curriculum.md`.
 
+For breadth after the base, `references/specialist-program.md` has twelve four
+week tracks and `references/senior-bar.md` is the review rubric.
+
 ### Code and binary, weeks 10 to 14
 
 Source audit with semgrep and manual tracing. C memory and mitigations. Ghidra static work. GDB and Frida dynamic work. A real libFuzzer campaign on the local parser.

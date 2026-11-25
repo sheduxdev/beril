@@ -29,6 +29,7 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 - [docs/prompt-injection.md](docs/prompt-injection.md): Beril's own attack surface
 - [docs/legal.md](docs/legal.md): Turkey, TCK, KVKK, responsible use
 - [docs/recon.md](docs/recon.md): passive subdomain and origin recon
+- [docs/specialist.md](docs/specialist.md): specialist track order and review
 
 ## Assessment
 
@@ -51,6 +52,8 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 - [references/artex-flask.md](references/artex-flask.md): Flask recon extract
 - [references/rce-mastery.md](references/rce-mastery.md): RCE proof ladder and classes
 - [references/rce-curriculum.md](references/rce-curriculum.md): six week RCE track
+- [references/specialist-program.md](references/specialist-program.md): twelve specialist tracks
+- [references/senior-bar.md](references/senior-bar.md): senior review rubric
 
 ## Training
 

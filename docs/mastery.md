@@ -1,6 +1,6 @@
 # Mastery map
 
-The 25-week curriculum gets you to competent. This map is the longer climb. Pick one primary track, keep one secondary, and measure by artifacts, not courses.
+The 25-week curriculum gets you to competent. This map is the longer climb. Pick one primary track, keep one secondary, and measure by artifacts, not courses. `references/specialist-program.md` turns each track into four week blocks. `references/senior-bar.md` is the review rubric.
 
 ## Milestones
 

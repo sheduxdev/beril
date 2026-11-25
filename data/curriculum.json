@@ -954,6 +954,22 @@
       "plan": "references/rce-curriculum.md",
       "method": "references/rce-mastery.md",
       "lab": "labs/rce"
-    }
+    },
+    "program": "references/specialist-program.md",
+    "senior_bar": "references/senior-bar.md",
+    "domains": [
+      "web",
+      "identity",
+      "api",
+      "cloud",
+      "ad",
+      "binary",
+      "mobile",
+      "detection",
+      "supply-chain",
+      "ai",
+      "firmware",
+      "network"
+    ]
   }
 }

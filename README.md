@@ -51,6 +51,7 @@ Beril was built from 44 public security skill repositories and a live collection
 | Active probes | One quote, one marker, one traversal, three template expressions and one shell expansion per parameter, OPTIONS and TRACE. Ownership gated. | `./beril scan --target https://your-app.example --active` |
 | Hunt a repo | Fingerprint, OSV, source rules, git history, fan-in, optional networkless sandbox with sanitizers. | `./beril hunt --target ./repo --sandbox` |
 | Learn RCE | Six week track, proof ladder, local lab with five classes and a report rubric. | `references/rce-curriculum.md`, `labs/rce` |
+| Grow senior | Twelve specialist tracks, a ten axis rubric and a portfolio plan. | `references/specialist-program.md`, `references/senior-bar.md` |
 | Render a report | Four reader profiles plus JSON and schema-checked SARIF from the same evidence. | `./beril report --input scans/app.json --profile smb` |
 | Run specialist tools | Installed Nuclei, Semgrep, Trivy, Gitleaks, OSV, Grype and testssl, merged into one schema. | `./beril run --target <url-or-dir>` |
 | Ingest another tool | SARIF, Nuclei, Trivy, Gitleaks, OSV, Grype or ZAP output into a Beril report. | `./beril ingest --input out.sarif --format sarif` |

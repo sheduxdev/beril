@@ -77,3 +77,5 @@ Read `mastery.md` for the track map and `references/books.md` for the canon.
 `references/curriculum.md` has the phases and capstone. `references/exercises.md` has 82 short drills by domain.
 
 For execution work, `references/rce-curriculum.md` is a six week track and `labs/rce` is its local target.
+
+For breadth, `references/specialist-program.md` has twelve four week tracks and `docs/specialist.md` explains the order.

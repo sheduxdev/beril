@@ -76,6 +76,7 @@ If the answer to 3 is active, the gate is mandatory:
 | "Dependency risk" | `./beril deps --target <dir> --reachability` | KEV/EPSS order |
 | "Write the report" | existing evidence | `docs/report-format.md` |
 | "Teach me" | `./beril train --status` | `references/curriculum.md` |
+| "Uzmanlaşayım" | pick one track | `references/specialist-program.md`, `references/senior-bar.md` |
 | "Run the labs" | `./beril labs --run` | `labs/README.md` |
 
 ## Rules

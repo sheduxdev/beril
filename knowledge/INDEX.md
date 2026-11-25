@@ -1,6 +1,6 @@
 # Knowledge index
 
-418 durable cards. Read this before a web search; open a card only when it matches.
+426 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -361,6 +361,14 @@
 | `runtime-tls` | Thread-local storage has a model and a destructor order | runtime, tls, threads | medium | 2026-11-25 |
 | `runtime-stack-unwind` | Unwinding runs cleanups between throw and catch | runtime, unwind, exceptions | high | 2026-11-25 |
 | `store-inverted-index` | An inverted index maps a term to postings | search, index, postings | high | 2026-11-25 |
+| `a-clean-scan-is-not-a-certificate` | A clean scan is not a certificate | senior, scan, honesty | high | 2026-11-26 |
+| `a-fix-must-close-the-class-not-the-string` | A fix must close the class, not the string | senior, fix, verification | high | 2026-11-26 |
+| `impact-is-reachability-times-consequence` | Impact is reachability times consequence | senior, severity, impact | medium | 2026-11-26 |
+| `peer-review-names-the-weak-link-not-the-style` | Peer review names the weak link, not the style | senior, review, teaching | high | 2026-11-26 |
+| `scope-is-a-technical-control-not-paperwork` | Scope is a technical control, not paperwork | senior, scope, authorization | high | 2026-11-26 |
+| `test-the-weakest-chain-link-first` | Test the weakest chain link first | senior, chain, proof | high | 2026-11-26 |
+| `the-untested-section-is-part-of-the-finding` | The untested section is part of the finding | senior, report, honesty | high | 2026-11-26 |
+| `threat-model-before-the-first-payload` | Threat model before the first payload | senior, threat-model, method | high | 2026-11-26 |
 | `sre-runbook` | A runbook is a tested procedure with a decision point | sre, runbook, toil | medium | 2026-11-25 |
 | `sre-incident-command` | Incident command separates the lead from the fixers | sre, incident, command | high | 2026-11-25 |
 | `storage-checksum` | A checksum detects corruption, it does not repair it | storage, checksum, corruption | medium | 2026-11-25 |

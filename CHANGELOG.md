@@ -21,6 +21,12 @@ All notable changes. Beril uses semantic versioning.
   parameter. Both are leads with request pairs, not exploitation.
 - `references/rce-mastery.md` and `references/rce-curriculum.md`: six week RCE
   track, proof ladder, class shelf, report shape and rubric.
+- `references/specialist-program.md`: twelve four week specialist tracks across
+  web, identity, API, cloud, AD, binary, mobile, detection, supply chain, AI,
+  firmware and network.
+- `references/senior-bar.md` and `docs/specialist.md`: ten axis senior rubric,
+  track order and portfolio rules.
+- Eight recall cards for senior judgment, from threat model to peer review.
 - `labs/rce`: command injection, blind injection, eval, pickle, traversal and
   upload to execution, with smoke tests and answers.
 - Five RCE method cards in `references/techniques.md`.

@@ -506,6 +506,26 @@ The cards assume written authorization for the target. A lab or a bounty program
 
 ## RCE
 
+### 25. Threat model before a payload
+
+**When:** You have a target and a class, and the obvious payload failed.
+
+**Signal:** You are guessing rather than reading.
+
+**Method:**
+
+1. Name the actor, the asset, the boundary and the control that should exist.
+2. Write the shortest path from input to the boundary.
+3. List the transforms on that path and the one you can test without noise.
+4. Pick the class that matches the transform, not the class you like.
+5. Write the expected failure before you send anything.
+
+**Proof:** A one page model with the boundary and the test that would cross it.
+
+**Pitfalls:** A model that names every boundary is a diagram, not a model. Pick the one that matters.
+
+**Sources:** `references/senior-bar.md`, `docs/break-my-app.md`.
+
 ### 26. Prove execution before a shell
 
 **When:** A parameter looks like it reaches an interpreter.
