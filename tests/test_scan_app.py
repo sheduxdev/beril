@@ -74,3 +74,16 @@ def test_render_failure_falls_back_to_http(web_app, auth_store, monkeypatch):
     report = scan_app.scan(web_app, rate=10, max_requests=20, render=True)
     assert report.meta["status"] == 200
     assert any("render failed" in error for error in report.errors)
+
+
+def test_hsts_without_subdomains_is_flagged():
+    import web_checks
+
+    res = {
+        "headers": [("Strict-Transport-Security", "max-age=31536000")],
+        "status": 200,
+        "request": "GET / HTTP/1.1",
+    }
+    checks = {finding.check for finding in web_checks.check_headers(res, "https://example.com/")}
+    assert "web.header.hsts-subdomains" in checks
+    assert "web.header.strict-transport-security" not in checks

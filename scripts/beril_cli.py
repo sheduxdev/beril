@@ -2,6 +2,7 @@
 """Thin command wrapper for Beril.
 
 ./beril scan --target https://example.com --active
+./beril recon --target example.com
 ./beril verify --new example.com
 ./beril hunt --target ./repo --sandbox
 ./beril harvest forums --sources 0x00sec,reddit
@@ -19,6 +20,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 COMMANDS = {
     "scan": "scan.py",
+    "recon": "recon.py",
     "verify": "authz.py",
     "secrets": "beril_secrets.py",
     "mcp": "scan_mcp.py",

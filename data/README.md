@@ -32,6 +32,7 @@ Scanner seed data, all offline by default:
 | `jar_iocs.json` | Minecraft malware file and string indicators |
 | `cms_vulns.json` | Small CMS version and path seed |
 | `osv_seed.json` | Offline OSV sample, `--online` uses the real API |
+| `recon.json` | CDN ranges, takeover markers, risky ports, auth paths, tech and wordlist seeds |
 
 `feed_cache/` is not committed. It holds timestamped copies of KEV, EPSS and OSV
 responses, is written atomically and is invalidated by TTL (24 hours for KEV, 12

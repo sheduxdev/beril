@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import collections
 import glob
+import ipaddress
 import json
 import os
 import re
@@ -90,6 +91,7 @@ def main() -> None:
         "source_rules.json",
         "cms_vulns.json",
         "osv_seed.json",
+        "recon.json",
     ]
     for name in machine:
         path = os.path.join(args.data, name)
@@ -109,6 +111,36 @@ def main() -> None:
                         errors.append(f"{path} rule {i} missing {field}")
         if name == "secret_providers.json" and not payload.get("providers"):
             errors.append(f"{path} has no providers")
+        if name == "recon.json":
+            for key in (
+                "cdn_ranges",
+                "ip_headers",
+                "risky_ports",
+                "auth_paths",
+                "subdomain_words",
+                "takeovers",
+                "tech",
+            ):
+                if not payload.get(key):
+                    errors.append(f"{path} has no {key}")
+            for cdn, ranges in payload.get("cdn_ranges", {}).items():
+                for cidr in ranges:
+                    try:
+                        ipaddress.ip_network(cidr, strict=False)
+                    except ValueError:
+                        errors.append(f"{path}: bad CIDR {cdn} {cidr}")
+            for port, item in payload.get("risky_ports", {}).items():
+                if not str(port).isdigit() or item.get("severity") not in ("critical", "high", "medium", "low", "info"):
+                    errors.append(f"{path}: bad risky port {port}")
+                elif not item.get("service"):
+                    errors.append(f"{path}: risky port {port} has no service")
+            for item in payload.get("tech", []):
+                matchers = item.get("header") or item.get("body") or item.get("cookie") or item.get("meta")
+                if not item.get("name") or not item.get("category") or not matchers:
+                    errors.append(f"{path}: incomplete tech fingerprint {item.get('name', '?')}")
+            for item in payload.get("takeovers", []):
+                if not item.get("service") or not item.get("cname") or not item.get("body"):
+                    errors.append(f"{path}: incomplete takeover fingerprint {item.get('service', '?')}")
 
     # Prose checks from the humanizer rules.
     paths = glob.glob(os.path.join(args.docs, "*.md"))

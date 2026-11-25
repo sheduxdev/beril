@@ -39,7 +39,7 @@ CHECKED_PASSIVE = [
     "Common exposed files and admin paths",
     "TLS certificate, expiry and version",
     "SPF, DKIM and DMARC records",
-    "MySQL, PostgreSQL, MongoDB, Redis, Elasticsearch, Memcached and Docker ports",
+    "MySQL, PostgreSQL, MongoDB, Redis, Elasticsearch, Memcached, Docker, SSH, RDP, SMB, VNC and 12 more ports",
     "Technology and version hints, error signatures, directory listing",
 ]
 NOT_CHECKED_PASSIVE = [

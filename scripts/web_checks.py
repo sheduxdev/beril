@@ -87,6 +87,52 @@ PATHS = [
     ("/.well-known/security.txt", "info", "high", "security.txt exists", "Good sign. Keep the contact current."),
     ("/robots.txt", "info", "high", "robots.txt exists", "Check for sensitive paths in Disallow."),
     ("/sitemap.xml", "info", "medium", "Sitemap is public", "Confirm it does not list staging paths."),
+    (
+        "/.git/config",
+        "high",
+        "high",
+        "Git config is reachable",
+        "Block .git. The config lists remotes and sometimes credentials.",
+    ),
+    ("/.gitignore", "low", "high", ".gitignore is public", "Block dotfiles. Ignored names hint at local secrets."),
+    ("/.htaccess", "low", "medium", ".htaccess is public", "Block it or confirm the rules are harmless."),
+    ("/.htpasswd", "critical", "high", ".htpasswd is public", "Block it. The hashes are offline-crackable."),
+    ("/.bzr/branch/branch.conf", "medium", "medium", "Bazaar metadata is reachable", "Block .bzr."),
+    (
+        "/composer.lock",
+        "medium",
+        "medium",
+        "Composer lockfile is public",
+        "Confirm the dependency versions are intended to be public.",
+    ),
+    ("/yarn.lock", "low", "medium", "Yarn lockfile is public", "Confirm it is intended."),
+    ("/docker-compose.yml", "medium", "medium", "Compose file is public", "Move deployment files out of the web root."),
+    ("/Dockerfile", "low", "medium", "Dockerfile is public", "Move build files out of the web root."),
+    ("/config.php", "high", "medium", "PHP config is reachable", "Move config above the web root or block it."),
+    ("/wp-config.php", "critical", "high", "wp-config.php is reachable", "Block it. It holds database credentials."),
+    ("/config.yaml", "high", "medium", "YAML config is reachable", "Move config above the web root or block it."),
+    ("/config.yml", "high", "medium", "YAML config is reachable", "Move config above the web root or block it."),
+    ("/config.json", "high", "medium", "JSON config is reachable", "Move config above the web root or block it."),
+    ("/database.sql", "critical", "high", "Database dump is reachable", "Move dumps out of the web root."),
+    ("/backup.sql", "critical", "high", "Database backup is reachable", "Move backups out of the web root."),
+    ("/admin/.env", "critical", "high", "Admin environment file is reachable", "Block it and rotate values."),
+    ("/admin/.git/HEAD", "high", "high", "Admin Git metadata is reachable", "Block .git under the admin path."),
+    (
+        "/admin/.htpasswd",
+        "critical",
+        "high",
+        "Admin password file is reachable",
+        "Block it. The hashes are offline-crackable.",
+    ),
+    ("/admin/config.yaml", "high", "medium", "Admin config is reachable", "Restrict the admin path."),
+    ("/storage/.env", "critical", "high", "Storage environment file is reachable", "Block it and rotate values."),
+    ("/storage/config.php", "high", "medium", "Storage config is reachable", "Move config above the web root."),
+    ("/api/.env", "critical", "high", "API environment file is reachable", "Block it and rotate values."),
+    ("/api/config.php", "high", "medium", "API config is reachable", "Move config above the web root."),
+    ("/logs/error.log", "high", "high", "Error log is public", "Block the log directory."),
+    ("/logs/access.log", "medium", "high", "Access log is public", "Block the log directory."),
+    ("/error.log", "high", "high", "Error log is public", "Block it."),
+    ("/access.log", "medium", "high", "Access log is public", "Block it."),
 ]
 
 SQL_ERRORS = [
@@ -122,6 +168,22 @@ PORTS = [
     (11211, "Memcached", "medium"),
     (2375, "Docker API (plaintext)", "critical"),
     (8080, "HTTP alternate", "info"),
+    (22, "SSH", "low"),
+    (21, "FTP", "medium"),
+    (23, "Telnet", "medium"),
+    (25, "SMTP", "low"),
+    (111, "rpcbind", "low"),
+    (445, "SMB", "medium"),
+    (1433, "MSSQL", "medium"),
+    (2376, "Docker API (TLS)", "info"),
+    (3389, "RDP", "medium"),
+    (5900, "VNC", "medium"),
+    (5984, "CouchDB", "medium"),
+    (6443, "Kubernetes API", "medium"),
+    (7001, "WebLogic", "medium"),
+    (8500, "Consul", "medium"),
+    (9042, "Cassandra", "medium"),
+    (15672, "RabbitMQ management", "medium"),
 ]
 
 
@@ -324,6 +386,21 @@ def check_headers(res: dict, url: str) -> list[Finding]:
                 impact="HSTS expires early and opens a downgrade window.",
                 fix="Use max-age 31536000 and includeSubDomains when ready.",
                 subject=url,
+                source="passive",
+            )
+        )
+    if hsts and "includesubdomains" not in hsts.lower():
+        out.append(
+            Finding(
+                check="web.header.hsts-subdomains",
+                title="HSTS does not cover subdomains",
+                severity="low",
+                confidence="high",
+                evidence=f"{url}: {hsts}",
+                impact="A subdomain can still downgrade a cookie scoped to the parent domain.",
+                fix="Add includeSubDomains after every subdomain is on HTTPS.",
+                subject=url,
+                cwe=["CWE-319"],
                 source="passive",
             )
         )
@@ -543,14 +620,14 @@ def analyze_html(url: str, body: str, headers: dict) -> list[Finding]:
             )
         )
     for pattern, _name in SQL_ERRORS:
-        if pattern.search(body):
+        if match := pattern.search(body):
             out.append(
                 Finding(
                     check="web.sql-error",
                     title="Database error signature in the page",
                     severity="low",
                     confidence="medium",
-                    evidence=f"{url}: {excerpt(body, pattern.search(body).group(0))}",
+                    evidence=f"{url}: {excerpt(body, match.group(0))}",
                     impact="The error leaks schema and engine detail and hints at injection.",
                     fix="Simplify error pages and disable detail in production.",
                     subject=url,
@@ -560,14 +637,14 @@ def analyze_html(url: str, body: str, headers: dict) -> list[Finding]:
             )
             break
     for pattern, name in DEBUG_MARKERS:
-        if pattern.search(body):
+        if match := pattern.search(body):
             out.append(
                 Finding(
                     check="web.debug",
                     title=f"Debug trace: {name}",
                     severity="medium",
                     confidence="medium",
-                    evidence=f"{url}: {excerpt(body, pattern.search(body).group(0))}",
+                    evidence=f"{url}: {excerpt(body, match.group(0))}",
                     impact="Leaks paths, versions and variable values.",
                     fix="Disable debug in production.",
                     subject=url,
@@ -719,6 +796,8 @@ def _strong_marker(path: str, body: str) -> bool:
         return body.lstrip()[:1] in ("{", "[")
     if path.startswith("/."):
         return "<html" not in body[:200].lower()
+    if path.endswith((".sql", ".log", ".yml", ".yaml", ".json", ".lock", ".php", "Dockerfile")):
+        return "<html" not in body[:200].lower()
     return True
 
 
@@ -758,6 +837,37 @@ def _marker_ok(path: str, body: str) -> bool:
         "/.well-known/security.txt": lambda s: "Contact:" in s,
         "/robots.txt": lambda s: "user-agent" in s.lower() or "disallow" in s.lower(),
         "/sitemap.xml": lambda s: "<urlset" in s or "<sitemapindex" in s,
+        "/.git/config": lambda s: "[core]" in s or "repositoryformatversion" in s,
+        "/.gitignore": lambda s: bool(s.strip()) and "<html" not in s[:200].lower(),
+        "/.htaccess": lambda s: any(k in s for k in ("RewriteEngine", "AuthType", "Options", "DirectoryIndex")),
+        "/.htpasswd": lambda s: ":" in s
+        and ("$apr1$" in s or "$2y$" in s or s.strip().startswith(("admin:", "user:"))),
+        "/.bzr/branch/branch.conf": lambda s: "[" in s and "]" in s,
+        "/composer.lock": lambda s: '"packages"' in s or '"content-hash"' in s,
+        "/yarn.lock": lambda s: "# yarn lockfile" in s,
+        "/docker-compose.yml": lambda s: "services:" in s or "version:" in s,
+        "/Dockerfile": lambda s: bool(re.search(r"(?m)^(FROM|ARG|RUN|COPY|ENTRYPOINT|CMD)\s", s)),
+        "/config.php": lambda s: "<?php" in s or ("=" in s and "<html" not in s[:200].lower()),
+        "/wp-config.php": lambda s: "DB_NAME" in s or "wp-settings" in s,
+        "/config.yaml": lambda s: bool(re.search(r"(?m)^[a-z_]+:\s", s)),
+        "/config.yml": lambda s: bool(re.search(r"(?m)^[a-z_]+:\s", s)),
+        "/config.json": lambda s: bool(re.match(r"^\s*\{", s)),
+        "/database.sql": lambda s: "CREATE TABLE" in s.upper() or "INSERT INTO" in s.upper(),
+        "/backup.sql": lambda s: "CREATE TABLE" in s.upper() or "INSERT INTO" in s.upper(),
+        "/admin/.env": lambda s: "=" in s and not s.lstrip().startswith("<"),
+        "/admin/.git/HEAD": lambda s: s.startswith("ref:") or bool(re.match(r"^[0-9a-f]{40}\s*$", s.strip())),
+        "/admin/.htpasswd": lambda s: ":" in s and ("$apr1$" in s or "$2y$" in s or "admin:" in s),
+        "/admin/config.yaml": lambda s: bool(re.search(r"(?m)^[a-z_]+:\s", s)),
+        "/storage/.env": lambda s: "=" in s and not s.lstrip().startswith("<"),
+        "/storage/config.php": lambda s: "<?php" in s or ("=" in s and "<html" not in s[:200].lower()),
+        "/api/.env": lambda s: "=" in s and not s.lstrip().startswith("<"),
+        "/api/config.php": lambda s: "<?php" in s or ("=" in s and "<html" not in s[:200].lower()),
+        "/logs/error.log": lambda s: bool(re.search(r"(?m)^\[?[A-Z][a-z]{2} [A-Z][a-z]{2} ", s))
+        or "error" in s[:200].lower(),
+        "/logs/access.log": lambda s: bool(re.search(r"\"(?:GET|POST|HEAD) /", s)),
+        "/error.log": lambda s: bool(re.search(r"(?m)^\[?[A-Z][a-z]{2} [A-Z][a-z]{2} ", s))
+        or "error" in s[:200].lower(),
+        "/access.log": lambda s: bool(re.search(r"\"(?:GET|POST|HEAD) /", s)),
     }
     return checks.get(path, lambda s: bool(s.strip()))(body)
 
@@ -765,6 +875,10 @@ def _marker_ok(path: str, body: str) -> bool:
 def _path_fix(path: str) -> str:
     if path.startswith(("/.git", "/.svn", "/.hg")):
         return "Move the metadata directory out of the web root or block it."
+    if path.endswith((".sql", ".log")):
+        return "Move dumps and logs outside the web root and block the directory."
+    if path.endswith((".yml", ".yaml", ".json", ".lock", ".php", "Dockerfile")):
+        return "Move configuration and build files outside the web root."
     if path.startswith("/.") or path in ("/backup.zip", "/backup.tar.gz", "/db.sql", "/dump.sql"):
         return "Move the file outside the web root and allowlist it."
     if "admin" in path or "phpmyadmin" in path or "adminer" in path:
@@ -813,7 +927,7 @@ def tls_info(url: str, timeout: int = 12) -> dict:
             ctx.wrap_socket(sock, server_hostname=host) as tls,
         ):
             cert = tls.getpeercert() or {}
-            not_after = cert.get("notAfter", "")
+            not_after = str(cert.get("notAfter", ""))
             days = None
             if not_after:
                 expiry = dt.datetime.strptime(not_after, "%b %d %H:%M:%S %Y %Z").replace(tzinfo=dt.UTC)
