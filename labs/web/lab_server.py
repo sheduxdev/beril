@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Deliberately vulnerable web lab. Standard library only.
 
-    python labs/web/lab_server.py --port 8099
+python labs/web/lab_server.py --port 8099
 """
+
 from __future__ import annotations
 
 import argparse
@@ -41,11 +42,12 @@ PAGES = {
 class Handler(BaseHTTPRequestHandler):
     server_version = "BerilLab/oops"
 
-    def log_message(self, fmt: str, *args) -> None:
-        print("%s - %s" % (self.address_string(), fmt % args))
+    def log_message(self, fmt: str, *args: object) -> None:
+        print(f"{self.address_string()} - " + (fmt % args))
 
-    def send(self, body: str, code: int = 200, ctype: str = "text/html; charset=utf-8",
-             headers: dict | None = None) -> None:
+    def send(
+        self, body: str, code: int = 200, ctype: str = "text/html; charset=utf-8", headers: dict | None = None
+    ) -> None:
         raw = body.encode("utf-8")
         self.send_response(code)
         self.send_header("Content-Type", ctype)
@@ -76,8 +78,7 @@ class Handler(BaseHTTPRequestHandler):
             row = DB.execute("SELECT name, role FROM users WHERE id=?", (uid,)).fetchone()
             if not row:
                 return self.send("no such user", 404)
-            return self.send(f"hello {row[0]}", headers={"Set-Cookie": f"uid={uid}; Path=/",
-                                                         "Set-Cookie": f"role={row[1]}; Path=/"})
+            return self.send(f"hello {row[0]}", headers={"Set-Cookie": f"uid={uid}; Path=/, role={row[1]}; Path=/"})
         if path == "/profile":
             uid = q.get("id", ["1"])[0]
             row = DB.execute("SELECT id, name, email, balance FROM users WHERE id=?", (uid,)).fetchone()
@@ -119,8 +120,10 @@ class Handler(BaseHTTPRequestHandler):
             row = DB.execute("SELECT id, name, email, role, balance FROM users WHERE id=?", (uid,)).fetchone()
             if not row:
                 return self.send(json.dumps({"error": "not found"}), 404, "application/json")
-            return self.send(json.dumps({"id": row[0], "name": row[1], "email": row[2],
-                                         "role": row[3], "balance": row[4]}), ctype="application/json")
+            return self.send(
+                json.dumps({"id": row[0], "name": row[1], "email": row[2], "role": row[3], "balance": row[4]}),
+                ctype="application/json",
+            )
         if path == "/api/transfer":
             return self.send(json.dumps({"ok": True, "from": 1, "to": 2, "amount": 10}), ctype="application/json")
         return self.send("not found", 404)

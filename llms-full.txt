@@ -8433,7 +8433,7 @@ A crash is a lead. A controlled register is a primitive. A working chain is an e
 
 # Training with Beril
 
-Beril has a 25-week curriculum and eleven local labs. It is a practice system, not a reading list.
+Beril has a 25-week curriculum and thirteen local labs. It is a practice system, not a reading list.
 
 ## Start
 
@@ -8462,6 +8462,8 @@ Mark tasks:
 |---|---|
 | `web` | IDOR, XSS, SQLi, traversal, SSRF |
 | `rce` | command injection, eval, pickle, upload to exec |
+| `auth` | session fixation, MFA skip, reset token, JWT none |
+| `crypto` | ECB, padding oracle, CTR reuse |
 | `binary` | stack, format string, UAF, integer |
 | `fuzz` | libFuzzer and crash triage |
 | `re` | stripped binary reconstruction |
@@ -9019,7 +9021,7 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 
 # Knowledge index
 
-573 durable cards. Read this before a web search; open a card only when it matches.
+770 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -9114,6 +9116,14 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `saml-signature-wrapping-moves-the-assertion-not-the-signatur` | SAML signature wrapping moves the assertion, not the signature | auth, saml, xsw | medium | 2026-11-26 |
 | `session-id-must-rotate-at-login` | Session id must rotate at login | auth, session, fixation | high | 2026-11-26 |
 | `webauthn-trusts-the-rp-id-and-origin-pair` | WebAuthn trusts the RP ID and origin pair | auth, passkey, webauthn | medium | 2026-11-26 |
+| `an-ecs-task-role-is-a-container-credential` | An ECS task role is a container credential | aws, ecs, role | high | 2026-11-26 |
+| `an-s3-acl-is-a-separate-grant-from-the-bucket-policy` | An S3 ACL is a separate grant from the bucket policy | aws, s3, acl | high | 2026-11-26 |
+| `lambda-environment-variables-are-plaintext-at-rest` | Lambda environment variables are plaintext at rest | aws, lambda, secret | high | 2026-11-26 |
+| `iam-passrole-is-the-role-chain` | iam:PassRole is the role chain | aws, iam, passrole | high | 2026-11-26 |
+| `sts-assumerole-is-a-trust-graph-edge` | sts:AssumeRole is a trust graph edge | aws, sts, trust | high | 2026-11-26 |
+| `an-azure-role-assignment-is-the-effective-right` | An Azure role assignment is the effective right | azure, role, rbac | high | 2026-11-26 |
+| `azure-managed-identity-is-a-token-endpoint` | Azure managed identity is a token endpoint | azure, managed-identity, token | high | 2026-11-26 |
+| `key-vault-access-needs-the-data-plane-role` | Key Vault access needs the data plane role | azure, keyvault, secret | high | 2026-11-26 |
 | `a-uaf-becomes-type-confusion-when-the-slot-is-reused` | A UAF becomes type confusion when the slot is reused | binary, uaf, type-confusion | high | 2026-11-26 |
 | `a-format-string-write-needs-the-argument-index` | A format string write needs the argument index | binary, format-string, write | high | 2026-11-26 |
 | `binary-hypervisor` | A hypervisor exposes synthetic MSRs and VTL boundaries | binary, hypervisor, virtualization | low | 2026-11-24 |
@@ -9135,14 +9145,32 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `binary-wasm` | Wasm modules have validation and a host boundary | binary, wasm, sandbox | medium | 2026-11-25 |
 | `binary-windows-kernel` | Windows kernel bugs are object and IRP lifetime bugs | binary, windows, kernel | high | 2026-11-25 |
 | `msg-msg-is-the-kernel-heap-spray-primitive` | msg_msg is the kernel heap spray primitive | binary, kernel, heap | medium | 2026-11-26 |
+| `a-csp-nonce-must-be-unpredictable-and-per-response` | A CSP nonce must be unpredictable and per response | browser, csp, nonce | high | 2026-11-26 |
+| `a-browser-sandbox-escape-is-a-broker-message-bug` | A browser sandbox escape is a broker message bug | browser, sandbox, ipc | medium | 2026-11-26 |
+| `a-service-worker-is-a-persistent-origin-proxy` | A service worker is a persistent origin proxy | browser, service-worker, cache | medium | 2026-11-26 |
 | `browser-extension-permissions` | An extension is a trusted page with broad APIs | browser, extension, permissions | medium | 2026-11-24 |
+| `coop-and-coep-isolate-the-browsing-context` | COOP and COEP isolate the browsing context | browser, coop, coep | medium | 2026-11-26 |
+| `clipboard-read-needs-a-gesture-and-a-permission` | Clipboard read needs a gesture and a permission | browser, clipboard, api | medium | 2026-11-26 |
+| `dom-clobbering-overrides-named-globals` | DOM clobbering overrides named globals | browser, dom-clobbering, xss | medium | 2026-11-26 |
+| `electron-with-nodeintegration-is-a-browser-and-a-shell` | Electron with nodeIntegration is a browser and a shell | browser, electron, rce | high | 2026-11-26 |
+| `file-system-access-keeps-a-handle-across-visits` | File System Access keeps a handle across visits | browser, file-system, api | low | 2026-11-26 |
+| `manifest-v3-changes-the-extension-attack-surface` | Manifest V3 changes the extension attack surface | browser, extension, mv3 | high | 2026-11-26 |
+| `trusted-types-is-only-as-strict-as-the-policy` | Trusted Types is only as strict as the policy | browser, trusted-types, xss | medium | 2026-11-26 |
+| `wasm-jit-bugs-cross-the-browser-sandbox` | WASM JIT bugs cross the browser sandbox | browser, wasm, jit | medium | 2026-11-26 |
+| `webrtc-can-reveal-a-local-address` | WebRTC can reveal a local address | browser, webrtc, privacy | medium | 2026-11-26 |
+| `xs-leaks-reads-state-without-reading-the-body` | XS-Leaks reads state without reading the body | browser, xsleaks, side-channel | medium | 2026-11-26 |
+| `postmessage-needs-origin-and-source-checks` | postMessage needs origin and source checks | browser, postmessage, origin | high | 2026-11-26 |
+| `window-name-survives-navigation` | window.name survives navigation | browser, window-name, state | medium | 2026-11-26 |
 | `build-hermetic` | A hermetic build is reproducible from declared inputs | build, hermetic, reproducible | medium | 2026-11-25 |
 | `build-incremental` | An incremental build is a cache keyed on inputs | build, incremental, cache | high | 2026-11-25 |
+| `a-kms-key-policy-is-the-real-access-control` | A KMS key policy is the real access control | cloud, kms, policy | high | 2026-11-26 |
 | `a-default-allow-network-policy-is-flat-networking` | A default allow network policy is flat networking | cloud, k8s, network | high | 2026-11-26 |
+| `a-logging-gap-is-the-first-cloud-finding` | A logging gap is the first cloud finding | cloud, logging, detection | high | 2026-11-26 |
 | `a-metadata-hop-limit-above-one-crosses-a-proxy` | A metadata hop limit above one crosses a proxy | cloud, metadata, ssrf | medium | 2026-11-26 |
 | `cloud-docker-socket` | A mounted Docker socket is root on the host | cloud, docker, container | medium | 2026-11-24 |
 | `cloud-k8s-hostpath` | A privileged pod with hostPath is a host escape | cloud, kubernetes, container | high | 2026-11-24 |
 | `a-public-principal-is-wider-than-a-public-acl` | A public principal is wider than a public ACL | cloud, storage, iam | high | 2026-11-26 |
+| `a-public-registry-is-an-image-supply-path` | A public registry is an image supply path | cloud, registry, image | high | 2026-11-26 |
 | `a-public-snapshot-exposes-every-volume-block` | A public snapshot exposes every volume block | cloud, snapshot, storage | medium | 2026-11-26 |
 | `cloud-secrets` | A secrets manager is only as strong as its policy | cloud, secrets, iam | high | 2026-11-24 |
 | `cloud-service-mesh` | A sidecar is a second network path | cloud, istio, mtls | medium | 2026-11-25 |
@@ -9165,6 +9193,18 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `cloud-terraform-state` | Terraform state is a secret store | cloud, terraform, state | medium | 2026-11-24 |
 | `unencrypted-etcd-secrets-are-readable-from-a-snapshot` | Unencrypted etcd secrets are readable from a snapshot | cloud, k8s, etcd | medium | 2026-11-26 |
 | `cloud-vmware` | VMware appliances are a chain of SSO and service bugs | cloud, vmware, vcenter | high | 2026-11-25 |
+| `a-vulnerability-report-needs-the-affected-range` | A vulnerability report needs the affected range | comp, reporting, version | high | 2026-11-26 |
+| `an-sbom-is-a-compliance-input-not-a-proof` | An SBOM is a compliance input, not a proof | comp, sbom, supply | high | 2026-11-26 |
+| `an-audit-needs-a-sample-and-a-trace` | An audit needs a sample and a trace | comp, audit, evidence | high | 2026-11-26 |
+| `cra-reporting-is-a-clock-with-a-24-hour-start` | CRA reporting is a clock with a 24 hour start | comp, cra, reporting | high | 2026-11-26 |
+| `coordinated-disclosure-is-a-clock-and-a-channel` | Coordinated disclosure is a clock and a channel | comp, disclosure, vendor | high | 2026-11-26 |
+| `gdpr-needs-a-lawful-basis-before-the-collection` | GDPR needs a lawful basis before the collection | comp, gdpr, basis | high | 2026-11-26 |
+| `hipaa-risk-analysis-is-the-first-evidence` | HIPAA risk analysis is the first evidence | comp, hipaa, risk | medium | 2026-11-26 |
+| `iso-27001-is-a-management-system-not-a-checklist` | ISO 27001 is a management system, not a checklist | comp, iso27001, isms | medium | 2026-11-26 |
+| `kvkk-notice-is-a-text-and-a-register` | KVKK notice is a text and a register | comp, kvkk, turkey | medium | 2026-11-26 |
+| `nis2-scope-is-a-sector-and-a-size-test` | NIS2 scope is a sector and a size test | comp, nis2, scope | medium | 2026-11-26 |
+| `pci-scope-follows-the-card-data-flow` | PCI scope follows the card data flow | comp, pci, scope | medium | 2026-11-26 |
+| `soc-2-evidence-is-a-period-not-a-point` | SOC 2 evidence is a period, not a point | comp, soc2, audit | high | 2026-11-26 |
 | `comp-jit` | A JIT has tiers, guards and a code cache | compiler, jit, deopt | high | 2026-11-25 |
 | `comp-abi` | An ABI is a contract between compiled units | compiler, abi, calling-convention | high | 2026-11-25 |
 | `comp-optimizer` | An optimizer pass must preserve semantics | compiler, optimizer, optimization, semantics, pass | medium | 2026-11-25 |
@@ -9226,6 +9266,18 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `db-recovery-redo` | Redo applies committed pages before undo | database, recovery, redo | high | 2026-11-25 |
 | `db-vacuum` | Vacuum reclaims versions and freezes old transaction ids | database, vacuum, bloat | medium | 2026-11-25 |
 | `db-vectorized-exec` | Vectorized execution amortizes per-row cost | database, vectorized, execution | medium | 2026-11-25 |
+| `a-crypto-decision-needs-the-threat-and-the-key-owner` | A crypto decision needs the threat and the key owner | design, crypto, key | high | 2026-11-26 |
+| `a-log-line-is-a-data-decision` | A log line is a data decision | design, logging, privacy | high | 2026-11-26 |
+| `a-rate-limit-needs-a-scope-and-a-cost` | A rate limit needs a scope and a cost | design, rate-limit, abuse | high | 2026-11-26 |
+| `a-secret-has-a-path-from-the-store-to-the-use` | A secret has a path from the store to the use | design, secret, flow | high | 2026-11-26 |
+| `a-threat-model-names-one-boundary-and-one-control` | A threat model names one boundary and one control | design, threat-model, control | high | 2026-11-26 |
+| `a-trust-boundary-is-where-the-identity-changes` | A trust boundary is where the identity changes | design, trust-boundary, identity | high | 2026-11-26 |
+| `authentication-and-authorization-are-different-questions` | Authentication and authorization are different questions | design, authn, authz | high | 2026-11-26 |
+| `fail-secure-is-a-default-decision` | Fail secure is a default decision | design, fail-secure, default | high | 2026-11-26 |
+| `input-validation-and-output-encoding-are-two-layers` | Input validation and output encoding are two layers | design, input, output | high | 2026-11-26 |
+| `isolation-needs-a-kernel-or-a-hardware-boundary` | Isolation needs a kernel or a hardware boundary | design, isolation, sandbox | high | 2026-11-26 |
+| `least-privilege-is-a-per-request-budget` | Least privilege is a per request budget | design, least-privilege, iam | high | 2026-11-26 |
+| `multi-tenant-needs-the-tenant-in-the-key` | Multi tenant needs the tenant in the key | design, multi-tenant, cache | high | 2026-11-26 |
 | `a-lolbin-needs-its-parent-checked` | A LOLBin needs its parent checked | detection, lolbin, parent | high | 2026-11-26 |
 | `a-sigma-rule-dies-on-the-wrong-logsource` | A Sigma rule dies on the wrong logsource | detection, sigma, logsource | high | 2026-11-26 |
 | `detection-sigma` | A Sigma rule needs a logsource, a selection and a false-positive note | detection, sigma, log | high | 2026-11-24 |
@@ -9261,6 +9313,11 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `repair-anti-entropy` | Anti-entropy compares digests and repairs the delta | distributed-storage, repair, merkle | high | 2026-11-25 |
 | `repair-quorum` | Degraded mode trades consistency for availability | distributed-storage, quorum, degraded | medium | 2026-11-25 |
 | `repair-read-repair` | Read repair fixes a replica on the read path | distributed-storage, read-repair, version | medium | 2026-11-25 |
+| `a-cname-loop-is-a-resolver-and-app-dependency` | A CNAME loop is a resolver and app dependency | dns, cname, loop | medium | 2026-11-26 |
+| `a-dnssec-algorithm-downgrade-needs-the-chain` | A DNSSEC algorithm downgrade needs the chain | dns, dnssec, downgrade | medium | 2026-11-26 |
+| `a-zone-transfer-is-a-full-inventory` | A zone transfer is a full inventory | dns, axfr, inventory | high | 2026-11-26 |
+| `caa-limits-who-can-issue-for-a-name` | CAA limits who can issue for a name | dns, caa, certificate | medium | 2026-11-26 |
+| `nsec-walking-enumerates-a-signed-zone` | NSEC walking enumerates a signed zone | dns, nsec, enumeration | medium | 2026-11-26 |
 | `econ-make-buy` | Build versus buy compares maintenance, not license | economics, make-buy, maintenance | high | 2026-11-25 |
 | `econ-headcount` | Headcount is a recurring cost with a ramp | economics, headcount, ramp | medium | 2026-11-25 |
 | `econ-vendor-lock` | Lock-in is the exit cost, not the logo | economics, vendor, exit | high | 2026-11-25 |
@@ -9370,6 +9427,23 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `formal-model-check` | Model checking enumerates states until a property fails | formal, model-check, states | high | 2026-11-25 |
 | `formal-refinement` | Refinement maps an abstract spec to concrete steps | formal, refinement, spec | medium | 2026-11-25 |
 | `formal-tla` | TLA+ describes a protocol as state and actions | formal, tla, protocol | high | 2026-11-25 |
+| `a-corpus-needs-minimization-and-diversity` | A corpus needs minimization and diversity | fuzz, corpus, minimize | high | 2026-11-26 |
+| `a-dictionary-crosses-magic-checks` | A dictionary crosses magic checks | fuzz, dictionary, magic | high | 2026-11-26 |
+| `a-fuzz-harness-has-one-entry-and-one-invariant` | A fuzz harness has one entry and one invariant | fuzz, harness, entry | high | 2026-11-26 |
+| `a-grammar-reaches-deep-structure` | A grammar reaches deep structure | fuzz, grammar, structure | medium | 2026-11-26 |
+| `a-kernel-target-needs-a-qemu-or-a-vm-harness` | A kernel target needs a QEMU or a VM harness | fuzz, kernel, qemu | medium | 2026-11-26 |
+| `a-network-harness-owns-the-socket` | A network harness owns the socket | fuzz, network, socket | medium | 2026-11-26 |
+| `a-persistent-loop-needs-a-clean-reset` | A persistent loop needs a clean reset | fuzz, persistent, state | high | 2026-11-26 |
+| `a-sanitizer-turns-silent-corruption-into-a-crash` | A sanitizer turns silent corruption into a crash | fuzz, sanitizer, asan | high | 2026-11-26 |
+| `a-snapshot-turns-a-fuzz-crash-into-a-replay` | A snapshot turns a fuzz crash into a replay | fuzz, snapshot, replay | high | 2026-11-26 |
+| `a-stateful-target-needs-a-sequence` | A stateful target needs a sequence | fuzz, stateful, sequence | medium | 2026-11-26 |
+| `coverage-guided-fuzzing-needs-the-right-build` | Coverage guided fuzzing needs the right build | fuzz, coverage, build | high | 2026-11-26 |
+| `crash-dedup-needs-the-stack-and-the-root-cause` | Crash dedup needs the stack and the root cause | fuzz, dedup, triage | high | 2026-11-26 |
+| `differential-fuzzing-compares-two-implementations` | Differential fuzzing compares two implementations | fuzz, differential, parser | medium | 2026-11-26 |
+| `a-gcp-service-account-key-is-a-long-lived-identity` | A GCP service account key is a long lived identity | gcp, service-account, key | high | 2026-11-26 |
+| `a-public-cloud-function-is-an-unauthenticated-entry` | A public Cloud Function is an unauthenticated entry | gcp, function, auth | high | 2026-11-26 |
+| `a-public-gcs-object-ignores-the-bucket-iam` | A public GCS object ignores the bucket IAM | gcp, storage, acl | high | 2026-11-26 |
+| `gcp-workload-identity-binds-a-kubernetes-subject` | GCP workload identity binds a Kubernetes subject | gcp, workload-identity, k8s | high | 2026-11-26 |
 | `hw-firmware-update` | A firmware update needs A/B slots and a rollback | hardware, firmware, rollback | medium | 2026-11-25 |
 | `hw-irq` | An interrupt handler must be short and defer the rest | hardware, interrupt, latency | medium | 2026-11-25 |
 | `hw-endian` | Byte order is part of the wire format | hardware, endian, layout | medium | 2026-11-25 |
@@ -9393,9 +9467,71 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `ir-phishing` | Phishing triage reads headers and detonates the payload | ir, phishing, email | medium | 2026-11-25 |
 | `ransomware-needs-an-offline-copy-and-a-restore-test` | Ransomware needs an offline copy and a restore test | ir, ransomware, backup | high | 2026-11-26 |
 | `ir-ransomware` | Ransomware triage is scope, encryption and backups | ir, ransomware, backup | high | 2026-11-25 |
+| `a-crd-inherits-the-rbac-of-its-controller` | A CRD inherits the RBAC of its controller | k8s, crd, rbac | medium | 2026-11-26 |
+| `a-networkpolicy-needs-a-default-deny-and-a-selector` | A NetworkPolicy needs a default deny and a selector | k8s, networkpolicy, segmentation | high | 2026-11-26 |
+| `a-mounted-secret-is-a-file-in-every-exec` | A mounted secret is a file in every exec | k8s, secret, mount | high | 2026-11-26 |
+| `a-service-account-token-audience-matters` | A service account token audience matters | k8s, serviceaccount, token | medium | 2026-11-26 |
+| `an-admission-webhook-can-be-bypassed-by-its-scope` | An admission webhook can be bypassed by its scope | k8s, admission, policy | medium | 2026-11-26 |
+| `an-audit-policy-with-no-data-plane-is-blind` | An audit policy with no data plane is blind | k8s, audit, detection | medium | 2026-11-26 |
+| `an-image-pull-secret-is-a-registry-identity` | An image pull secret is a registry identity | k8s, registry, secret | high | 2026-11-26 |
+| `ingress-auth-is-not-backend-auth` | Ingress auth is not backend auth | k8s, ingress, auth | high | 2026-11-26 |
+| `pod-security-admission-is-three-labels-deep` | Pod Security Admission is three labels deep | k8s, psa, namespace | high | 2026-11-26 |
+| `port-forward-bypasses-the-ingress-path` | Port forward bypasses the ingress path | k8s, portforward, rbac | high | 2026-11-26 |
+| `the-node-authorizer-has-a-fixed-grant-set` | The node authorizer has a fixed grant set | k8s, node, authorizer | medium | 2026-11-26 |
+| `kubectl-exec-is-a-pod-identity` | kubectl exec is a pod identity | k8s, exec, rbac | high | 2026-11-26 |
+| `net-viewstate-and-formatters-are-signed-or-not` | .NET viewstate and formatters are signed or not | lang, dotnet, deser | high | 2026-11-26 |
+| `a-dockerfile-is-a-build-identity` | A Dockerfile is a build identity | lang, dockerfile, supply | high | 2026-11-26 |
+| `c-string-and-integer-bugs-share-a-size-path` | C string and integer bugs share a size path | lang, c, memory | high | 2026-11-26 |
+| `go-templates-are-not-jinja` | Go templates are not Jinja | lang, go, ssti | medium | 2026-11-26 |
+| `java-deserialization-needs-a-classpath-gadget` | Java deserialization needs a classpath gadget | lang, java, deser | high | 2026-11-26 |
+| `javascript-prototype-pollution-reaches-a-sink` | JavaScript prototype pollution reaches a sink | lang, javascript, prototype | high | 2026-11-26 |
+| `php-type-juggling-is-a-comparison-bug` | PHP type juggling is a comparison bug | lang, php, type | high | 2026-11-26 |
+| `python-deserialization-is-pickle-and-yaml` | Python deserialization is pickle and YAML | lang, python, deser | high | 2026-11-26 |
+| `regex-needs-an-anchor-and-a-length` | Regex needs an anchor and a length | lang, regex, validation | high | 2026-11-26 |
+| `ruby-marshal-is-code-with-a-gadget` | Ruby Marshal is code with a gadget | lang, ruby, deser | medium | 2026-11-26 |
+| `rust-unsafe-is-a-contract-not-a-bug` | Rust unsafe is a contract, not a bug | lang, rust, unsafe | high | 2026-11-26 |
+| `sql-is-a-language-and-a-parser` | SQL is a language and a parser | lang, sql, injection | high | 2026-11-26 |
+| `shell-is-a-quoting-language-first` | Shell is a quoting language first | lang, shell, quoting | high | 2026-11-26 |
+| `terraform-plan-is-the-effective-cloud-change` | Terraform plan is the effective cloud change | lang, terraform, cloud | high | 2026-11-26 |
+| `yaml-tags-are-object-constructors` | YAML tags are object constructors | lang, yaml, deser | high | 2026-11-26 |
 | `a-safe-harbor-claim-needs-the-program-text` | A safe harbor claim needs the program text | legal, safe-harbor, scope | high | 2026-11-26 |
 | `linux-suid` | A SUID binary is a path, not a finding | linux, privesc, suid | high | 2026-11-24 |
+| `a-suid-binary-is-only-useful-with-a-path` | A SUID binary is only useful with a path | linux, suid, privilege | high | 2026-11-26 |
+| `a-file-capability-is-a-narrower-suid` | A file capability is a narrower SUID | linux, capabilities, privilege | high | 2026-11-26 |
+| `a-process-environment-is-a-secret-store` | A process environment is a secret store | linux, proc, secret | high | 2026-11-26 |
+| `a-sudoers-rule-needs-the-argument-check` | A sudoers rule needs the argument check | linux, sudo, sudoers | high | 2026-11-26 |
+| `a-writable-cron-file-is-a-timed-root` | A writable cron file is a timed root | linux, cron, privilege | high | 2026-11-26 |
+| `a-writable-systemd-unit-is-a-service-takeover` | A writable systemd unit is a service takeover | linux, systemd, privilege | high | 2026-11-26 |
+| `ld-preload-needs-a-trusted-launcher-and-a-writable-library` | LD_PRELOAD needs a trusted launcher and a writable library | linux, ld-preload, library | high | 2026-11-26 |
+| `nfs-no-root-squash-is-a-root-write` | NFS no_root_squash is a root write | linux, nfs, root | high | 2026-11-26 |
+| `selinux-and-apparmor-need-a-mode-check` | SELinux and AppArmor need a mode check | linux, selinux, apparmor | high | 2026-11-26 |
 | `linux-cron-systemd` | Scheduled jobs inherit a weak PATH or writable unit | linux, privesc, cron, systemd | medium | 2026-11-24 |
+| `the-docker-socket-is-host-root` | The Docker socket is host root | linux, docker, socket | high | 2026-11-26 |
+| `ptrace-on-a-privileged-process-reads-its-memory` | ptrace on a privileged process reads its memory | linux, ptrace, memory | medium | 2026-11-26 |
+| `a-dkim-selector-is-a-public-key-with-a-revocation-path` | A DKIM selector is a public key with a revocation path | mail, dkim, selector | medium | 2026-11-26 |
+| `a-catch-all-address-hides-user-enumeration` | A catch all address hides user enumeration | mail, catch-all, enumeration | high | 2026-11-26 |
+| `a-header-newline-is-a-message-filter-bypass` | A header newline is a message filter bypass | mail, header-injection, smtp | high | 2026-11-26 |
+| `an-open-relay-needs-a-foreign-sender-and-recipient` | An open relay needs a foreign sender and recipient | mail, smtp, relay | high | 2026-11-26 |
+| `dmarc-alignment-is-the-real-policy` | DMARC alignment is the real policy | mail, dmarc, alignment | high | 2026-11-26 |
+| `mx-reputation-is-a-delivery-and-spoof-signal` | MX reputation is a delivery and spoof signal | mail, mx, reputation | medium | 2026-11-26 |
+| `spf-breaks-at-the-lookup-limit` | SPF breaks at the lookup limit | mail, spf, dns | high | 2026-11-26 |
+| `starttls-can-be-stripped-on-the-mx-path` | STARTTLS can be stripped on the MX path | mail, starttls, downgrade | medium | 2026-11-26 |
+| `the-from-header-is-not-the-envelope-sender` | The From header is not the envelope sender | mail, from, spoof | high | 2026-11-26 |
+| `a-yara-rule-needs-a-unique-string-and-a-condition` | A YARA rule needs a unique string and a condition | malware, yara, detection | high | 2026-11-26 |
+| `a-loader-is-a-small-stage-and-a-decoder` | A loader is a small stage and a decoder | malware, loader, stage | high | 2026-11-26 |
+| `a-macro-runs-in-a-parent-process` | A macro runs in a parent process | malware, macro, office | high | 2026-11-26 |
+| `a-packer-is-a-section-and-entropy-pattern` | A packer is a section and entropy pattern | malware, packer, entropy | high | 2026-11-26 |
+| `a-rootkit-hides-a-layer-not-a-file` | A rootkit hides a layer, not a file | malware, rootkit, kernel | medium | 2026-11-26 |
+| `a-sandbox-needs-a-network-and-a-clock` | A sandbox needs a network and a clock | malware, sandbox, dynamic | high | 2026-11-26 |
+| `an-lnk-file-is-a-command-line-container` | An LNK file is a command line container | malware, lnk, delivery | high | 2026-11-26 |
+| `an-import-is-a-capability-hint` | An import is a capability hint | malware, import, capability | high | 2026-11-26 |
+| `anti-analysis-is-a-check-before-a-behavior` | Anti analysis is a check before a behavior | malware, anti-analysis, sandbox | high | 2026-11-26 |
+| `c2-is-a-channel-and-a-fallback-set` | C2 is a channel and a fallback set | malware, c2, network | medium | 2026-11-26 |
+| `persistence-is-a-boot-or-a-login-trigger` | Persistence is a boot or a login trigger | malware, persistence, boot | high | 2026-11-26 |
+| `process-injection-is-a-write-then-a-run` | Process injection is a write then a run | malware, injection, process | high | 2026-11-26 |
+| `ransomware-is-a-key-and-a-deletion-race` | Ransomware is a key and a deletion race | malware, ransomware, recovery | high | 2026-11-26 |
+| `shellcode-needs-the-loader-contract` | Shellcode needs the loader contract | malware, shellcode, loader | medium | 2026-11-26 |
+| `static-malware-triage-starts-with-the-hash-and-the-header` | Static malware triage starts with the hash and the header | malware, static, triage | high | 2026-11-26 |
 | `a-javascript-bridge-is-a-native-api-in-the-page` | A JavaScript bridge is a native API in the page | mobile, webview, bridge | high | 2026-11-26 |
 | `a-deep-link-parameter-is-untrusted-input` | A deep link parameter is untrusted input | mobile, deeplink, input | high | 2026-11-26 |
 | `mobile-deep-link-bridge` | A deep link plus a JS bridge is a chain | mobile, android, deep-link | high | 2026-11-24 |
@@ -9453,6 +9589,16 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `os-signal` | A signal handler runs on an arbitrary stack point | os, signal, async | medium | 2026-11-25 |
 | `os-syscall` | A syscall is an ABI with an error convention | os, syscall, errno | medium | 2026-11-25 |
 | `os-virtual-memory` | Virtual memory is a translation and permission layer | os, virtual-memory, paging | medium | 2026-11-25 |
+| `a-plc-program-is-the-final-authority` | A PLC program is the final authority | ot, plc, logic | high | 2026-11-26 |
+| `a-historian-is-a-copy-of-the-process` | A historian is a copy of the process | ot, historian, data | medium | 2026-11-26 |
+| `an-air-gap-has-a-removable-bridge` | An air gap has a removable bridge | ot, airgap, bridge | high | 2026-11-26 |
+| `bacnet-is-a-building-broadcast-protocol` | BACnet is a building broadcast protocol | ot, bacnet, building | medium | 2026-11-26 |
+| `can-frames-are-broadcast-with-an-arbitration-id` | CAN frames are broadcast with an arbitration id | ot, can, automotive | medium | 2026-11-26 |
+| `dnp3-is-a-master-and-outstation-relationship` | DNP3 is a master and outstation relationship | ot, dnp3, scada | medium | 2026-11-26 |
+| `mqtt-topics-are-the-authorization-boundary` | MQTT topics are the authorization boundary | ot, mqtt, iot | high | 2026-11-26 |
+| `modbus-has-no-auth-and-no-sequence` | Modbus has no auth and no sequence | ot, modbus, plc | high | 2026-11-26 |
+| `s7comm-needs-a-rack-and-a-slot` | S7comm needs a rack and a slot | ot, s7, siemens | medium | 2026-11-26 |
+| `zigbee-needs-the-network-key` | Zigbee needs the network key | ot, zigbee, iot | medium | 2026-11-26 |
 | `perf-latency-percentile` | A percentile hides the shape and coordinated omission | performance, latency, percentile | high | 2026-11-25 |
 | `perf-profiling` | Sampling measures where time goes; instrumentation measures counts | performance, profiling, flamegraph | high | 2026-11-25 |
 | `collect-the-minimum-personal-data` | Collect the minimum personal data | privacy, data-minimization, gdpr | high | 2026-11-26 |
@@ -9475,6 +9621,22 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `proto-state-machine` | A protocol is a set of legal transitions | protocol, state-machine, transitions | high | 2026-11-25 |
 | `proto-backpressure` | Flow control is a window the receiver grants | protocol, backpressure, window | medium | 2026-11-25 |
 | `proto-versioning` | Version negotiation needs a downgrade policy | protocol, versioning, downgrade | high | 2026-11-25 |
+| `a-got-overwrite-needs-a-call-after-the-write` | A GOT overwrite needs a call after the write | pwn, got, partial-relro | high | 2026-11-26 |
+| `a-rop-chain-needs-a-reliability-number` | A ROP chain needs a reliability number | pwn, rop, reliability | high | 2026-11-26 |
+| `a-stack-pivot-moves-rsp-to-controlled-memory` | A stack pivot moves RSP to controlled memory | pwn, stack-pivot, rop | high | 2026-11-26 |
+| `a-vtable-call-is-a-control-target-in-c` | A vtable call is a control target in C++ | pwn, vtable, cplusplus | medium | 2026-11-26 |
+| `fsop-targets-the-file-vtable-and-the-lock` | FSOP targets the FILE vtable and the lock | pwn, fsop, libc | medium | 2026-11-26 |
+| `heap-metadata-is-a-target-after-the-data` | Heap metadata is a target after the data | pwn, heap, metadata | medium | 2026-11-26 |
+| `house-of-force-needs-a-top-chunk-size-overwrite` | House of Force needs a top chunk size overwrite | pwn, heap, house-of-force | medium | 2026-11-26 |
+| `jit-spray-turns-immediates-into-code` | JIT spray turns immediates into code | pwn, jit, spray | medium | 2026-11-26 |
+| `kernel-cred-overwrite-is-the-shortest-root` | Kernel cred overwrite is the shortest root | pwn, kernel, cred | medium | 2026-11-26 |
+| `kernel-modprobe-path-is-a-write-target` | Kernel modprobe_path is a write target | pwn, kernel, modprobe | high | 2026-11-26 |
+| `largebin-attack-writes-a-libc-pointer` | Largebin attack writes a libc pointer | pwn, largebin, write | low | 2026-11-26 |
+| `smap-and-smep-split-the-chain` | SMAP and SMEP split the chain | pwn, kernel, smap | high | 2026-11-26 |
+| `srop-sets-every-register-from-a-fake-frame` | SROP sets every register from a fake frame | pwn, srop, sigreturn | medium | 2026-11-26 |
+| `tls-dtor-is-a-per-thread-function-pointer` | TLS dtor is a per thread function pointer | pwn, tls, dtor | low | 2026-11-26 |
+| `unsorted-bin-leak-is-a-libc-address` | Unsorted bin leak is a libc address | pwn, unsorted-bin, leak | high | 2026-11-26 |
+| `ret2plt-is-the-no-leak-control-path` | ret2plt is the no leak control path | pwn, rop, plt | high | 2026-11-26 |
 | `blind-rce-needs-a-unique-channel-and-a-repeat` | Blind RCE needs a unique channel and a repeat | rce, blind, oob | high | 2026-11-26 |
 | `command-injection-depends-on-the-quote-context` | Command injection depends on the quote context | rce, cmdi, shell | high | 2026-11-26 |
 | `expression-language-injection-is-a-class-reference-away` | Expression language injection is a class reference away | rce, spel, ognl | high | 2026-11-26 |
@@ -9500,6 +9662,17 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `a-technology-fingerprint-needs-two-independent-sources` | A technology fingerprint needs two independent sources | recon, fingerprint, tech | high | 2026-11-25 |
 | `origin-ip-scoring-needs-a-direct-response-check` | Origin IP scoring needs a direct-response check | recon, cdn, origin | medium | 2026-11-25 |
 | `wildcard-dns-invalidates-brute-force-hits` | Wildcard DNS invalidates brute-force hits | recon, dns, wildcard | high | 2026-11-25 |
+| `a-c2-profile-is-a-traffic-shape` | A C2 profile is a traffic shape | red, c2, traffic | medium | 2026-11-26 |
+| `a-lolbin-is-a-signed-loader` | A LOLBin is a signed loader | red, lolbin, execution | high | 2026-11-26 |
+| `a-payload-needs-a-loader-and-a-fallback` | A payload needs a loader and a fallback | red, payload, loader | high | 2026-11-26 |
+| `a-phishing-pretext-needs-a-sender-and-a-reason` | A phishing pretext needs a sender and a reason | red, phishing, pretext | medium | 2026-11-26 |
+| `a-red-team-report-is-a-defense-plan` | A red team report is a defense plan | red, report, defense | high | 2026-11-26 |
+| `cleanup-is-part-of-the-proof` | Cleanup is part of the proof | red, cleanup, evidence | high | 2026-11-26 |
+| `persistence-needs-a-trigger-the-blue-team-does-not-watch` | Persistence needs a trigger the blue team does not watch | red, persistence, trigger | high | 2026-11-26 |
+| `red-team-opsec-is-a-mistake-ledger` | Red team OPSEC is a mistake ledger | red, opsec, mistake | high | 2026-11-26 |
+| `red-team-infrastructure-needs-a-redirector-and-a-backup` | Red team infrastructure needs a redirector and a backup | red, infra, redirector | medium | 2026-11-26 |
+| `red-team-logging-is-a-detection-gift` | Red team logging is a detection gift | red, logging, detection | high | 2026-11-26 |
+| `red-team-scope-is-a-time-and-access-budget` | Red team scope is a time and access budget | red, scope, engagement | high | 2026-11-26 |
 | `runtime-gc-safepoint` | A safepoint is where the runtime can move or scan | runtime, gc, safepoint | high | 2026-11-25 |
 | `runtime-dynload` | Dynamic loading runs initializers before main | runtime, dynload, init-order | medium | 2026-11-25 |
 | `runtime-exception` | Exception tables describe where a throw may land | runtime, exceptions, unwind | medium | 2026-11-25 |
@@ -9548,6 +9721,18 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `test-fuzzing` | A fuzzer explores inputs a human would not write | testing, fuzzing, corpus | high | 2026-11-25 |
 | `test-chaos-suite` | Deterministic simulation finds bugs a real cluster hides | testing, simulation, determinism | high | 2026-11-25 |
 | `test-mutation` | Mutation testing measures whether a test would notice a change | testing, mutation, coverage | medium | 2026-11-25 |
+| `a-ttp-outlives-a-tool` | A TTP outlives a tool | ti, ttp, attack | high | 2026-11-26 |
+| `a-campaign-is-a-shared-time-and-infrastructure` | A campaign is a shared time and infrastructure | ti, campaign, cluster | medium | 2026-11-26 |
+| `a-false-flag-is-a-deliberate-inconsistency` | A false flag is a deliberate inconsistency | ti, false-flag, attribution | low | 2026-11-26 |
+| `a-source-grade-is-not-a-confidence-grade` | A source grade is not a confidence grade | ti, source, confidence | high | 2026-11-26 |
+| `att-ck-mapping-needs-the-sub-technique` | ATT&CK mapping needs the sub technique | ti, attack, mapping | medium | 2026-11-26 |
+| `an-ioc-has-a-shelf-life` | An IOC has a shelf life | ti, ioc, lifecycle | high | 2026-11-26 |
+| `an-actor-profile-names-the-constraint` | An actor profile names the constraint | ti, actor, profile | medium | 2026-11-26 |
+| `an-intel-report-separates-fact-inference-and-recommendation` | An intel report separates fact, inference and recommendation | ti, report, analytic | high | 2026-11-26 |
+| `confidence-is-about-the-fact-not-the-actor` | Confidence is about the fact, not the actor | ti, confidence, analytic | high | 2026-11-26 |
+| `dark-web-data-needs-a-collection-date` | Dark web data needs a collection date | ti, darkweb, collection | medium | 2026-11-26 |
+| `feed-dedup-needs-the-canonical-indicator` | Feed dedup needs the canonical indicator | ti, feed, dedup | high | 2026-11-26 |
+| `the-diamond-model-ties-the-four-corners` | The diamond model ties the four corners | ti, diamond, analysis | medium | 2026-11-26 |
 | `a-cache-that-ignores-the-user-cookie-leaks-across-accounts` | A cache that ignores the user cookie leaks across accounts | web, cache, session | high | 2026-11-26 |
 | `a-price-calculated-in-the-client-is-a-suggestion` | A price calculated in the client is a suggestion | web, logic, price | high | 2026-11-26 |
 | `web-race-single-packet` | A race is a check and a write without one lock | web, race, logic | high | 2026-11-24 |
@@ -9593,6 +9778,20 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `web-xxe-parser` | XXE depends on entity expansion and the parser feature set | web, xxe, xml | medium | 2026-11-24 |
 | `web-postmessage` | postMessage is a bug when the receiver trusts any origin or sends to any origin | web, postmessage, client-side | high | 2026-11-24 |
 | `web3-contract` | Smart contracts fail on external calls and access control | web3, solidity, contract | high | 2026-11-25 |
+| `a-defender-exclusion-is-a-blind-spot` | A Defender exclusion is a blind spot | win, defender, exclusion | high | 2026-11-26 |
+| `a-named-pipe-is-a-local-trust-channel` | A named pipe is a local trust channel | win, named-pipe, relay | medium | 2026-11-26 |
+| `an-unquoted-service-path-is-a-file-placement-race` | An unquoted service path is a file placement race | win, service, path | high | 2026-11-26 |
+| `dll-search-order-is-a-writable-directory-trap` | DLL search order is a writable directory trap | win, dll, hijack | high | 2026-11-26 |
+| `dpapi-master-keys-follow-the-user` | DPAPI master keys follow the user | win, dpapi, credential | high | 2026-11-26 |
+| `kerberos-relay-needs-a-coerced-service-ticket` | Kerberos relay needs a coerced service ticket | win, kerberos, relay | medium | 2026-11-26 |
+| `ntlm-relay-needs-signing-off-and-a-coercion` | NTLM relay needs signing off and a coercion | win, ntlm, relay | high | 2026-11-26 |
+| `printnightmare-is-a-spooler-driver-load` | PrintNightmare is a spooler driver load | win, printnightmare, spooler | medium | 2026-11-26 |
+| `sccm-is-a-distribution-point-trust-problem` | SCCM is a distribution point trust problem | win, sccm, deployment | medium | 2026-11-26 |
+| `seimpersonate-is-the-service-account-ladder` | SeImpersonate is the service account ladder | win, impersonate, potato | high | 2026-11-26 |
+| `service-acl-write-is-service-takeover` | Service ACL write is service takeover | win, service, acl | high | 2026-11-26 |
+| `token-duplication-needs-sedebugprivilege` | Token duplication needs SeDebugPrivilege | win, token, privilege | high | 2026-11-26 |
+| `wdac-and-applocker-have-different-bypass-classes` | WDAC and AppLocker have different bypass classes | win, wdac, applocker | medium | 2026-11-26 |
+| `gmsa-password-read-is-a-service-identity` | gMSA password read is a service identity | win, gmsa, password | high | 2026-11-26 |
 | `win-service-acl` | A weak service ACL is local privilege escalation | windows, privesc, service | high | 2026-11-24 |
 | `win-credential-stores` | Windows keeps credentials in more than one place | windows, credentials, dpapi | medium | 2026-11-24 |
 | `win-token-privileges` | Windows token privileges are the privesc surface | windows, token, privesc | high | 2026-11-24 |

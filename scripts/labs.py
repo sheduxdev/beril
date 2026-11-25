@@ -17,6 +17,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LABS = {
     "web": ["bash", "labs/web/tests.sh"],
     "rce": ["bash", "labs/rce/tests.sh"],
+    "auth": ["bash", "labs/auth/tests.sh"],
+    "crypto": ["bash", "labs/crypto/tests.sh"],
     "binary": ["bash", "labs/binary/tests.sh"],
     "re": ["bash", "labs/re/tests.sh"],
     "mobile": ["bash", "labs/mobile/tests.sh"],
