@@ -6597,6 +6597,8 @@ Each track ends with an artifact a client, a maintainer or a peer can review.
 6. Keep a portfolio. Track artifacts are the portfolio.
 7. A track is done when a peer can rerun the exit proof from your notes.
 
+Every track has recall cards in `knowledge/`. Use `./beril recall "<track and class>" --decide` before a week and add a card after each lesson.
+
 ## How to choose
 
 | Your current work | Start with |
@@ -8244,7 +8246,8 @@ page. Cloud CIDRs move. A stale range only lowers precision.
 
 Beril has twelve four week specialist tracks. Each has a threat model, drills,
 a local or external lab and an exit proof. The program is `references/specialist-program.md`.
-The scoring rubric is `references/senior-bar.md`.
+The scoring rubric is `references/senior-bar.md`. Each track has cards in
+`knowledge/`.
 
 ## Start
 
@@ -9016,7 +9019,7 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 
 # Knowledge index
 
-426 durable cards. Read this before a web search; open a card only when it matches.
+573 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -9024,22 +9027,46 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `a11y-contrast` | Contrast is a ratio, and color is not the only cue | accessibility, contrast, color | medium | 2026-11-25 |
 | `a11y-keyboard` | Keyboard order is the interface for many users | accessibility, keyboard, focus | high | 2026-11-25 |
 | `a11y-motion` | Reduced motion is a vestibular setting | accessibility, motion, vestibular | medium | 2026-11-25 |
+| `a-kerberoastable-spn-is-an-offline-crack-target` | A Kerberoastable SPN is an offline crack target | ad, kerberos, kerberoast | high | 2026-11-26 |
 | `ad-acl-path` | AD compromise is an edge path, not a single bug | ad, windows, acl | high | 2026-11-24 |
+| `adcs-http-enrollment-is-an-ntlm-relay-target` | ADCS HTTP enrollment is an NTLM relay target | ad, adcs, relay | medium | 2026-11-26 |
+| `as-rep-roast-needs-preauthentication-off` | AS-REP roast needs preauthentication off | ad, kerberos, asrep | high | 2026-11-26 |
+| `constrained-delegation-is-a-service-map` | Constrained delegation is a service map | ad, delegation, s4u | medium | 2026-11-26 |
 | `ad-adcs-esc1` | ESC1 is an enrollable SAN on a client-auth template | ad, adcs, certificate | high | 2026-11-24 |
+| `gpo-write-is-code-on-every-linked-host` | GPO write is code on every linked host | ad, gpo, code | high | 2026-11-26 |
+| `genericall-on-a-user-is-a-password-reset` | GenericAll on a user is a password reset | ad, acl, genericall | high | 2026-11-26 |
+| `laps-read-rights-are-local-admin-passwords` | LAPS read rights are local admin passwords | ad, laps, password | high | 2026-11-26 |
+| `machine-account-quota-is-a-foothold-factory` | Machine account quota is a foothold factory | ad, machine-account, quota | high | 2026-11-26 |
+| `resource-based-delegation-is-a-write-on-the-target` | Resource based delegation is a write on the target | ad, delegation, rbcd | high | 2026-11-26 |
+| `sid-history-crosses-a-trust-boundary` | SID history crosses a trust boundary | ad, trust, sid | medium | 2026-11-26 |
+| `unconstrained-delegation-captures-the-first-tgt` | Unconstrained delegation captures the first TGT | ad, delegation, tgt | high | 2026-11-26 |
+| `writedacl-is-persistent-control` | WriteDACL is persistent control | ad, acl, writedacl | high | 2026-11-26 |
+| `a-rag-citation-is-not-a-verified-source` | A RAG citation is not a verified source | ai, rag, citation | high | 2026-11-26 |
 | `ai-sandbox-escape` | A code interpreter is a process with a filesystem | ai, sandbox, interpreter | high | 2026-11-24 |
+| `a-guardrail-can-be-bypassed-by-encoding` | A guardrail can be bypassed by encoding | ai, guardrail, encoding | high | 2026-11-26 |
 | `ai-guardrail` | A guardrail is a classifier with an input distribution | ai, guardrail, bypass | medium | 2026-11-25 |
 | `ai-vector-auth` | A vector query still needs an ACL | ai, rag, vector | medium | 2026-11-24 |
+| `agent-memory-has-a-write-path-and-a-read-path` | Agent memory has a write path and a read path | ai, memory, poison | medium | 2026-11-26 |
 | `ai-memory-poison` | Agent memory is a write target | ai, agent, memory | high | 2026-11-24 |
 | `ai-agent-tool` | Agent tool abuse is argument control, not prompt text | ai, agent, tool | high | 2026-11-24 |
+| `an-mcp-tool-description-is-prompt-surface` | An MCP tool description is prompt surface | ai, mcp, prompt | high | 2026-11-26 |
 | `ai-cost-control` | An agent loop is a budget bug | ai, cost, agent | medium | 2026-11-24 |
+| `an-agent-loop-needs-a-turn-and-token-budget` | An agent loop needs a turn and token budget | ai, agent, cost | high | 2026-11-26 |
 | `ai-agent-planning` | An agent plan is a permission boundary | ai, agent, planning | high | 2026-11-24 |
+| `an-agent-sandbox-needs-an-egress-rule` | An agent sandbox needs an egress rule | ai, sandbox, egress | high | 2026-11-26 |
+| `an-agent-tool-call-is-a-confused-deputy` | An agent tool call is a confused deputy | ai, agent, authorization | high | 2026-11-26 |
 | `ai-embedding` | An embedding is not anonymized data | ai, embedding, rag | medium | 2026-11-24 |
+| `an-eval-set-leaks-into-the-prompt` | An eval set leaks into the prompt | ai, eval, leak | medium | 2026-11-26 |
+| `embedding-inversion-recovers-text-from-a-vector` | Embedding inversion recovers text from a vector | ai, embedding, privacy | medium | 2026-11-26 |
 | `ai-indirect-injection-tool` | Indirect injection turns a document into an instruction | ai, llm, prompt-injection | high | 2026-11-24 |
 | `ai-mcp` | MCP config is a trust boundary with filesystem and network rights | ai, mcp, config | high | 2026-11-24 |
 | `ai-model-extraction` | Model extraction is a query budget problem | ai, model, extraction | medium | 2026-11-24 |
+| `model-fingerprinting-is-a-version-check` | Model fingerprinting is a version check | ai, model, fingerprint | low | 2026-11-26 |
+| `multi-agent-trust-is-a-hop-boundary` | Multi agent trust is a hop boundary | ai, multiagent, trust | medium | 2026-11-26 |
 | `ai-multiagent` | Multi-agent trust is a delegation graph | ai, multiagent, delegation | high | 2026-11-25 |
 | `ai-data-poison` | Poisoned data changes the model or the retrieval set | ai, data, poisoning | high | 2026-11-24 |
 | `ai-rag-tenant-filter` | RAG leaks when retrieval ignores the tenant | ai, llm, rag | high | 2026-11-24 |
+| `tool-arguments-are-model-output-not-validated-input` | Tool arguments are model output, not validated input | ai, tool, injection | high | 2026-11-26 |
 | `ai-tool-output` | Tool output is untrusted input to the next turn | ai, tool, injection | high | 2026-11-24 |
 | `alloc-arena` | An arena frees a whole region at once | allocator, arena, region | medium | 2026-11-25 |
 | `alloc-fragmentation` | External fragmentation grows when live objects pin pages | allocator, fragmentation, memory | high | 2026-11-25 |
@@ -9047,50 +9074,96 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `alloc-size-class` | Size classes trade internal fragmentation for speed | allocator, size-class, fragmentation | medium | 2026-11-25 |
 | `alloc-tcache` | Thread caches reduce contention and create remote frees | allocator, tcache, threads | high | 2026-11-25 |
 | `api-batch` | A batch endpoint checks the envelope, not each item | api, batch, auth | medium | 2026-11-25 |
+| `a-nested-object-id-often-checks-the-parent-only` | A nested object id often checks the parent only | api, bola, authorization | high | 2026-11-26 |
 | `api-webhook-signature` | A webhook without HMAC is an unauthenticated write | api, webhook, hmac | high | 2026-11-24 |
 | `api-openapi` | An exposed schema is a map, not a finding | api, openapi, schema | high | 2026-11-24 |
+| `cursors-often-encode-the-sort-key-not-the-owner` | Cursors often encode the sort key, not the owner | api, cursor, authorization | medium | 2026-11-26 |
 | `api-oauth-device` | Device code flow is phishing with a real code | api, oauth, device-code | medium | 2026-11-24 |
+| `graphql-aliases-turn-one-request-into-many` | GraphQL aliases turn one request into many | api, graphql, rate-limit | high | 2026-11-26 |
+| `graphql-depth-and-breadth-need-a-cap` | GraphQL depth and breadth need a cap | api, graphql, dos | medium | 2026-11-26 |
+| `idempotency-keys-must-be-scoped-to-the-user-and-the-operatio` | Idempotency keys must be scoped to the user and the operation | api, idempotency, race | medium | 2026-11-26 |
 | `api-jwt-rotation` | Key rotation is a cache and trust problem | api, jwt, jwks | high | 2026-11-24 |
 | `api-mass-assignment` | Mass assignment is a binder trusting extra fields | api, json, mass-assignment | high | 2026-11-24 |
+| `mass-assignment-needs-the-role-field-in-the-schema` | Mass assignment needs the role field in the schema | api, mass-assignment, authorization | high | 2026-11-26 |
 | `api-versioning` | Old API versions keep old authorization | api, versioning, shadow | high | 2026-11-24 |
 | `api-pagination` | Pagination is an enumeration and counting oracle | api, pagination, enumeration | medium | 2026-11-25 |
+| `production-introspection-is-a-schema-diff-source` | Production introspection is a schema diff source | api, graphql, recon | high | 2026-11-26 |
 | `api-rate-limit-bypass` | Rate limits are only as strong as the key | api, rate-limit, bypass | high | 2026-11-24 |
 | `api-idempotency` | Retries need an idempotency key at the write | api, idempotency, retry | high | 2026-11-24 |
 | `api-sse` | Server-sent events need per-connection auth | api, sse, stream | medium | 2026-11-24 |
+| `websocket-auth-is-checked-at-the-handshake-not-per-message` | WebSocket auth is checked at the handshake, not per message | api, websocket, auth | medium | 2026-11-26 |
 | `api-websocket-auth` | WebSocket authorization is per message and per channel | api, websocket, auth | high | 2026-11-25 |
+| `webhook-urls-are-ssrf-and-secret-theft-at-once` | Webhook URLs are SSRF and secret theft at once | api, webhook, ssrf | high | 2026-11-26 |
+| `grpc-reflection-exposes-the-method-list-and-the-authz-gaps` | gRPC reflection exposes the method list and the authz gaps | api, grpc, recon | high | 2026-11-26 |
 | `api-grpc-reflection` | gRPC reflection is a map, per-method auth is the bug | api, grpc, reflection | medium | 2026-11-24 |
 | `api-contract-test` | A consumer contract catches a break before deploy | api-design, contract, testing | medium | 2026-11-25 |
 | `api-error-taxonomy` | An error names whether the caller may retry | api-design, errors, retry | high | 2026-11-25 |
 | `api-cursor` | Cursor pagination keys on the last seen tuple, not an offset | api-design, pagination, paging, cursor, stability | high | 2026-11-25 |
 | `api-partial-update` | PATCH needs a rule for absent, null and empty | api-design, patch, merge | medium | 2026-11-25 |
+| `a-kid-header-can-become-a-path-or-a-query` | A kid header can become a path or a query | auth, jwt, kid | medium | 2026-11-26 |
+| `a-wildcard-redirect-uri-is-a-claimable-subdomain` | A wildcard redirect URI is a claimable subdomain | auth, oauth, redirect | high | 2026-11-26 |
+| `cookie-prefixes-only-work-when-the-browser-enforces-them` | Cookie prefixes only work when the browser enforces them | auth, cookie, session | medium | 2026-11-26 |
+| `jwt-algorithm-confusion-uses-the-public-key-as-an-hmac-secre` | JWT algorithm confusion uses the public key as an HMAC secret | auth, jwt, crypto | high | 2026-11-26 |
+| `just-in-time-sso-provisioning-trusts-the-wrong-claim` | Just in time SSO provisioning trusts the wrong claim | auth, sso, provisioning | medium | 2026-11-26 |
+| `logout-must-revoke-refresh-and-device-tokens` | Logout must revoke refresh and device tokens | auth, session, logout | high | 2026-11-26 |
+| `mfa-on-the-ui-is-not-mfa-on-the-server` | MFA on the UI is not MFA on the server | auth, mfa, access-control | high | 2026-11-26 |
+| `oauth-state-must-be-bound-to-the-session` | OAuth state must be bound to the session | auth, oauth, csrf | high | 2026-11-26 |
+| `otp-verification-needs-a-race-and-a-reuse-check` | OTP verification needs a race and a reuse check | auth, otp, race | medium | 2026-11-26 |
+| `pkce-can-be-stripped-when-the-server-does-not-require-it` | PKCE can be stripped when the server does not require it | auth, oauth, pkce | high | 2026-11-26 |
+| `password-reset-tokens-need-entropy-binding-and-single-use` | Password reset tokens need entropy, binding and single use | auth, reset, token | high | 2026-11-26 |
+| `saml-signature-wrapping-moves-the-assertion-not-the-signatur` | SAML signature wrapping moves the assertion, not the signature | auth, saml, xsw | medium | 2026-11-26 |
+| `session-id-must-rotate-at-login` | Session id must rotate at login | auth, session, fixation | high | 2026-11-26 |
+| `webauthn-trusts-the-rp-id-and-origin-pair` | WebAuthn trusts the RP ID and origin pair | auth, passkey, webauthn | medium | 2026-11-26 |
+| `a-uaf-becomes-type-confusion-when-the-slot-is-reused` | A UAF becomes type confusion when the slot is reused | binary, uaf, type-confusion | high | 2026-11-26 |
+| `a-format-string-write-needs-the-argument-index` | A format string write needs the argument index | binary, format-string, write | high | 2026-11-26 |
 | `binary-hypervisor` | A hypervisor exposes synthetic MSRs and VTL boundaries | binary, hypervisor, virtualization | low | 2026-11-24 |
 | `binary-kernel` | A kernel bug is an object lifetime bug with a user buffer | binary, kernel, driver | high | 2026-11-24 |
+| `a-seccomp-allowlist-defines-the-useful-post-exploit-set` | A seccomp allowlist defines the useful post exploit set | binary, sandbox, seccomp | high | 2026-11-26 |
+| `a-stack-canary-ends-in-a-null-byte-for-a-reason` | A stack canary ends in a null byte for a reason | binary, canary, stack | high | 2026-11-26 |
+| `aslr-partial-overwrite-keeps-the-high-bytes` | ASLR partial overwrite keeps the high bytes | binary, aslr, partial-overwrite | medium | 2026-11-26 |
 | `binary-browser` | Browser exploitation needs a renderer bug and a sandbox path | binary, browser, jit | high | 2026-11-24 |
+| `heap-feng-shui-is-a-layout-budget` | Heap feng shui is a layout budget | binary, heap, layout | medium | 2026-11-26 |
+| `integer-truncation-breaks-the-size-check` | Integer truncation breaks the size check | binary, integer, size | high | 2026-11-26 |
 | `binary-jit` | JIT bugs are about generated code and stale metadata | binary, jit, exploit | medium | 2026-11-24 |
 | `binary-macos` | Mach-O and dyld define what loads before main | binary, macos, macho | medium | 2026-11-25 |
+| `relro-level-decides-the-got-write` | RELRO level decides the GOT write | binary, relro, got | high | 2026-11-26 |
+| `shadow-stack-and-bti-narrow-the-gadget-space` | Shadow stack and BTI narrow the gadget space | binary, jop, mitigation | medium | 2026-11-26 |
+| `tcache-poisoning-needs-the-safe-linking-mask` | Tcache poisoning needs the safe linking mask | binary, heap, tcache | medium | 2026-11-26 |
 | `binary-ebpf` | The eBPF verifier is the security boundary | binary, ebpf, verifier | low | 2026-11-25 |
 | `binary-uefi` | UEFI is an event-driven firmware runtime | binary, uefi, firmware | medium | 2026-11-24 |
+| `wasm-memory-bounds-are-checked-per-access` | WASM memory bounds are checked per access | binary, wasm, bounds | medium | 2026-11-26 |
 | `binary-wasm` | Wasm modules have validation and a host boundary | binary, wasm, sandbox | medium | 2026-11-25 |
 | `binary-windows-kernel` | Windows kernel bugs are object and IRP lifetime bugs | binary, windows, kernel | high | 2026-11-25 |
+| `msg-msg-is-the-kernel-heap-spray-primitive` | msg_msg is the kernel heap spray primitive | binary, kernel, heap | medium | 2026-11-26 |
 | `browser-extension-permissions` | An extension is a trusted page with broad APIs | browser, extension, permissions | medium | 2026-11-24 |
 | `build-hermetic` | A hermetic build is reproducible from declared inputs | build, hermetic, reproducible | medium | 2026-11-25 |
 | `build-incremental` | An incremental build is a cache keyed on inputs | build, incremental, cache | high | 2026-11-25 |
+| `a-default-allow-network-policy-is-flat-networking` | A default allow network policy is flat networking | cloud, k8s, network | high | 2026-11-26 |
+| `a-metadata-hop-limit-above-one-crosses-a-proxy` | A metadata hop limit above one crosses a proxy | cloud, metadata, ssrf | medium | 2026-11-26 |
 | `cloud-docker-socket` | A mounted Docker socket is root on the host | cloud, docker, container | medium | 2026-11-24 |
 | `cloud-k8s-hostpath` | A privileged pod with hostPath is a host escape | cloud, kubernetes, container | high | 2026-11-24 |
+| `a-public-principal-is-wider-than-a-public-acl` | A public principal is wider than a public ACL | cloud, storage, iam | high | 2026-11-26 |
+| `a-public-snapshot-exposes-every-volume-block` | A public snapshot exposes every volume block | cloud, snapshot, storage | medium | 2026-11-26 |
 | `cloud-secrets` | A secrets manager is only as strong as its policy | cloud, secrets, iam | high | 2026-11-24 |
 | `cloud-service-mesh` | A sidecar is a second network path | cloud, istio, mtls | medium | 2026-11-25 |
 | `cloud-aks-identity` | AKS mixes Azure RBAC and Kubernetes RBAC | cloud, aks, kubernetes | medium | 2026-11-24 |
 | `cloud-alibaba-ram` | Alibaba RAM roles and STS follow the same trust graph | cloud, alibaba, ram | low | 2026-11-25 |
+| `an-oidc-sub-wildcard-trusts-every-branch` | An OIDC `sub` wildcard trusts every branch | cloud, oidc, ci | high | 2026-11-26 |
+| `automounted-service-account-tokens-are-credentials-in-every-` | Automounted service account tokens are credentials in every pod | cloud, k8s, token | high | 2026-11-26 |
 | `cloud-azure-role` | Azure identity is a role assignment graph | cloud, azure, iam | high | 2026-11-24 |
 | `cloud-oidc-ci` | CI OIDC trust is a subject claim match | cloud, oidc, ci | high | 2026-11-24 |
 | `cloud-metadata-role` | Cloud metadata is a credential endpoint | cloud, ssrf, iam | high | 2026-11-24 |
 | `cloud-eks` | EKS has two identity planes: IAM and Kubernetes | cloud, eks, kubernetes | medium | 2026-11-24 |
 | `cloud-gcp-iam` | GCP IAM binds a member to a role on a resource | cloud, gcp, iam | high | 2026-11-24 |
 | `cloud-iam-wildcard` | IAM wildcard is administrator access until proven otherwise | cloud, iam, aws | high | 2026-11-24 |
+| `imdsv1-is-a-proxy-friendly-credential-path` | IMDSv1 is a proxy friendly credential path | cloud, metadata, imds | high | 2026-11-26 |
+| `irsa-trust-must-pin-the-service-account-subject` | IRSA trust must pin the service account subject | cloud, k8s, irsa | high | 2026-11-26 |
 | `cloud-oci` | OCI policy is compartment and tenancy scoped | cloud, oci, iam | low | 2026-11-24 |
 | `cloud-openstack` | OpenStack policy is a service and project graph | cloud, openstack, keystone | low | 2026-11-25 |
+| `rbac-bind-and-escalate-are-the-quiet-paths` | RBAC bind and escalate are the quiet paths | cloud, k8s, rbac | high | 2026-11-26 |
 | `cloud-serverless` | Serverless events are input, not a trusted trigger | cloud, serverless, lambda | medium | 2026-11-24 |
 | `cloud-terraform-state` | Terraform state is a secret store | cloud, terraform, state | medium | 2026-11-24 |
+| `unencrypted-etcd-secrets-are-readable-from-a-snapshot` | Unencrypted etcd secrets are readable from a snapshot | cloud, k8s, etcd | medium | 2026-11-26 |
 | `cloud-vmware` | VMware appliances are a chain of SSO and service bugs | cloud, vmware, vcenter | high | 2026-11-25 |
 | `comp-jit` | A JIT has tiers, guards and a code cache | compiler, jit, deopt | high | 2026-11-25 |
 | `comp-abi` | An ABI is a contract between compiled units | compiler, abi, calling-convention | high | 2026-11-25 |
@@ -9106,12 +9179,25 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `conc-actor` | An actor owns its state and processes one message at a time | concurrency, actor, supervision | medium | 2026-11-25 |
 | `conc-stm` | STM retries a transaction when a read value changed | concurrency, stm, transaction | low | 2026-11-25 |
 | `conc-memory-model` | The memory model defines which writes a read may see | concurrency, memory-model, atomics | high | 2026-11-25 |
+| `a-handover-names-the-owner-and-the-next-check` | A handover names the owner and the next check | consulting, handover, report | high | 2026-11-26 |
+| `a-retest-needs-the-original-request-and-a-new-result` | A retest needs the original request and a new result | consulting, retest, fix | high | 2026-11-26 |
+| `a-scope-letter-names-the-stop-condition` | A scope letter names the stop condition | consulting, scope, legal | high | 2026-11-26 |
+| `an-executive-summary-has-no-payloads` | An executive summary has no payloads | consulting, report, summary | high | 2026-11-26 |
+| `severity-needs-the-environment-in-the-sentence` | Severity needs the environment in the sentence | consulting, severity, context | high | 2026-11-26 |
 | `container-escape` | A container escape is a host resource exposed to the container | container, escape, kubernetes | high | 2026-11-24 |
+| `a-key-in-the-client-is-a-public-key-not-a-secret` | A key in the client is a public key, not a secret | crypto, key, client | high | 2026-11-26 |
 | `crypto-kdf` | A password hash is a cost parameter | crypto, kdf, password | medium | 2026-11-25 |
+| `cbc-padding-oracle-needs-only-a-yes-or-no` | CBC padding oracle needs only a yes or no | crypto, cbc, padding | high | 2026-11-26 |
+| `ecb-leaks-block-structure-and-equality` | ECB leaks block structure and equality | crypto, ecb, block | high | 2026-11-26 |
+| `gcm-nonce-reuse-recovers-the-keystream` | GCM nonce reuse recovers the keystream | crypto, nonce, gcm | high | 2026-11-26 |
+| `jwt-alg-none-still-appears-in-old-verifiers` | JWT alg none still appears in old verifiers | crypto, jwt, none | high | 2026-11-26 |
 | `key-management` | Key management is where crypto bugs become data bugs | crypto, keys, storage | medium | 2026-11-24 |
+| `length-extension-breaks-secret-prefix-hashes` | Length extension breaks secret prefix hashes | crypto, hash, mac | medium | 2026-11-26 |
 | `crypto-postquantum` | PQC migration is a hybrid, not a flag | crypto, pqc, hybrid | low | 2026-11-24 |
 | `crypto-weak-random` | Predictable randomness is a key recovery bug | crypto, random, predictability | high | 2026-11-24 |
+| `rsa-pkcs1-v1-5-padding-is-still-an-oracle-target` | RSA PKCS1 v1.5 padding is still an oracle target | crypto, rsa, padding | medium | 2026-11-26 |
 | `tls-config-review` | TLS is a version, a chain and a policy | crypto, tls, certificate | medium | 2026-11-24 |
+| `weak-random-tokens-are-predictable-from-the-clock` | Weak random tokens are predictable from the clock | crypto, random, token | high | 2026-11-26 |
 | `crypto-kdf-derive` | A KDF separates keys by label and context | cryptography, kdf, hkdf | high | 2026-11-25 |
 | `crypto-nonce` | A nonce is unique per key by construction or by count | cryptography, nonce, collision | high | 2026-11-25 |
 | `crypto-aead` | AEAD authenticates ciphertext and associated data together | cryptography, aead, nonce | high | 2026-11-25 |
@@ -9140,13 +9226,18 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `db-recovery-redo` | Redo applies committed pages before undo | database, recovery, redo | high | 2026-11-25 |
 | `db-vacuum` | Vacuum reclaims versions and freezes old transaction ids | database, vacuum, bloat | medium | 2026-11-25 |
 | `db-vectorized-exec` | Vectorized execution amortizes per-row cost | database, vectorized, execution | medium | 2026-11-25 |
+| `a-lolbin-needs-its-parent-checked` | A LOLBin needs its parent checked | detection, lolbin, parent | high | 2026-11-26 |
+| `a-sigma-rule-dies-on-the-wrong-logsource` | A Sigma rule dies on the wrong logsource | detection, sigma, logsource | high | 2026-11-26 |
 | `detection-sigma` | A Sigma rule needs a logsource, a selection and a false-positive note | detection, sigma, log | high | 2026-11-24 |
 | `detection-beacon` | A beacon is a timing pattern, not a single request | detection, beacon, network | medium | 2026-11-24 |
+| `a-rule-needs-a-clean-day-baseline` | A rule needs a clean day baseline | detection, false-positive, baseline | high | 2026-11-26 |
+| `beacon-jitter-is-measured-not-guessed` | Beacon jitter is measured, not guessed | detection, beacon, jitter | medium | 2026-11-26 |
 | `detection-cloud` | Cloud detection is control-plane and role-assumption first | detection, cloud, audit | high | 2026-11-25 |
 | `detection-dns` | DNS tunneling is a length and entropy pattern | detection, dns, tunnel | medium | 2026-11-25 |
 | `detection-edr` | EDR detection is a process tree and a sequence | detection, edr, process | medium | 2026-11-24 |
 | `detection-identity` | Identity detections need a baseline and a token context | detection, identity, logs | high | 2026-11-25 |
 | `detection-lolbins` | LOLBins hide in parent-child and arguments | detection, lolbins, process | high | 2026-11-24 |
+| `map-the-technique-not-the-tool` | Map the technique, not the tool | detection, attack, mapping | high | 2026-11-26 |
 | `detection-tls` | TLS fingerprints identify a client stack, not a person | detection, tls, ja3 | medium | 2026-11-25 |
 | `detection-threatintel` | Threat intel ages and IOCs are easy to rotate | detection, intel, ioc | medium | 2026-11-24 |
 | `dist-crdt` | A CRDT merges without coordination | distributed, crdt, merge | high | 2026-11-25 |
@@ -9258,12 +9349,20 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `eng-finops` | Unit economics make cost a design signal | engineering, finops, cost | medium | 2026-11-25 |
 | `exploit-uaf-reallocate` | UAF becomes control when the freed slot is reallocated | exploit, uaf, heap | high | 2026-11-24 |
 | `exploit-rop-argument-registers` | x86_64 ROP needs the argument registers | exploit, rop, linux | high | 2026-11-24 |
+| `a-cgi-environment-variable-is-a-shell-input` | A CGI environment variable is a shell input | firmware, cgi, injection | high | 2026-11-26 |
+| `a-uart-header-is-a-boot-log-and-a-shell` | A UART header is a boot log and a shell | firmware, uart, console | high | 2026-11-26 |
+| `a-hardcoded-key-in-the-rootfs-is-shared-by-the-fleet` | A hardcoded key in the rootfs is shared by the fleet | firmware, key, rootfs | high | 2026-11-26 |
+| `a-radio-protocol-needs-a-capture-before-a-decode` | A radio protocol needs a capture before a decode | firmware, radio, protocol | medium | 2026-11-26 |
 | `firmware-update-sign` | A signed update is useless if verification is off | firmware, update, signature | high | 2026-11-24 |
+| `an-update-without-rollback-protection-is-a-downgrade` | An update without rollback protection is a downgrade | firmware, update, rollback | high | 2026-11-26 |
 | `firmware-cgi-injection` | Firmware CGI builds a shell string from the query | firmware, iot, command | high | 2026-11-24 |
 | `firmware-jtag` | JTAG and SWD are identified by pinout and IDCODE | firmware, hardware, jtag | medium | 2026-11-24 |
+| `jtag-can-halt-the-core` | JTAG can halt the core | firmware, jtag, debug | high | 2026-11-26 |
 | `firmware-radio` | Radio protocols are state machines with replay windows | firmware, radio, ble | medium | 2026-11-24 |
+| `spi-flash-holds-the-whole-firmware` | SPI flash holds the whole firmware | firmware, spi, dump | high | 2026-11-26 |
 | `firmware-spi` | SPI flash reads need two matching dumps | firmware, hardware, spi | medium | 2026-11-24 |
 | `firmware-secureboot` | Secure boot is a chain, not a boolean | firmware, secureboot, boot | high | 2026-11-24 |
+| `secure-boot-state-is-a-fuse-not-a-config` | Secure boot state is a fuse, not a config | firmware, secureboot, fuse | high | 2026-11-26 |
 | `firmware-uart` | UART is found by idle levels and confirmed by baud | firmware, hardware, uart | high | 2026-11-24 |
 | `formal-contract` | A contract is a precondition, a postcondition and an invariant | formal, contract, runtime | medium | 2026-11-25 |
 | `formal-proof` | A proof assistant checks every step, at a cost | formal, proof, assistant | low | 2026-11-25 |
@@ -9279,24 +9378,52 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `hardware-sidechannel` | Side channels leak through power, timing or EM | hardware, sidechannel | low | 2026-11-24 |
 | `hci-fitts` | Fitts's law sizes a target by distance and width | hci, fitts, target | medium | 2026-11-25 |
 | `hci-error-prevention` | Prevent the error before the confirmation | hci, error-prevention, undo | high | 2026-11-25 |
+| `a-timeline-is-only-as-good-as-the-clock` | A timeline is only as good as the clock | ir, timeline, clock | high | 2026-11-26 |
 | `ir-timeline` | An incident timeline needs three independent clocks | ir, timeline, forensics | medium | 2026-11-24 |
 | `ir-cloud` | Cloud audit logs are the timeline | ir, cloud, logs | medium | 2026-11-24 |
+| `cloud-logs-expire-before-the-investigation-starts` | Cloud logs expire before the investigation starts | ir, cloud, retention | high | 2026-11-26 |
 | `ir-container` | Container triage is image diff plus runtime state | ir, container, docker | medium | 2026-11-25 |
+| `containment-trades-evidence-for-spread` | Containment trades evidence for spread | ir, containment, tradeoff | high | 2026-11-26 |
 | `ir-disk` | Disk artifacts answer who, what and when | ir, disk, forensics | medium | 2026-11-24 |
+| `hash-before-you-open-the-evidence` | Hash before you open the evidence | ir, custody, hash | high | 2026-11-26 |
+| `memory-goes-before-disk-on-a-live-host` | Memory goes before disk on a live host | ir, memory, order | high | 2026-11-26 |
 | `ir-memory` | Memory is the most volatile evidence | ir, memory, forensics | medium | 2026-11-24 |
 | `ir-mobile` | Mobile triage starts with the backup and the sysdiagnose | ir, mobile, ios | low | 2026-11-25 |
+| `phishing-headers-carry-the-delivery-path` | Phishing headers carry the delivery path | ir, phishing, headers | high | 2026-11-26 |
 | `ir-phishing` | Phishing triage reads headers and detonates the payload | ir, phishing, email | medium | 2026-11-25 |
+| `ransomware-needs-an-offline-copy-and-a-restore-test` | Ransomware needs an offline copy and a restore test | ir, ransomware, backup | high | 2026-11-26 |
 | `ir-ransomware` | Ransomware triage is scope, encryption and backups | ir, ransomware, backup | high | 2026-11-25 |
+| `a-safe-harbor-claim-needs-the-program-text` | A safe harbor claim needs the program text | legal, safe-harbor, scope | high | 2026-11-26 |
 | `linux-suid` | A SUID binary is a path, not a finding | linux, privesc, suid | high | 2026-11-24 |
 | `linux-cron-systemd` | Scheduled jobs inherit a weak PATH or writable unit | linux, privesc, cron, systemd | medium | 2026-11-24 |
+| `a-javascript-bridge-is-a-native-api-in-the-page` | A JavaScript bridge is a native API in the page | mobile, webview, bridge | high | 2026-11-26 |
+| `a-deep-link-parameter-is-untrusted-input` | A deep link parameter is untrusted input | mobile, deeplink, input | high | 2026-11-26 |
 | `mobile-deep-link-bridge` | A deep link plus a JS bridge is a chain | mobile, android, deep-link | high | 2026-11-24 |
 | `mobile-ios-ats` | ATS exceptions are domain-scoped trust decisions | mobile, ios, ats | medium | 2026-11-24 |
+| `allowbackup-is-a-data-extraction-path` | AllowBackup is a data extraction path | mobile, android, backup | high | 2026-11-26 |
+| `an-ats-arbitrary-load-exception-covers-every-domain` | An ATS arbitrary load exception covers every domain | mobile, ios, ats | high | 2026-11-26 |
+| `an-exported-component-without-a-permission-is-open-to-every-` | An exported component without a permission is open to every app | mobile, android, exported | high | 2026-11-26 |
 | `mobile-provider-paths` | An exported provider with a broad path leaks files | mobile, android, provider | high | 2026-11-24 |
+| `an-implicit-intent-can-be-redirected` | An implicit intent can be redirected | mobile, android, intent | medium | 2026-11-26 |
+| `app-links-verification-is-not-a-custom-scheme` | App Links verification is not a custom scheme | mobile, deeplink, applinks | high | 2026-11-26 |
+| `certificate-pinning-is-bypassed-at-the-trust-call` | Certificate pinning is bypassed at the trust call | mobile, pinning, frida | high | 2026-11-26 |
+| `flag-secure-is-the-screenshot-control` | FLAG_SECURE is the screenshot control | mobile, android, screen | high | 2026-11-26 |
 | `mobile-flutter` | Flutter hides logic in libapp.so and pins in Dart | mobile, flutter, dart | medium | 2026-11-24 |
+| `keychain-accessibility-decides-off-device-exposure` | Keychain accessibility decides off device exposure | mobile, ios, keychain | medium | 2026-11-26 |
 | `mobile-swift` | Swift hooks need mangled names or a bridge | mobile, ios, swift | medium | 2026-11-24 |
 | `mobile-swiftui-state` | SwiftUI state is not a security boundary | mobile, ios, swiftui | low | 2026-11-24 |
 | `net-cdn` | A CDN is a cache with a key and a purge | network, cdn, cache | medium | 2026-11-25 |
+| `a-cdn-origin-check-needs-the-host-and-the-certificate` | A CDN origin check needs the Host and the certificate | network, cdn, origin | medium | 2026-11-26 |
+| `a-more-specific-bgp-prefix-wins-the-route` | A more specific BGP prefix wins the route | network, bgp, hijack | high | 2026-11-26 |
+| `a-proxy-environment-variable-is-a-trust-boundary` | A proxy environment variable is a trust boundary | network, proxy, env | high | 2026-11-26 |
+| `arp-is-the-segmentation-check-inside-a-subnet` | ARP is the segmentation check inside a subnet | network, arp, segmentation | high | 2026-11-26 |
+| `dns-cache-snooping-reads-resolver-history` | DNS cache snooping reads resolver history | network, dns, cache | medium | 2026-11-26 |
+| `dns-egress-is-the-usual-allowed-channel` | DNS egress is the usual allowed channel | network, egress, dns | high | 2026-11-26 |
+| `ipv6-router-advertisements-can-override-the-default-route` | IPv6 router advertisements can override the default route | network, ipv6, ra | medium | 2026-11-26 |
+| `mtu-and-fragmentation-break-the-happy-path` | MTU and fragmentation break the happy path | network, mtu, frag | medium | 2026-11-26 |
 | `net-quic` | QUIC moves reliability into user space per stream | network, quic, streams | medium | 2026-11-25 |
+| `rpki-invalid-and-unknown-are-not-the-same` | RPKI invalid and unknown are not the same | network, rpki, roa | high | 2026-11-26 |
+| `sni-routing-is-a-virtual-host-decision` | SNI routing is a virtual host decision | network, tls, sni | medium | 2026-11-26 |
 | `num-unicode` | A string is bytes plus an encoding; a character is a grapheme | numerics, unicode, encoding | high | 2026-11-25 |
 | `num-time` | A timestamp is an instant; a local time is a rule | numerics, time, timezone | high | 2026-11-25 |
 | `num-float` | Floating point is exact at powers of two and lossy elsewhere | numerics, float, rounding | high | 2026-11-25 |
@@ -9328,6 +9455,8 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `os-virtual-memory` | Virtual memory is a translation and permission layer | os, virtual-memory, paging | medium | 2026-11-25 |
 | `perf-latency-percentile` | A percentile hides the shape and coordinated omission | performance, latency, percentile | high | 2026-11-25 |
 | `perf-profiling` | Sampling measures where time goes; instrumentation measures counts | performance, profiling, flamegraph | high | 2026-11-25 |
+| `collect-the-minimum-personal-data` | Collect the minimum personal data | privacy, data-minimization, gdpr | high | 2026-11-26 |
+| `logs-are-a-personal-data-store` | Logs are a personal data store | privacy, logs, pii | high | 2026-11-26 |
 | `process-retest` | A fix is not a fix until the same request fails | process, retest, regression | high | 2026-11-24 |
 | `report-impact-chain` | A report is a chain a triager can rerun | process, report, impact | high | 2026-11-24 |
 | `report-cvss-context` | CVSS without business context misranks the bug | process, report, cvss | medium | 2026-11-24 |
@@ -9392,6 +9521,16 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `storage-wal` | A write-ahead log makes the write durable before the page | storage, wal, durability | high | 2026-11-25 |
 | `storage-compaction` | Compaction trades space and read speed for write stalls | storage, compaction, lsm, write, stall, sorted-runs | medium | 2026-11-25 |
 | `storage-replication` | Replication has a lag and a loss window | storage, replication, failover | high | 2026-11-25 |
+| `a-cloud-role-trust-to-a-repo-needs-the-ref-and-the-environme` | A cloud role trust to a repo needs the ref and the environment | supply, oidc, trust | high | 2026-11-26 |
+| `a-lockfile-without-integrity-is-a-suggestion` | A lockfile without integrity is a suggestion | supply, lockfile, integrity | high | 2026-11-26 |
+| `a-long-lived-publish-token-is-a-package-takeover` | A long lived publish token is a package takeover | supply, publish, token | high | 2026-11-26 |
+| `an-sbom-without-transitive-components-is-a-file-list` | An SBOM without transitive components is a file list | supply, sbom, coverage | high | 2026-11-26 |
+| `an-action-pinned-by-tag-can-move` | An action pinned by tag can move | supply, ci, action | high | 2026-11-26 |
+| `dependency-confusion-needs-an-internal-name-on-a-public-regi` | Dependency confusion needs an internal name on a public registry | supply, dependency-confusion, registry | high | 2026-11-26 |
+| `provenance-proves-the-build-not-the-source` | Provenance proves the build, not the source | supply, slsa, provenance | high | 2026-11-26 |
+| `typosquat-detection-is-edit-distance-plus-install-scripts` | Typosquat detection is edit distance plus install scripts | supply, typosquat, registry | medium | 2026-11-26 |
+| `vex-not-affected-needs-a-justification` | VEX not affected needs a justification | supply, vex, triage | medium | 2026-11-26 |
+| `npm-lifecycle-scripts-run-on-install` | npm lifecycle scripts run on install | supply, npm, postinstall | high | 2026-11-26 |
 | `supply-lockfile` | A lockfile is an integrity contract | supply-chain, lockfile, reproducible | medium | 2026-11-24 |
 | `supply-typosquat` | A package name one character off is a supply-chain bug | supply-chain, package, typosquat | high | 2026-11-24 |
 | `secrets-verified` | A secret is a finding only after a read-only proof | supply-chain, secret, verification | high | 2026-11-24 |
@@ -9409,35 +9548,46 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `test-fuzzing` | A fuzzer explores inputs a human would not write | testing, fuzzing, corpus | high | 2026-11-25 |
 | `test-chaos-suite` | Deterministic simulation finds bugs a real cluster hides | testing, simulation, determinism | high | 2026-11-25 |
 | `test-mutation` | Mutation testing measures whether a test would notice a change | testing, mutation, coverage | medium | 2026-11-25 |
+| `a-cache-that-ignores-the-user-cookie-leaks-across-accounts` | A cache that ignores the user cookie leaks across accounts | web, cache, session | high | 2026-11-26 |
+| `a-price-calculated-in-the-client-is-a-suggestion` | A price calculated in the client is a suggestion | web, logic, price | high | 2026-11-26 |
 | `web-race-single-packet` | A race is a check and a write without one lock | web, race, logic | high | 2026-11-24 |
+| `a-state-machine-can-be-jumped-not-only-raced` | A state machine can be jumped, not only raced | web, logic, state-machine | high | 2026-11-26 |
 | `race-idempotency` | A unique constraint is the cheapest race fix | web, race, database | medium | 2026-11-24 |
 | `web-cors-null-origin` | CORS reflection is only a bug with credentials | web, cors, browser | high | 2026-11-24 |
 | `web-csp-bypass` | CSP is bypassed by a trusted script source, not by a weak directive alone | web, csp, xss | high | 2026-11-24 |
 | `web-csrf-samesite` | CSRF survives when state changes on a safe method | web, csrf, session | high | 2026-11-24 |
 | `web-css-injection` | CSS injection exfiltrates attributes without script | web, css, injection | medium | 2026-11-25 |
+| `cache-deception-caches-a-dynamic-page-as-static` | Cache deception caches a dynamic page as static | web, cache, deception | medium | 2026-11-26 |
 | `web-cache-deception` | Cache deception dresses a private page as a static file | web, cache, deception | medium | 2026-11-24 |
 | `web-cache-key-unkeyed-input` | Cache poisoning is an unkeyed input that changes the response | web, cache, cdn | high | 2026-11-24 |
 | `web-clickjacking` | Clickjacking is a missing frame policy with a valuable action | web, clickjacking, ui | high | 2026-11-25 |
 | `web-client-path-traversal` | Client-side path traversal is a router normalization bug | web, spa, router | medium | 2026-11-24 |
+| `coupons-need-stacking-reuse-and-scope-rules` | Coupons need stacking, reuse and scope rules | web, logic, coupon | high | 2026-11-26 |
+| `dns-rebinding-beats-an-ssrf-allowlist` | DNS rebinding beats an SSRF allowlist | web, ssrf, dns | medium | 2026-11-26 |
 | `web-dom-clobbering` | DOM clobbering turns an id into a variable | web, dom, clobbering | medium | 2026-11-24 |
 | `web-dangling-markup` | Dangling markup leaks what follows the injection | web, html, csrf | medium | 2026-11-25 |
 | `web-desync-parser-disagreement` | Desync needs two HTTP parsers and an ambiguous length | web, http, smuggling | high | 2026-11-24 |
+| `field-level-authorization-is-the-graphql-test` | Field level authorization is the GraphQL test | web, graphql, authorization | high | 2026-11-26 |
 | `web-graphql-field-auth` | GraphQL authorization is per field, not per endpoint | web, graphql, api | high | 2026-11-24 |
 | `web-http2-downgrade` | HTTP/2 adds a second parser for the same request | web, http2, smuggling | medium | 2026-11-24 |
+| `host-header-poisoning-reaches-reset-links-and-caches` | Host header poisoning reaches reset links and caches | web, host-header, reset | high | 2026-11-26 |
 | `web-idor-owner-check` | IDOR is a missing owner check, not a hidden id | web, idor, access-control | high | 2026-11-24 |
 | `web-jsonp` | JSONP is script injection with a callback name | web, jsonp, script | medium | 2026-11-24 |
 | `web-jwt-signature-trust` | JWT bugs are claim trust, not base64 | web, jwt, identity | high | 2026-11-24 |
 | `web-ldap-xpath` | LDAP and XPath injection are filter syntax bugs | web, ldap, xpath, injection | medium | 2026-11-24 |
 | `web-deserialization-gadget` | Native deserialization is RCE when a gadget chain exists | web, deserialization, rce | high | 2026-11-24 |
+| `negative-quantities-move-money-the-other-way` | Negative quantities move money the other way | web, logic, quantity | medium | 2026-11-26 |
 | `web-oauth-redirect-binding` | OAuth redirect matching is prefix logic under pressure | web, oauth, identity | high | 2026-11-24 |
 | `web-open-redirect-chain` | Open redirect matters when a token rides the URL | web, redirect, oauth | high | 2026-11-24 |
 | `web-host-header-reset` | Password reset trusts the request host | web, host-header, email | high | 2026-11-24 |
 | `web-prototype-pollution` | Prototype pollution needs a merge sink and a gadget | web, javascript, prototype | high | 2026-11-24 |
+| `request-smuggling-needs-a-front-and-back-parser-disagreement` | Request smuggling needs a front and back parser disagreement | web, desync, smuggling | medium | 2026-11-26 |
 | `web-saml-signature-wrapping` | SAML trusts the assertion, not the signature | web, saml, identity | high | 2026-11-24 |
 | `web-sqli-parameterized` | SQL injection is a string-built query at a boundary | web, sqli, database | high | 2026-11-24 |
 | `web-ssrf-parser-differential` | SSRF hides in URL parser disagreement | web, ssrf, parser | high | 2026-11-24 |
 | `web-traversal-canonical-path` | Traversal is a join before canonicalization | web, file, traversal | high | 2026-11-24 |
 | `web-upload-validation` | Upload validation is four separate checks | web, upload, file | high | 2026-11-24 |
+| `uploaded-svg-is-active-content-when-served-inline` | Uploaded SVG is active content when served inline | web, upload, xss | high | 2026-11-26 |
 | `web-websocket-origin` | WebSocket handshakes skip the same-origin policy | web, websocket, origin | high | 2026-11-24 |
 | `web-xss-parser-differential` | XSS survives when two parsers disagree | web, xss, parser | high | 2026-11-24 |
 | `web-xxe-parser` | XXE depends on entity expansion and the parser feature set | web, xxe, xml | medium | 2026-11-24 |

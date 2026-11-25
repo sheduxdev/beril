@@ -27,6 +27,9 @@ All notable changes. Beril uses semantic versioning.
 - `references/senior-bar.md` and `docs/specialist.md`: ten axis senior rubric,
   track order and portfolio rules.
 - Eight recall cards for senior judgment, from threat model to peer review.
+- 147 recall cards across the twelve tracks, from OAuth state to firmware UART,
+  AD ACL edges, cache deception, heap primitives, detection baselines, supply
+  chain provenance, agent tool trust and consulting handover.
 - `labs/rce`: command injection, blind injection, eval, pickle, traversal and
   upload to execution, with smoke tests and answers.
 - Five RCE method cards in `references/techniques.md`.

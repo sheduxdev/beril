@@ -4,7 +4,7 @@
 
 A local-first cybersecurity skill for agents and people, with two working lines. The defense line scans an app, repository, artifact, MCP config or Minecraft plugin you own and returns a ranked fix list. The attack line hunts bugs in open source behind an ownership gate, a networkless sandbox and maintainer reports. Both lines share one finding model: severity, confidence, evidence, impact, fix and a plain statement of what was not tested.
 
-Beril also reads the security sites that block plain HTTP clients, keeps every lead with a date and a public URL, and turns the result into a dossier with a reading queue, a tool shelf and method cards. The repository carries ten practice labs and a 25-week training plan.
+Beril also reads the security sites that block plain HTTP clients, keeps every lead with a date and a public URL, and turns the result into a dossier with a reading queue, a tool shelf and method cards. The repository carries eleven practice labs and a 25-week training plan.
 
 [![version](https://img.shields.io/github/v/tag/sheduxdev/beril?sort=semver&label=version&color=2f6f4e)](https://github.com/sheduxdev/beril/tags)
 ![license](https://img.shields.io/badge/license-MIT-2f6f4e)
@@ -282,7 +282,7 @@ make github
 
 ## Memory
 
-Beril recalls before it researches. `knowledge/` holds 404 testable cards; `knowledge/INDEX.md` is the entry point. A fresh high or medium card closes a decision for 180 or 90 days. Stale cards are refreshed, missing ones are researched and added.
+Beril recalls before it researches. `knowledge/` holds 573 testable cards; `knowledge/INDEX.md` is the entry point. A fresh high or medium card closes a decision for 180 or 90 days. Stale cards are refreshed, missing ones are researched and added.
 
 ```bash
 ./beril recall "idor owner check" --decide

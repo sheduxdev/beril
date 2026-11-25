@@ -2,7 +2,8 @@
 
 Beril has twelve four week specialist tracks. Each has a threat model, drills,
 a local or external lab and an exit proof. The program is `references/specialist-program.md`.
-The scoring rubric is `references/senior-bar.md`.
+The scoring rubric is `references/senior-bar.md`. Each track has cards in
+`knowledge/`.
 
 ## Start
 

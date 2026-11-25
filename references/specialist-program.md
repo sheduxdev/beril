@@ -18,6 +18,8 @@ Each track ends with an artifact a client, a maintainer or a peer can review.
 6. Keep a portfolio. Track artifacts are the portfolio.
 7. A track is done when a peer can rerun the exit proof from your notes.
 
+Every track has recall cards in `knowledge/`. Use `./beril recall "<track and class>" --decide` before a week and add a card after each lesson.
+
 ## How to choose
 
 | Your current work | Start with |
