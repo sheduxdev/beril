@@ -63,6 +63,7 @@ If the answer to 3 is active, the gate is mandatory:
 |---|---|---|
 | "Scan my web app" | `./beril scan --target <url>` | `references/techniques.md`, manual request pair |
 | "Kır / açık bul" | `./beril scan --target <url>` | one class, replay, proof |
+| "RCE ara" | `./beril scan --target <url>` | `references/rce-mastery.md`, SSTI and command probes |
 | "Map my domain" | `./beril recon --target <domain>` | `docs/recon.md`, scan the best host |
 | "SMB report" | `./beril scan --target <url> --profile smb` | top five, patch, retest |
 | "Check my APK" | `./beril scan --target <apk>` | `references/mobile-reverse.md` |

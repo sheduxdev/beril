@@ -26,6 +26,8 @@ def test_active_with_owned_finds_probes(web_app, auth_store):
     checks = {f.check for f in report.findings}
     assert "active.traversal" in checks
     assert "active.xss.reflect" in checks or "active.sqli.error" in checks
+    assert "active.ssti" in checks
+    assert "active.cmdi" in checks
     assert "web.path.env" in checks
     assert "web.path.git-head" in checks
     assert report.authorization["method"] == "ack"

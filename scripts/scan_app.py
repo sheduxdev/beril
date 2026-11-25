@@ -266,12 +266,16 @@ def scan(
         report.scope["checked"] += [
             "SQL error signature (single quote)",
             "Reflection (XSS marker)",
+            "Template arithmetic (SSTI lead)",
+            "Shell arithmetic expansion (command injection lead)",
             "Open redirect",
             "Path traversal",
             "OPTIONS and TRACE",
         ]
         report.scope["not_checked"] += [
             "Time based injection",
+            "Blind and out of band code execution",
+            "Template sandbox escape",
             "Authenticated IDOR",
             "File upload and SSRF",
             "POST bodies",

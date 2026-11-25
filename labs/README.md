@@ -5,6 +5,7 @@ Small local targets. Each has a README, tasks, a smoke test, and an answer key.
 | Lab | Topic | Run |
 |---|---|---|
 | `web` | IDOR, XSS, SQLi, traversal, SSRF, weak auth | `./labs/web/tests.sh` |
+| `rce` | command injection, eval, pickle, traversal, upload to exec | `./labs/rce/tests.sh` |
 | `binary` | stack, format string, UAF, integer, mitigations | `./labs/binary/tests.sh` |
 | `fuzz` | libFuzzer harness and crash triage | `make -C labs/fuzz run` |
 | `re` | stripped binary, static reconstruction | `./labs/re/tests.sh` |

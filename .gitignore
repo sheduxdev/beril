@@ -21,6 +21,9 @@ labs/fuzz/fuzz
 labs/fuzz/artifacts/
 labs/firmware/firmware.bin
 labs/firmware/out/
+labs/rce/uploads/
+labs/rce/evidence/
+labs/rce/access.log
 .ruff_cache/
 
 data/feed_cache/

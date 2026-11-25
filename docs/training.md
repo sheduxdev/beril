@@ -1,6 +1,6 @@
 # Training with Beril
 
-Beril has a 25-week curriculum and seven local labs. It is a practice system, not a reading list.
+Beril has a 25-week curriculum and eleven local labs. It is a practice system, not a reading list.
 
 ## Start
 
@@ -28,6 +28,7 @@ Mark tasks:
 | Lab | Topic |
 |---|---|
 | `web` | IDOR, XSS, SQLi, traversal, SSRF |
+| `rce` | command injection, eval, pickle, upload to exec |
 | `binary` | stack, format string, UAF, integer |
 | `fuzz` | libFuzzer and crash triage |
 | `re` | stripped binary reconstruction |
@@ -73,4 +74,6 @@ Read `mastery.md` for the track map and `references/books.md` for the canon.
 
 ## Full plan
 
-`references/curriculum.md` has the phases and capstone. `references/exercises.md` has 74 short drills by domain.
+`references/curriculum.md` has the phases and capstone. `references/exercises.md` has 82 short drills by domain.
+
+For execution work, `references/rce-curriculum.md` is a six week track and `labs/rce` is its local target.

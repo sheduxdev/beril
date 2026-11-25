@@ -118,6 +118,19 @@ Level: 1 recall, 2 guided, 3 independent, 4 chained.
 | 73 | Write the Rust slice and trait-object layouts from memory | 2 | Diagram |
 | 74 | Map an async state machine to its await points | 4 | State table |
 
+## RCE
+
+| # | Task | Level | Evidence |
+|---|---|---|---|
+| 75 | Name five sinks in Python, Node, PHP and Java | 2 | Sink sheet |
+| 76 | Break a concat sink in four quote contexts | 3 | Four payloads and fixes |
+| 77 | Fingerprint six template engines blind | 3 | Engine table, 5 of 6 |
+| 78 | Prove blind command injection with DNS | 3 | Resolver log and token |
+| 79 | Build a pickle payload by hand | 3 | Payload and `__reduce__` note |
+| 80 | Turn a log read into execution | 4 | Request chain |
+| 81 | Reduce a public RCE PoC to a one line check | 3 | One line and version |
+| 82 | Write the fix for an upload that executes | 3 | Patch and regression test |
+
 ## How to use
 
 1. Pick a level above your comfort zone, not below it.

@@ -4,6 +4,10 @@ The curriculum turns Beril from a lookup tool into a practice system. It runs 25
 
 The machine-readable plan lives in `data/curriculum.json` and is driven by `./beril train`.
 
+For a focused execution path, use `references/rce-curriculum.md` and
+`references/rce-mastery.md`. The track runs six weeks on top of week 1 and week
+8 here. The local target is `labs/rce`.
+
 ## Rules
 
 1. Two hours a day, five days a week. Miss a day, not a week.
@@ -80,6 +84,14 @@ Checkpoint at week 4: you can build a small tool, explain a TLS handshake, and r
 Asset mapping, certificate and ASN pivots, content discovery, authentication, injection, logic, IDOR, and APIs. The local web lab covers IDOR, XSS, SQLi, traversal, SSRF, and weak authorization.
 
 Checkpoint at week 9: you can take one request from discovery to a reproduced impact and write the chain without a template.
+
+### RCE extension, weeks 1 and 8
+
+The RCE track runs in parallel for six weeks. Week 8 gives the injection base.
+The track adds command injection, template and expression engines,
+deserialization, LFI, SQLi to execution, SSRF to internal RCE and upload to
+execution. Each week has a lab and a report. Use `labs/rce` and the PortSwigger
+labs. The full plan is `references/rce-curriculum.md`.
 
 ### Code and binary, weeks 10 to 14
 

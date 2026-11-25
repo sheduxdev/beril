@@ -19,10 +19,12 @@ Certifications help at gates. They do not replace artifacts. OSCP, OSWE, OSED, C
 ### Web and API
 
 - Deep: auth, OAuth, SAML, request parsing, cache, race, GraphQL, business logic.
+- RCE specialization: command injection, template and expression engines, deserialization, LFI, upload, SQLi and SSRF to execution.
 - Build: a proxy plugin, a parser diff tool, a fuzzer for a spec.
 - Read: PortSwigger research, Bugcrowd VRT, OWASP WSTG, disclosed reports.
 - Proof: a chain with a clean reproduction and a fix.
 - Ceiling: novel parser or protocol research.
+- Track: `references/rce-curriculum.md`.
 
 ### Binary and RE
 

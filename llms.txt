@@ -49,6 +49,8 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 - [references/claude-bughunter.md](references/claude-bughunter.md): bounty bundle
 - [references/artex.md](references/artex.md): autonomous runner
 - [references/artex-flask.md](references/artex-flask.md): Flask recon extract
+- [references/rce-mastery.md](references/rce-mastery.md): RCE proof ladder and classes
+- [references/rce-curriculum.md](references/rce-curriculum.md): six week RCE track
 
 ## Training
 

@@ -1,6 +1,6 @@
 # Knowledge index
 
-408 durable cards. Read this before a web search; open a card only when it matches.
+418 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -330,6 +330,16 @@
 | `proto-state-machine` | A protocol is a set of legal transitions | protocol, state-machine, transitions | high | 2026-11-25 |
 | `proto-backpressure` | Flow control is a window the receiver grants | protocol, backpressure, window | medium | 2026-11-25 |
 | `proto-versioning` | Version negotiation needs a downgrade policy | protocol, versioning, downgrade | high | 2026-11-25 |
+| `blind-rce-needs-a-unique-channel-and-a-repeat` | Blind RCE needs a unique channel and a repeat | rce, blind, oob | high | 2026-11-26 |
+| `command-injection-depends-on-the-quote-context` | Command injection depends on the quote context | rce, cmdi, shell | high | 2026-11-26 |
+| `expression-language-injection-is-a-class-reference-away` | Expression language injection is a class reference away | rce, spel, ognl | high | 2026-11-26 |
+| `fingerprint-the-template-engine-before-the-escape` | Fingerprint the template engine before the escape | rce, ssti, template | high | 2026-11-26 |
+| `lfi-becomes-rce-only-through-an-executor` | LFI becomes RCE only through an executor | rce, lfi, php | high | 2026-11-26 |
+| `rce-proof-climbs-a-ladder-it-does-not-jump-to-a-shell` | RCE proof climbs a ladder, it does not jump to a shell | rce, proof, method | high | 2026-11-26 |
+| `sqli-to-rce-needs-a-file-or-execution-right` | SQLi to RCE needs a file or execution right | rce, sqli, database | high | 2026-11-26 |
+| `ssrf-to-rce-targets-services-that-take-commands` | SSRF to RCE targets services that take commands | rce, ssrf, redis | medium | 2026-11-26 |
+| `template-sandbox-escape-starts-at-the-object-graph` | Template sandbox escape starts at the object graph | rce, ssti, sandbox | medium | 2026-11-26 |
+| `upload-is-not-execution-until-the-runtime-reads-it` | Upload is not execution until the runtime reads it | rce, upload, execution | high | 2026-11-26 |
 | `re-crash-triage-primitive` | A crash is a lead; the primitive is the finding | re, triage, crash | high | 2026-11-24 |
 | `re-arm64` | AArch64 has a calling convention, PAC and MTE | re, arm64, pac | medium | 2026-11-25 |
 | `re-cpp-rtti` | C++ RTTI and vtables reveal the class graph | re, cpp, rtti | medium | 2026-11-25 |

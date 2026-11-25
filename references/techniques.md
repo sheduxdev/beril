@@ -504,9 +504,113 @@ The cards assume written authorization for the target. A lab or a bounty program
 
 **Sources:** PortSwigger AI research, ProjectDiscovery Neo benchmark posts, OWASP LLM Top 10.
 
+## RCE
+
+### 26. Prove execution before a shell
+
+**When:** A parameter looks like it reaches an interpreter.
+
+**Signal:** The response changes after a separator, an expression or a class reference.
+
+**Method:**
+
+1. Start with arithmetic that only an interpreter expands, `$((6*7))` or `{{7*7}}`.
+2. Confirm the literal payload is absent and the expanded value is present.
+3. Repeat with a second operator or expression.
+4. Move to a read-only command only after rung 2.
+5. Use a unique callback when output is swallowed.
+
+**Proof:** Command output or a timed callback. A computed value alone is evaluation, not execution.
+
+**Pitfalls:** The app can reflect the payload. A page can contain 49 by chance. A sandbox can evaluate arithmetic and block objects.
+
+**Sources:** `references/rce-mastery.md`, PortSwigger command injection and SSTI labs.
+
+### 27. Command injection needs the right context
+
+**When:** The feature shells out to ping, DNS, PDF, image, archive or backup tools.
+
+**Signal:** A host, path or filename parameter, plus a version banner for the wrapper tool.
+
+**Method:**
+
+1. Send `;`, `|`, `&&`, newline, backtick and `$()` one at a time.
+2. Check whether the value is quoted, unquoted or passed as one argv item.
+3. Escape the quote context first, then the separator.
+4. Use `$((6*7))` to separate reflection from evaluation.
+5. On Windows try `&`, `|` and `%COMSPEC%`.
+6. Prove with `id`, then one callback.
+
+**Proof:** Expanded marker, then command output or callback.
+
+**Pitfalls:** A safe `subprocess.run` with an argv list can still be injectable through the wrapped tool. A proxy can expand syntax.
+
+**Sources:** OWASP OS command injection, `PayloadsAllTheThings`.
+
+### 28. Template fingerprint, then escape
+
+**When:** Input is rendered inside a template or a preview.
+
+**Signal:** `{{7*7}}`, `${7*7}` or `<%= 7*7 %>` evaluates.
+
+**Method:**
+
+1. Fingerprint the family with `{{7*'7'}}`, error text and a division by zero.
+2. Name the exact engine and version.
+3. Reach the object graph. `config`, `self`, `_self`, `app.request`.
+4. Use an engine specific gadget to a process call.
+5. Stop at output, then chain to a file read or a shell.
+
+**Proof:** Expanded expression plus command output or callback.
+
+**Pitfalls:** Client side rendering is not SSTI. Sandboxes differ by version. A 49 in the page is not proof.
+
+**Sources:** PortSwigger SSTI, engine sandbox advisories, SSTImap.
+
+### 29. Deserialization, format then gadget
+
+**When:** A cookie, hidden field, token or viewstate carries a binary or base64 blob.
+
+**Signal:** Magic bytes `AC ED`, `O:`, `\x80\x04`, `AAEAAAD`.
+
+**Method:**
+
+1. Decode and identify the format.
+2. Change one scalar and resend to prove the parser is reachable.
+3. Pick a gadget for the language and classpath.
+4. Try DNS first, then a command.
+5. Keep the object minimal and note every library version.
+
+**Proof:** Callback or command from a crafted object.
+
+**Pitfalls:** A parser test is not RCE. Signatures block tampering. A gadget needs a reachable class.
+
+**Sources:** ysoserial, phpggc, PortSwigger deserialization labs.
+
+### 30. Upload or LFI to execution
+
+**When:** A file write or a file read exists on the same host as a runtime.
+
+**Signal:** An upload directory in the web root, or an include style file parameter.
+
+**Method:**
+
+1. Upload a text file and find the stored URL.
+2. Test extension, MIME, magic byte and serving path separately.
+3. If code is not executed, check `.htaccess`, `web.config` and archive unpack.
+4. With LFI, identify include versus read. PHP include executes, Python open reads.
+5. Chain upload plus LFI or log poisoning when direct execution is blocked.
+6. Prove with output or a callback from the stored file.
+
+**Proof:** The stored file executes, or an included file runs your syntax.
+
+**Pitfalls:** A CDN can serve the file as static. A resize strips code. A log line is URL encoded.
+
+**Sources:** `PayloadsAllTheThings`, PortSwigger file upload and LFI labs.
+
 ## Reporting
 
-### 25. Build the impact chain
+### 31. Build the impact chain
 
 **When:** You have a valid bug and need a report that survives triage.
 

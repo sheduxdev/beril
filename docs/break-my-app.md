@@ -66,7 +66,7 @@ Never mix two profiles in one report.
 ./beril scan --target https://app.example
 ```
 
-Read the scan. Open `references/techniques.md` and pick one class that fits the stack: auth, IDOR, injection, logic, upload, SSRF.
+Read the scan. Open `references/techniques.md` and pick one class that fits the stack: auth, IDOR, injection, logic, upload, SSRF. For an execution path, use the ladder and the class shelf in `references/rce-mastery.md`.
 
 Then:
 

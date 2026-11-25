@@ -48,8 +48,9 @@ Beril was built from 44 public security skill repositories and a live collection
 | Audit MCP configs | Unpinned packages, plaintext keys, broad filesystem access, privileged containers, plain HTTP, tool-description instructions. | `./beril mcp --target .` |
 | Triage a plugin | JAR manifest, IOC files, class strings, external URLs, Base64, obfuscation and hash. | `./beril jar --target ./plugins` |
 | Review a vibe-coded app | Missing RLS, service_role in the client, NEXT_PUBLIC secrets, unsafe HTML, open CORS, open Firebase rules. | `./beril vibe --target ./app` |
-| Active probes | One quote, one marker, one redirect, one traversal per parameter, OPTIONS and TRACE. Ownership gated. | `./beril scan --target https://your-app.example --active` |
+| Active probes | One quote, one marker, one traversal, three template expressions and one shell expansion per parameter, OPTIONS and TRACE. Ownership gated. | `./beril scan --target https://your-app.example --active` |
 | Hunt a repo | Fingerprint, OSV, source rules, git history, fan-in, optional networkless sandbox with sanitizers. | `./beril hunt --target ./repo --sandbox` |
+| Learn RCE | Six week track, proof ladder, local lab with five classes and a report rubric. | `references/rce-curriculum.md`, `labs/rce` |
 | Render a report | Four reader profiles plus JSON and schema-checked SARIF from the same evidence. | `./beril report --input scans/app.json --profile smb` |
 | Run specialist tools | Installed Nuclei, Semgrep, Trivy, Gitleaks, OSV, Grype and testssl, merged into one schema. | `./beril run --target <url-or-dir>` |
 | Ingest another tool | SARIF, Nuclei, Trivy, Gitleaks, OSV, Grype or ZAP output into a Beril report. | `./beril ingest --input out.sarif --format sarif` |
@@ -460,7 +461,7 @@ beril/
 ├── tests/                   # regression suite and local fixtures
 ├── references/              # method cards, finding schema, maintainer template, RE
 ├── agents/                  # role prompts
-├── labs/                    # ten local targets
+├── labs/                    # eleven local targets
 ├── docs/                    # attacking, defending, verification, report format
 ├── data/                    # catalogs plus KEV, EPSS, rule and IOC seeds
 ├── assets/                  # banner and dashboard preview

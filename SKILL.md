@@ -98,8 +98,9 @@ Attack line. Active probes need an ownership record.
 ```
 
 The web scanner sends ordinary GETs, honors robots.txt, caps the budget and
-masks secrets. Active mode adds one quote, one marker, one redirect and one
-traversal per parameter, plus OPTIONS and TRACE. Artifact scans are static.
+masks secrets. Active mode adds one quote, one marker, one redirect, one
+traversal, three template expressions and one shell expansion per parameter,
+plus OPTIONS and TRACE. Artifact scans are static.
 Walkthroughs: `docs/attacking.md`, `docs/defending.md`, `docs/verification.md`,
 `docs/bug-hunt.md`.
 
@@ -471,6 +472,9 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `references/github-atlas.md` | 2,064 security repositories by topic |
 | `references/claude-bughunter.md` | 83-skill bounty bundle, 7-Question Gate, evidence hygiene |
 | `references/artex.md` | Autonomous multi-agent pentest platform |
+| `references/artex-flask.md` | Flask recon app extract |
+| `references/rce-mastery.md` | RCE classes, proof ladder, report shape |
+| `references/rce-curriculum.md` | Six week RCE track |
 | `references/curriculum.md` | 25-week training plan and grading |
 | `references/exercises.md` | 68 drills by domain |
 | `references/self-training.md` | Turn labs into durable method notes |

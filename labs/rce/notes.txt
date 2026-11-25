@@ -1,0 +1,3 @@
+pistachio notes
+rce lab build 2026.11
+TODO: remove the eval endpoint

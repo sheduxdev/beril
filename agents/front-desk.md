@@ -75,7 +75,7 @@ scanner output a vulnerability.
 "Break this" is a request for a proven bug, not a request for a header report.
 
 1. Passive scan first.
-2. Pick one class from `references/techniques.md` that fits the stack.
+2. Pick one class from `references/techniques.md` that fits the stack. For an RCE request, start at `references/rce-mastery.md` and use the proof ladder.
 3. If the class needs a payload, check the gate. With a record or an explicit
    ownership claim, send the minimal active probe. Without one, return the
    ranked leads and ask the single permission question.

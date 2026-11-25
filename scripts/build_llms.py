@@ -28,6 +28,8 @@ FILES = [
     "references/claude-bughunter.md",
     "references/artex.md",
     "references/artex-flask.md",
+    "references/rce-mastery.md",
+    "references/rce-curriculum.md",
     "references/curriculum.md",
     "references/exercises.md",
     "references/self-training.md",

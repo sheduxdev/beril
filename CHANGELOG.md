@@ -17,6 +17,16 @@ All notable changes. Beril uses semantic versioning.
   triggers for break, find, map, secrets and artifact requests.
 - `/beril:do` command and `beril-front-desk` plugin agent for natural sentences.
 - `beril scan` accepts a bare domain and adds the scheme.
+- Active probes add three template expressions and one shell expansion per
+  parameter. Both are leads with request pairs, not exploitation.
+- `references/rce-mastery.md` and `references/rce-curriculum.md`: six week RCE
+  track, proof ladder, class shelf, report shape and rubric.
+- `labs/rce`: command injection, blind injection, eval, pickle, traversal and
+  upload to execution, with smoke tests and answers.
+- Five RCE method cards in `references/techniques.md`.
+- Renamed `research_notes/Beril genişleme alanları` to
+  `research_notes/beril-expansion-areas`, translated the Turkish market note to
+  English and added folder indexes.
 - 27 exposed paths from the same source, 16 more common ports, and an HSTS
   `includeSubDomains` check.
 

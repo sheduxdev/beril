@@ -21,7 +21,7 @@ computer law in Turkey before a public release.
 1. **Passive default.** A browser-like GET against a public page.
 2. **Proof for active work.** DNS TXT, file or meta verification is enforced in
    code.
-3. **Non-destructive.** GET, one quote, one marker, one redirect, one traversal.
+3. **Non-destructive.** GET, one quote, one marker, one redirect, one traversal, template arithmetic and a shell echo.
    No writes. 2 requests per second, 250 request budget.
 4. **Secret masking.** No full key in the report. Personal data is counted, not
    quoted.

@@ -948,5 +948,12 @@
       ],
       "lab": "labs/detection/incidents"
     }
-  ]
+  ],
+  "tracks": {
+    "rce": {
+      "plan": "references/rce-curriculum.md",
+      "method": "references/rce-mastery.md",
+      "lab": "labs/rce"
+    }
+  }
 }

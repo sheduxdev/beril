@@ -114,6 +114,7 @@ conditions. `docs/attacking.md` and `docs/bug-hunt.md` cover the offensive line.
 | "Is my MCP config safe" | `mcp`, then review permissions |
 | "Is this plugin malicious" | `jar`, then decompile hits |
 | "Map my subdomains" | `recon --target <domain>`, then read high-value hosts |
+| "Find RCE / açık bul" | `scan` passive, then one class from `references/rce-mastery.md` |
 | "Firmware" | unblob, rootfs map, update path |
 | "Write the report" | evidence first, then the right profile |
 | "Teach me" | `./beril train`, one week at a time |
@@ -411,8 +412,9 @@ Attack line. Active probes need an ownership record.
 ```
 
 The web scanner sends ordinary GETs, honors robots.txt, caps the budget and
-masks secrets. Active mode adds one quote, one marker, one redirect and one
-traversal per parameter, plus OPTIONS and TRACE. Artifact scans are static.
+masks secrets. Active mode adds one quote, one marker, one redirect, one
+traversal, three template expressions and one shell expansion per parameter,
+plus OPTIONS and TRACE. Artifact scans are static.
 Walkthroughs: `docs/attacking.md`, `docs/defending.md`, `docs/verification.md`,
 `docs/bug-hunt.md`.
 
@@ -784,6 +786,9 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `references/github-atlas.md` | 2,064 security repositories by topic |
 | `references/claude-bughunter.md` | 83-skill bounty bundle, 7-Question Gate, evidence hygiene |
 | `references/artex.md` | Autonomous multi-agent pentest platform |
+| `references/artex-flask.md` | Flask recon app extract |
+| `references/rce-mastery.md` | RCE classes, proof ladder, report shape |
+| `references/rce-curriculum.md` | Six week RCE track |
 | `references/curriculum.md` | 25-week training plan and grading |
 | `references/exercises.md` | 68 drills by domain |
 | `references/self-training.md` | Turn labs into durable method notes |
@@ -885,6 +890,7 @@ If the answer to 3 is active, the gate is mandatory:
 |---|---|---|
 | "Scan my web app" | `./beril scan --target <url>` | `references/techniques.md`, manual request pair |
 | "Kır / açık bul" | `./beril scan --target <url>` | one class, replay, proof |
+| "RCE ara" | `./beril scan --target <url>` | `references/rce-mastery.md`, SSTI and command probes |
 | "Map my domain" | `./beril recon --target <domain>` | `docs/recon.md`, scan the best host |
 | "SMB report" | `./beril scan --target <url> --profile smb` | top five, patch, retest |
 | "Check my APK" | `./beril scan --target <apk>` | `references/mobile-reverse.md` |
@@ -1023,7 +1029,7 @@ scanner output a vulnerability.
 "Break this" is a request for a proven bug, not a request for a header report.
 
 1. Passive scan first.
-2. Pick one class from `references/techniques.md` that fits the stack.
+2. Pick one class from `references/techniques.md` that fits the stack. For an RCE request, start at `references/rce-mastery.md` and use the proof ladder.
 3. If the class needs a payload, check the gate. With a record or an explicit
    ownership claim, send the minimal active probe. Without one, return the
    ranked leads and ask the single permission question.
@@ -1908,9 +1914,113 @@ The cards assume written authorization for the target. A lab or a bounty program
 
 **Sources:** PortSwigger AI research, ProjectDiscovery Neo benchmark posts, OWASP LLM Top 10.
 
+## RCE
+
+### 26. Prove execution before a shell
+
+**When:** A parameter looks like it reaches an interpreter.
+
+**Signal:** The response changes after a separator, an expression or a class reference.
+
+**Method:**
+
+1. Start with arithmetic that only an interpreter expands, `$((6*7))` or `{{7*7}}`.
+2. Confirm the literal payload is absent and the expanded value is present.
+3. Repeat with a second operator or expression.
+4. Move to a read-only command only after rung 2.
+5. Use a unique callback when output is swallowed.
+
+**Proof:** Command output or a timed callback. A computed value alone is evaluation, not execution.
+
+**Pitfalls:** The app can reflect the payload. A page can contain 49 by chance. A sandbox can evaluate arithmetic and block objects.
+
+**Sources:** `references/rce-mastery.md`, PortSwigger command injection and SSTI labs.
+
+### 27. Command injection needs the right context
+
+**When:** The feature shells out to ping, DNS, PDF, image, archive or backup tools.
+
+**Signal:** A host, path or filename parameter, plus a version banner for the wrapper tool.
+
+**Method:**
+
+1. Send `;`, `|`, `&&`, newline, backtick and `$()` one at a time.
+2. Check whether the value is quoted, unquoted or passed as one argv item.
+3. Escape the quote context first, then the separator.
+4. Use `$((6*7))` to separate reflection from evaluation.
+5. On Windows try `&`, `|` and `%COMSPEC%`.
+6. Prove with `id`, then one callback.
+
+**Proof:** Expanded marker, then command output or callback.
+
+**Pitfalls:** A safe `subprocess.run` with an argv list can still be injectable through the wrapped tool. A proxy can expand syntax.
+
+**Sources:** OWASP OS command injection, `PayloadsAllTheThings`.
+
+### 28. Template fingerprint, then escape
+
+**When:** Input is rendered inside a template or a preview.
+
+**Signal:** `{{7*7}}`, `${7*7}` or `<%= 7*7 %>` evaluates.
+
+**Method:**
+
+1. Fingerprint the family with `{{7*'7'}}`, error text and a division by zero.
+2. Name the exact engine and version.
+3. Reach the object graph. `config`, `self`, `_self`, `app.request`.
+4. Use an engine specific gadget to a process call.
+5. Stop at output, then chain to a file read or a shell.
+
+**Proof:** Expanded expression plus command output or callback.
+
+**Pitfalls:** Client side rendering is not SSTI. Sandboxes differ by version. A 49 in the page is not proof.
+
+**Sources:** PortSwigger SSTI, engine sandbox advisories, SSTImap.
+
+### 29. Deserialization, format then gadget
+
+**When:** A cookie, hidden field, token or viewstate carries a binary or base64 blob.
+
+**Signal:** Magic bytes `AC ED`, `O:`, `\x80\x04`, `AAEAAAD`.
+
+**Method:**
+
+1. Decode and identify the format.
+2. Change one scalar and resend to prove the parser is reachable.
+3. Pick a gadget for the language and classpath.
+4. Try DNS first, then a command.
+5. Keep the object minimal and note every library version.
+
+**Proof:** Callback or command from a crafted object.
+
+**Pitfalls:** A parser test is not RCE. Signatures block tampering. A gadget needs a reachable class.
+
+**Sources:** ysoserial, phpggc, PortSwigger deserialization labs.
+
+### 30. Upload or LFI to execution
+
+**When:** A file write or a file read exists on the same host as a runtime.
+
+**Signal:** An upload directory in the web root, or an include style file parameter.
+
+**Method:**
+
+1. Upload a text file and find the stored URL.
+2. Test extension, MIME, magic byte and serving path separately.
+3. If code is not executed, check `.htaccess`, `web.config` and archive unpack.
+4. With LFI, identify include versus read. PHP include executes, Python open reads.
+5. Chain upload plus LFI or log poisoning when direct execution is blocked.
+6. Prove with output or a callback from the stored file.
+
+**Proof:** The stored file executes, or an included file runs your syntax.
+
+**Pitfalls:** A CDN can serve the file as static. A resize strips code. A log line is URL encoded.
+
+**Sources:** `PayloadsAllTheThings`, PortSwigger file upload and LFI labs.
+
 ## Reporting
 
-### 25. Build the impact chain
+### 31. Build the impact chain
 
 **When:** You have a valid bug and need a report that survives triage.
 
@@ -5866,6 +5976,579 @@ Do not copy these blindly.
 - GitHub API metadata for stars, dates and license.
 
 
+<!-- ===== references/rce-mastery.md ===== -->
+
+# RCE mastery
+
+Remote code execution is the class where a small input reaches an interpreter
+that the attacker does not own. The hard part is not the payload. The hard part
+is proving that the interpreter ran your syntax, with the least noise, and then
+stopping before the target notices.
+
+This file is the method shelf and the practice plan. `references/techniques.md`
+has the short cards. `references/rce-curriculum.md` has the six week track.
+`labs/rce` has a local target.
+
+Everything here assumes written authorization. A lab, a program asset or a
+signed scope counts.
+
+## The proof ladder
+
+Climb one rung at a time. Do not skip to a shell.
+
+| Rung | Evidence | Strength |
+|---|---|---|
+| 0 | Error text changes after a metacharacter | Lead |
+| 1 | Arithmetic or expression expands in the response | Evaluation |
+| 2 | Command output appears, produced by your syntax | Execution |
+| 3 | A callback arrives on a host you control | Execution, blind included |
+| 4 | A file is written or a second command runs from the first | Control |
+| 5 | A stable channel, reverse shell or tunnel | Access |
+
+A report needs rung 2 or higher. Rung 1 is a template evaluation, not RCE. Rung
+3 is enough when the response is blind, but the callback must include a unique
+token tied to the request.
+
+## Source to sink
+
+Do this in the source before sending payloads.
+
+1. List every input. Query, body, header, cookie, filename, JSON field, XML
+   node, multipart part, archive entry and import URL.
+2. Follow each input to a sink. Search for `exec`, `system`, `popen`, `shell`,
+   `eval`, `include`, `require`, `render`, `compile`, `unserialize`, `load`,
+   `fromYaml`, `ObjectInputStream`, `readObject`, `Process`, `spawn`.
+3. Note the transform between source and sink. Concatenation, quoting,
+   allowlist, regex, `escapeshellarg`, `shlex.quote`, JSON parse, template
+   sandbox.
+4. Find the missing check. A sink with an allowlist is still interesting when
+   the allowlist is a prefix check or a regex without anchors.
+5. Build the smallest input that reaches the sink with one metacharacter.
+
+A scanner tells you where to read. It does not tell you what the transform is.
+
+## Choose by surface
+
+| Surface | First hypothesis | Skip when |
+|---|---|---|
+| `host`, `ip`, `domain`, `target` | Command injection | The app resolves with a library call |
+| `q`, `name`, `message`, `title` rendered by a template | SSTI | The page is a static SPA with client rendering |
+| `expr`, `calc`, `formula`, `rule` | Expression language | The math is done in JavaScript |
+| `file`, `page`, `view`, `include`, `template` | LFI or template load | The path is mapped to a fixed enum |
+| `url`, `webhook`, `import`, `feed` | SSRF to internal service | Egress is fully blocked and proven |
+| File upload with any server side parser | Upload to execution | Files are stored on object storage only |
+| Search or filter with an error | SQLi to RCE | The database runs with minimal rights |
+| `data`, `state`, `token`, `session` in base64 or binary | Deserialization | The format is signed and verified first |
+| Version banner with a recent CVE | Dependency RCE | The backport level is unknown |
+
+## Command injection
+
+Signal. The feature shells out. Ping, DNS lookup, PDF conversion, image
+resize, archive unpack, git clone, backup, print.
+
+Minimal probes, in order.
+
+```text
+127.0.0.1; echo $((6*7))
+127.0.0.1 | echo $((6*7))
+127.0.0.1 && echo $((6*7))
+127.0.0.1 `echo 42`
+127.0.0.1 $(echo 42)
+```
+
+On Windows, try `& echo 42`, `| echo 42` and `%COMSPEC%`.
+
+Proof. The expanded value `42` appears and the literal `$((6*7))` does not.
+Then try `; id`, `; uname -a` and one DNS callback.
+
+Pitfalls. The value may be reflected by the app, not the shell. A quote style
+can hide the separator. A shell can be `sh`, `bash`, `cmd`, PowerShell or a
+language wrapper. `&&` fails when the first command exits non zero.
+
+Escalation. Confirm the user, the working directory and the shell. Use an
+out of band channel when output is swallowed. A file write is a good second
+proof. A reverse shell is the last step.
+
+Fix language. Use an argv list, not a shell string. If a shell is required,
+quote with the platform primitive and validate the host against a strict
+allowlist.
+
+## Code and eval injection
+
+Signal. A calculator, formula, rule builder or plugin field. The app evaluates
+source, not data.
+
+Probes.
+
+```text
+1+1
+7*7
+__import__('os').popen('id').read()        Python
+process.mainModule.require('child_process').execSync('id')    Node
+java.lang.Runtime.getRuntime().exec('id')  Java EL
+```
+
+Proof. The output appears, or the error names the evaluator.
+
+Pitfalls. A calculator may use a parser, not `eval`. A sandbox may expose only
+math. Python `eval` with an empty `__builtins__` still leaks through subclasses.
+Node `vm` is not a security boundary.
+
+## Server side template injection
+
+Signal. Input is rendered inside a template. Invoice names, email templates,
+preview panes, CMS pages, PDF generators.
+
+Fingerprint with arithmetic, one engine family at a time.
+
+| Payload | Engine family |
+|---|---|
+| `{{7*7}}` | Jinja2, Twig, Nunjucks, Handlebars-like |
+| `${7*7}` | Freemarker, Velocity, JSP EL, Thymeleaf |
+| `#{7*7}` | Ruby, some Java |
+| `<%= 7*7 %>` | ERB, EJS |
+| `{7*7}` | Smarty |
+| `*{7*7}` | Thymeleaf |
+
+Then split the family.
+
+```text
+{{7*'7'}}        Jinja2 gives 7777777, Twig gives 49
+{{7/0}}          error text names the engine
+${7*7}
+```
+
+Proof. The expression evaluates and a second expression with a different
+operator also evaluates. For Jinja2, `{{config}}` and
+`{{self.__class__}}` show the object graph. For Twig, `{{_self}}` and
+`{{app.request}}` are useful.
+
+Pitfalls. Client side template injection is not server side. A 49 in the page
+can be a date. A sandbox blocks attributes differently per version. Angular
+brackets are not Jinja.
+
+Escalation. Jinja2 goes through `cycler`, `lipsum`, `joiner` or config to
+`os.popen`. Twig goes through `_self` and filter chains. Freemarker uses
+`Execute` or `ObjectConstructor`. Thymeleaf uses `T(java.lang.Runtime)` or
+Spring beans. Always record the exact engine version.
+
+## Expression language injection
+
+Signal. Spring, Struts, Confluence, older Java stacks. Params named `expr`,
+`message`, `redirect`, `view`.
+
+Probes.
+
+```text
+${7*7}
+%{7*7}
+#{7*7}
+T(java.lang.Runtime).getRuntime().exec('id')     SpEL
+```
+
+Proof. Evaluation, then a class reference. SpEL `T(...)` is a strong signal.
+OGNL uses `@java.lang.Runtime@getRuntime().exec('id')`.
+
+Pitfalls. Many apps print `${7*7}` literally because the expression is resolved
+only in a specific parameter or body. Double evaluation exists. WAF rules often
+block `T(` and `Runtime`.
+
+## Deserialization
+
+Signal. A blob in a cookie, hidden field, `viewstate`, `token`, `data` or
+session. Magic bytes `AC ED` for Java, `O:` for PHP, `\x80\x04` for Python
+pickle, `AAEAAAD` in base64 for .NET.
+
+Probes.
+
+1. Decode and identify the format.
+2. Change one scalar and resend. A clean error proves the parser is reachable.
+3. Generate a minimal object with a known side effect. `ysoserial` for Java,
+   `phpggc` for PHP, a `__reduce__` pickle for Python.
+4. For Java, try a DNS or HTTP gadget before a command gadget.
+
+Proof. A callback or command from the crafted object.
+
+Pitfalls. A serialized object with no gadget is a parser test, not RCE. A
+signature can block tampering. Java gadget availability depends on the
+classpath. PHP `unserialize` needs an autoloader or a gadget chain.
+
+## Upload to execution
+
+Signal. Any upload that lands in the web root or a directory a runtime reads.
+Avatars, imports, plugin zips, themes, CSV feeds.
+
+Method.
+
+1. Upload a harmless text file. Find the stored URL and the response headers.
+2. Test extension handling. `.php`, `.phtml`, `.php5`, `.jsp`, `.jspx`, `.aspx`,
+   `.py`, case changes, double extension, trailing dot, null byte in old stacks.
+3. Test MIME and magic byte checks separately. A `GIF89a` prefix plus code is a
+   classic polyglot.
+4. Check whether `.htaccess` or `web.config` can be uploaded and whether it is
+   honored.
+5. Check whether the file is executed or served as text. A source leak is not
+   RCE.
+
+Proof. A request to the stored file returns command output or a callback.
+
+Pitfalls. A CDN can cache and serve the file as static. A resize step can strip
+the payload. A zip upload may be unpacked outside the web root.
+
+## LFI to RCE
+
+Signal. A file parameter reads content. `file`, `page`, `view`, `include`,
+`template`, `lang`.
+
+Method.
+
+1. Read a known file. `/etc/passwd` or the app config.
+2. Identify the include style. PHP `include` executes PHP. Python `open` only
+   reads. Java `include` can compile JSP.
+3. PHP paths to execution are wrappers and writes. `php://filter` for source,
+   `data://` when `allow_url_include` is on, `phar://` for deserialization,
+   session files, access logs and `pearcmd.php`.
+4. Log poisoning. Put PHP code in User-Agent, then include the access log.
+5. Upload plus LFI is the reliable chain when an upload exists.
+
+Proof. Command output from the included file.
+
+Pitfalls. `php://filter` alone is disclosure. A log path differs per distro.
+Log lines are URL encoded, so keep the payload free of characters that break
+the surrounding syntax.
+
+## SQL injection to RCE
+
+Signal. Stacked queries or a database account with file and execution rights.
+
+| DB | Path |
+|---|---|
+| MSSQL | `xp_cmdshell`, `sp_OACreate`, CLR |
+| PostgreSQL | `COPY ... FROM PROGRAM`, `plpython`, `plperl` |
+| MySQL | `INTO OUTFILE` to the web root, UDF |
+| Oracle | Java stored procedures, `DBMS_SCHEDULER` |
+| SQLite | `ATTACH`, extensions when enabled |
+
+Proof. Command output, a written file that executes, or a callback.
+
+Pitfalls. `xp_cmdshell` is often disabled. `secure_file_priv` blocks MySQL
+writes. The web root path is unknown. A DB on another host cannot write to the
+app host.
+
+## SSRF to RCE
+
+Signal. URL fetch, webhook, PDF renderer, image proxy, import.
+
+Targets that turn SSRF into execution.
+
+- Redis on 6379 with `CONFIG SET dir` and `dbfilename`, then `SAVE`.
+- Docker API on 2375, create a container with a bind mount.
+- Kubernetes kubelet 10250 or an unauthenticated API.
+- Consul, Nomad, Jenkins, RabbitMQ management.
+- Cloud metadata to a role, then the control plane.
+- Internal admin panels with default credentials.
+- Gopher is the strongest protocol when available. It can speak Redis and
+  FastCGI.
+
+Proof. A read from the internal service, then an action, then execution.
+
+Pitfalls. A fetch error is not SSRF. DNS rebinding is blocked by some resolvers.
+The egress path can be one host only.
+
+## Dependency and appliance RCE
+
+Signal. A version banner, a lockfile, a vendor appliance.
+
+Method.
+
+1. Map the exact product and version. A range is not enough.
+2. Find the vendor advisory and the backport state.
+3. Prefer a bug with a known safe check. Log4Shell, Spring4Shell, Text4Shell,
+   Struts OGNL, Fastjson, Jackson, Confluence OGNL, Citrix, Fortinet, MOVEit.
+4. Prove with the smallest callback. Do not drop a full exploit chain first.
+
+Pitfalls. A banner can be a proxy. A patch level can be backported without a
+version bump. A WAF can block the classic payload while the bug remains.
+
+## Blind and out of band
+
+When output is swallowed, use a channel you own.
+
+| Channel | Probe | Proof |
+|---|---|---|
+| DNS | `nslookup <token>.oob.example` | Resolver log with time and source |
+| HTTP | `curl https://<token>.oob.example` | Request line and source address |
+| Time | `sleep 5` | Repeated delta against a baseline |
+| File | write to a path you can fetch | The file content |
+
+Use a unique token per request. Record the time. Repeat once to rule out jitter.
+A DNS hit can come from a proxy, so pair it with the app behavior.
+
+## Encoding and filters
+
+Filters usually fail in one of three places. The separator, the command name or
+the output.
+
+- Separator blocked. Try newline `%0a`, backtick, `$()`, `&&`, `|`.
+- Space blocked. `${IFS}`, `<`, `%09`, brace expansion.
+- Slash blocked. `cd` into the directory, use `${PATH:0:1}`.
+- Quotes blocked. Use the other quote, or a glob.
+- Length limit. Write in stages, use a short URL, use base64.
+
+Do not spend an hour on a WAF before you have rung 2 without the WAF.
+
+## From execution to access
+
+1. `id`, `hostname`, `pwd`, `uname -a`.
+2. Read the app config for database and cloud credentials.
+3. Check the metadata service and the environment.
+4. Establish a stable channel only if the engagement allows it.
+5. Keep the first proof request unchanged. A shell is not evidence by itself.
+
+## Triage checklist
+
+- Does the payload reach an interpreter, or only the response?
+- Is the transform a concat, a quote, an allowlist or a parser?
+- Is there a second independent proof?
+- Is the callback unique and time stamped?
+- Is the command safe and read only?
+- Is the impact clear without a full shell?
+- Did you preserve the request and the response?
+- Did you stop at the agreed proof?
+
+## Reporting RCE
+
+Lead with the smallest request pair and the output. Name the sink and the
+missing check. State the execution user. State whether the path is blind. Give
+the fix in code terms, not a lecture.
+
+```markdown
+Title: Command injection in the ping tool reaches the shell
+Asset: https://app.example/tools/ping
+Precondition: authenticated low privilege user
+Request: GET /tools/ping?host=127.0.0.1%3Bid
+Result: uid=33(www-data) gid=33(www-data)
+Sink: subprocess.run("ping -c1 " + host, shell=True)
+Missing check: no quote and no allowlist
+Impact: code execution as www-data, config and cloud role reachable
+Fix: argv list or shlex.quote plus a host regex
+Evidence: scans/rce.json, request and response hash
+```
+
+## Tooling
+
+| Job | Tool |
+|---|---|
+| Intercept and replay | Burp Suite, Caido, mitmproxy |
+| Template scan | SSTImap, tplmap |
+| Command injection | commix, manual |
+| Java deserialization | ysoserial, marshalsec, JNDIExploit |
+| PHP deserialization | phpggc |
+| Callback | interactsh, Burp Collaborator, a VPS with `tcpdump` |
+| Encoding | CyberChef |
+| Source to sink | semgrep, CodeQL, manual grep |
+| Lab targets | `labs/rce`, PortSwigger, HackTheBox, VulnHub |
+
+## 30 60 90 plan
+
+### Days 1 to 30
+
+- Finish weeks 1 and 2 of `references/rce-curriculum.md`.
+- Solve ten PortSwigger labs across OS command injection and SSTI.
+- Build a source to sink checklist for Python, Node, PHP and Java.
+- Reproduce every class in `labs/rce` and write one page per class.
+
+### Days 31 to 60
+
+- Finish weeks 3 and 4.
+- Add deserialization and LFI chains.
+- Run a real source audit on two open source apps. Keep a trace for each sink.
+- Build a callback server and practice blind proof.
+
+### Days 61 to 90
+
+- Finish weeks 5 and 6.
+- Audit one Java and one PHP app end to end.
+- Write a tool. A source to sink helper or a payload encoder is enough.
+- Publish two writeups with request pairs.
+- Ask a reviewer to break your proof. Fix the weak part.
+
+## Drills
+
+1. Name five sinks for each of Python, Node, PHP and Java.
+2. Take a concat sink and write the bypass for single quote, double quote and
+   no quote context.
+3. Fingerprint six template engines without looking at the table. Score 5 of 6.
+4. Build a pickle payload by hand and explain `__reduce__`.
+5. Find the `secure_file_priv` path on a MySQL lab and write a file.
+6. Run a blind command through DNS and show the resolver log.
+7. Turn a log poisoning read into execution in the lab.
+8. Write the fix for a command sink in two languages.
+9. Take one CVE and reduce the public PoC to a one line check.
+10. Explain why rung 1 is not RCE to a non technical reader.
+
+## Rubric
+
+Score each axis 0 to 3.
+
+| Axis | 0 | 1 | 2 | 3 |
+|---|---|---|---|---|
+| Reach | Guess | Saw a sink | Traced input to sink | Proved with the smallest input |
+| Proof | Error text | Arithmetic | Command output or callback | Second channel and control |
+| Safety | No baseline | One baseline | Read only command | Time box and rollback note |
+| Report | Payload dump | Steps | Request pair and fix | A triager can rerun it blind |
+
+Nine or more means move on. Five to eight means repeat the class with a new
+target. Below five means return to the source to sink drill.
+
+## Reading
+
+- PortSwigger Web Security Academy, OS command injection, SSTI and
+  deserialization labs.
+- OWASP WSTG, injection and file include sections.
+- `PayloadsAllTheThings`, command injection and SSTI pages.
+- `swisskyrepo/InternalAllTheThings` for SSRF to internal services.
+- Vendor advisories for Log4Shell, Spring4Shell and Text4Shell.
+- Project Zero and Assetnote writeups for parser and appliance bugs.
+- `docs/attacking.md` and `references/techniques.md` for the Beril contract.
+
+
+<!-- ===== references/rce-curriculum.md ===== -->
+
+# RCE curriculum, six weeks
+
+A focused track for a tester who already knows HTTP, a proxy and one scripting
+language. Ten hours a week, two hours a day. Each day ends with an artifact.
+Each week ends with a reproduction that someone else can rerun.
+
+Read `references/rce-mastery.md` first. Use `labs/rce` for the local target.
+Use PortSwigger labs for the classes the local lab does not cover.
+
+Rules.
+
+1. One class at a time. No class hopping inside a day.
+2. Every payload has a hypothesis before it is sent.
+3. The first proof is read only.
+4. Record the request, the response and the time.
+5. Repeat every blind proof once.
+6. Stop at the agreed rung of the proof ladder.
+7. Publish one writeup at the end of weeks 3 and 6.
+
+## Week 1, how execution happens
+
+Outcome. You can name the sink, the transform and the missing check in four
+languages.
+
+| Day | Work | Artifact |
+|---|---|---|
+| 1 | Read the source to sink section. List 20 sinks across Python, Node, PHP and Java | Sink sheet |
+| 2 | Trace three sinks in an open source app. Mark the transform on each path | Three traces |
+| 3 | Run `labs/rce` command endpoint. Send the arithmetic marker, then `id` | Request pair |
+| 4 | Break the concat sink four ways. Quote, no quote, space, slash | Four payloads and the fix |
+| 5 | Write the source to sink checklist. Review it with a peer | Checklist v1 |
+
+Checkpoint. A peer picks one trace and you explain the transform without the
+notes.
+
+## Week 2, command injection
+
+Outcome. You can prove and report a shell expansion without a reverse shell.
+
+| Day | Work | Artifact |
+|---|---|---|
+| 1 | PortSwigger OS command injection, first three labs | Lab notes |
+| 2 | Blind endpoint in `labs/rce`. Prove with time, then with a file write | Timing table, file path |
+| 3 | Build a DNS callback. Send one token per request | Resolver log |
+| 4 | Filter drill. Blocked space, blocked slash, blocked separator | Bypass table |
+| 5 | Write the report for the lab command injection | One page report |
+
+Checkpoint. Report has a request pair, the sink, the missing check and a code
+level fix.
+
+## Week 3, templates and expressions
+
+Outcome. You can fingerprint a template family and reach a command in a
+sandboxed engine.
+
+| Day | Work | Artifact |
+|---|---|---|
+| 1 | Fingerprint six engines with arithmetic only | Engine table |
+| 2 | Jinja2 sandbox escape in a local app. Reach `os.popen` | Payload and output |
+| 3 | Twig escape. Reach a filter chain, then a command | Payload and output |
+| 4 | SpEL and OGNL class reference. One lab each | Request pairs |
+| 5 | Write the SSTI writeup. Include the version and the sandbox limit | Public writeup draft |
+
+Checkpoint. You can explain why rung 1 is not RCE and show rung 2.
+
+## Week 4, deserialization and file include
+
+Outcome. You can identify a format, build a gadget and turn a read into
+execution.
+
+| Day | Work | Artifact |
+|---|---|---|
+| 1 | Format identification drill. Java, PHP, Python, .NET blobs | Format sheet |
+| 2 | Pickle payload by hand. Explain `__reduce__` | Payload and note |
+| 3 | Java gadget with ysoserial. DNS callback first, command second | Callback log |
+| 4 | LFI in `labs/rce`. Read a file, poison a log, execute | Request chain |
+| 5 | Upload plus LFI chain. Prove execution from the stored file | Chain diagram |
+
+Checkpoint. Every step has a request and a response. The chain has no assumed
+path.
+
+## Week 5, database, SSRF and dependencies
+
+Outcome. You can judge whether a lower severity primitive can become execution.
+
+| Day | Work | Artifact |
+|---|---|---|
+| 1 | MSSQL `xp_cmdshell` lab. Check the disabled state first | State evidence |
+| 2 | PostgreSQL `COPY FROM PROGRAM` and MySQL `INTO OUTFILE` | Two payloads |
+| 3 | SSRF to Redis and to Docker API in a local compose stack | Two chains |
+| 4 | Pick one recent CVE. Reduce the PoC to a one line check | One line check |
+| 5 | Write a decision table for primitive to execution | Decision table |
+
+Checkpoint. For each primitive you can say the precondition that fails and the
+precondition that succeeds.
+
+## Week 6, blind proof, tooling and capstone
+
+Outcome. A complete RCE report on a target you have not seen.
+
+| Day | Work | Artifact |
+|---|---|---|
+| 1 | Blind proof drill. DNS, HTTP and file channel | Three proofs |
+| 2 | Build a small encoder. URL, base64, `IFS`, brace expansion | Tool and tests |
+| 3 | Audit one Java app. Keep every sink trace | Trace bundle |
+| 4 | Capstone. Fresh target, full chain, time box four hours | Report draft |
+| 5 | Peer review. Fix the weakest proof and the weakest sentence | Final report |
+
+Checkpoint. A reviewer reruns the chain from the report alone.
+
+## Assessment
+
+Score reach, proof, safety and report from 0 to 3. Nine or more means pass.
+Five to eight means repeat the week with a new target. Below five means return
+to week 1.
+
+## Reading by week
+
+| Week | Primary |
+|---|---|
+| 1 | OWASP WSTG injection sections, language sink docs |
+| 2 | PortSwigger command injection, `PayloadsAllTheThings` |
+| 3 | PortSwigger SSTI, engine sandbox docs |
+| 4 | ysoserial and phpggc READMEs, LFI to RCE writeups |
+| 5 | DB docs, `InternalAllTheThings`, vendor advisories |
+| 6 | Project Zero, Assetnote, disclosed RCE reports |
+
+## After the track
+
+Keep one RCE lab per month. Diff one patched app per month. Add every new sink
+to the checklist. The field moves through dependencies and parsers, not through
+new separators.
+
+
 <!-- ===== references/curriculum.md ===== -->
 
 # Training curriculum
@@ -5873,6 +6556,10 @@ Do not copy these blindly.
 The curriculum turns Beril from a lookup tool into a practice system. It runs 25 weeks, about 10 hours a week, from the shell to exploit development and firmware. Every week ends with evidence, not a feeling of understanding.
 
 The machine-readable plan lives in `data/curriculum.json` and is driven by `./beril train`.
+
+For a focused execution path, use `references/rce-curriculum.md` and
+`references/rce-mastery.md`. The track runs six weeks on top of week 1 and week
+8 here. The local target is `labs/rce`.
 
 ## Rules
 
@@ -5950,6 +6637,14 @@ Checkpoint at week 4: you can build a small tool, explain a TLS handshake, and r
 Asset mapping, certificate and ASN pivots, content discovery, authentication, injection, logic, IDOR, and APIs. The local web lab covers IDOR, XSS, SQLi, traversal, SSRF, and weak authorization.
 
 Checkpoint at week 9: you can take one request from discovery to a reproduced impact and write the chain without a template.
+
+### RCE extension, weeks 1 and 8
+
+The RCE track runs in parallel for six weeks. Week 8 gives the injection base.
+The track adds command injection, template and expression engines,
+deserialization, LFI, SQLi to execution, SSRF to internal RCE and upload to
+execution. Each week has a lab and a report. Use `labs/rce` and the PortSwigger
+labs. The full plan is `references/rce-curriculum.md`.
 
 ### Code and binary, weeks 10 to 14
 
@@ -6180,6 +6875,19 @@ Level: 1 recall, 2 guided, 3 independent, 4 chained.
 | 72 | Compare GhidRust output with Ghidra's upstream Rust support | 3 | Two decompiler views |
 | 73 | Write the Rust slice and trait-object layouts from memory | 2 | Diagram |
 | 74 | Map an async state machine to its await points | 4 | State table |
+
+## RCE
+
+| # | Task | Level | Evidence |
+|---|---|---|---|
+| 75 | Name five sinks in Python, Node, PHP and Java | 2 | Sink sheet |
+| 76 | Break a concat sink in four quote contexts | 3 | Four payloads and fixes |
+| 77 | Fingerprint six template engines blind | 3 | Engine table, 5 of 6 |
+| 78 | Prove blind command injection with DNS | 3 | Resolver log and token |
+| 79 | Build a pickle payload by hand | 3 | Payload and `__reduce__` note |
+| 80 | Turn a log read into execution | 4 | Request chain |
+| 81 | Reduce a public RCE PoC to a one line check | 3 | One line and version |
+| 82 | Write the fix for an upload that executes | 3 | Patch and regression test |
 
 ## How to use
 
@@ -6572,10 +7280,12 @@ Certifications help at gates. They do not replace artifacts. OSCP, OSWE, OSED, C
 ### Web and API
 
 - Deep: auth, OAuth, SAML, request parsing, cache, race, GraphQL, business logic.
+- RCE specialization: command injection, template and expression engines, deserialization, LFI, upload, SQLi and SSRF to execution.
 - Build: a proxy plugin, a parser diff tool, a fuzzer for a spec.
 - Read: PortSwigger research, Bugcrowd VRT, OWASP WSTG, disclosed reports.
 - Proof: a chain with a clean reproduction and a fix.
 - Ceiling: novel parser or protocol research.
+- Track: `references/rce-curriculum.md`.
 
 ### Binary and RE
 
@@ -7095,7 +7805,7 @@ A crash is a lead. A controlled register is a primitive. A working chain is an e
 
 # Training with Beril
 
-Beril has a 25-week curriculum and seven local labs. It is a practice system, not a reading list.
+Beril has a 25-week curriculum and eleven local labs. It is a practice system, not a reading list.
 
 ## Start
 
@@ -7123,6 +7833,7 @@ Mark tasks:
 | Lab | Topic |
 |---|---|
 | `web` | IDOR, XSS, SQLi, traversal, SSRF |
+| `rce` | command injection, eval, pickle, upload to exec |
 | `binary` | stack, format string, UAF, integer |
 | `fuzz` | libFuzzer and crash triage |
 | `re` | stripped binary reconstruction |
@@ -7168,7 +7879,9 @@ Read `mastery.md` for the track map and `references/books.md` for the canon.
 
 ## Full plan
 
-`references/curriculum.md` has the phases and capstone. `references/exercises.md` has 74 short drills by domain.
+`references/curriculum.md` has the phases and capstone. `references/exercises.md` has 82 short drills by domain.
+
+For execution work, `references/rce-curriculum.md` is a six week track and `labs/rce` is its local target.
 
 
 <!-- ===== docs/agents.md ===== -->
@@ -7291,7 +8004,7 @@ Never mix two profiles in one report.
 ./beril scan --target https://app.example
 ```
 
-Read the scan. Open `references/techniques.md` and pick one class that fits the stack: auth, IDOR, injection, logic, upload, SSRF.
+Read the scan. Open `references/techniques.md` and pick one class that fits the stack: auth, IDOR, injection, logic, upload, SSRF. For an execution path, use the ladder and the class shelf in `references/rce-mastery.md`.
 
 Then:
 
@@ -7676,7 +8389,7 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 
 # Knowledge index
 
-408 durable cards. Read this before a web search; open a card only when it matches.
+418 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -8006,6 +8719,16 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `proto-state-machine` | A protocol is a set of legal transitions | protocol, state-machine, transitions | high | 2026-11-25 |
 | `proto-backpressure` | Flow control is a window the receiver grants | protocol, backpressure, window | medium | 2026-11-25 |
 | `proto-versioning` | Version negotiation needs a downgrade policy | protocol, versioning, downgrade | high | 2026-11-25 |
+| `blind-rce-needs-a-unique-channel-and-a-repeat` | Blind RCE needs a unique channel and a repeat | rce, blind, oob | high | 2026-11-26 |
+| `command-injection-depends-on-the-quote-context` | Command injection depends on the quote context | rce, cmdi, shell | high | 2026-11-26 |
+| `expression-language-injection-is-a-class-reference-away` | Expression language injection is a class reference away | rce, spel, ognl | high | 2026-11-26 |
+| `fingerprint-the-template-engine-before-the-escape` | Fingerprint the template engine before the escape | rce, ssti, template | high | 2026-11-26 |
+| `lfi-becomes-rce-only-through-an-executor` | LFI becomes RCE only through an executor | rce, lfi, php | high | 2026-11-26 |
+| `rce-proof-climbs-a-ladder-it-does-not-jump-to-a-shell` | RCE proof climbs a ladder, it does not jump to a shell | rce, proof, method | high | 2026-11-26 |
+| `sqli-to-rce-needs-a-file-or-execution-right` | SQLi to RCE needs a file or execution right | rce, sqli, database | high | 2026-11-26 |
+| `ssrf-to-rce-targets-services-that-take-commands` | SSRF to RCE targets services that take commands | rce, ssrf, redis | medium | 2026-11-26 |
+| `template-sandbox-escape-starts-at-the-object-graph` | Template sandbox escape starts at the object graph | rce, ssti, sandbox | medium | 2026-11-26 |
+| `upload-is-not-execution-until-the-runtime-reads-it` | Upload is not execution until the runtime reads it | rce, upload, execution | high | 2026-11-26 |
 | `re-crash-triage-primitive` | A crash is a lead; the primitive is the finding | re, triage, crash | high | 2026-11-24 |
 | `re-arm64` | AArch64 has a calling convention, PAC and MTE | re, arm64, pac | medium | 2026-11-25 |
 | `re-cpp-rtti` | C++ RTTI and vtables reveal the class graph | re, cpp, rtti | medium | 2026-11-25 |
@@ -8510,7 +9233,8 @@ Then widen by hand:
 ## 2. Active pass
 
 Beril's active set is deliberately small: one quote, one reflection marker, one
-redirect, one traversal, OPTIONS and TRACE. No writes, no fuzzing.
+redirect, one traversal, three template expressions and one shell expansion,
+OPTIONS and TRACE. No writes, no fuzzing.
 
 ```bash
 ./beril scan --target https://app.example --active --profile bugbounty --sarif
@@ -8522,6 +9246,10 @@ How to read a probe:
   candidate. Confirm with a boolean pair or a timing check.
 - A marker returned without encoding is reflection, not XSS. Check the context
   (attribute, script, URL) and the CSP before reporting.
+- A template expression that becomes 49 is evaluation, not execution. Escape the
+  sandbox before you call it RCE. `references/rce-mastery.md` has the ladder.
+- A shell arithmetic expansion that becomes 42 is evaluation in a shell. Send a
+  read only command next, then a callback.
 - A `Location` header to an attacker host is an open redirect candidate. The
   impact depends on whether an OAuth flow carries a token through it.
 - A `/etc/passwd` body is a proven file read. Try the app config and secret
@@ -9372,7 +10100,7 @@ computer law in Turkey before a public release.
 1. **Passive default.** A browser-like GET against a public page.
 2. **Proof for active work.** DNS TXT, file or meta verification is enforced in
    code.
-3. **Non-destructive.** GET, one quote, one marker, one redirect, one traversal.
+3. **Non-destructive.** GET, one quote, one marker, one redirect, one traversal, template arithmetic and a shell echo.
    No writes. 2 requests per second, 250 request budget.
 4. **Secret masking.** No full key in the report. Personal data is counted, not
    quoted.

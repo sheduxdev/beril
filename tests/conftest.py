@@ -39,6 +39,7 @@ class Handler(BaseHTTPRequestHandler):
                 '<html><title>Test</title><form><input type="password"></form>'
                 '<a href="/search?q=hello">s</a><a href="/item?id=1">i</a>'
                 '<a href="/download?file=notes.txt">d</a><a href="/redirect?next=/x">r</a>'
+                '<a href="/tpl?x=hi">t</a><a href="/shell?cmd=hi">c</a>'
                 '<meta name="generator" content="WordPress 6.0"></html>',
                 headers={"Set-Cookie": "sid=abc; Path=/"},
             )
@@ -65,6 +66,16 @@ class Handler(BaseHTTPRequestHandler):
             if target.startswith("//"):
                 target = "https:" + target
             return self.send("", 302, headers={"Location": target})
+        if path == "/tpl":
+            value = query.get("x", [""])[0]
+            if value in ("{{7*7}}", "${7*7}"):
+                return self.send("<h1>Result</h1><p>49</p>")
+            return self.send(f"<h1>Result</h1><p>{value}</p>")
+        if path == "/shell":
+            value = query.get("cmd", [""])[0]
+            if value.startswith(";echo "):
+                return self.send("<p>beril42</p>")
+            return self.send(f"<p>ran {value}</p>")
         if path == "/login":
             return self.send("ok", headers={"Set-Cookie": "sid=abc; Path=/"})
         if path == "/.env":

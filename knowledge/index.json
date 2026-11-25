@@ -1194,6 +1194,28 @@
   "failure": "A crash can be a DoS only. Check the session and the integrity level."
  },
  {
+  "path": "knowledge/blind-rce-needs-a-unique-channel-and-a-repeat.md",
+  "body": "# Blind RCE needs a unique channel and a repeat\n\n## Claim\n\nWhen output is swallowed, a DNS or HTTP callback with a per request token is the proof. Time alone needs a baseline and a repeat.\n\n## Test\n\nSend one token per request from the target. Record the resolver or web log with time and source. Repeat once to rule out jitter.\n\n## Proof\n\nA callback log entry that matches the token and time.\n\n## Failure modes\n\nA proxy makes the callback. The cache replays it. Sleep comes from network delay.",
+  "id": "blind-rce-needs-a-unique-channel-and-a-repeat",
+  "title": "Blind RCE needs a unique channel and a repeat",
+  "tags": [
+   "rce",
+   "blind",
+   "oob"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/rce-mastery.md"
+  ],
+  "status": "active",
+  "claim": "When output is swallowed, a DNS or HTTP callback with a per request token is the proof. Time alone needs a baseline and a repeat.",
+  "test": "Send one token per request from the target. Record the resolver or web log with time and source. Repeat once to rule out jitter.",
+  "proof": "A callback log entry that matches the token and time.",
+  "failure": "A proxy makes the callback. The cache replays it. Sleep comes from network delay."
+ },
+ {
   "path": "knowledge/browser-extension-permissions.md",
   "body": "# An extension is a trusted page with broad APIs\n\n## Claim\n\nThe extension has host permissions, content scripts and message passing. A web page or another extension can send messages.\n\n## Test\n\nRead the manifest. List permissions. Send messages from a page and from another extension. Check externally_connectable.\n\n## Proof\n\nA privileged action or data read from an untrusted sender.\n\n## Failure modes\n\nA permission that is never used is not a finding. Content script isolation matters.",
   "id": "browser-extension-permissions",
@@ -1655,6 +1677,29 @@
   "test": "Map the versions and services. Test SSO redirects, the vSphere client and the appliance API. Check known CVEs.",
   "proof": "An authenticated or pre-auth action beyond the intended role.",
   "failure": "A console UI bug may not affect the API. Version mapping matters."
+ },
+ {
+  "path": "knowledge/command-injection-depends-on-the-quote-context.md",
+  "body": "# Command injection depends on the quote context\n\n## Claim\n\nThe separator, the quote and the shell decide the payload. A value inside double quotes needs a different escape than an unquoted value. An argv list can still be unsafe when the wrapped tool parses the string.\n\n## Test\n\nTry separator, newline, backtick and dollar paren one at a time. Try both quote styles. Check whether the first command exits non zero before using and-and.\n\n## Proof\n\nAn expanded marker, then id output or a callback.\n\n## Failure modes\n\nThe app reflects the syntax. A proxy expands it. A wrapper tool parses the argument again.",
+  "id": "command-injection-depends-on-the-quote-context",
+  "title": "Command injection depends on the quote context",
+  "tags": [
+   "rce",
+   "cmdi",
+   "shell"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/rce-mastery.md",
+   "labs/rce"
+  ],
+  "status": "active",
+  "claim": "The separator, the quote and the shell decide the payload. A value inside double quotes needs a different escape than an unquoted value. An argv list can still be unsafe when the wrapped tool parses the string.",
+  "test": "Try separator, newline, backtick and dollar paren one at a time. Try both quote styles. Check whether the first command exits non zero before using and-and.",
+  "proof": "An expanded marker, then id output or a callback.",
+  "failure": "The app reflects the syntax. A proxy expands it. A wrapper tool parses the argument again."
  },
  {
   "path": "knowledge/comp-abi.md",
@@ -5129,6 +5174,50 @@
   "failure": "A UAF crash without reallocation is not control. Allocator behavior differs by version."
  },
  {
+  "path": "knowledge/expression-language-injection-is-a-class-reference-away.md",
+  "body": "# Expression language injection is a class reference away\n\n## Claim\n\nSpEL and OGNL evaluate type references. A literal expression proves evaluation, a T() or @class@ reference proves reach into the runtime.\n\n## Test\n\nSend the arithmetic form first, then a Runtime getRuntime exec with id. Check both the body and the body parameter path.\n\n## Proof\n\nClass reference evaluation and command output.\n\n## Failure modes\n\nThe parameter is not the expression source. A WAF blocks T or Runtime. Double evaluation changes the quoting.",
+  "id": "expression-language-injection-is-a-class-reference-away",
+  "title": "Expression language injection is a class reference away",
+  "tags": [
+   "rce",
+   "spel",
+   "ognl"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/rce-mastery.md"
+  ],
+  "status": "active",
+  "claim": "SpEL and OGNL evaluate type references. A literal expression proves evaluation, a T() or @class@ reference proves reach into the runtime.",
+  "test": "Send the arithmetic form first, then a Runtime getRuntime exec with id. Check both the body and the body parameter path.",
+  "proof": "Class reference evaluation and command output.",
+  "failure": "The parameter is not the expression source. A WAF blocks T or Runtime. Double evaluation changes the quoting."
+ },
+ {
+  "path": "knowledge/fingerprint-the-template-engine-before-the-escape.md",
+  "body": "# Fingerprint the template engine before the escape\n\n## Claim\n\nArithmetic tells you an engine family, not the engine. String multiplication, division by zero and error text separate Jinja2 from Twig and expose the version.\n\n## Test\n\nSend two expression families. Jinja2 turns 7 times string 7 into 7777777, Twig returns 49. Read the error page for the engine name.\n\n## Proof\n\nTwo evaluated expressions and an engine version.\n\n## Failure modes\n\nClient side rendering. A page value that happens to be 49. A sandbox blocks attributes per version.",
+  "id": "fingerprint-the-template-engine-before-the-escape",
+  "title": "Fingerprint the template engine before the escape",
+  "tags": [
+   "rce",
+   "ssti",
+   "template"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/rce-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Arithmetic tells you an engine family, not the engine. String multiplication, division by zero and error text separate Jinja2 from Twig and expose the version.",
+  "test": "Send two expression families. Jinja2 turns 7 times string 7 into 7777777, Twig returns 49. Read the error page for the engine name.",
+  "proof": "Two evaluated expressions and an engine version.",
+  "failure": "Client side rendering. A page value that happens to be 49. A sandbox blocks attributes per version."
+ },
+ {
   "path": "knowledge/firmware-cgi-injection.md",
   "body": "# Firmware CGI builds a shell string from the query\n\n## Claim\n\nA CGI passes QUERY_STRING into a shell command without quoting or validation. Root execution is common on embedded systems.\n\n## Test\n\nExtract the rootfs. Read the CGI. Call it with a separator and a command. Confirm with id.\n\n## Proof\n\nCommand output in the HTTP response or a callback.\n\n## Failure modes\n\nA reflected parameter is not injection. The command must run.",
   "id": "firmware-cgi-injection",
@@ -5787,6 +5876,28 @@
   "test": "Find every key path. Check file permissions, env exposure and git history. Test a rotated key.",
   "proof": "A key readable by a lower-privilege principal, or an old key still valid.",
   "failure": "A public key is not a secret. A key in a secret manager with narrow access is the goal."
+ },
+ {
+  "path": "knowledge/lfi-becomes-rce-only-through-an-executor.md",
+  "body": "# LFI becomes RCE only through an executor\n\n## Claim\n\nReading a file is disclosure. Execution needs an include that compiles, a wrapper that runs, a poisoned log that is included, or an upload that is executed.\n\n## Test\n\nIdentify include versus read. For PHP try php filter for source, then data or phar, then session and access log poisoning. Chain upload plus include when available.\n\n## Proof\n\nCommand output from the included file.\n\n## Failure modes\n\nphp filter alone is disclosure. The log path differs by distro. Log encoding breaks the syntax.",
+  "id": "lfi-becomes-rce-only-through-an-executor",
+  "title": "LFI becomes RCE only through an executor",
+  "tags": [
+   "rce",
+   "lfi",
+   "php"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/rce-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Reading a file is disclosure. Execution needs an include that compiles, a wrapper that runs, a poisoned log that is included, or an upload that is executed.",
+  "test": "Identify include versus read. For PHP try php filter for source, then data or phar, then session and access log poisoning. Chain upload plus include when available.",
+  "proof": "Command output from the included file.",
+  "failure": "php filter alone is disclosure. The log path differs by distro. Log encoding breaks the syntax."
  },
  {
   "path": "knowledge/linux-cron-systemd.md",
@@ -6942,6 +7053,28 @@
   "failure": "A transaction without a unique constraint can still race at a higher isolation level. Test the real DB."
  },
  {
+  "path": "knowledge/rce-proof-climbs-a-ladder-it-does-not-jump-to-a-shell.md",
+  "body": "# RCE proof climbs a ladder, it does not jump to a shell\n\n## Claim\n\nA changed error is a lead, an arithmetic expansion is evaluation, command output or a unique callback is execution. A report needs the second, not the first.\n\n## Test\n\nSend an interpreter specific arithmetic marker, confirm the literal is absent and the value is present, repeat with a second operator, then send a read only command.\n\n## Proof\n\nCommand output tied to the request, or a unique callback with a timestamp.\n\n## Failure modes\n\nThe app reflects the payload. The page already contains the result value. A sandbox evaluates math and blocks objects.",
+  "id": "rce-proof-climbs-a-ladder-it-does-not-jump-to-a-shell",
+  "title": "RCE proof climbs a ladder, it does not jump to a shell",
+  "tags": [
+   "rce",
+   "proof",
+   "method"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/rce-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A changed error is a lead, an arithmetic expansion is evaluation, command output or a unique callback is execution. A report needs the second, not the first.",
+  "test": "Send an interpreter specific arithmetic marker, confirm the literal is absent and the value is present, repeat with a second operator, then send a read only command.",
+  "proof": "Command output tied to the request, or a unique callback with a timestamp.",
+  "failure": "The app reflects the payload. The page already contains the result value. A sandbox evaluates math and blocks objects."
+ },
+ {
   "path": "knowledge/re-android-native.md",
   "body": "# JNI is the bridge between Java and native code\n\n## Claim\n\nNative methods are registered by name or JNI_OnLoad. The signature ties a Java method to a C function.\n\n## Test\n\nFind RegisterNatives and JNI exports. Map the signatures. Hook the native side.\n\n## Proof\n\nA recovered native function and a working hook.\n\n## Failure modes\n\nA stripped library hides names. Static registration still leaves exports.",
   "id": "re-android-native",
@@ -7519,6 +7652,28 @@
   "failure": "A public client key may be intended. A revoked key is a false positive."
  },
  {
+  "path": "knowledge/sqli-to-rce-needs-a-file-or-execution-right.md",
+  "body": "# SQLi to RCE needs a file or execution right\n\n## Claim\n\nStacked queries are not enough. MSSQL needs xp_cmdshell or OLE, PostgreSQL needs COPY FROM PROGRAM or an untrusted language, MySQL needs a writable web root or a UDF.\n\n## Test\n\nCheck the DB version, the current user and the relevant setting before a payload. Prefer a command output over a file write.\n\n## Proof\n\nCommand output, callback, or a written file that executes.\n\n## Failure modes\n\nsecure_file_priv blocks writes. xp_cmdshell is disabled. The DB host cannot write to the app host.",
+  "id": "sqli-to-rce-needs-a-file-or-execution-right",
+  "title": "SQLi to RCE needs a file or execution right",
+  "tags": [
+   "rce",
+   "sqli",
+   "database"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/rce-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Stacked queries are not enough. MSSQL needs xp_cmdshell or OLE, PostgreSQL needs COPY FROM PROGRAM or an untrusted language, MySQL needs a writable web root or a UDF.",
+  "test": "Check the DB version, the current user and the relevant setting before a payload. Prefer a command output over a file write.",
+  "proof": "Command output, callback, or a written file that executes.",
+  "failure": "secure_file_priv blocks writes. xp_cmdshell is disabled. The DB host cannot write to the app host."
+ },
+ {
   "path": "knowledge/sre-incident-command.md",
   "body": "# Incident command separates the lead from the fixers\n\n## Claim\n\nThe incident commander coordinates, the ops lead fixes, the scribe records, the comms lead updates.\n\n## Test\n\nDeclare an incident. Assign roles. Check the update cadence.\n\n## Proof\n\nA timeline with role-based updates.\n\n## Failure modes\n\nEveryone debugging means no one communicates. A silent commander blocks decisions.",
   "id": "sre-incident-command",
@@ -7561,6 +7716,28 @@
   "test": "Follow a runbook on a staging alert. Time it and note the gaps.",
   "proof": "A procedure completed by someone on call for the first time.",
   "failure": "A runbook that assumes context fails at 3am. Untested automation is a liability."
+ },
+ {
+  "path": "knowledge/ssrf-to-rce-targets-services-that-take-commands.md",
+  "body": "# SSRF to RCE targets services that take commands\n\n## Claim\n\nRedis with CONFIG SET, Docker API, kubelet, Consul and Jenkins turn a fetch into execution. Gopher is the strongest protocol when available.\n\n## Test\n\nConfirm a read from the internal service first. Then send one state change. Use a host header or a gopher payload only after the protocol is known.\n\n## Proof\n\nA read, then an action, then command output or a callback.\n\n## Failure modes\n\nA fetch error is not SSRF. Egress can be one host only. DNS rebinding is blocked.",
+  "id": "ssrf-to-rce-targets-services-that-take-commands",
+  "title": "SSRF to RCE targets services that take commands",
+  "tags": [
+   "rce",
+   "ssrf",
+   "redis"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/rce-mastery.md"
+  ],
+  "status": "active",
+  "claim": "Redis with CONFIG SET, Docker API, kubelet, Consul and Jenkins turn a fetch into execution. Gopher is the strongest protocol when available.",
+  "test": "Confirm a read from the internal service first. Then send one state change. Use a host header or a gopher payload only after the protocol is known.",
+  "proof": "A read, then an action, then command output or a callback.",
+  "failure": "A fetch error is not SSRF. Egress can be one host only. DNS rebinding is blocked."
  },
  {
   "path": "knowledge/storage-checksum.md",
@@ -8030,6 +8207,28 @@
   "failure": "A split by layer creates a matrix. A split during an incident is chaos."
  },
  {
+  "path": "knowledge/template-sandbox-escape-starts-at-the-object-graph.md",
+  "body": "# Template sandbox escape starts at the object graph\n\n## Claim\n\nA confirmed SSTI is not RCE until an object path reaches import, process or a class loader. The path differs by engine and version.\n\n## Test\n\nEnumerate config, self, cycler, lipsum or app.request. Walk to a module loader, then call a process function with a read only command.\n\n## Proof\n\nCommand output or callback from the escaped template.\n\n## Failure modes\n\nThe sandbox exposes values but blocks callables. The version backport changes the gadget. Output is truncated.",
+  "id": "template-sandbox-escape-starts-at-the-object-graph",
+  "title": "Template sandbox escape starts at the object graph",
+  "tags": [
+   "rce",
+   "ssti",
+   "sandbox"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/rce-mastery.md"
+  ],
+  "status": "active",
+  "claim": "A confirmed SSTI is not RCE until an object path reaches import, process or a class loader. The path differs by engine and version.",
+  "test": "Enumerate config, self, cycler, lipsum or app.request. Walk to a module loader, then call a process function with a read only command.",
+  "proof": "Command output or callback from the escaped template.",
+  "failure": "The sandbox exposes values but blocks callables. The version backport changes the gadget. Output is truncated."
+ },
+ {
   "path": "knowledge/test-chaos-suite.md",
   "body": "# Deterministic simulation finds bugs a real cluster hides\n\n## Claim\n\nA simulated network with a seeded clock and scheduler replays the same interleaving. Failures become reproducible.\n\n## Test\n\nRun a partition scenario with a seed. Replay the seed. Compare the trace.\n\n## Proof\n\nA reproducible failure trace from one seed.\n\n## Failure modes\n\nA simulation that omits fsync proves a different system. A random seed that is not logged cannot replay.",
   "id": "test-chaos-suite",
@@ -8204,6 +8403,29 @@
   "test": "Sample at 1%. Check that all spans of a sampled trace appear.",
   "proof": "A complete or absent trace, never a partial one.",
   "failure": "Independent per-service sampling produces orphan spans. Tail sampling costs memory."
+ },
+ {
+  "path": "knowledge/upload-is-not-execution-until-the-runtime-reads-it.md",
+  "body": "# Upload is not execution until the runtime reads it\n\n## Claim\n\nExtension, MIME, magic byte and serving path are separate checks. Execution needs the stored file in a path the runtime compiles or includes.\n\n## Test\n\nUpload text and find the stored URL. Test each check alone. Try a polyglot, double extension, case change and htaccess or web config. Fetch the file and compare served type with execution.\n\n## Proof\n\nCommand output or callback from the stored file.\n\n## Failure modes\n\nA CDN serves the file as static. A resize strips code. The upload path is outside the web root.",
+  "id": "upload-is-not-execution-until-the-runtime-reads-it",
+  "title": "Upload is not execution until the runtime reads it",
+  "tags": [
+   "rce",
+   "upload",
+   "execution"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/rce-mastery.md",
+   "labs/rce"
+  ],
+  "status": "active",
+  "claim": "Extension, MIME, magic byte and serving path are separate checks. Execution needs the stored file in a path the runtime compiles or includes.",
+  "test": "Upload text and find the stored URL. Test each check alone. Try a polyglot, double extension, case change and htaccess or web config. Fetch the file and compare served type with execution.",
+  "proof": "Command output or callback from the stored file.",
+  "failure": "A CDN serves the file as static. A resize strips code. The upload path is outside the web root."
  },
  {
   "path": "knowledge/web-cache-deception.md",

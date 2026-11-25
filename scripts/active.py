@@ -10,10 +10,13 @@ Probe set:
 - a unique marker for reflected XSS;
 - a protocol relative URL for open redirect;
 - a traversal string for file read;
+- arithmetic template expressions for SSTI;
+- an expanded shell marker for command injection;
 - OPTIONS/TRACE method behavior.
 
 Each result is a lead with a request pair. A reflected marker is not an XSS
-proof until you show execution context; the finding says so.
+proof until you show execution context; the finding says so. The SSTI and
+command probes prove evaluation, not full exploitation.
 """
 
 from __future__ import annotations
@@ -65,6 +68,9 @@ SQL_RE = re.compile(
     r"near \"[^\"]+\": syntax error|no such column|unrecognized token)",
     re.I,
 )
+SSTI_PAYLOADS = ("{{7*7}}", "${7*7}", "<%= 7*7 %>")
+CMDI_PAYLOAD = ";echo beril$((6*7))"
+CMDI_MARKER = "beril42"
 
 
 def targets_from_page(base: str, body: str) -> list[tuple[str, dict]]:
@@ -121,6 +127,8 @@ def run(base: str, body: str, fetcher: Fetcher, origin: str = "") -> list[Findin
             lowered = name.lower()
             out += _sqli(url, name, baseline, fetcher, origin, base_body, base_status)
             out += _xss(url, name, baseline, fetcher, origin, base_body)
+            out += _ssti(url, name, fetcher, origin, base_body)
+            out += _cmdi(url, name, fetcher, origin, base_body)
             if lowered in REDIRECT_PARAMS:
                 out += _redirect(url, name, fetcher, origin, base_body, base_status)
             if lowered in FILE_PARAMS:
@@ -243,6 +251,66 @@ def _xss(url: str, name: str, baseline: dict, fetcher: Fetcher, origin: str, bas
             )
         ]
     return []
+
+
+def _ssti(url: str, name: str, fetcher: Fetcher, origin: str, base_body: str) -> list[Finding]:
+    for payload in SSTI_PAYLOADS:
+        mutated_url = _with_param(url, name, payload)
+        try:
+            res = fetcher.request(mutated_url, origin=origin, max_body=120_000)
+        except BudgetExceeded:
+            return []
+        body = res.get("body", "")
+        if payload in body or not re.search(r"\b49\b", body) or re.search(r"\b49\b", base_body):
+            continue
+        return [
+            Finding(
+                check="active.ssti",
+                title=f"Template expression evaluated: {name}",
+                severity="medium",
+                confidence="medium",
+                evidence=f"GET {mutated_url} -> {payload} became 49, literal payload absent",
+                impact="The value reaches a template engine. Sandbox escape may reach code execution.",
+                fix="Treat input as data, not template source. Use a logic-less template where possible.",
+                subject=url,
+                source="active",
+                cwe=["CWE-1336"],
+                tags=["ssti", "rce"],
+                request=res.get("request", ""),
+                response=excerpt(body, "49", 240),
+                false_positive="A page can contain 49 for other reasons. Confirm with a second expression and a version probe.",
+            )
+        ]
+    return []
+
+
+def _cmdi(url: str, name: str, fetcher: Fetcher, origin: str, base_body: str) -> list[Finding]:
+    mutated_url = _with_param(url, name, CMDI_PAYLOAD)
+    try:
+        res = fetcher.request(mutated_url, origin=origin, max_body=120_000)
+    except BudgetExceeded:
+        return []
+    body = res.get("body", "")
+    if CMDI_MARKER not in body or CMDI_PAYLOAD in body or CMDI_MARKER in base_body:
+        return []
+    return [
+        Finding(
+            check="active.cmdi",
+            title=f"Shell expansion in parameter: {name}",
+            severity="high",
+            confidence="medium",
+            evidence=f"GET {mutated_url} -> arithmetic expansion produced {CMDI_MARKER}",
+            impact="The value reaches a shell. A separator and an arbitrary command may execute.",
+            fix="Avoid shell=True. Pass an argv list and validate against an allowlist.",
+            subject=url,
+            source="active",
+            cwe=["CWE-78"],
+            tags=["cmdi", "rce"],
+            request=res.get("request", ""),
+            response=excerpt(body, CMDI_MARKER, 240),
+            false_positive="The shell syntax can be expanded by another layer. Confirm with a second command and a callback.",
+        )
+    ]
 
 
 def _redirect(url: str, name: str, fetcher: Fetcher, origin: str, base_body: str, base_status: int) -> list[Finding]:

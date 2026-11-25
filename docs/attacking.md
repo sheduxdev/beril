@@ -67,7 +67,8 @@ Then widen by hand:
 ## 2. Active pass
 
 Beril's active set is deliberately small: one quote, one reflection marker, one
-redirect, one traversal, OPTIONS and TRACE. No writes, no fuzzing.
+redirect, one traversal, three template expressions and one shell expansion,
+OPTIONS and TRACE. No writes, no fuzzing.
 
 ```bash
 ./beril scan --target https://app.example --active --profile bugbounty --sarif
@@ -79,6 +80,10 @@ How to read a probe:
   candidate. Confirm with a boolean pair or a timing check.
 - A marker returned without encoding is reflection, not XSS. Check the context
   (attribute, script, URL) and the CSP before reporting.
+- A template expression that becomes 49 is evaluation, not execution. Escape the
+  sandbox before you call it RCE. `references/rce-mastery.md` has the ladder.
+- A shell arithmetic expansion that becomes 42 is evaluation in a shell. Send a
+  read only command next, then a callback.
 - A `Location` header to an attacker host is an open redirect candidate. The
   impact depends on whether an OAuth flow carries a token through it.
 - A `/etc/passwd` body is a proven file read. Try the app config and secret
