@@ -1,0 +1,6 @@
+Console log, operator DEV01
+D T                                                                                                                                      
+D A,L                                                                                                                                   
+$HASP000   JOB DEV01A  WAITING FOR OUTPUT
+START SVCBACK                                                                                                                          
+IEE122I START COMMAND DEV01 NOT AUTHORIZED FOR SVCBACK

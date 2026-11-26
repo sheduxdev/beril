@@ -1,0 +1,4 @@
+manifest: version 1.2, signed, key slot 1, anti_rollback_counter 7
+manifest: version 1.1, signed, key slot 1, anti_rollback_counter 5
+update transport: http://updates.legacy.example/feed
+signature: RSA-2048 SHA-256

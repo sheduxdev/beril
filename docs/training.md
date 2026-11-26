@@ -1,6 +1,6 @@
 # Training with Beril
 
-Beril has a 25-week curriculum and fourteen local labs. It is a practice system, not a reading list.
+Beril has a 25-week curriculum and eighteen local labs. It is a practice system, not a reading list.
 
 ## Start
 
@@ -32,6 +32,10 @@ Mark tasks:
 | `auth` | session fixation, MFA skip, reset token, JWT none |
 | `crypto` | ECB, padding oracle, CTR reuse |
 | `api` | BOLA, mass assignment, GraphQL alias, SSRF |
+| `macos` | ATS, entitlements, launchd, TCC |
+| `android` | exported components, deep link, provider |
+| `hardware` | UART, SPI, fuse, JTAG |
+| `mainframe` | RACF, JCL, CICS, APF |
 | `binary` | stack, format string, UAF, integer |
 | `fuzz` | libFuzzer and crash triage |
 | `re` | stripped binary reconstruction |

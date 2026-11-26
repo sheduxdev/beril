@@ -1,0 +1,10 @@
+[    0.000000] Booting Linux 5.10.42 on sample-board
+[    0.000000] UART0 at 0x10000000, baud 115200
+[    0.000000] Secure boot: enabled, key slot 1
+[    0.000000] Loading rootfs from mmcblk0p2
+[    1.220114] sample login: root
+[    2.013001] sample shell# cat /etc/version
+build 2026.07
+[    2.201000] sample shell# cat /etc/device.key
+DEVICE_KEY=hw-lab-9a7c
+[    2.402000] sample shell# reboot

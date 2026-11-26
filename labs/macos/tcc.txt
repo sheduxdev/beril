@@ -1,0 +1,7 @@
+TCC grants observed on the host
+
+service            client                     auth      last_modified
+kTCCServiceScreenCapture  com.example.Sample  allowed   2026-11-20
+kTCCServiceMicrophone     com.example.Sample  allowed   2026-11-20
+kTCCServiceSystemPolicyAllFiles com.example.Sample allowed 2026-11-21
+kTCCServiceAppleEvents    com.example.Sample  allowed   2026-11-21

@@ -1,0 +1,6 @@
+JTAG scan
+TAP idcode 0x4ba00477
+IR length 4
+DR length 32
+Boundary scan supported
+CPU halted at 0x0000a104

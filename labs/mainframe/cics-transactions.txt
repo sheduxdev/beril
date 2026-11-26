@@ -1,0 +1,6 @@
+CICS transaction list
+CEMT  INQUIRE SYSTEM        enabled
+CECI  command interpreter   enabled
+CEDF  debugger              enabled
+CEBR  browse                enabled
+CSMT  master terminal       disabled

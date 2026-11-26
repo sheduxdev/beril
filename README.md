@@ -4,7 +4,7 @@
 
 A local-first cybersecurity skill for agents and people, with two working lines. The defense line scans an app, repository, artifact, MCP config or Minecraft plugin you own and returns a ranked fix list. The attack line hunts bugs in open source behind an ownership gate, a networkless sandbox and maintainer reports. Both lines share one finding model: severity, confidence, evidence, impact, fix and a plain statement of what was not tested.
 
-Beril also reads the security sites that block plain HTTP clients, keeps every lead with a date and a public URL, and turns the result into a dossier with a reading queue, a tool shelf and method cards. The repository carries fourteen practice labs and a 25-week training plan.
+Beril also reads the security sites that block plain HTTP clients, keeps every lead with a date and a public URL, and turns the result into a dossier with a reading queue, a tool shelf and method cards. The repository carries eighteen practice labs and a 25-week training plan.
 
 [![version](https://img.shields.io/github/v/tag/sheduxdev/beril?sort=semver&label=version&color=2f6f4e)](https://github.com/sheduxdev/beril/tags)
 ![license](https://img.shields.io/badge/license-MIT-2f6f4e)
@@ -463,7 +463,7 @@ beril/
 ├── tests/                   # regression suite and local fixtures
 ├── references/              # method cards, finding schema, maintainer template, RE
 ├── agents/                  # role prompts
-├── labs/                    # fourteen local targets
+├── labs/                    # eighteen local targets
 ├── docs/                    # attacking, defending, verification, report format
 ├── data/                    # catalogs plus KEV, EPSS, rule and IOC seeds
 ├── assets/                  # banner and dashboard preview

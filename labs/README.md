@@ -9,6 +9,10 @@ Small local targets. Each has a README, tasks, a smoke test, and an answer key.
 | `auth` | session fixation, MFA skip, reset token, JWT none | `./labs/auth/tests.sh` |
 | `crypto` | ECB, CBC padding oracle, CTR reuse, length extension | `./labs/crypto/tests.sh` |
 | `api` | BOLA, mass assignment, GraphQL alias, SSRF | `./labs/api/tests.sh` |
+| `macos` | ATS, entitlements, launchd, TCC, bundle secret | `./labs/macos/tests.sh` |
+| `android` | exported components, deep link, provider, backup | `./labs/android/tests.sh` |
+| `hardware` | UART, SPI, fuse, JTAG, update manifest | `./labs/hardware/tests.sh` |
+| `mainframe` | RACF, JCL, CICS, APF, DB2, spool | `./labs/mainframe/tests.sh` |
 | `binary` | stack, format string, UAF, integer, mitigations | `./labs/binary/tests.sh` |
 | `fuzz` | libFuzzer harness and crash triage | `make -C labs/fuzz run` |
 | `re` | stripped binary, static reconstruction | `./labs/re/tests.sh` |

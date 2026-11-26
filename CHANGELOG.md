@@ -37,6 +37,9 @@ All notable changes. Beril uses semantic versioning.
 - `labs/auth` and `labs/crypto`: session fixation, MFA skip, reset token, JWT
   none, ECB, CBC padding oracle and CTR nonce reuse.
 - `labs/api`: BOLA, mass assignment, GraphQL alias batching and SSRF.
+- `labs/macos`, `labs/android`, `labs/hardware` and `labs/mainframe`: static
+  cases for ATS and TCC, exported Android components, UART and JTAG, and RACF
+  and JCL.
 - `references/vulnerability-taxonomy.md`, `references/firewall-and-filter-defense.md`,
   `references/communities-and-feeds.md`, `references/rce-defense-reading.md`: a
   class coverage map, filter defense, feed list and reading list.

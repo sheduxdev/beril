@@ -1,0 +1,10 @@
+spi flash dump, offset 0x001f0000, 512 bytes
+00000000  41 50 49 5f 4b 45 59 3d  68 77 2d 66 6c 61 73 68  |API_KEY=hw-flash|
+00000010  2d 39 61 37 63 0a 00 00  00 00 00 00 00 00 00 00  |-9a7c..........|
+00000020  55 50 44 41 54 45 5f 55 52  4c 3d 68 74 74 70 3a  |UPDATE_URL=http:|
+00000030  2f 2f 75 70 64 61 74 65 73  2e 6c 65 67 61 63 79  |//updates.legacy|
+00000040  2e 65 78 61 6d 70 6c 65 2f  66 65 65 64 0a        |.example/feed.|
+
+ascii strings in window:
+API_KEY=hw-flash-9a7c
+UPDATE_URL=http://updates.legacy.example/feed

@@ -1,0 +1,8 @@
+BuildConfig.VERSION_NAME 2.8.1
+API_BASE https://api.example/
+LEGACY_BASE http://legacy.example/
+WEBVIEW_URL sample://web?url=
+DEEP_LINK sample://open?next=
+PREFS_NAME sample_prefs
+API_TOKEN=android-lab-3d9e
+SIGNING_CERT=debug
