@@ -46,6 +46,8 @@ line and an attack/hunt line. This file is the entry point for any coding agent.
 ./beril ingest --input <file> --format sarif|zap
 ./beril report --input <json> --profile bugbounty
 
+./beril quiz --tag web
+./beril coverage
 ./beril train --status
 ./beril labs --run
 ./beril validate
@@ -426,6 +428,8 @@ The distilled layer is `knowledge/`. Before a web search:
 
 ```bash
 ./beril recall "target class" --decide
+./beril quiz --tag web --count 5
+./beril coverage
 ```
 
 `USE` answers from a fresh high or medium card. `REFRESH` verifies one claim and updates the card. `RESEARCH` means no card, so collect and then add one.
@@ -800,6 +804,7 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `references/senior-bar.md` | Ten axis senior rubric |
 | `docs/specialist.md` | Track selection and review |
 | `docs/osint.md` | OSINT quick path and limits |
+| `docs/study.md` | Quiz and coverage commands |
 | `references/curriculum.md` | 25-week training plan and grading |
 | `references/exercises.md` | 82 drills by domain |
 | `references/self-training.md` | Turn labs into durable method notes |
@@ -9052,6 +9057,57 @@ stays a lead.
 
 Check the host with `scan` after the map. OSINT finds the door. It does not
 prove it opens.
+
+
+<!-- ===== docs/study.md ===== -->
+
+# Study and coverage
+
+Two commands keep the knowledge sharp.
+
+## Quiz
+
+Draw recall cards as questions. The default mode shows the title and the test
+scenario and hides the claim, proof and failure.
+
+```bash
+./beril quiz
+./beril quiz --tag web --count 5
+./beril quiz --tag auth --mode claim --answers
+./beril quiz --json
+```
+
+Modes.
+
+| Mode | Question | Answer |
+|---|---|---|
+| `test` | Title and scenario | Claim, proof, failure |
+| `claim` | Claim | Test, proof, failure |
+| `title` | Title | Claim, test, proof |
+
+Use one card a day per weak domain. Say the answer out loud before `--answers`.
+A card you fail twice goes into your notes as a drill.
+
+## Coverage
+
+```bash
+./beril coverage
+./beril coverage --json
+```
+
+The panel counts active cards, labs and references per domain and marks a domain
+thin under ten cards. The target is twenty per domain. Coverage is a rough map,
+not a score of quality.
+
+Use it once a month. Take the three thinnest domains and add one card each after
+a real lesson. Do not add a card without a test and a failure mode.
+
+## Rules
+
+- A card you cannot test is a note, not knowledge.
+- A quiz answer without the proof is half an answer.
+- A thin domain needs a lab before more cards.
+- A strong domain still needs one old card each month.
 
 
 <!-- ===== docs/reverse-engineering.md ===== -->

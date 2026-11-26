@@ -42,6 +42,9 @@ All notable changes. Beril uses semantic versioning.
   class coverage map, filter defense, feed list and reading list.
 - `references/osint-toolkit.md` and `docs/osint.md`: public record, code,
   archive, image and verification method.
+- `beril quiz` draws cards by tag and mode for recall practice.
+- `beril coverage` shows card, lab and reference counts per domain against a
+  thin and target line.
 - Five RCE method cards in `references/techniques.md`.
 - Renamed `research_notes/Beril genişleme alanları` to
   `research_notes/beril-expansion-areas`, translated the Turkish market note to

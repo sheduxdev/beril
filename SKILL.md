@@ -110,6 +110,8 @@ The distilled layer is `knowledge/`. Before a web search:
 
 ```bash
 ./beril recall "target class" --decide
+./beril quiz --tag web --count 5
+./beril coverage
 ```
 
 `USE` answers from a fresh high or medium card. `REFRESH` verifies one claim and updates the card. `RESEARCH` means no card, so collect and then add one.
@@ -484,6 +486,7 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `references/senior-bar.md` | Ten axis senior rubric |
 | `docs/specialist.md` | Track selection and review |
 | `docs/osint.md` | OSINT quick path and limits |
+| `docs/study.md` | Quiz and coverage commands |
 | `references/curriculum.md` | 25-week training plan and grading |
 | `references/exercises.md` | 82 drills by domain |
 | `references/self-training.md` | Turn labs into durable method notes |

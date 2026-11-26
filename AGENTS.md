@@ -38,6 +38,8 @@ line and an attack/hunt line. This file is the entry point for any coding agent.
 ./beril ingest --input <file> --format sarif|zap
 ./beril report --input <json> --profile bugbounty
 
+./beril quiz --tag web
+./beril coverage
 ./beril train --status
 ./beril labs --run
 ./beril validate

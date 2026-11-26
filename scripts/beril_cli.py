@@ -3,6 +3,7 @@
 
 ./beril scan --target https://example.com --active
 ./beril recon --target example.com
+./beril quiz --tag web
 ./beril verify --new example.com
 ./beril hunt --target ./repo --sandbox
 ./beril harvest forums --sources 0x00sec,reddit
@@ -58,6 +59,8 @@ COMMANDS = {
     "dashboard": "dashboard.py",
     "job": "job.py",
     "recall": "recall.py",
+    "quiz": "quiz.py",
+    "coverage": "coverage.py",
     "remember": "remember.py",
     "gaps": "gaps.py",
 }

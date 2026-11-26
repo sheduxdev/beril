@@ -31,6 +31,7 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 - [docs/recon.md](docs/recon.md): passive subdomain and origin recon
 - [docs/specialist.md](docs/specialist.md): specialist track order and review
 - [docs/osint.md](docs/osint.md): OSINT quick path
+- [docs/study.md](docs/study.md): quiz and coverage
 
 ## Assessment
 
@@ -75,6 +76,8 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 ```bash
 ./beril scan --target <url-or-path>
 ./beril recon --target <domain>
+./beril quiz --tag web
+./beril coverage
 ./beril scan --target <web> --profile smb
 ./beril secrets --target <dir> --history
 ./beril mcp --target <dir>

@@ -48,6 +48,7 @@ FILES = [
     "docs/recon.md",
     "docs/specialist.md",
     "docs/osint.md",
+    "docs/study.md",
     "docs/reverse-engineering.md",
     "docs/training.md",
     "docs/agents.md",
