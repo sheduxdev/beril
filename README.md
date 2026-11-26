@@ -43,6 +43,7 @@ Beril was built from 44 public security skill repositories and a live collection
 | Map the tool shelf | Sweeps GitHub topics for security repositories with stars, language, license and last push. | `./beril github` |
 | Scan your web app | Passive checks for headers, CSP, cookies, CORS, 62 exposed paths, TLS, SPF/DKIM/DMARC, 24 common ports and fingerprints. Request budget and robots.txt respect. | `./beril scan --target https://your-app.example` |
 | Map a domain | Passive subdomains from CT and passive DNS, takeover markers, origin candidates, host scoring, auth surface and emails. | `./beril recon --target your-app.example` |
+| OSINT | Domain, certificate, code, archive and image method with two source rule and a lead sheet. | `references/osint-toolkit.md` |
 | Prioritize known bugs | KEV, EPSS and CVSS joined to dependency findings, with import reachability as a first filter. | `./beril deps --target ./repo --reachability` |
 | Scan secrets | Provider patterns, context filters, git history and masked output. Revocation link per hit, revoke-first order. Optional live check. | `./beril secrets --target ./repo --history` |
 | Audit MCP configs | Unpinned packages, plaintext keys, broad filesystem access, privileged containers, plain HTTP, tool-description instructions. | `./beril mcp --target .` |
@@ -282,7 +283,7 @@ make github
 
 ## Memory
 
-Beril recalls before it researches. `knowledge/` holds 902 testable cards; `knowledge/INDEX.md` is the entry point. A fresh high or medium card closes a decision for 180 or 90 days. Stale cards are refreshed, missing ones are researched and added.
+Beril recalls before it researches. `knowledge/` holds 932 testable cards; `knowledge/INDEX.md` is the entry point. A fresh high or medium card closes a decision for 180 or 90 days. Stale cards are refreshed, missing ones are researched and added.
 
 ```bash
 ./beril recall "idor owner check" --decide

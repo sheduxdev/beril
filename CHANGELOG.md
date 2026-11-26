@@ -27,16 +27,21 @@ All notable changes. Beril uses semantic versioning.
 - `references/senior-bar.md` and `docs/specialist.md`: ten axis senior rubric,
   track order and portfolio rules.
 - Eight recall cards for senior judgment, from threat model to peer review.
-- 476 recall cards across the twelve tracks, from OAuth state to firmware UART,
+- 506 recall cards across the twelve tracks, from OAuth state to firmware UART,
   AD ACL edges, cache deception, heap primitives, detection baselines, supply
   chain provenance, agent tool trust, browser side channels, Windows and Linux
   privilege paths, cloud providers, K8s, mail, fuzzing, malware, threat intel,
-  secure design, language review, red team OPSEC, OT and compliance.
+  secure design, language review, red team OPSEC, OT, compliance and OSINT.
 - `labs/rce`: command injection, blind injection, eval, pickle, traversal and
   upload to execution, with smoke tests and answers.
 - `labs/auth` and `labs/crypto`: session fixation, MFA skip, reset token, JWT
   none, ECB, CBC padding oracle and CTR nonce reuse.
 - `labs/api`: BOLA, mass assignment, GraphQL alias batching and SSRF.
+- `references/vulnerability-taxonomy.md`, `references/firewall-and-filter-defense.md`,
+  `references/communities-and-feeds.md`, `references/rce-defense-reading.md`: a
+  class coverage map, filter defense, feed list and reading list.
+- `references/osint-toolkit.md` and `docs/osint.md`: public record, code,
+  archive, image and verification method.
 - Five RCE method cards in `references/techniques.md`.
 - Renamed `research_notes/Beril genişleme alanları` to
   `research_notes/beril-expansion-areas`, translated the Turkish market note to

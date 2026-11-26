@@ -1,5 +1,27 @@
 [
  {
+  "path": "knowledge/a-breach-hit-needs-a-read-only-check.md",
+  "body": "# A breach hit needs a read only check\n\n## Claim\n\nA breach record is old and can be a combo list. The address exists, but the password may have changed.\n\n## Test\n\nCheck the breach source and the date. Try one read only login with the pair. Watch for MFA.\n\n## Proof\n\nA successful read only login with the date.\n\n## Failure modes\n\nA combo list repeats other breaches. A password reuse is not guaranteed.",
+  "id": "a-breach-hit-needs-a-read-only-check",
+  "title": "A breach hit needs a read only check",
+  "tags": [
+   "osint",
+   "breach",
+   "credential"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/osint-toolkit.md"
+  ],
+  "status": "active",
+  "claim": "A breach record is old and can be a combo list. The address exists, but the password may have changed.",
+  "test": "Check the breach source and the date. Try one read only login with the pair. Watch for MFA.",
+  "proof": "A successful read only login with the date.",
+  "failure": "A combo list repeats other breaches. A password reuse is not guaranteed."
+ },
+ {
   "path": "knowledge/a-browser-sandbox-escape-is-a-broker-message-bug.md",
   "body": "# A browser sandbox escape is a broker message bug\n\n## Claim\n\nThe renderer talks to a privileged broker through an IPC surface. A confused message or a type mix up crosses the boundary.\n\n## Test\n\nList the exposed interfaces and the message types. Send malformed fields. Watch the broker process and the file access.\n\n## Proof\n\nA privileged action from a compromised renderer.\n\n## Failure modes\n\nA strict mojo or IPC validator blocks it. A renderer already in the sandbox still needs a broker bug.",
   "id": "a-browser-sandbox-escape-is-a-broker-message-bug",
@@ -155,6 +177,29 @@
   "failure": "A shared origin returns a neighbour. A second CDN node looks the same."
  },
  {
+  "path": "knowledge/a-certificate-name-is-not-a-live-host.md",
+  "body": "# A certificate name is not a live host\n\n## Claim\n\nCertificate transparency lists names that were issued, not names that resolve today. A dead name is still useful as history.\n\n## Test\n\nTake a CT name. Resolve it. Probe it. Mark live, dead or wildcard.\n\n## Proof\n\nA resolution and an HTTP status per name.\n\n## Failure modes\n\nA wildcard can resolve every name. A split horizon can hide the public record.",
+  "id": "a-certificate-name-is-not-a-live-host",
+  "title": "A certificate name is not a live host",
+  "tags": [
+   "osint",
+   "certificate",
+   "dns"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/osint-toolkit.md",
+   "knowledge/a-dangling-cname-is-a-takeover-lead-not-a-finding.md"
+  ],
+  "status": "active",
+  "claim": "Certificate transparency lists names that were issued, not names that resolve today. A dead name is still useful as history.",
+  "test": "Take a CT name. Resolve it. Probe it. Mark live, dead or wildcard.",
+  "proof": "A resolution and an HTTP status per name.",
+  "failure": "A wildcard can resolve every name. A split horizon can hide the public record."
+ },
+ {
   "path": "knowledge/a-cgi-environment-variable-is-a-shell-input.md",
   "body": "# A CGI environment variable is a shell input\n\n## Claim\n\nEmbedded CGI wrappers often build a shell string from query values, the User-Agent or the Referer.\n\n## Test\n\nSend a separator in each header and query value. Watch the response and a callback.\n\n## Proof\n\nAn expanded command or a callback.\n\n## Failure modes\n\nA wrapper with an argv list holds. A busybox applet can parse the string again.",
   "id": "a-cgi-environment-variable-is-a-shell-input",
@@ -289,6 +334,28 @@
   "failure": "A signature permission closes it. A provider can be app internal only."
  },
  {
+  "path": "knowledge/a-corporate-registry-is-the-ownership-record.md",
+  "body": "# A corporate registry is the ownership record\n\n## Claim\n\nThe registry names the legal entity, the officers and the address. A brand page is marketing.\n\n## Test\n\nSearch the exact legal title in the registry. Read the filing. Compare the officer with the site and the certificate.\n\n## Proof\n\nA filing that names the entity and the officer.\n\n## Failure modes\n\nA holding company can hide the brand. A registry can lag a change.",
+  "id": "a-corporate-registry-is-the-ownership-record",
+  "title": "A corporate registry is the ownership record",
+  "tags": [
+   "osint",
+   "corporate",
+   "registry"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/osint-toolkit.md"
+  ],
+  "status": "active",
+  "claim": "The registry names the legal entity, the officers and the address. A brand page is marketing.",
+  "test": "Search the exact legal title in the registry. Read the filing. Compare the officer with the site and the certificate.",
+  "proof": "A filing that names the entity and the officer.",
+  "failure": "A holding company can hide the brand. A registry can lag a change."
+ },
+ {
   "path": "knowledge/a-corpus-needs-minimization-and-diversity.md",
   "body": "# A corpus needs minimization and diversity\n\n## Claim\n\nA huge corpus slows every run. A minimized set keeps the edges with fewer bytes.\n\n## Test\n\nRun the corpus through the minimizer. Compare edges and size. Keep the seeds that add an edge.\n\n## Proof\n\nThe same edge coverage at a fraction of the size.\n\n## Failure modes\n\nA minimizer can drop a rare path. Deep seeds can be needed for a grammar.",
   "id": "a-corpus-needs-minimization-and-diversity",
@@ -398,6 +465,28 @@
   "test": "Resolve CNAME, fetch the host, compare the body with the service marker, then try to claim the resource at the provider. A 404 with the marker is the strong case.",
   "proof": "CNAME to the service and its exact unclaimed page on the hostname, confirmed by a claim attempt.",
   "failure": "A live but parked service looks the same. A custom domain already attached at the provider stays claimed. Wildcard DNS hides the CNAME."
+ },
+ {
+  "path": "knowledge/a-dead-source-stays-in-the-note.md",
+  "body": "# A dead source stays in the note\n\n## Claim\n\nA 404 is evidence of change. Removing it hides the history and the reason for the current state.\n\n## Test\n\nKeep the URL and the archive. Mark the death time. Add the replacement if one exists.\n\n## Proof\n\nA dead URL with an archive and a date.\n\n## Failure modes\n\nAn archive can be missing. A redirect can hide the death.",
+  "id": "a-dead-source-stays-in-the-note",
+  "title": "A dead source stays in the note",
+  "tags": [
+   "osint",
+   "dead-link",
+   "evidence"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/osint-toolkit.md"
+  ],
+  "status": "active",
+  "claim": "A 404 is evidence of change. Removing it hides the history and the reason for the current state.",
+  "test": "Keep the URL and the archive. Mark the death time. Add the replacement if one exists.",
+  "proof": "A dead URL with an archive and a date.",
+  "failure": "An archive can be missing. A redirect can hide the death."
  },
  {
   "path": "knowledge/a-debug-port-needs-the-pinout-before-the-probe.md",
@@ -666,6 +755,28 @@
   "failure": "A shared tool can be a real reuse. A copy can be perfect."
  },
  {
+  "path": "knowledge/a-favicon-hash-finds-the-same-app.md",
+  "body": "# A favicon hash finds the same app\n\n## Claim\n\nThe favicon hash is stable across hosts that serve the same product. It is a pivot, not an ownership proof.\n\n## Test\n\nFetch the favicon. Hash it with the Shodan mmh3 recipe. Search the hash. Compare the title and the cert.\n\n## Proof\n\nA second host with the same hash and a related certificate.\n\n## Failure modes\n\nA default product favicon matches every install. A CDN can rewrite the icon.",
+  "id": "a-favicon-hash-finds-the-same-app",
+  "title": "A favicon hash finds the same app",
+  "tags": [
+   "osint",
+   "favicon",
+   "shodan"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/osint-toolkit.md"
+  ],
+  "status": "active",
+  "claim": "The favicon hash is stable across hosts that serve the same product. It is a pivot, not an ownership proof.",
+  "test": "Fetch the favicon. Hash it with the Shodan mmh3 recipe. Search the hash. Compare the title and the cert.",
+  "proof": "A second host with the same hash and a related certificate.",
+  "failure": "A default product favicon matches every install. A CDN can rewrite the icon."
+ },
+ {
   "path": "knowledge/a-file-capability-is-a-narrower-suid.md",
   "body": "# A file capability is a narrower SUID\n\n## Claim\n\n`cap_setuid` or `cap_dac_read_search` on a binary gives the specific right without full SUID.\n\n## Test\n\nList capabilities with getcap. Check the binary behavior. Use the right to read a root file or set uid.\n\n## Proof\n\nA root file read or a uid change.\n\n## Failure modes\n\nA bounding set drop blocks it. An empty capability set on exec clears it.",
   "id": "a-file-capability-is-a-narrower-suid",
@@ -775,6 +886,28 @@
   "test": "Find key files in repos and buckets. Use gcloud with the key. Enumerate the roles.",
   "proof": "An authenticated session as the service account.",
   "failure": "Key rotation and org policy can stop new keys. Workload identity removes the file."
+ },
+ {
+  "path": "knowledge/a-github-dork-is-a-query-with-a-field.md",
+  "body": "# A GitHub dork is a query with a field\n\n## Claim\n\n`org:`, `filename:` and `path:` narrow the code search to the target. A bare string returns every fork and tutorial.\n\n## Test\n\nAdd one field at a time to the query. Compare the hit count and the first page. Open a hit and confirm the org.\n\n## Proof\n\nA hit inside the target org with the file path.\n\n## Failure modes\n\nA fork carries the same file. A private repo can be invisible.",
+  "id": "a-github-dork-is-a-query-with-a-field",
+  "title": "A GitHub dork is a query with a field",
+  "tags": [
+   "osint",
+   "github",
+   "dork"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/osint-toolkit.md"
+  ],
+  "status": "active",
+  "claim": "`org:`, `filename:` and `path:` narrow the code search to the target. A bare string returns every fork and tutorial.",
+  "test": "Add one field at a time to the query. Compare the hit count and the first page. Open a hit and confirm the org.",
+  "proof": "A hit inside the target org with the file path.",
+  "failure": "A fork carries the same file. A private repo can be invisible."
  },
  {
   "path": "knowledge/a-got-overwrite-needs-a-call-after-the-write.md",
@@ -1285,6 +1418,29 @@
   "test": "Hook the clock and the data. Set the threshold. Capture a known transaction. Decode by hand first.",
   "proof": "A decoded transaction that matches the device action.",
   "failure": "A fast bus needs a high sample rate. A differential bus needs the right probe."
+ },
+ {
+  "path": "knowledge/a-login-wall-changes-the-osint-terms.md",
+  "body": "# A login wall changes the OSINT terms\n\n## Claim\n\nA public page is one terms state. A logged in page or an API key is another. The collection note must say which.\n\n## Test\n\nRecord the login state and the terms URL per source. Check whether the scraper identifies itself.\n\n## Proof\n\nA source note with the login state and the terms link.\n\n## Failure modes\n\nA public page can still forbid scraping. A key can have a query quota.",
+  "id": "a-login-wall-changes-the-osint-terms",
+  "title": "A login wall changes the OSINT terms",
+  "tags": [
+   "osint",
+   "terms",
+   "legal"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/osint-toolkit.md",
+   "docs/legal.md"
+  ],
+  "status": "active",
+  "claim": "A public page is one terms state. A logged in page or an API key is another. The collection note must say which.",
+  "test": "Record the login state and the terms URL per source. Check whether the scraper identifies itself.",
+  "proof": "A source note with the login state and the terms link.",
+  "failure": "A public page can still forbid scraping. A key can have a query quota."
  },
  {
   "path": "knowledge/a-lolbin-is-a-signed-loader.md",
@@ -3890,6 +4046,28 @@
   "failure": "A data diode is one way. A strict media policy and a scan kiosk narrow it."
  },
  {
+  "path": "knowledge/an-analytics-or-ad-id-is-a-site-cluster.md",
+  "body": "# An analytics or ad ID is a site cluster\n\n## Claim\n\nA shared tracking ID links sites under one account, often across brands and acquisitions.\n\n## Test\n\nRead the page source for the ID. Search the exact ID. Compare the owner and the certificate.\n\n## Proof\n\nA second site with the same ID and a corporate link.\n\n## Failure modes\n\nAn agency can share one ID across clients. A tag manager can inject the ID later.",
+  "id": "an-analytics-or-ad-id-is-a-site-cluster",
+  "title": "An analytics or ad ID is a site cluster",
+  "tags": [
+   "osint",
+   "analytics",
+   "pivot"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/osint-toolkit.md"
+  ],
+  "status": "active",
+  "claim": "A shared tracking ID links sites under one account, often across brands and acquisitions.",
+  "test": "Read the page source for the ID. Search the exact ID. Compare the owner and the certificate.",
+  "proof": "A second site with the same ID and a corporate link.",
+  "failure": "An agency can share one ID across clients. A tag manager can inject the ID later."
+ },
+ {
   "path": "knowledge/an-app-container-is-a-data-boundary.md",
   "body": "# An app container is a data boundary\n\n## Claim\n\nThe container holds the app data and the keychain items are separate. A backup and a shared group cross the container.\n\n## Test\n\nList the container and the group. Read the file protection. Check the backup state.\n\n## Proof\n\nA file readable outside the app process.\n\n## Failure modes\n\nA protected file needs the device unlocked. A group container is intentional sharing.",
   "id": "an-app-container-is-a-data-boundary",
@@ -4044,6 +4222,28 @@
   "failure": "A signed image requirement blocks a custom flash. A gateway can limit the session."
  },
  {
+  "path": "knowledge/an-email-format-needs-a-real-sample.md",
+  "body": "# An email format needs a real sample\n\n## Claim\n\nA pattern guessed from a name is a lead. Five published addresses from the domain make the pattern usable.\n\n## Test\n\nCollect five real addresses. Classify the local part. Test the pattern against an SMTP RCPT if the server allows it.\n\n## Proof\n\nFive samples that fit one pattern.\n\n## Failure modes\n\nA small company can mix formats. A catch all accepts every guess.",
+  "id": "an-email-format-needs-a-real-sample",
+  "title": "An email format needs a real sample",
+  "tags": [
+   "osint",
+   "email",
+   "pattern"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/osint-toolkit.md"
+  ],
+  "status": "active",
+  "claim": "A pattern guessed from a name is a lead. Five published addresses from the domain make the pattern usable.",
+  "test": "Collect five real addresses. Classify the local part. Test the pattern against an SMTP RCPT if the server allows it.",
+  "proof": "Five samples that fit one pattern.",
+  "failure": "A small company can mix formats. A catch all accepts every guess."
+ },
+ {
   "path": "knowledge/an-entitlement-is-the-macos-capability.md",
   "body": "# An entitlement is the macOS capability\n\n## Claim\n\n`com.apple.security.cs.allow-jit`, `disable-library-validation` and the sandbox entitlements each open a specific path.\n\n## Test\n\nList the entitlements on the app and its helpers. Map each to a capability. Test the one with the most reach.\n\n## Proof\n\nA behavior that depends on the entitlement.\n\n## Failure modes\n\nA hardened runtime can still restrict it. A helper can hold the right instead.",
   "id": "an-entitlement-is-the-macos-capability",
@@ -4176,6 +4376,28 @@
   "test": "Scan the bus for addresses. Read the first page. Compare two devices. Change one byte and watch the boot.",
   "proof": "A config change that survives a reboot.",
   "failure": "A write protect pin blocks the write. The address can collide with a sensor."
+ },
+ {
+  "path": "knowledge/an-image-location-needs-two-cues.md",
+  "body": "# An image location needs two cues\n\n## Claim\n\nOne landmark can exist in several cities. A sign language, a plate style, a shadow and a map match together narrow it.\n\n## Test\n\nList every cue. Remove the weakest. Check the shadow against the claimed time. Match the street view.\n\n## Proof\n\nTwo independent cues and a map match.\n\n## Failure modes\n\nA chain brand appears everywhere. A stock image has no EXIF.",
+  "id": "an-image-location-needs-two-cues",
+  "title": "An image location needs two cues",
+  "tags": [
+   "osint",
+   "image",
+   "geolocation"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/osint-toolkit.md"
+  ],
+  "status": "active",
+  "claim": "One landmark can exist in several cities. A sign language, a plate style, a shadow and a map match together narrow it.",
+  "test": "List every cue. Remove the weakest. Check the shadow against the claimed time. Match the street view.",
+  "proof": "Two independent cues and a map match.",
+  "failure": "A chain brand appears everywhere. A stock image has no EXIF."
  },
  {
   "path": "knowledge/an-image-pull-secret-is-a-registry-identity.md",
@@ -4486,6 +4708,28 @@
   "test": "Connect with EHLO. Send MAIL FROM and RCPT TO outside the domain. Check the accept and the queue.",
   "proof": "A queued message with two foreign addresses.",
   "failure": "A relay that requires auth is closed. A local sender can be enough for some checks."
+ },
+ {
+  "path": "knowledge/an-osint-lead-needs-two-source-classes.md",
+  "body": "# An OSINT lead needs two source classes\n\n## Claim\n\nTwo pages on the same site repeat one source. Two classes, such as a registry and a certificate, corroborate.\n\n## Test\n\nName the source class of each fact. Replace one with a class from the other column. Keep the fact only when both agree.\n\n## Proof\n\nTwo independent classes and a date per fact.\n\n## Failure modes\n\nAn aggregator can quote the same registry. A primary record can be stale.",
+  "id": "an-osint-lead-needs-two-source-classes",
+  "title": "An OSINT lead needs two source classes",
+  "tags": [
+   "osint",
+   "verification",
+   "source"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/osint-toolkit.md"
+  ],
+  "status": "active",
+  "claim": "Two pages on the same site repeat one source. Two classes, such as a registry and a certificate, corroborate.",
+  "test": "Name the source class of each fact. Replace one with a class from the other column. Keep the fact only when both agree.",
+  "proof": "Two independent classes and a date per fact.",
+  "failure": "An aggregator can quote the same registry. A primary record can be stale."
  },
  {
   "path": "knowledge/an-ota-command-needs-a-checksum-and-a-window.md",
@@ -5128,6 +5372,28 @@
   "failure": "The OS chooser can still show both apps. A verified link with a correct file is bound."
  },
  {
+  "path": "knowledge/archive-the-page-before-the-quote.md",
+  "body": "# Archive the page before the quote\n\n## Claim\n\nA live page can change or vanish before the report. An archive URL and a capture time keep the quote checkable.\n\n## Test\n\nSave the page to an archive. Copy the archive URL and the time into the note. Quote from the archive.\n\n## Proof\n\nAn archive URL with the capture time.\n\n## Failure modes\n\nAn archive can miss a script page. A private page can refuse the crawler.",
+  "id": "archive-the-page-before-the-quote",
+  "title": "Archive the page before the quote",
+  "tags": [
+   "osint",
+   "archive",
+   "evidence"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/osint-toolkit.md"
+  ],
+  "status": "active",
+  "claim": "A live page can change or vanish before the report. An archive URL and a capture time keep the quote checkable.",
+  "test": "Save the page to an archive. Copy the archive URL and the time into the note. Quote from the archive.",
+  "proof": "An archive URL with the capture time.",
+  "failure": "An archive can miss a script page. A private page can refuse the crawler."
+ },
+ {
   "path": "knowledge/arp-is-the-segmentation-check-inside-a-subnet.md",
   "body": "# ARP is the segmentation check inside a subnet\n\n## Claim\n\nTwo hosts in the same VLAN reach each other by ARP even when a firewall rule says deny. The rule must sit on the gateway.\n\n## Test\n\nCheck the subnet mask. Send an ARP request and a direct ping. Compare with the firewall rule.\n\n## Proof\n\nDirect L2 reachability where the policy expected L3 filtering.\n\n## Failure modes\n\nPrivate VLANs and port isolation change it. A host firewall can still block.",
   "id": "arp-is-the-segmentation-check-inside-a-subnet",
@@ -5214,6 +5480,102 @@
   "test": "Read the procedure. Pick the sub technique that matches the command. Write the procedure in one sentence.",
   "proof": "A sub technique ID with the observed command.",
   "failure": "A behavior can fit two sub techniques. A tool can implement several."
+ },
+ {
+  "path": "knowledge/auth-credential-stuffing.md",
+  "body": "# Credential stuffing is a reuse bug, not a guessing bug\n\n## Claim\n\nAn attacker replays username and password pairs leaked from another site. Each pair can be valid on the first try, so per-account lockout never fires. Reported success rate is roughly 0.2 to 2 percent, enough at scale.\n\n## Test\n\nReplay a small set of known-breached pairs against a staging login. Watch whether one failure counter per account is the only control, and whether a valid pair sails through without a second factor.\n\n## Proof\n\nA login that accepts a breached pair with no step-up, from a fresh IP, under the lockout threshold.\n\n## Failure modes\n\nA CAPTCHA alone is bypassed by solver services and residential proxies. The real fix is MFA, breached-password checks and device or behavior signals, not a lower lockout count.",
+  "id": "auth-credential-stuffing",
+  "title": "Credential stuffing is a reuse bug, not a guessing bug",
+  "tags": [
+   "auth",
+   "credential-stuffing",
+   "account-takeover"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "https://cheatsheetseries.owasp.org/cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.html",
+   "https://owasp.org/www-community/attacks/Credential_stuffing",
+   "https://attack.mitre.org/techniques/T1110/004/"
+  ],
+  "status": "active",
+  "claim": "An attacker replays username and password pairs leaked from another site. Each pair can be valid on the first try, so per-account lockout never fires. Reported success rate is roughly 0.2 to 2 percent, enough at scale.",
+  "test": "Replay a small set of known-breached pairs against a staging login. Watch whether one failure counter per account is the only control, and whether a valid pair sails through without a second factor.",
+  "proof": "A login that accepts a breached pair with no step-up, from a fresh IP, under the lockout threshold.",
+  "failure": "A CAPTCHA alone is bypassed by solver services and residential proxies. The real fix is MFA, breached-password checks and device or behavior signals, not a lower lockout count."
+ },
+ {
+  "path": "knowledge/auth-mfa-fatigue.md",
+  "body": "# Push MFA without number matching is a fatigue target\n\n## Claim\n\nWith a valid password, an attacker triggers repeated push prompts until the user taps Accept by accident or annoyance (push bombing, MFA fatigue). Plain approve-or-deny push carries no context.\n\n## Test\n\nCheck whether the MFA app shows a number the user must type from the login screen. Try repeated prompts against a test account and see whether the tenth prompt is identical to the first.\n\n## Proof\n\nA config where approval is a single tap with no number matching, and repeated prompts are not rate limited or alerted.\n\n## Failure modes\n\nNumber matching is an interim fix, not phishing-resistant. SMS and voice add SS7 and SIM-swap risk. The endpoint is still phishable without a bound credential.",
+  "id": "auth-mfa-fatigue",
+  "title": "Push MFA without number matching is a fatigue target",
+  "tags": [
+   "auth",
+   "mfa",
+   "push-bombing"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "https://www.cisa.gov/sites/default/files/publications/fact-sheet-implement-number-matching-in-mfa-applications-508c.pdf",
+   "https://www.cisa.gov/resources-tools/resources/implementing-phishing-resistant-mfa"
+  ],
+  "status": "active",
+  "claim": "With a valid password, an attacker triggers repeated push prompts until the user taps Accept by accident or annoyance (push bombing, MFA fatigue). Plain approve-or-deny push carries no context.",
+  "test": "Check whether the MFA app shows a number the user must type from the login screen. Try repeated prompts against a test account and see whether the tenth prompt is identical to the first.",
+  "proof": "A config where approval is a single tap with no number matching, and repeated prompts are not rate limited or alerted.",
+  "failure": "Number matching is an interim fix, not phishing-resistant. SMS and voice add SS7 and SIM-swap risk. The endpoint is still phishable without a bound credential."
+ },
+ {
+  "path": "knowledge/auth-password-spray.md",
+  "body": "# Password spraying inverts the loop to dodge lockout\n\n## Claim\n\nOne common password is tried against many accounts, then the next password after a delay. Each account sees one failure, so per-account counters stay quiet while the tenant is under attack.\n\n## Test\n\nAggregate failed logins by source and by password hash across all accounts in a window, not per account. Look for one source touching many usernames with a low per-account rate.\n\n## Proof\n\nA tenant-wide spike in distinct usernames failing, with few failures each, often low and slow across hours.\n\n## Failure modes\n\nPer-account lockout is the control that misses this. Detection needs tenant-wide aggregation and an impossible-travel or new-ASN signal. Banning common passwords shrinks the usable spray list.",
+  "id": "auth-password-spray",
+  "title": "Password spraying inverts the loop to dodge lockout",
+  "tags": [
+   "auth",
+   "password-spray",
+   "detection"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "https://attack.mitre.org/techniques/T1110/003/",
+   "https://cheatsheetseries.owasp.org/cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.html",
+   "https://pages.nist.gov/800-63-4/sp800-63b.html"
+  ],
+  "status": "active",
+  "claim": "One common password is tried against many accounts, then the next password after a delay. Each account sees one failure, so per-account counters stay quiet while the tenant is under attack.",
+  "test": "Aggregate failed logins by source and by password hash across all accounts in a window, not per account. Look for one source touching many usernames with a low per-account rate.",
+  "proof": "A tenant-wide spike in distinct usernames failing, with few failures each, often low and slow across hours.",
+  "failure": "Per-account lockout is the control that misses this. Detection needs tenant-wide aggregation and an impossible-travel or new-ASN signal. Banning common passwords shrinks the usable spray list."
+ },
+ {
+  "path": "knowledge/auth-phishing-resistant.md",
+  "body": "# Phishing-resistant MFA binds the credential to the origin\n\n## Claim\n\nFIDO2 or WebAuthn and PKI smart cards sign a challenge with a private key tied to the real origin, so a proxy phishing page or a relay cannot replay it. CISA calls this the gold standard.\n\n## Test\n\nEnroll a passkey or security key. Try to authenticate through an attacker-in-the-middle proxy that serves a look-alike origin. The key should refuse because the origin does not match.\n\n## Proof\n\nAn authentication that fails on the wrong origin and succeeds only on the registered one, with no shared code to steal.\n\n## Failure modes\n\nA fallback to OTP or push reopens the hole; account recovery is the new weakest link. Transition-mode or hybrid rollouts leave a phishable path until the fallback is removed.",
+  "id": "auth-phishing-resistant",
+  "title": "Phishing-resistant MFA binds the credential to the origin",
+  "tags": [
+   "auth",
+   "fido2",
+   "webauthn",
+   "phishing"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "https://www.cisa.gov/resources-tools/resources/implementing-phishing-resistant-mfa",
+   "https://fidoalliance.org/specifications/",
+   "https://www.w3.org/TR/webauthn-2/"
+  ],
+  "status": "active",
+  "claim": "FIDO2 or WebAuthn and PKI smart cards sign a challenge with a private key tied to the real origin, so a proxy phishing page or a relay cannot replay it. CISA calls this the gold standard.",
+  "test": "Enroll a passkey or security key. Try to authenticate through an attacker-in-the-middle proxy that serves a look-alike origin. The key should refuse because the origin does not match.",
+  "proof": "An authentication that fails on the wrong origin and succeeds only on the registered one, with no shared code to steal.",
+  "failure": "A fallback to OTP or push reopens the hole; account recovery is the new weakest link. Transition-mode or hybrid rollouts leave a phishable path until the fallback is removed."
  },
  {
   "path": "knowledge/authentication-and-authorization-are-different-questions.md",
@@ -7934,6 +8296,106 @@
   "failure": "A view can hide the table. A plan can run with the owner rights."
  },
  {
+  "path": "knowledge/defense-ips-inline-tuning.md",
+  "body": "# An inline IPS needs an alert-only baseline first\n\n## Claim\n\nSuricata or Snort in IPS mode drops traffic on a rule match, so an untuned ruleset breaks production before it stops an attacker.\n\n## Test\n\nRun the ruleset in IDS mode. Rank rules by alert count. Suppress or threshold noisy rules with a note. Switch to drop per rule category.\n\n## Proof\n\nA replayed exploit pcap is dropped and a normal-day pcap passes.\n\n## Failure modes\n\nTLS hides payload rules unless traffic is decrypted. An IPS that fails closed under load is an outage.",
+  "id": "defense-ips-inline-tuning",
+  "title": "An inline IPS needs an alert-only baseline first",
+  "tags": [
+   "defense",
+   "ips",
+   "suricata",
+   "snort"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "https://docs.suricata.io/",
+   "https://www.snort.org/documents",
+   "https://csrc.nist.gov/pubs/sp/800/94/final"
+  ],
+  "status": "active",
+  "claim": "Suricata or Snort in IPS mode drops traffic on a rule match, so an untuned ruleset breaks production before it stops an attacker.",
+  "test": "Run the ruleset in IDS mode. Rank rules by alert count. Suppress or threshold noisy rules with a note. Switch to drop per rule category.",
+  "proof": "A replayed exploit pcap is dropped and a normal-day pcap passes.",
+  "failure": "TLS hides payload rules unless traffic is decrypted. An IPS that fails closed under load is an outage."
+ },
+ {
+  "path": "knowledge/defense-kev-patch-order.md",
+  "body": "# Patch order follows exploitation evidence, not CVSS alone\n\n## Claim\n\nCVSS measures severity. CISA KEV lists bugs exploited in the wild, and EPSS estimates exploitation likelihood. Exposure and asset value decide the rest.\n\n## Test\n\nJoin the asset inventory to CVEs. Mark KEV entries, then high EPSS, then internet-facing. Compare with a CVSS-only order.\n\n## Proof\n\nA ranked list where every top item is exposed and has exploitation evidence.\n\n## Failure modes\n\nNo CVE does not mean no risk. EPSS is a probability, not a guarantee. A missing inventory makes every ranking wrong.",
+  "id": "defense-kev-patch-order",
+  "title": "Patch order follows exploitation evidence, not CVSS alone",
+  "tags": [
+   "defense",
+   "patch",
+   "kev",
+   "epss"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+   "https://www.first.org/epss/",
+   "https://www.first.org/cvss/"
+  ],
+  "status": "active",
+  "claim": "CVSS measures severity. CISA KEV lists bugs exploited in the wild, and EPSS estimates exploitation likelihood. Exposure and asset value decide the rest.",
+  "test": "Join the asset inventory to CVEs. Mark KEV entries, then high EPSS, then internet-facing. Compare with a CVSS-only order.",
+  "proof": "A ranked list where every top item is exposed and has exploitation evidence.",
+  "failure": "No CVE does not mean no risk. EPSS is a probability, not a guarantee. A missing inventory makes every ranking wrong."
+ },
+ {
+  "path": "knowledge/defense-rce-blast-radius.md",
+  "body": "# RCE impact is the rights of the process that runs it\n\n## Claim\n\nCode execution inherits the user, filesystem, secrets, network and syscalls of the service. Hardening limits what the next step can do.\n\n## Test\n\nFor each internet-facing service, record the user, writable paths, mounted secrets, egress rules and seccomp or AppArmor profile.\n\n## Proof\n\nA non-root user, a read-only root filesystem, no default egress and a syscall filter, checked from inside the service.\n\n## Failure modes\n\nA container with the Docker socket or host mounts is not isolated. Blocking egress does not stop data reaching a writable web root.",
+  "id": "defense-rce-blast-radius",
+  "title": "RCE impact is the rights of the process that runs it",
+  "tags": [
+   "defense",
+   "rce",
+   "hardening",
+   "least-privilege"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "https://attack.mitre.org/techniques/T1190/",
+   "https://d3fend.mitre.org/",
+   "https://docs.docker.com/engine/security/seccomp/"
+  ],
+  "status": "active",
+  "claim": "Code execution inherits the user, filesystem, secrets, network and syscalls of the service. Hardening limits what the next step can do.",
+  "test": "For each internet-facing service, record the user, writable paths, mounted secrets, egress rules and seccomp or AppArmor profile.",
+  "proof": "A non-root user, a read-only root filesystem, no default egress and a syscall filter, checked from inside the service.",
+  "failure": "A container with the Docker socket or host mounts is not isolated. Blocking egress does not stop data reaching a writable web root."
+ },
+ {
+  "path": "knowledge/defense-waf-anomaly-score.md",
+  "body": "# A CRS WAF blocks a score, not an attack\n\n## Claim\n\nOWASP CRS adds points per matched rule. A request is blocked when the inbound score passes the threshold (default 5). Paranoia levels 1 to 4 add stricter rules.\n\n## Test\n\nRun in detection-only mode. Collect a week of traffic. Write exclusions per path and parameter, then raise the paranoia level one step.\n\n## Proof\n\nLab attacks blocked and the baseline passing, at a recorded level and threshold.\n\n## Failure modes\n\nA global exclusion is a hole. A WAF does not fix the sink; it buys time until the patch.",
+  "id": "defense-waf-anomaly-score",
+  "title": "A CRS WAF blocks a score, not an attack",
+  "tags": [
+   "defense",
+   "waf",
+   "modsecurity",
+   "crs"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "https://coreruleset.org/docs/",
+   "https://github.com/coreruleset/coreruleset",
+   "https://coraza.io/docs/"
+  ],
+  "status": "active",
+  "claim": "OWASP CRS adds points per matched rule. A request is blocked when the inbound score passes the threshold (default 5). Paranoia levels 1 to 4 add stricter rules.",
+  "test": "Run in detection-only mode. Collect a week of traffic. Write exclusions per path and parameter, then raise the paranoia level one step.",
+  "proof": "Lab attacks blocked and the baseline passing, at a recorded level and threshold.",
+  "failure": "A global exclusion is a hole. A WAF does not fix the sink; it buys time until the patch."
+ },
+ {
   "path": "knowledge/dependency-confusion-needs-an-internal-name-on-a-public-regi.md",
   "body": "# Dependency confusion needs an internal name on a public registry\n\n## Claim\n\nA package manager that prefers the public registry for an internal name installs the attacker package when versions are higher.\n\n## Test\n\nRead the scope and registry config. Look for unscoped internal names. Check whether a public package with that name exists.\n\n## Proof\n\nThe public package installs in place of the internal one.\n\n## Failure modes\n\nA scope or a registry pin closes it. A higher internal version can win.",
   "id": "dependency-confusion-needs-an-internal-name-on-a-public-regi",
@@ -8882,6 +9344,32 @@
   "test": "Read the BrowserWindow options. Open DevTools in the app. Run `require('child_process').exec('id')`.",
   "proof": "A shell command runs from the renderer.",
   "failure": "Context isolation and a preload bridge reduce it. A sandboxed renderer with no bridge is strong."
+ },
+ {
+  "path": "knowledge/email-dmarc-alignment.md",
+  "body": "# DMARC enforces alignment that SPF and DKIM alone do not\n\n## Claim\n\nSPF checks the envelope sender path; DKIM signs the body and headers. Neither ties the result to the visible From. DMARC requires SPF or DKIM to pass and align with the From domain, then tells receivers to quarantine or reject on failure.\n\n## Test\n\nRead the DMARC record policy: `p=none` only reports. Send a spoof from an unauthorized host and read the Authentication-Results header. Check the SPF record stays within the 10 DNS lookup limit, or it PermErrors.\n\n## Proof\n\nA spoof of the org domain rejected under `p=reject`, and legitimate mail still aligned and delivered.\n\n## Failure modes\n\n`p=none` is visibility, not protection. DMARC does not stop look-alike domains or mail from a compromised real account; that is the BEC gap. Forwarding breaks SPF, so DKIM alignment and ARC matter.",
+  "id": "email-dmarc-alignment",
+  "title": "DMARC enforces alignment that SPF and DKIM alone do not",
+  "tags": [
+   "email",
+   "dmarc",
+   "spf",
+   "dkim",
+   "bec"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "https://www.m3aawg.org/sites/default/files/m3aawg-email-authentication-recommended-best-practices-09-2020.pdf",
+   "https://datatracker.ietf.org/doc/html/rfc7489",
+   "https://datatracker.ietf.org/doc/html/rfc7208"
+  ],
+  "status": "active",
+  "claim": "SPF checks the envelope sender path; DKIM signs the body and headers. Neither ties the result to the visible From. DMARC requires SPF or DKIM to pass and align with the From domain, then tells receivers to quarantine or reject on failure.",
+  "test": "Read the DMARC record policy: `p=none` only reports. Send a spoof from an unauthorized host and read the Authentication-Results header. Check the SPF record stays within the 10 DNS lookup limit, or it PermErrors.",
+  "proof": "A spoof of the org domain rejected under `p=reject`, and legitimate mail still aligned and delivered.",
+  "failure": "`p=none` is visibility, not protection. DMARC does not stop look-alike domains or mail from a compromised real account; that is the BEC gap. Forwarding breaks SPF, so DKIM alignment and ARC matter."
  },
  {
   "path": "knowledge/embedding-inversion-recovers-text-from-a-vector.md",
@@ -13664,6 +14152,54 @@
   "failure": "A cookie in the key fragments the cache. A purge across POPs is not instant."
  },
  {
+  "path": "knowledge/net-ddos-layers.md",
+  "body": "# DDoS defense matches the layer the attack targets\n\n## Claim\n\nCISA, FBI and MS-ISAC split DDoS into three types: volumetric (consume bandwidth, e.g. DNS reflection), protocol (exhaust state at layers 3 and 4, e.g. SYN flood), and application (layer 7, cheap requests that cost the server dearly). A control for one does little for another.\n\n## Test\n\nClassify the last incident or a tabletop by type. Check upstream scrubbing or anycast for volumetric, SYN cookies and connection limits for protocol, and rate limits plus caching and bot scoring for layer 7.\n\n## Proof\n\nA mitigation mapped to each type, with capacity above the expected flood and a provider that can absorb volumetric traffic you cannot.\n\n## Failure modes\n\nAn on-box firewall cannot stop a volumetric flood that fills the pipe upstream. Layer 7 attacks pass as valid requests, so signatures miss them. The three types combine in one campaign.",
+  "id": "net-ddos-layers",
+  "title": "DDoS defense matches the layer the attack targets",
+  "tags": [
+   "net",
+   "ddos",
+   "availability"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "https://www.cisa.gov/sites/default/files/2024-03/UPDATED_Joint-DDoS_Guide_03192024_508c%20%281%29.pdf",
+   "https://www.cisa.gov/resources-tools/resources/understanding-and-responding-distributed-denial-service-attacks"
+  ],
+  "status": "active",
+  "claim": "CISA, FBI and MS-ISAC split DDoS into three types: volumetric (consume bandwidth, e.g. DNS reflection), protocol (exhaust state at layers 3 and 4, e.g. SYN flood), and application (layer 7, cheap requests that cost the server dearly). A control for one does little for another.",
+  "test": "Classify the last incident or a tabletop by type. Check upstream scrubbing or anycast for volumetric, SYN cookies and connection limits for protocol, and rate limits plus caching and bot scoring for layer 7.",
+  "proof": "A mitigation mapped to each type, with capacity above the expected flood and a provider that can absorb volumetric traffic you cannot.",
+  "failure": "An on-box firewall cannot stop a volumetric flood that fills the pipe upstream. Layer 7 attacks pass as valid requests, so signatures miss them. The three types combine in one campaign."
+ },
+ {
+  "path": "knowledge/net-egress-filtering.md",
+  "body": "# Egress filtering is allowlist outbound, deny and log the rest\n\n## Claim\n\nC2 and exfiltration hide in permitted outbound traffic over 443, 53 and cloud APIs. Enumerating bad destinations lags; allowing known-good egress per host and denying the rest removes most channels.\n\n## Test\n\nFor each server, list the destinations and protocols it legitimately needs. Write a per-host outbound stanza that permits those and ends in deny-and-log. Watch the logs for what hits the deny line.\n\n## Proof\n\nA beacon or data transfer blocked at the deny line, with the normal app still working, from a host that had no business reaching that destination.\n\n## Failure modes\n\nDNS to any resolver is a tunnel; force internal or protective resolvers. Allowing all 443 outbound from servers defeats the control. Not logging the deny line means you never learn what you stopped.",
+  "id": "net-egress-filtering",
+  "title": "Egress filtering is allowlist outbound, deny and log the rest",
+  "tags": [
+   "net",
+   "egress",
+   "c2",
+   "exfiltration"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "https://attack.mitre.org/mitigations/M1037/",
+   "https://isc.sans.edu/diary/18379",
+   "https://attack.mitre.org/techniques/T1071/"
+  ],
+  "status": "active",
+  "claim": "C2 and exfiltration hide in permitted outbound traffic over 443, 53 and cloud APIs. Enumerating bad destinations lags; allowing known-good egress per host and denying the rest removes most channels.",
+  "test": "For each server, list the destinations and protocols it legitimately needs. Write a per-host outbound stanza that permits those and ends in deny-and-log. Watch the logs for what hits the deny line.",
+  "proof": "A beacon or data transfer blocked at the deny line, with the normal app still working, from a host that had no business reaching that destination.",
+  "failure": "DNS to any resolver is a tunnel; force internal or protective resolvers. Allowing all 443 outbound from servers defeats the control. Not logging the deny line means you never learn what you stopped."
+ },
+ {
   "path": "knowledge/net-quic.md",
   "body": "# QUIC moves reliability into user space per stream\n\n## Claim\n\nStreams are independent so one loss does not block another. 0-RTT reuses a ticket and can replay.\n\n## Test\n\nLose a packet on one stream. Check the other stream and the handshake RTT.\n\n## Proof\n\nA stream that continues while another recovers.\n\n## Failure modes\n\n0-RTT data is replayable, so it must be idempotent. A UDP-blocked network needs a fallback.",
   "id": "net-quic",
@@ -15720,6 +16256,31 @@
   "test": "Demangle symbols. Find witness tables. Map the value layout before reading a method.",
   "proof": "A recovered protocol method and a correct field layout.",
   "failure": "Objective-C bridging hides some calls. Swift name mangling changes by version."
+ },
+ {
+  "path": "knowledge/recon-attack-surface.md",
+  "body": "# Your attack surface is what enumeration finds, not what you deployed\n\n## Claim\n\nAn attacker maps internet-facing assets from passive sources: certificate transparency logs, DNS, WHOIS, reverse IP and public OSINT. Forgotten subdomains such as old or test hosts are frequent entry points, including subdomain takeover.\n\n## Test\n\nRun passive enumeration on your own domains (Amass, Subfinder, CT log search). Diff the result against the official inventory. Flag dangling CNAMEs that point to deprovisioned cloud resources.\n\n## Proof\n\nA live asset the inventory did not list, or a CNAME pointing at an unclaimed cloud endpoint that can be registered.\n\n## Failure modes\n\nPassive data goes stale, so re-run on a schedule. Active scanning needs written scope. Finding an asset is not a finding; it is the start of one.",
+  "id": "recon-attack-surface",
+  "title": "Your attack surface is what enumeration finds, not what you deployed",
+  "tags": [
+   "recon",
+   "asm",
+   "subdomain",
+   "osint"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "https://owasp.org/www-project-amass/",
+   "https://github.com/owasp-amass/amass",
+   "https://attack.mitre.org/techniques/T1595/"
+  ],
+  "status": "active",
+  "claim": "An attacker maps internet-facing assets from passive sources: certificate transparency logs, DNS, WHOIS, reverse IP and public OSINT. Forgotten subdomains such as old or test hosts are frequent entry points, including subdomain takeover.",
+  "test": "Run passive enumeration on your own domains (Amass, Subfinder, CT log search). Diff the result against the official inventory. Flag dangling CNAMEs that point to deprovisioned cloud resources.",
+  "proof": "A live asset the inventory did not list, or a CNAME pointing at an unclaimed cloud endpoint that can be registered.",
+  "failure": "Passive data goes stale, so re-run on a schedule. Active scanning needs written scope. Finding an asset is not a finding; it is the start of one."
  },
  {
   "path": "knowledge/red-team-infrastructure-needs-a-redirector-and-a-backup.md",
@@ -18976,6 +19537,30 @@
   "failure": "A server-side 404 can hide a client-side fetch that already happened. Check the request."
  },
  {
+  "path": "knowledge/web-command-injection.md",
+  "body": "# Command injection is a string reaching a shell\n\n## Claim\n\nUser input is joined into a command line that a shell parses: `system`, `exec`, `popen`, backticks, `shell=True`, `Runtime.exec(\"sh -c ...\")`.\n\n## Test\n\nFind the sink in source first. Trace one input to it. In a lab, send a harmless separator and a time delay or an out-of-band DNS callback to your own host.\n\n## Proof\n\nA delay, callback or file write that only a second command could cause.\n\n## Failure modes\n\nAn argv array with no shell is not this bug, but option injection (`--output=`) still is. Escaping by blocklist fails; the fix is no shell, an allowlist and `--` before arguments.",
+  "id": "web-command-injection",
+  "title": "Command injection is a string reaching a shell",
+  "tags": [
+   "web",
+   "rce",
+   "command-injection"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "https://cwe.mitre.org/data/definitions/78.html",
+   "https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html",
+   "https://portswigger.net/web-security/os-command-injection"
+  ],
+  "status": "active",
+  "claim": "User input is joined into a command line that a shell parses: `system`, `exec`, `popen`, backticks, `shell=True`, `Runtime.exec(\"sh -c ...\")`.",
+  "test": "Find the sink in source first. Trace one input to it. In a lab, send a harmless separator and a time delay or an out-of-band DNS callback to your own host.",
+  "proof": "A delay, callback or file write that only a second command could cause.",
+  "failure": "An argv array with no shell is not this bug, but option injection (`--output=`) still is. Escaping by blocklist fails; the fix is no shell, an allowlist and `--` before arguments."
+ },
+ {
   "path": "knowledge/web-cors-null-origin.md",
   "body": "# CORS reflection is only a bug with credentials\n\n## Claim\n\nThe server reflects any Origin, or trusts null, while allowing credentials. Any site can read authenticated responses.\n\n## Test\n\nSend Origin: https://evil.lab and Origin: null. Check ACAO and ACAC. Read a private endpoint from a cross-origin page.\n\n## Proof\n\nA browser fetch returns private data for a logged-in victim.\n\n## Failure modes\n\nWildcard ACAO with ACAC true is invalid. A public endpoint with no credentials is not a finding.",
   "id": "web-cors-null-origin",
@@ -19153,6 +19738,30 @@
   "failure": "A unique id that is never read as a variable is not clobberable. Modules reduce the surface."
  },
  {
+  "path": "knowledge/web-expression-injection.md",
+  "body": "# Expression language injection is eval under a framework name\n\n## Claim\n\nUser input reaches a SpEL, OGNL, MVEL, JEXL or Jakarta EL evaluator, which can call methods and reach the runtime.\n\n## Test\n\nGrep for `parseExpression`, `ValueStack`, `ELProcessor` and `@Value` built from input. Send an arithmetic probe in a lab.\n\n## Proof\n\nEvaluated arithmetic, then a method call that the context should not allow.\n\n## Failure modes\n\nA `SimpleEvaluationContext` limits SpEL to property access. Struts OGNL bugs are often in the framework, so check the version before the code.",
+  "id": "web-expression-injection",
+  "title": "Expression language injection is eval under a framework name",
+  "tags": [
+   "web",
+   "rce",
+   "java",
+   "el"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "https://cwe.mitre.org/data/definitions/917.html",
+   "https://owasp.org/www-community/vulnerabilities/Expression_Language_Injection"
+  ],
+  "status": "active",
+  "claim": "User input reaches a SpEL, OGNL, MVEL, JEXL or Jakarta EL evaluator, which can call methods and reach the runtime.",
+  "test": "Grep for `parseExpression`, `ValueStack`, `ELProcessor` and `@Value` built from input. Send an arithmetic probe in a lab.",
+  "proof": "Evaluated arithmetic, then a method call that the context should not allow.",
+  "failure": "A `SimpleEvaluationContext` limits SpEL to property access. Struts OGNL bugs are often in the framework, so check the version before the code."
+ },
+ {
   "path": "knowledge/web-graphql-field-auth.md",
   "body": "# GraphQL authorization is per field, not per endpoint\n\n## Claim\n\nThe gateway checks the query but resolvers do not check the object, field or mutation. Introspection is a map, not a finding.\n\n## Test\n\nTest each field and mutation with two roles. Test node lookups, nested fields, aliases, batching and cost limits.\n\n## Proof\n\nA restricted field or mutation returns data for a lower-privilege account.\n\n## Failure modes\n\nIntrospection enabled is not a bug. HTTP 200 with GraphQL errors is not success.",
   "id": "web-graphql-field-auth",
@@ -19241,6 +19850,55 @@
   "test": "Create two accounts at the same role. Capture an object id from A. Request it with B. Repeat for read, update, delete and export.",
   "proof": "B receives or changes A's object, with both sessions and the ids in the log.",
   "failure": "A public object, a 200 with an empty body, or an admin bypass is not the same bug. Check the data, not the status."
+ },
+ {
+  "path": "knowledge/web-imagemagick-delegate.md",
+  "body": "# An image converter is a parser zoo with shell delegates\n\n## Claim\n\nImageMagick, Ghostscript, ExifTool or ffmpeg pick a decoder by content, not extension. Some coders call external programs (ImageTragick, CVE-2016-3714).\n\n## Test\n\nList the tools the upload path calls and their versions. Read `policy.xml` for disabled coders: PS, EPS, PDF, XPS, MVG, MSL, URL.\n\n## Proof\n\nA policy that allows a dangerous coder on untrusted input, or a lab file that triggers a delegate.\n\n## Failure modes\n\nAn extension check does not stop content sniffing. The fix is a strict policy, a sandboxed worker without network, and re-encoding to one known format.",
+  "id": "web-imagemagick-delegate",
+  "title": "An image converter is a parser zoo with shell delegates",
+  "tags": [
+   "web",
+   "rce",
+   "upload",
+   "imagemagick"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "https://imagemagick.org/script/security-policy.php",
+   "https://nvd.nist.gov/vuln/detail/CVE-2016-3714"
+  ],
+  "status": "active",
+  "claim": "ImageMagick, Ghostscript, ExifTool or ffmpeg pick a decoder by content, not extension. Some coders call external programs (ImageTragick, CVE-2016-3714).",
+  "test": "List the tools the upload path calls and their versions. Read `policy.xml` for disabled coders: PS, EPS, PDF, XPS, MVG, MSL, URL.",
+  "proof": "A policy that allows a dangerous coder on untrusted input, or a lab file that triggers a delegate.",
+  "failure": "An extension check does not stop content sniffing. The fix is a strict policy, a sandboxed worker without network, and re-encoding to one known format."
+ },
+ {
+  "path": "knowledge/web-jndi-lookup.md",
+  "body": "# A JNDI lookup in a log line is remote class loading\n\n## Claim\n\nA logger expands `${jndi:...}` in logged data, fetches an LDAP or RMI reference and loads a remote object (Log4Shell, CVE-2021-44228).\n\n## Test\n\nInventory log4j-core versions, including shaded and nested jars. In a lab, log a lookup that points to your own DNS canary.\n\n## Proof\n\nA DNS or LDAP callback from the server, tied to the request.\n\n## Failure modes\n\nlog4j-api alone is not vulnerable. A DNS hit without class loading proves the lookup, not RCE. The fix is 2.17.1 or later; WAF rules are a stopgap that obfuscation bypasses.",
+  "id": "web-jndi-lookup",
+  "title": "A JNDI lookup in a log line is remote class loading",
+  "tags": [
+   "web",
+   "rce",
+   "java",
+   "log4j"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "https://logging.apache.org/log4j/2.x/security.html",
+   "https://www.cisa.gov/news-events/news/apache-log4j-vulnerability-guidance",
+   "https://nvd.nist.gov/vuln/detail/CVE-2021-44228"
+  ],
+  "status": "active",
+  "claim": "A logger expands `${jndi:...}` in logged data, fetches an LDAP or RMI reference and loads a remote object (Log4Shell, CVE-2021-44228).",
+  "test": "Inventory log4j-core versions, including shaded and nested jars. In a lab, log a lookup that points to your own DNS canary.",
+  "proof": "A DNS or LDAP callback from the server, tied to the request.",
+  "failure": "log4j-api alone is not vulnerable. A DNS hit without class loading proves the lookup, not RCE. The fix is 2.17.1 or later; WAF rules are a stopgap that obfuscation bypasses."
  },
  {
   "path": "knowledge/web-jsonp.md",
@@ -19492,6 +20150,30 @@
   "failure": "DNS-only SSRF is weak without exfiltration. A hit on your listener does not prove the response reaches the attacker."
  },
  {
+  "path": "knowledge/web-ssti-sandbox.md",
+  "body": "# SSTI is input parsed as a template, not rendered into one\n\n## Claim\n\nThe app builds the template source from user input (`render_template_string(user)`, `Template(user)`) instead of passing it as a variable.\n\n## Test\n\nSend an arithmetic probe such as `{{7*7}}` and engine variants. Fingerprint the engine from errors and output. Read whether a sandbox is on.\n\n## Proof\n\nEvaluated output, then engine identity. In your own lab, object traversal to a command.\n\n## Failure modes\n\nClient-side template output is XSS, not SSTI. A sandboxed engine may only leak config. The fix is a fixed template with data in the context.",
+  "id": "web-ssti-sandbox",
+  "title": "SSTI is input parsed as a template, not rendered into one",
+  "tags": [
+   "web",
+   "rce",
+   "ssti"
+  ],
+  "confidence": "high",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "references/techniques.md",
+   "https://portswigger.net/web-security/server-side-template-injection",
+   "https://cwe.mitre.org/data/definitions/1336.html"
+  ],
+  "status": "active",
+  "claim": "The app builds the template source from user input (`render_template_string(user)`, `Template(user)`) instead of passing it as a variable.",
+  "test": "Send an arithmetic probe such as `{{7*7}}` and engine variants. Fingerprint the engine from errors and output. Read whether a sandbox is on.",
+  "proof": "Evaluated output, then engine identity. In your own lab, object traversal to a command.",
+  "failure": "Client-side template output is XSS, not SSTI. A sandboxed engine may only leak config. The fix is a fixed template with data in the context."
+ },
+ {
   "path": "knowledge/web-traversal-canonical-path.md",
   "body": "# Traversal is a join before canonicalization\n\n## Claim\n\nThe app joins a user path to a root without resolving and checking the result. Encoded separators and absolute second arguments bypass naive filters.\n\n## Test\n\nTry ../, ..%2f, double encoding, absolute paths, null bytes and Windows separators. Compare the served file with the intended root.\n\n## Proof\n\nA file outside the intended directory is returned or written.\n\n## Failure modes\n\nReflected filenames are not traversal. A 404 with the path in the body proves nothing.",
   "id": "web-traversal-canonical-path",
@@ -19736,6 +20418,30 @@
   "test": "List the filters and the callouts. Send traffic through the proxy. Compare with a direct path.",
   "proof": "A traffic path that bypasses the filter.",
   "failure": "A default block closes it. A layered filter can inspect both paths."
+ },
+ {
+  "path": "knowledge/wifi-evil-twin.md",
+  "body": "# An evil twin wins when the client does not verify the network\n\n## Claim\n\nA rogue AP broadcasts a real SSID, often at higher power, and clients reconnect to it (MITRE T1557.004). WPA2-Enterprise without server-certificate validation hands credentials to the twin. WPA3 transition mode keeps the WPA2 attack surface.\n\n## Test\n\nOn your own network, check that clients are configured to validate the RADIUS server certificate and CA, and to refuse an unknown one. Confirm Protected Management Frames are required and transition mode is understood.\n\n## Proof\n\nA client that refuses to associate when the server certificate does not match, and management frames that cannot be forged to deauth.\n\n## Failure modes\n\nEAP methods without mutual auth, or clients set to not validate the cert, defeat WPA3's promise. Transition mode downgrades silently. Headless IoT often cannot do EAP-TLS, so segment it.",
+  "id": "wifi-evil-twin",
+  "title": "An evil twin wins when the client does not verify the network",
+  "tags": [
+   "wifi",
+   "evil-twin",
+   "eap-tls",
+   "wpa3"
+  ],
+  "confidence": "medium",
+  "updated": "2026-11-26",
+  "uses": "0",
+  "sources": [
+   "https://www.cisa.gov/news-events/news/securing-enterprise-wireless-networks",
+   "https://attack.mitre.org/techniques/T1557/004/"
+  ],
+  "status": "active",
+  "claim": "A rogue AP broadcasts a real SSID, often at higher power, and clients reconnect to it (MITRE T1557.004). WPA2-Enterprise without server-certificate validation hands credentials to the twin. WPA3 transition mode keeps the WPA2 attack surface.",
+  "test": "On your own network, check that clients are configured to validate the RADIUS server certificate and CA, and to refuse an unknown one. Confirm Protected Management Frames are required and transition mode is understood.",
+  "proof": "A client that refuses to associate when the server certificate does not match, and management frames that cannot be forged to deauth.",
+  "failure": "EAP methods without mutual auth, or clients set to not validate the cert, defeat WPA3's promise. Transition mode downgrades silently. Headless IoT often cannot do EAP-TLS, so segment it."
  },
  {
   "path": "knowledge/wildcard-dns-invalidates-brute-force-hits.md",

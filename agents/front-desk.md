@@ -20,6 +20,7 @@ question. Ask only for data you cannot infer.
 |---|---|---|
 | "kır", "break this", "bunu kır", "açık bul", "find a bug", "bak" | Assess | `./beril scan --target <target>` |
 | "harita", "recon", "subdomain", "neler var", "map this domain" | Map | `./beril recon --target <domain>` |
+| "osint", "kim bunlar", "şirket", "e-posta" | OSINT | `references/osint-toolkit.md` |
 | "sızma", "leak", "key", "secret", "anahtar" | Secret leak | `./beril secrets --target <dir> --history` |
 | "bu apk", "bu exe", "bu jar", "this binary" | Artifact | `./beril scan --target <path> --deep` |
 | "bu repo", "source", "kod", "review this" | Source review | `./beril scan --target <dir> --tools --vibe` |

@@ -114,6 +114,7 @@ conditions. `docs/attacking.md` and `docs/bug-hunt.md` cover the offensive line.
 | "Is my MCP config safe" | `mcp`, then review permissions |
 | "Is this plugin malicious" | `jar`, then decompile hits |
 | "Map my subdomains" | `recon --target <domain>`, then read high-value hosts |
+| "OSINT" | `references/osint-toolkit.md`, two source classes per fact |
 | "Find RCE / açık bul" | `scan` passive, then one class from `references/rce-mastery.md` |
 | "Firmware" | unblob, rootfs map, update path |
 | "Write the report" | evidence first, then the right profile |
@@ -789,10 +790,16 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `references/artex.md` | Autonomous multi-agent pentest platform |
 | `references/artex-flask.md` | Flask recon app extract |
 | `references/rce-mastery.md` | RCE classes, proof ladder, report shape |
+| `references/rce-defense-reading.md` | RCE, prevention and detection reading list |
+| `references/vulnerability-taxonomy.md` | Discovery class map with close and card |
+| `references/osint-toolkit.md` | Public record, code, archive and image method |
+| `references/firewall-and-filter-defense.md` | Why filters fail and how to layer them |
+| `references/communities-and-feeds.md` | Research blogs, CERTs and communities |
 | `references/rce-curriculum.md` | Six week RCE track |
 | `references/specialist-program.md` | Twelve four week specialist tracks |
 | `references/senior-bar.md` | Ten axis senior rubric |
 | `docs/specialist.md` | Track selection and review |
+| `docs/osint.md` | OSINT quick path and limits |
 | `references/curriculum.md` | 25-week training plan and grading |
 | `references/exercises.md` | 82 drills by domain |
 | `references/self-training.md` | Turn labs into durable method notes |
@@ -979,6 +986,7 @@ question. Ask only for data you cannot infer.
 |---|---|---|
 | "kır", "break this", "bunu kır", "açık bul", "find a bug", "bak" | Assess | `./beril scan --target <target>` |
 | "harita", "recon", "subdomain", "neler var", "map this domain" | Map | `./beril recon --target <domain>` |
+| "osint", "kim bunlar", "şirket", "e-posta" | OSINT | `references/osint-toolkit.md` |
 | "sızma", "leak", "key", "secret", "anahtar" | Secret leak | `./beril secrets --target <dir> --history` |
 | "bu apk", "bu exe", "bu jar", "this binary" | Artifact | `./beril scan --target <path> --deep` |
 | "bu repo", "source", "kod", "review this" | Source review | `./beril scan --target <dir> --tools --vibe` |
@@ -6439,6 +6447,670 @@ target. Below five means return to the source to sink drill.
 - `docs/attacking.md` and `references/techniques.md` for the Beril contract.
 
 
+<!-- ===== references/rce-defense-reading.md ===== -->
+
+# RCE, intrusion prevention and pentest reading list
+
+Where to read about finding RCE, closing it, and stopping intrusions. Primary sources first. Use a lab or a scope you own.
+
+Snapshot 2026-11-26.
+
+## Standards and taxonomies
+
+| Source | Endpoint | Use |
+|---|---|---|
+| CWE-78 OS command injection | `https://cwe.mitre.org/data/definitions/78.html` | Root cause and examples |
+| CWE-94 code injection | `https://cwe.mitre.org/data/definitions/94.html` | eval-class RCE |
+| CWE-502 deserialization | `https://cwe.mitre.org/data/definitions/502.html` | Gadget-chain RCE |
+| CWE-917 expression language | `https://cwe.mitre.org/data/definitions/917.html` | SpEL, OGNL, EL |
+| CWE-1336 template injection | `https://cwe.mitre.org/data/definitions/1336.html` | SSTI |
+| CWE-434 unrestricted upload | `https://cwe.mitre.org/data/definitions/434.html` | Upload to execution |
+| CWE Top 25 | `https://cwe.mitre.org/top25/` | Yearly ranking |
+| OWASP Top 10 | `https://owasp.org/www-project-top-ten/` | A03 Injection, A08 Integrity |
+| MITRE ATT&CK T1190 | `https://attack.mitre.org/techniques/T1190/` | Exploit public-facing app |
+| MITRE ATT&CK T1059 | `https://attack.mitre.org/techniques/T1059/` | Command interpreter, detections |
+| MITRE D3FEND | `https://d3fend.mitre.org/` | Defensive technique map |
+| CAPEC | `https://capec.mitre.org/` | Attack patterns per CWE |
+
+## Pentest methodology
+
+| Source | Endpoint | Use |
+|---|---|---|
+| NIST SP 800-115 | `https://csrc.nist.gov/pubs/sp/800/115/final` | Test planning and rules of engagement |
+| OWASP WSTG | `https://owasp.org/www-project-web-security-testing-guide/` | Web test cases, INPV section for injection |
+| OWASP ASVS | `https://owasp.org/www-project-application-security-verification-standard/` | Verification levels, fix checklist |
+| OWASP MASTG | `https://mas.owasp.org/MASTG/` | Mobile testing |
+| PTES | `http://www.pentest-standard.org/` | Engagement phases |
+| OSSTMM | `https://www.isecom.org/OSSTMM.3.pdf` | Operational testing |
+| HackTricks | `https://book.hacktricks.wiki/` | Community methodology notes |
+| PayloadsAllTheThings | `https://github.com/swisskyrepo/PayloadsAllTheThings` | Probe memory aid; confirm the parser |
+
+## RCE classes to learn and fix
+
+| Class | Learn | Fix guidance | Card |
+|---|---|---|---|
+| OS command injection | `https://portswigger.net/web-security/os-command-injection` | `https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html` | `web-command-injection` |
+| SSTI | `https://portswigger.net/web-security/server-side-template-injection` | Same page, prevention section | `web-ssti-sandbox` |
+| Deserialization | `https://portswigger.net/web-security/deserialization` | `https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html` | `web-deserialization-gadget` |
+| Expression language | `https://owasp.org/www-community/vulnerabilities/Expression_Language_Injection` | Spring `SimpleEvaluationContext` docs | `web-expression-injection` |
+| JNDI / Log4Shell | `https://logging.apache.org/log4j/2.x/security.html` | `https://www.cisa.gov/news-events/news/apache-log4j-vulnerability-guidance` | `web-jndi-lookup` |
+| File upload | `https://portswigger.net/web-security/file-upload` | `https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html` | `web-upload-validation` |
+| Image and document parsers | `https://imagemagick.org/script/security-policy.php` | Policy file, sandboxed worker | `web-imagemagick-delegate` |
+| Prototype pollution to RCE | `https://portswigger.net/web-security/prototype-pollution/server-side` | Null-prototype objects, schema validation | `web-prototype-pollution` |
+| XXE | `https://portswigger.net/web-security/xxe` | `https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html` | `web-xxe-parser` |
+| SSRF to internal RCE | `https://portswigger.net/web-security/ssrf` | `https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html` | `web-ssrf-parser-differential` |
+| Memory corruption | `https://github.com/shellphish/how2heap` | Compiler hardening flags, sanitizers | `references/exploit-development.md` |
+
+## Finding RCE in code you own
+
+| Tool | Endpoint | Use |
+|---|---|---|
+| Semgrep rules | `https://semgrep.dev/r` | Sink rules for exec, eval, templates |
+| CodeQL queries | `https://codeql.github.com/codeql-query-help/` | Taint paths, `cwe-078`, `cwe-094` |
+| Bandit | `https://bandit.readthedocs.io/` | Python `subprocess` and `pickle` checks |
+| gosec | `https://github.com/securego/gosec` | Go `exec.Command` checks |
+| Brakeman | `https://brakemanscanner.org/` | Rails command and eval checks |
+| OSV-Scanner | `https://google.github.io/osv-scanner/` | Vulnerable dependencies |
+| Trivy | `https://trivy.dev/` | Images, SBOM and IaC |
+| Nuclei templates | `https://github.com/projectdiscovery/nuclei-templates` | Known-CVE checks on your own hosts |
+| OWASP ZAP | `https://www.zaproxy.org/docs/` | DAST on a staging app |
+| Burp Suite docs | `https://portswigger.net/burp/documentation` | Manual testing |
+
+## Patch priority and advisories
+
+| Source | Endpoint | Use |
+|---|---|---|
+| CISA KEV | `https://www.cisa.gov/known-exploited-vulnerabilities-catalog` | Exploited in the wild; JSON feed available |
+| FIRST EPSS | `https://www.first.org/epss/` | Exploitation probability |
+| FIRST CVSS | `https://www.first.org/cvss/` | Severity vector |
+| NVD | `https://nvd.nist.gov/` | CVE records and CPE |
+| OSV | `https://osv.dev/` | Ecosystem advisories |
+| GitHub Advisory DB | `https://github.com/advisories` | Package advisories |
+| USOM | `https://www.usom.gov.tr/` | Turkish national CERT alerts |
+| Vendor PSIRTs | Microsoft MSRC, Cisco, Fortinet, Ivanti, Citrix | Edge devices are frequent KEV entries |
+
+## Intrusion prevention and detection
+
+| Source | Endpoint | Use | Card |
+|---|---|---|---|
+| NIST SP 800-94 | `https://csrc.nist.gov/pubs/sp/800/94/final` | IDPS classes | `defense-ips-inline-tuning` |
+| Suricata docs | `https://docs.suricata.io/` | IDS/IPS rules, eve.json | `defense-ips-inline-tuning` |
+| Snort 3 docs | `https://www.snort.org/documents` | Rules and inline mode | `defense-ips-inline-tuning` |
+| Emerging Threats Open | `https://rules.emergingthreats.net/` | Free ruleset | |
+| OWASP CRS | `https://coreruleset.org/docs/` | WAF anomaly scoring | `defense-waf-anomaly-score` |
+| Coraza | `https://coraza.io/docs/` | CRS-compatible WAF in Go | `defense-waf-anomaly-score` |
+| ModSecurity | `https://github.com/owasp-modsecurity/ModSecurity` | Reference WAF engine | `defense-waf-anomaly-score` |
+| Zeek | `https://docs.zeek.org/` | Network logs for hunting | |
+| Wazuh | `https://documentation.wazuh.com/` | HIDS, FIM, SIEM | |
+| Falco | `https://falco.org/docs/` | Runtime syscall rules, shell in container | `defense-rce-blast-radius` |
+| Sigma rules | `https://github.com/SigmaHQ/sigma` | Web shell and child-process detections | `detection-sigma` |
+| CrowdSec | `https://docs.crowdsec.net/` | Behavior-based IP blocking | |
+| fail2ban | `https://github.com/fail2ban/fail2ban` | Log-driven bans | |
+| CISA CPGs | `https://www.cisa.gov/cybersecurity-performance-goals-cpgs` | Baseline controls | |
+| NIST SP 800-61r3 | `https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-61r3.pdf` | Incident response after RCE | |
+
+## Hardening after the fix
+
+| Source | Endpoint | Use |
+|---|---|---|
+| CIS Benchmarks | `https://www.cisecurity.org/cis-benchmarks` | OS and service baselines |
+| Docker seccomp | `https://docs.docker.com/engine/security/seccomp/` | Syscall filter |
+| Kubernetes Pod Security Standards | `https://kubernetes.io/docs/concepts/security/pod-security-standards/` | Restricted profile |
+| AppArmor | `https://apparmor.net/` | Mandatory access control |
+| OpenSSF Compiler Hardening Guide | `https://best.openssf.org/Compiler-Hardening-Guides/Compiler-Options-Hardening-Guide-for-C-and-C++` | C and C++ flags |
+
+## Labs (local or legal)
+
+| Lab | Endpoint | Covers |
+|---|---|---|
+| PortSwigger Web Security Academy | `https://portswigger.net/web-security/all-labs` | Every web RCE class, free |
+| OWASP Juice Shop | `https://owasp.org/www-project-juice-shop/` | Broad web app |
+| DVWA | `https://github.com/digininja/DVWA` | Command injection, upload |
+| WebGoat | `https://owasp.org/www-project-webgoat/` | Java, deserialization |
+| Vulhub | `https://github.com/vulhub/vulhub` | Docker images of real CVEs, test patch and detection |
+| TryHackMe | `https://tryhackme.com/` | Guided rooms, blue and red |
+| Hack The Box | `https://www.hackthebox.com/` | Machines and Academy |
+| Detection labs | `labs/` in this repo | Local Beril labs |
+
+## Disclosed reports and research
+
+| Source | Endpoint | Use |
+|---|---|---|
+| HackerOne Hacktivity | `https://hackerone.com/hacktivity` | Disclosed RCE reports and fixes |
+| PortSwigger Research | `https://portswigger.net/research` | New primitives |
+| Google Project Zero | `https://googleprojectzero.blogspot.com/` | Root-cause analyses |
+| Project Zero 0day RCA | `https://googleprojectzero.github.io/0days-in-the-wild/` | In-the-wild exploit analyses |
+| Assetnote research | `https://www.assetnote.io/resources/research` | Edge device RCE, patch diffs |
+| watchTowr Labs | `https://labs.watchtowr.com/` | Patch diffing of KEV bugs |
+| Trail of Bits blog | `https://blog.trailofbits.com/` | Audits and tooling |
+
+Rule. A blog post is a lead. A claim enters a card only with a CVE, an advisory, a vendor fix or a reproducible lab.
+
+
+<!-- ===== references/vulnerability-taxonomy.md ===== -->
+
+# Vulnerability class taxonomy
+
+A map of discovery classes, each with where it bites, how to find it, how to close it, and the card that holds the mechanism. The point is coverage. A defender should be able to walk the table and ask "do we test for this, and is it closed?"
+
+Snapshot 2026-11-26.
+
+## Injection and code execution
+
+| Class | Where | Find | Close | Card |
+|---|---|---|---|---|
+| SQL injection | DB query built from input | Parameterized vs concatenated query review; error and time probes | Prepared statements, least-privilege DB user | `web-sqli-parameterized` |
+| OS command injection | Shell from input | Sink review for `exec`/`system`/`shell=True` | No shell, argv arrays, allowlist | `web-command-injection` |
+| Code / eval injection | Dynamic eval of input | Grep for `eval`, `Function`, `pickle`, `exec` | Remove eval, sandbox, schema | `web-deserialization-gadget` |
+| Template injection (SSTI) | Template built from input | `{{7*7}}` probe, engine fingerprint | Fixed template, data in context | `web-ssti-sandbox` |
+| Expression language (SpEL/OGNL) | EL evaluator from input | Grep `parseExpression`, framework version | `SimpleEvaluationContext`, patch | `web-expression-injection` |
+| JNDI / Log4Shell | Logged data expanded | Inventory log4j-core incl. shaded jars | Upgrade, strip lookups | `web-jndi-lookup` |
+| Deserialization | Native object from bytes | Format and magic-prefix review | Avoid native, allowlist types | `web-deserialization-gadget` |
+| XXE | XML/SAML/DOCX/SVG parser | External-entity probe | Disable DTD and external entities | `web-xxe-parser` |
+| LDAP / XPath injection | Directory or XML query | Blind and syntax probes | Parameterize, escape per context | `web-ldap-xpath` |
+| Prototype pollution | JS merge of input | `__proto__` source and sink | Null-proto objects, schema | `web-prototype-pollution` |
+| Parser-zoo RCE (image/doc) | Converter delegates | Tool and version inventory, policy review | Strict policy, sandbox, re-encode | `web-imagemagick-delegate` |
+
+## Access control and authorization
+
+| Class | Find | Close | Card |
+|---|---|---|---|
+| IDOR / BOLA | Swap an object id across users | Per-object owner check server-side | `web-idor-owner-check` |
+| Mass assignment | Add fields the UI never sends | Bind allowlist, read serializer | `api-mass-assignment` |
+| GraphQL field auth | Query fields the UI hides | Per-field resolver auth | `web-graphql-field-auth` |
+| Shadow API versions | Old `/v1` keeps old authz | Retire or re-auth old versions | `api-versioning` |
+| Rate-limit bypass | Header and casing tricks | Normalize, limit per identity | `api-rate-limit-bypass` |
+
+## Authentication and session
+
+| Class | Find | Close | Card |
+|---|---|---|---|
+| Credential stuffing | Replay breached pairs | MFA, breached-password check | `auth-credential-stuffing` |
+| Password spraying | One password, many accounts | Tenant-wide aggregation, ban common | `auth-password-spray` |
+| MFA fatigue / push bombing | Repeat push to a test account | Number matching, phishing-resistant | `auth-mfa-fatigue` |
+| Phishable MFA | Proxy relay of OTP | FIDO2/WebAuthn, PKI | `auth-phishing-resistant` |
+| JWT signature trust | `alg=none`, key confusion | Pin algorithm, verify key | `web-jwt-signature-trust` |
+| OAuth redirect binding | Open redirect in flow | Exact redirect match, PKCE | `web-oauth-redirect-binding` |
+| SAML signature wrapping | Move the signed element | Canonical validation, schema | `web-saml-signature-wrapping` |
+
+## Request handling and server state
+
+| Class | Find | Close | Card |
+|---|---|---|---|
+| SSRF | Input that becomes a server request | Parser-differential probe, metadata reach | Allowlist egress, block metadata IP | `web-ssrf-parser-differential` |
+| Request smuggling / desync | CL vs TE disagreement | Parser-disagreement probes | One parser, reject ambiguous | `web-desync-parser-disagreement` |
+| Host header poisoning | Reset link uses Host | Pin a canonical host | `web-host-header-reset` |
+| Open redirect | Redirect param to external | Allowlist redirect targets | `web-open-redirect-chain` |
+| Cache poisoning / deception | Unkeyed input, path confusion | Key the cache correctly | `web-cache-key-unkeyed-input`, `web-cache-deception` |
+| Race condition | Parallel requests on one state | Single-packet probe | Idempotency and locks | `web-race-single-packet` |
+| Path traversal | `../` and encodings | Canonical-path probe | Canonicalize then check | `web-traversal-canonical-path` |
+| File upload to execution | Extension/MIME/magic mismatch | Validate all three, store off-web | `web-upload-validation` |
+
+## Client-side
+
+| Class | Find | Close | Card |
+|---|---|---|---|
+| XSS (stored/reflected/DOM) | Parser-differential probes | Context-encode, CSP | `web-xss-parser-differential`, `web-csp-bypass` |
+| CSRF | State-changing request without token | SameSite, token, re-auth | `web-csrf-samesite` |
+| CORS misconfig | Reflected or null origin | Explicit origin allowlist | `web-cors-null-origin` |
+| postMessage / clickjacking | Origin check, frame ancestors | Verify origin, frame-ancestors | `web-postmessage`, `web-clickjacking` |
+| DOM clobbering / dangling markup | Injected markup alters DOM | Sanitize, isolate | `web-dom-clobbering`, `web-dangling-markup` |
+
+## Network, infrastructure and availability
+
+| Class | Find | Close | Card |
+|---|---|---|---|
+| Weak egress / C2 channel | What a host can reach outbound | Allowlist egress, deny-and-log | `net-egress-filtering` |
+| DDoS (volumetric/protocol/app) | Classify by OSI layer | Match control to layer | `net-ddos-layers` |
+| TLS misconfig | Protocol and cipher review | Modern config, pin versions | `tls-config-review` |
+| Evil twin / rogue AP | Cert validation on clients | EAP-TLS, PMF, segment IoT | `wifi-evil-twin` |
+| Attack-surface sprawl | Passive enumeration vs inventory | Continuous ASM, kill dangling CNAMEs | `recon-attack-surface` |
+| Email spoofing / BEC | DMARC policy and alignment | `p=reject`, DKIM alignment | `email-dmarc-alignment` |
+
+## Platform and privilege escalation
+
+| Class | Find | Close | Card |
+|---|---|---|---|
+| Linux SUID / capabilities | GTFOBins review | Drop SUID, caps | `linux-suid` |
+| Linux cron / systemd PATH | Writable unit or PATH | Fix ownership and PATH | `linux-cron-systemd` |
+| Windows service ACL | Weak/unquoted service | Fix ACL, quote path | `win-service-acl` |
+| Windows token privileges | Potato-family privs | Remove impersonation privs | `win-token-privileges` |
+| Container escape | Socket, caps, host mounts | Drop caps, no socket, read-only | `container-escape`, `cloud-docker-socket` |
+| Cloud IAM wildcard | `*` actions, trust policy | Scope actions and trust | `cloud-iam-wildcard` |
+| K8s hostPath / privileged pod | Pod Security review | Restricted profile | `cloud-k8s-hostpath` |
+| Cloud metadata SSRF | Reach 169.254.169.254 | IMDSv2, block metadata | `cloud-metadata-role` |
+
+## Supply chain and build
+
+| Class | Find | Close | Card |
+|---|---|---|---|
+| Dependency confusion / typosquat | Internal names on public registry | Scope, pin registry | `supply-typosquat` |
+| Lockfile integrity | Unpinned or mutable deps | Hash-pin, reproducible build | `supply-lockfile` |
+| CI untrusted checkout | `pull_request_target` misuse | Least privilege, no secret on fork | `cicd-pr-target` |
+| Unverified provenance | No signing | Sigstore, verify in deploy | `supply-sigstore` |
+| Leaked secrets | Scan history with verification | Rotate, scope, vault | `secrets-verified`, `key-management` |
+
+## Cryptography
+
+| Class | Find | Close | Card |
+|---|---|---|---|
+| Weak randomness | Predictable token source | CSPRNG | `crypto-weak-random` |
+| Nonce reuse | Repeated IV/nonce | Unique per message | `crypto-nonce` |
+| Non-constant-time compare | Timing on secret compare | Constant-time compare | `crypto-constant-time` |
+| Weak KDF | Fast hash for passwords | Argon2/scrypt/bcrypt | `crypto-kdf`, `crypto-kdf-derive` |
+| Key rotation gaps | Stale keys, no rotation | Rotation and JWKS cache plan | `crypto-key-rotation`, `api-jwt-rotation` |
+
+## Mobile, firmware, hardware
+
+| Class | Find | Close | Card |
+|---|---|---|---|
+| Android exported provider | FileProvider path review | Scope exports, grant URIs | `mobile-provider-paths` |
+| iOS ATS exception / bridge | WKWebView bridge review | Remove exceptions, validate bridge | `mobile-ios-ats` |
+| Deep-link bridge abuse | Link to native call | Validate and authorize | `mobile-deep-link-bridge` |
+| Firmware CGI injection | Binary endpoint review | Patch, input handling | `firmware-cgi-injection` |
+| Secure boot / update signing | Downgrade and signature | Enforce signed, anti-rollback | `firmware-secureboot`, `firmware-update-sign` |
+| Hardware side channel | Timing/power leakage | Constant-time, masking | `hardware-sidechannel` |
+
+Use the table as a checklist, not a to-do. For each row, decide whether it is in scope, whether you test for it, and whether it is closed in the systems you own. Rows with no card yet are candidates for `knowledge/GAPS.md`.
+
+
+<!-- ===== references/osint-toolkit.md ===== -->
+
+# OSINT toolkit
+
+Open source intelligence is the part of recon that uses public records and
+public posts instead of packets. The output is a lead sheet with a source and a
+date, not a screenshot pile. Every claim needs a second source before it enters
+a report.
+
+Use this on a scope you own or a program asset. Public does not mean free of
+terms. `references/recon.md` covers the host side. This file covers people,
+organizations, certificates, archives and images.
+
+## The method
+
+1. Write the question. "Who owns this domain" and "which hosts exist" need
+   different sources.
+2. Name the evidence that would answer it.
+3. Collect from two independent source classes.
+4. Record the URL, the date and the confidence.
+5. Discard a source that only repeats another source.
+6. Archive before you quote. A page can change.
+
+| Rung | Evidence |
+|---|---|
+| Lead | One post or one record |
+| Corroborated | Two independent sources agree |
+| Confirmed | A primary record or a direct observation |
+| Attributed | A named owner or document links the fact to the target |
+
+A report needs corroborated or better. A lead is a note.
+
+## Domain and DNS
+
+| Job | Source | Note |
+|---|---|---|
+| Registration | RDAP, whois | RDAP is structured and free |
+| History | SecurityTrails, ViewDNS, DNS history | Free tiers are limited |
+| Passive DNS | crt.sh, Cert Spotter, HackerTarget | Certificate names are not hosts |
+| DNS records | `dig`, `dnsx` | A, AAAA, MX, TXT, NS, CAA |
+| Zone transfer | `dig AXFR` | Try every NS |
+| Wildcard | random label resolve | A wildcard invalidates brute force |
+| Email policy | SPF, DMARC, DKIM selectors | `dig TXT` |
+| Reputation | VirusTotal, URLhaus, Google Safe Browsing | A block is not a verdict |
+
+Tools.
+
+```bash
+dig +short A example.com
+dig +short MX example.com
+dig +short TXT example.com
+dig AXFR example.com @ns1.example.com
+whois example.com
+curl -s https://rdap.org/domain/example.com
+```
+
+## Certificates and ASN
+
+Certificate transparency is the best free hostname source. It also exposes
+internal names and old hosts.
+
+| Job | Source |
+|---|---|
+| Certificate names | crt.sh, Cert Spotter, Censys |
+| Certificate details | `openssl s_client`, crt.sh |
+| ASN and prefix | `whois -h whois.radb.net`, bgp.tools, RIPEstat |
+| BGP history | RIPEstat, BGPlay, BGPstream |
+| RPKI state | `routinator`, Cloudflare RPKI portal |
+| Reverse IP | HackerTarget, Shodan, Censys |
+| Favicon hash | Shodan `http.favicon.hash` |
+
+Censys and Shodan need an account. A free query budget is enough for a small
+scope. Do not scan the whole internet from your laptop.
+
+## Search engines and dorks
+
+A dork is a query with a field. The engine does the crawl.
+
+| Source | Field examples |
+|---|---|
+| Google | `site:`, `filetype:`, `inurl:`, `intitle:` |
+| Bing | `site:`, `filetype:`, `ip:` |
+| GitHub | `path:`, `filename:`, `org:`, `language:` |
+| GitLab | `filename:`, `extension:`, `group:` |
+| Shodan | `http.title:`, `http.favicon.hash:`, `ssl:` |
+| Censys | `services.http.response.headers:` |
+| FOFA | `body=`, `cert=`, `domain=` |
+| ZoomEye | `app:`, `title:` |
+
+High value dorks.
+
+```text
+site:example.com filetype:pdf
+site:example.com inurl:admin
+site:example.com ext:env OR ext:sql OR ext:bak
+site:github.com "example.com" password
+site:github.com org:example filename:.env
+```
+
+A dork hit is a URL. Open it and check that it is live and in scope.
+
+## Code and secret exposure
+
+| Job | Source |
+|---|---|
+| Public repos | GitHub, GitLab, Gitea, Sourcehut |
+| Search | GitHub code search, grep.app, Sourcegraph |
+| Secret scan | gitleaks, trufflehog, GitHub secret scanning |
+| History | `git log -p`, `git filter-repo` |
+| Package metadata | npm, PyPI, Maven, NuGet |
+| CI config | workflow files, GitLab CI, Jenkinsfile |
+| Dork for config | `filename:.env`, `filename:docker-compose.yml` |
+
+A key in a public repo is a finding only after a read only verification and a
+check of the exposed rights. Revoke first, then clean history.
+
+## People and organizations
+
+| Job | Source |
+|---|---|
+| Corporate registry | National company register, OpenCorporates |
+| Ownership | Registry filings, annual reports, tender records |
+| Officers | Registry, LinkedIn, press releases |
+| Email format | Public emails, `theHarvester`, Hunter |
+| Breach exposure | HIBP, DeHashed, LeakCheck |
+| Social | LinkedIn, X, Mastodon, GitHub profile |
+| Conference talks | YouTube, conference schedule, Papers |
+| Job posts | Company careers, LinkedIn jobs |
+
+Email format inference.
+
+```text
+first.last@, firstlast@, f.last@, first@
+```
+
+Collect five real addresses first. A format without a real sample is a guess.
+
+## Archives
+
+| Job | Source |
+|---|---|
+| Page history | Wayback Machine, archive.today |
+| Dead link | Wayback, Common Crawl |
+| Deleted post | Archive, search cache |
+| Document metadata | `exiftool`, `pdfinfo` |
+| Screenshot | A local capture with a timestamp |
+
+Archive the page before quoting. A live URL can change under the report.
+
+## Images and geolocation
+
+| Job | Method |
+|---|---|
+| Reverse image | Google Lens, Yandex, Bing, TinEye |
+| EXIF | `exiftool image.jpg` |
+| Metadata strip | Check for GPS and device |
+| Landmark | Sign text, skyline, road marks, plate style |
+| Shadow | Sun angle and time of day |
+| Weather | Historical weather for the claimed date |
+| Map match | Street View, Mapillary, OpenStreetMap |
+
+A location needs two independent cues. A single landmark is a lead.
+
+## Corporate and infrastructure pivots
+
+| Pivot | Why |
+|---|---|
+| ASN to prefixes | Finds hosting the org owns |
+| Certificate org field | Finds related certificates |
+| Favicon hash | Finds the same app on other hosts |
+| Analytics ID | Finds sites with the same tag |
+| MX and SPF include | Finds the mail provider |
+| GitHub org | Finds repos and CI identities |
+| Trademark and app store | Finds product names and package ids |
+| Job post | Names the stack and the provider |
+
+## Turkish sources
+
+| Source | Use |
+|---|---|
+| USOM | Advisories and block lists |
+| BTK | Regulator notices |
+| Ticaret Sicili Gazetesi | Company notices |
+| Resmî Gazete | Regulation and tenders |
+| YÖK Akademik | Academic profiles |
+| TÜBİTAK | Projects and calls |
+
+Turkish company data is split across the trade registry and the official
+gazette. Search the exact company title, not the brand.
+
+## Verification
+
+- Two source classes, not two pages on the same site.
+- Primary record over an aggregator.
+- Date every fact.
+- Archive every quote.
+- Check the scope before a host request.
+- Label inference and keep it out of the fact column.
+- A dead source stays in the note with the archive link.
+
+## Tool table
+
+| Tool | Job | Install |
+|---|---|---|
+| `dig`, `whois` | DNS and registration | System package |
+| `amass` | Asset mapping | `go install` |
+| `subfinder` | Passive hosts | `go install` |
+| `dnsx` | DNS resolution | `go install` |
+| `httpx` | HTTP probe | `go install` |
+| `theHarvester` | Email and host | `pipx` |
+| `gitleaks` | Secret scan | Release binary |
+| `trufflehog` | Secret scan plus verify | Release binary |
+| `exiftool` | Metadata | System package |
+| `waybackurls` | Archive URLs | `go install` |
+| `gau` | Known URLs | `go install` |
+| `shodan` | Host search | `pipx` |
+| `censys` | Certificate and host | `pipx` |
+| `maltego` | Graph pivot | Desktop |
+| `spiderfoot` | Automated OSINT | `pipx` |
+
+Do not install all of them. Pick one per column and learn its noise.
+
+## Legal and terms
+
+Public data is still governed. Robots.txt, terms of service, database rights
+and personal data rules apply. A login wall changes the terms. An API key is a
+contract. A breach dump is not a public record.
+
+- Keep a per source note on the terms and the login state.
+- Minimize personal data. A dossier does not need a home address.
+- Name the retention and the deletion owner.
+- For a commercial deliverable, check the database licence.
+- Turkey, KVKK applies to personal data even when the source is public.
+- EU, GDPR applies when the subject is in the EU.
+
+This is a working summary, not legal advice.
+
+## Output
+
+```markdown
+## Lead
+- Question:
+- Fact:
+- Source 1:
+- Source 2:
+- Archive:
+- Date:
+- Confidence: lead / corroborated / confirmed
+- Scope note:
+```
+
+A lead without two sources stays a lead. That is the discipline.
+
+
+<!-- ===== references/firewall-and-filter-defense.md ===== -->
+
+# Firewall, WAF and filter defense
+
+Why filters get bypassed, and how a defender closes the gap. This is a defender's page. Understand evasion so you can test your own controls and layer them. A filter is a speed bump, never the fix. Use it only against systems you own or have written scope for.
+
+Snapshot 2026-11-26.
+
+## The core idea
+
+A firewall, WAF or IPS makes a decision on a parsed view of traffic. Every bypass is a disagreement between what the filter parsed and what the backend will parse. Defense is therefore two moves: fix the real sink behind the filter, and shrink the parser gap so the filter and the backend agree.
+
+## Why filters fail, and the defensive answer
+
+| Evasion principle | Why it works | Defensive answer |
+|---|---|---|
+| Encoding and normalization gaps | Filter and app decode differently (URL, double-URL, unicode, case) | Normalize to one canonical form before the rule, then decode once in the app |
+| Parser differential | Filter and backend disagree on boundaries (CL/TE, charset, multipart) | One parser, reject ambiguous requests, keep WAF and app decoders in step |
+| Protocol downgrade / smuggling | HTTP/2 to HTTP/1.1 rewrite changes framing | Terminate consistently, reject malformed framing (`web-http2-downgrade`, `web-desync-parser-disagreement`) |
+| Obfuscated payloads | Comments, whitespace, alternative syntax slip signatures | Prefer positive security (allowlist) over blocklists; score, don't single-match |
+| Traffic volume / distribution | Many IPs via proxies dilute per-source rules | Rate-limit per identity and behavior, not per IP alone |
+| Encryption | Payload rules cannot see inside TLS | Decrypt at the edge for inspection, or rely on behavior and egress |
+| Allowed-channel abuse | C2 rides 443, 53, cloud APIs that are permitted | Egress allowlist and protective DNS (`net-egress-filtering`) |
+
+## WAF deployment
+
+- Run OWASP CRS or Coraza in detection-only first, collect a week of real traffic, then tune. See `defense-waf-anomaly-score`.
+- CRS scores per rule and blocks on a threshold (default inbound 5). Raise paranoia level one step at a time.
+- Write exclusions per path and parameter, never a global off switch.
+- A WAF virtual-patches a known CVE while the real patch ships. It does not replace the patch.
+
+## IDS and IPS baseline
+
+- Suricata or Snort in IDS mode first; rank rules by alert volume. Threshold or suppress the noisy ones with a note. See `defense-ips-inline-tuning`.
+- Switch to inline drop per rule category, not all at once.
+- Encrypted traffic needs decryption or the payload rules are blind; lean on TLS metadata, JA3/JA4 and egress.
+
+## Egress and C2 prevention
+
+- Default-deny outbound, allow known-good per host, deny-and-log the rest (`net-egress-filtering`).
+- Force internal or protective DNS resolvers; filter DNS to untrusted domains (MITRE M1037.004).
+- Servers should not browse the internet; give each a narrow destination list.
+- C2 hides in permitted traffic, so blocking known-bad indicators alone always lags.
+
+## Layer the controls
+
+No single box is the perimeter. A workable stack is edge DDoS and anycast, then TLS termination with WAF, then app-level input handling and authz, then host egress control and EDR, then detection on what still gets through (`detection-sigma`, `detection-beacon`, `detection-dns`). Each layer assumes the one in front can fail.
+
+## Primary sources
+
+| Source | Endpoint | Use |
+|---|---|---|
+| MITRE ATT&CK Filter Network Traffic | `https://attack.mitre.org/mitigations/M1037/` | Egress and protocol filtering |
+| MITRE ATT&CK T1071 | `https://attack.mitre.org/techniques/T1071/` | C2 over permitted protocols |
+| SANS ISC egress filtering | `https://isc.sans.edu/diary/18379` | Building an egress allowlist |
+| OWASP CRS docs | `https://coreruleset.org/docs/` | Anomaly scoring, paranoia levels |
+| Coraza | `https://coraza.io/docs/` | CRS-compatible WAF |
+| Suricata docs | `https://docs.suricata.io/` | IDS/IPS tuning |
+| NIST SP 800-94 | `https://csrc.nist.gov/pubs/sp/800/94/final` | IDPS classes |
+| CISA DDoS joint guide | `https://www.cisa.gov/resources-tools/resources/understanding-and-responding-distributed-denial-service-attacks` | Layered DDoS defense |
+
+Rule of the page. Every evasion listed here is a reason to add a layer and fix the sink, not a recipe to run against someone else's network.
+
+
+<!-- ===== references/communities-and-feeds.md ===== -->
+
+# Communities and feeds
+
+Where defenders and researchers publish and discuss. Complements `references/forums.md` (which has tested fetch endpoints) with a broader, lower-maintenance list. Read for method and disclosed detail. A blog post is a lead, not a fact until confirmed by a CVE, advisory, vendor fix or a reproducible lab.
+
+Snapshot 2026-11-26.
+
+## Disclosure and writeups
+
+| Source | Endpoint | Take |
+|---|---|---|
+| HackerOne Hacktivity | `https://hackerone.com/hacktivity` | Disclosed reports and fixes |
+| Bugcrowd blog | `https://www.bugcrowd.com/blog/` | Methodology, program notes |
+| Intigriti blog | `https://www.intigriti.com/researchers/blog` | Web bug writeups |
+| PentesterLand writeups | `https://pentester.land/writeups/` | Aggregated bounty writeups |
+| GitHub Security Advisories | `https://github.com/advisories` | Package advisories |
+| Exploit-DB | `https://www.exploit-db.com/` | PoC archive, study only on your own lab |
+
+## Research blogs
+
+| Source | Endpoint | Take |
+|---|---|---|
+| PortSwigger Research | `https://portswigger.net/research` | New web primitives |
+| Google Project Zero | `https://googleprojectzero.blogspot.com/` | Deep root-cause analyses |
+| watchTowr Labs | `https://labs.watchtowr.com/` | Edge-device patch diffing |
+| Assetnote | `https://www.assetnote.io/resources/research` | Appliance RCE research |
+| Trail of Bits | `https://blog.trailofbits.com/` | Audits, tooling, crypto |
+| Orange Tsai | `https://blog.orange.tw/` | Request smuggling, logic chains |
+| Microsoft MSRC | `https://msrc.microsoft.com/blog/` | Vendor-side analysis |
+| Rapid7 | `https://www.rapid7.com/blog/` | Vuln analysis, Metasploit notes |
+
+## Blue team and detection
+
+| Source | Endpoint | Take |
+|---|---|---|
+| SANS Internet Storm Center | `https://isc.sans.edu/diaries.html` | Daily defender diaries |
+| SigmaHQ | `https://github.com/SigmaHQ/sigma` | Detection rules |
+| Florian Roth / Nextron | `https://www.nextron-systems.com/blog/` | Detection engineering |
+| The DFIR Report | `https://thedfirreport.com/` | Full intrusion timelines |
+| Red Canary blog | `https://redcanary.com/blog/` | Threat detection |
+| MITRE ATT&CK blog | `https://medium.com/mitre-attack` | Technique updates |
+| Awesome Detection Engineering | `https://github.com/infosecB/awesome-detection-engineering` | Curated list |
+
+## Communities (login or human in the loop)
+
+| Source | Endpoint | Take |
+|---|---|---|
+| r/netsec | `https://old.reddit.com/r/netsec/` | Curated writeups |
+| r/blueteamsec | `https://old.reddit.com/r/blueteamsec/` | Defender links |
+| r/AskNetsec | `https://old.reddit.com/r/AskNetsec/` | Practitioner Q&A |
+| 0x00sec | `https://0x00sec.org/` | Low-level, RE, red team |
+| TryHackMe Discord/forum | `https://tryhackme.com/` | Learning community |
+| Hack The Box forum | `https://forum.hackthebox.com/` | Machine and cert discussion |
+| OWASP Slack | `https://owasp.org/slack/invite` | Project and appsec chat |
+
+## Standards bodies and CERTs
+
+| Source | Endpoint | Take |
+|---|---|---|
+| CISA | `https://www.cisa.gov/news-events/cybersecurity-advisories` | US advisories, KEV |
+| NCSC UK | `https://www.ncsc.gov.uk/section/advice-guidance/all-topics` | Guidance |
+| ENISA | `https://www.enisa.europa.eu/publications` | EU threat landscape |
+| USOM (Türkiye) | `https://www.usom.gov.tr/` | Turkish national CERT alerts |
+| FIRST | `https://www.first.org/` | CVSS, EPSS, CSIRT community |
+| OWASP | `https://owasp.org/projects/` | Projects, cheat sheets, WSTG |
+
+## Turkish-language
+
+| Source | Endpoint | Take |
+|---|---|---|
+| USOM | `https://www.usom.gov.tr/` | Alerts and takedown lists |
+| BTK / TR-CERT | `https://www.btk.gov.tr/` | Regulator and CERT notices |
+| Mehmet Dursun İnce | `https://mdisec.com/` | Turkish offensive-security writeups |
+| Canyoupwn.me archive | `https://canyoupwn.me/` | Turkish CTF and method notes |
+
+Maintenance note. This list favors stability over tested endpoints. Before wiring any of these into a harvest job, confirm the feed URL and read `references/forums.md` for the sources that already have tested endpoints and parsing notes.
+
+
 <!-- ===== references/rce-curriculum.md ===== -->
 
 # RCE curriculum, six weeks
@@ -8325,6 +8997,63 @@ One artifact per track, twelve total. A short index page that links each one.
 The portfolio is the proof of the senior bar, not the track list.
 
 
+<!-- ===== docs/osint.md ===== -->
+
+# OSINT
+
+Public records and posts answer questions packets cannot. `references/osint-toolkit.md`
+is the method and tool shelf. This page is the short path.
+
+## Start
+
+One question, two source classes, a date on every fact.
+
+```bash
+./beril recon --target example.com
+dig +short TXT example.com
+curl -s https://rdap.org/domain/example.com
+```
+
+Map the domain first. Then read certificates, registries, code and archives in
+that order.
+
+## Rules
+
+- Public is not permission. Read the terms and the scope.
+- A lead needs two independent sources before it enters a report.
+- Archive before you quote.
+- Name the date, the source and the confidence.
+- Keep personal data to the minimum the question needs.
+- A login wall and an API key are separate terms.
+- A dead source stays with its archive link.
+
+## Order
+
+1. `recon` for the host inventory.
+2. RDAP and DNS for registration and records.
+3. Certificate transparency for names.
+4. Registry and corporate records for the owner.
+5. Code and package search for leaks and stack.
+6. Archive for deleted and changed pages.
+7. Images for place and time only with two cues.
+
+## Output
+
+Use the lead block in `references/osint-toolkit.md`. A lead without two sources
+stays a lead.
+
+## Limits
+
+- Free APIs rate limit.
+- A certificate name is not a live host.
+- A favicon hash is not proof of ownership.
+- A social profile is self reported.
+- An image cue can match several places.
+
+Check the host with `scan` after the map. OSINT finds the door. It does not
+prove it opens.
+
+
 <!-- ===== docs/reverse-engineering.md ===== -->
 
 # Reverse engineering quick start
@@ -9022,7 +9751,7 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 
 # Knowledge index
 
-902 durable cards. Read this before a web search; open a card only when it matches.
+932 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -9119,6 +9848,7 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `a-kid-header-can-become-a-path-or-a-query` | A kid header can become a path or a query | auth, jwt, kid | medium | 2026-11-26 |
 | `a-wildcard-redirect-uri-is-a-claimable-subdomain` | A wildcard redirect URI is a claimable subdomain | auth, oauth, redirect | high | 2026-11-26 |
 | `cookie-prefixes-only-work-when-the-browser-enforces-them` | Cookie prefixes only work when the browser enforces them | auth, cookie, session | medium | 2026-11-26 |
+| `auth-credential-stuffing` | Credential stuffing is a reuse bug, not a guessing bug | auth, credential-stuffing, account-takeover | high | 2026-11-26 |
 | `jwt-algorithm-confusion-uses-the-public-key-as-an-hmac-secre` | JWT algorithm confusion uses the public key as an HMAC secret | auth, jwt, crypto | high | 2026-11-26 |
 | `just-in-time-sso-provisioning-trusts-the-wrong-claim` | Just in time SSO provisioning trusts the wrong claim | auth, sso, provisioning | medium | 2026-11-26 |
 | `logout-must-revoke-refresh-and-device-tokens` | Logout must revoke refresh and device tokens | auth, session, logout | high | 2026-11-26 |
@@ -9127,6 +9857,9 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `otp-verification-needs-a-race-and-a-reuse-check` | OTP verification needs a race and a reuse check | auth, otp, race | medium | 2026-11-26 |
 | `pkce-can-be-stripped-when-the-server-does-not-require-it` | PKCE can be stripped when the server does not require it | auth, oauth, pkce | high | 2026-11-26 |
 | `password-reset-tokens-need-entropy-binding-and-single-use` | Password reset tokens need entropy, binding and single use | auth, reset, token | high | 2026-11-26 |
+| `auth-password-spray` | Password spraying inverts the loop to dodge lockout | auth, password-spray, detection | high | 2026-11-26 |
+| `auth-phishing-resistant` | Phishing-resistant MFA binds the credential to the origin | auth, fido2, webauthn, phishing | high | 2026-11-26 |
+| `auth-mfa-fatigue` | Push MFA without number matching is a fatigue target | auth, mfa, push-bombing | high | 2026-11-26 |
 | `saml-signature-wrapping-moves-the-assertion-not-the-signatur` | SAML signature wrapping moves the assertion, not the signature | auth, saml, xsw | medium | 2026-11-26 |
 | `session-id-must-rotate-at-login` | Session id must rotate at login | auth, session, fixation | high | 2026-11-26 |
 | `webauthn-trusts-the-rp-id-and-origin-pair` | WebAuthn trusts the RP ID and origin pair | auth, passkey, webauthn | medium | 2026-11-26 |
@@ -9289,6 +10022,10 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `db-recovery-redo` | Redo applies committed pages before undo | database, recovery, redo | high | 2026-11-25 |
 | `db-vacuum` | Vacuum reclaims versions and freezes old transaction ids | database, vacuum, bloat | medium | 2026-11-25 |
 | `db-vectorized-exec` | Vectorized execution amortizes per-row cost | database, vectorized, execution | medium | 2026-11-25 |
+| `defense-waf-anomaly-score` | A CRS WAF blocks a score, not an attack | defense, waf, modsecurity, crs | high | 2026-11-26 |
+| `defense-ips-inline-tuning` | An inline IPS needs an alert-only baseline first | defense, ips, suricata, snort | high | 2026-11-26 |
+| `defense-kev-patch-order` | Patch order follows exploitation evidence, not CVSS alone | defense, patch, kev, epss | high | 2026-11-26 |
+| `defense-rce-blast-radius` | RCE impact is the rights of the process that runs it | defense, rce, hardening, least-privilege | high | 2026-11-26 |
 | `a-crypto-decision-needs-the-threat-and-the-key-owner` | A crypto decision needs the threat and the key owner | design, crypto, key | high | 2026-11-26 |
 | `a-log-line-is-a-data-decision` | A log line is a data decision | design, logging, privacy | high | 2026-11-26 |
 | `a-rate-limit-needs-a-scope-and-a-cost` | A rate limit needs a scope and a cost | design, rate-limit, abuse | high | 2026-11-26 |
@@ -9351,6 +10088,7 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `econ-debt-interest` | Technical debt is principal plus interest | economics, debt, interest | high | 2026-11-25 |
 | `econ-total-cost` | Total cost includes the invisible line items | economics, tco, cost | high | 2026-11-25 |
 | `electron-context-isolation` | Electron is Node with a browser attached | electron, desktop, context-isolation | medium | 2026-11-24 |
+| `email-dmarc-alignment` | DMARC enforces alignment that SPF and DKIM alone do not | email, dmarc, spf, dkim, bec | high | 2026-11-26 |
 | `eng-gc` | A GC trades throughput for pause and space | engineering, gc, allocation | medium | 2026-11-25 |
 | `eng-regression` | A bug fix needs a test that failed before it | engineering, testing, regression | high | 2026-11-25 |
 | `eng-repro-build` | A build should be reproducible from a clean checkout | engineering, build, reproducible | high | 2026-11-25 |
@@ -9649,6 +10387,8 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `keychain-accessibility-decides-off-device-exposure` | Keychain accessibility decides off device exposure | mobile, ios, keychain | medium | 2026-11-26 |
 | `mobile-swift` | Swift hooks need mangled names or a bridge | mobile, ios, swift | medium | 2026-11-24 |
 | `mobile-swiftui-state` | SwiftUI state is not a security boundary | mobile, ios, swiftui | low | 2026-11-24 |
+| `net-ddos-layers` | DDoS defense matches the layer the attack targets | net, ddos, availability | high | 2026-11-26 |
+| `net-egress-filtering` | Egress filtering is allowlist outbound, deny and log the rest | net, egress, c2, exfiltration | high | 2026-11-26 |
 | `net-cdn` | A CDN is a cache with a key and a purge | network, cdn, cache | medium | 2026-11-25 |
 | `a-cdn-origin-check-needs-the-host-and-the-certificate` | A CDN origin check needs the Host and the certificate | network, cdn, origin | medium | 2026-11-26 |
 | `a-more-specific-bgp-prefix-wins-the-route` | A more specific BGP prefix wins the route | network, bgp, hijack | high | 2026-11-26 |
@@ -9690,6 +10430,18 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `os-signal` | A signal handler runs on an arbitrary stack point | os, signal, async | medium | 2026-11-25 |
 | `os-syscall` | A syscall is an ABI with an error convention | os, syscall, errno | medium | 2026-11-25 |
 | `os-virtual-memory` | Virtual memory is a translation and permission layer | os, virtual-memory, paging | medium | 2026-11-25 |
+| `a-github-dork-is-a-query-with-a-field` | A GitHub dork is a query with a field | osint, github, dork | high | 2026-11-26 |
+| `a-breach-hit-needs-a-read-only-check` | A breach hit needs a read only check | osint, breach, credential | medium | 2026-11-26 |
+| `a-certificate-name-is-not-a-live-host` | A certificate name is not a live host | osint, certificate, dns | high | 2026-11-26 |
+| `a-corporate-registry-is-the-ownership-record` | A corporate registry is the ownership record | osint, corporate, registry | high | 2026-11-26 |
+| `a-dead-source-stays-in-the-note` | A dead source stays in the note | osint, dead-link, evidence | high | 2026-11-26 |
+| `a-favicon-hash-finds-the-same-app` | A favicon hash finds the same app | osint, favicon, shodan | medium | 2026-11-26 |
+| `a-login-wall-changes-the-osint-terms` | A login wall changes the OSINT terms | osint, terms, legal | high | 2026-11-26 |
+| `an-osint-lead-needs-two-source-classes` | An OSINT lead needs two source classes | osint, verification, source | high | 2026-11-26 |
+| `an-analytics-or-ad-id-is-a-site-cluster` | An analytics or ad ID is a site cluster | osint, analytics, pivot | medium | 2026-11-26 |
+| `an-email-format-needs-a-real-sample` | An email format needs a real sample | osint, email, pattern | high | 2026-11-26 |
+| `an-image-location-needs-two-cues` | An image location needs two cues | osint, image, geolocation | medium | 2026-11-26 |
+| `archive-the-page-before-the-quote` | Archive the page before the quote | osint, archive, evidence | high | 2026-11-26 |
 | `a-plc-program-is-the-final-authority` | A PLC program is the final authority | ot, plc, logic | high | 2026-11-26 |
 | `a-historian-is-a-copy-of-the-process` | A historian is a copy of the process | ot, historian, data | medium | 2026-11-26 |
 | `an-air-gap-has-a-removable-bridge` | An air gap has a removable bridge | ot, airgap, bridge | high | 2026-11-26 |
@@ -9775,6 +10527,7 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `a-technology-fingerprint-needs-two-independent-sources` | A technology fingerprint needs two independent sources | recon, fingerprint, tech | high | 2026-11-25 |
 | `origin-ip-scoring-needs-a-direct-response-check` | Origin IP scoring needs a direct-response check | recon, cdn, origin | medium | 2026-11-25 |
 | `wildcard-dns-invalidates-brute-force-hits` | Wildcard DNS invalidates brute-force hits | recon, dns, wildcard | high | 2026-11-25 |
+| `recon-attack-surface` | Your attack surface is what enumeration finds, not what you deployed | recon, asm, subdomain, osint | high | 2026-11-26 |
 | `a-c2-profile-is-a-traffic-shape` | A C2 profile is a traffic shape | red, c2, traffic | medium | 2026-11-26 |
 | `a-lolbin-is-a-signed-loader` | A LOLBin is a signed loader | red, lolbin, execution | high | 2026-11-26 |
 | `a-payload-needs-a-loader-and-a-fallback` | A payload needs a loader and a fallback | red, payload, loader | high | 2026-11-26 |
@@ -9854,11 +10607,13 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `dark-web-data-needs-a-collection-date` | Dark web data needs a collection date | ti, darkweb, collection | medium | 2026-11-26 |
 | `feed-dedup-needs-the-canonical-indicator` | Feed dedup needs the canonical indicator | ti, feed, dedup | high | 2026-11-26 |
 | `the-diamond-model-ties-the-four-corners` | The diamond model ties the four corners | ti, diamond, analysis | medium | 2026-11-26 |
+| `web-jndi-lookup` | A JNDI lookup in a log line is remote class loading | web, rce, java, log4j | high | 2026-11-26 |
 | `a-cache-that-ignores-the-user-cookie-leaks-across-accounts` | A cache that ignores the user cookie leaks across accounts | web, cache, session | high | 2026-11-26 |
 | `a-price-calculated-in-the-client-is-a-suggestion` | A price calculated in the client is a suggestion | web, logic, price | high | 2026-11-26 |
 | `web-race-single-packet` | A race is a check and a write without one lock | web, race, logic | high | 2026-11-24 |
 | `a-state-machine-can-be-jumped-not-only-raced` | A state machine can be jumped, not only raced | web, logic, state-machine | high | 2026-11-26 |
 | `race-idempotency` | A unique constraint is the cheapest race fix | web, race, database | medium | 2026-11-24 |
+| `web-imagemagick-delegate` | An image converter is a parser zoo with shell delegates | web, rce, upload, imagemagick | medium | 2026-11-26 |
 | `web-cors-null-origin` | CORS reflection is only a bug with credentials | web, cors, browser | high | 2026-11-24 |
 | `web-csp-bypass` | CSP is bypassed by a trusted script source, not by a weak directive alone | web, csp, xss | high | 2026-11-24 |
 | `web-csrf-samesite` | CSRF survives when state changes on a safe method | web, csrf, session | high | 2026-11-24 |
@@ -9868,11 +10623,13 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `web-cache-key-unkeyed-input` | Cache poisoning is an unkeyed input that changes the response | web, cache, cdn | high | 2026-11-24 |
 | `web-clickjacking` | Clickjacking is a missing frame policy with a valuable action | web, clickjacking, ui | high | 2026-11-25 |
 | `web-client-path-traversal` | Client-side path traversal is a router normalization bug | web, spa, router | medium | 2026-11-24 |
+| `web-command-injection` | Command injection is a string reaching a shell | web, rce, command-injection | high | 2026-11-26 |
 | `coupons-need-stacking-reuse-and-scope-rules` | Coupons need stacking, reuse and scope rules | web, logic, coupon | high | 2026-11-26 |
 | `dns-rebinding-beats-an-ssrf-allowlist` | DNS rebinding beats an SSRF allowlist | web, ssrf, dns | medium | 2026-11-26 |
 | `web-dom-clobbering` | DOM clobbering turns an id into a variable | web, dom, clobbering | medium | 2026-11-24 |
 | `web-dangling-markup` | Dangling markup leaks what follows the injection | web, html, csrf | medium | 2026-11-25 |
 | `web-desync-parser-disagreement` | Desync needs two HTTP parsers and an ambiguous length | web, http, smuggling | high | 2026-11-24 |
+| `web-expression-injection` | Expression language injection is eval under a framework name | web, rce, java, el | high | 2026-11-26 |
 | `field-level-authorization-is-the-graphql-test` | Field level authorization is the GraphQL test | web, graphql, authorization | high | 2026-11-26 |
 | `web-graphql-field-auth` | GraphQL authorization is per field, not per endpoint | web, graphql, api | high | 2026-11-24 |
 | `web-http2-downgrade` | HTTP/2 adds a second parser for the same request | web, http2, smuggling | medium | 2026-11-24 |
@@ -9891,6 +10648,7 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `web-saml-signature-wrapping` | SAML trusts the assertion, not the signature | web, saml, identity | high | 2026-11-24 |
 | `web-sqli-parameterized` | SQL injection is a string-built query at a boundary | web, sqli, database | high | 2026-11-24 |
 | `web-ssrf-parser-differential` | SSRF hides in URL parser disagreement | web, ssrf, parser | high | 2026-11-24 |
+| `web-ssti-sandbox` | SSTI is input parsed as a template, not rendered into one | web, rce, ssti | high | 2026-11-26 |
 | `web-traversal-canonical-path` | Traversal is a join before canonicalization | web, file, traversal | high | 2026-11-24 |
 | `web-upload-validation` | Upload validation is four separate checks | web, upload, file | high | 2026-11-24 |
 | `uploaded-svg-is-active-content-when-served-inline` | Uploaded SVG is active content when served inline | web, upload, xss | high | 2026-11-26 |
@@ -9899,6 +10657,7 @@ Twenty queries, expected top hit. Run it after a batch of edits.
 | `web-xxe-parser` | XXE depends on entity expansion and the parser feature set | web, xxe, xml | medium | 2026-11-24 |
 | `web-postmessage` | postMessage is a bug when the receiver trusts any origin or sends to any origin | web, postmessage, client-side | high | 2026-11-24 |
 | `web3-contract` | Smart contracts fail on external calls and access control | web3, solidity, contract | high | 2026-11-25 |
+| `wifi-evil-twin` | An evil twin wins when the client does not verify the network | wifi, evil-twin, eap-tls, wpa3 | medium | 2026-11-26 |
 | `a-defender-exclusion-is-a-blind-spot` | A Defender exclusion is a blind spot | win, defender, exclusion | high | 2026-11-26 |
 | `a-named-pipe-is-a-local-trust-channel` | A named pipe is a local trust channel | win, named-pipe, relay | medium | 2026-11-26 |
 | `an-unquoted-service-path-is-a-file-placement-race` | An unquoted service path is a file placement race | win, service, path | high | 2026-11-26 |

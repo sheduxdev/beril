@@ -474,10 +474,16 @@ GHIDRA_HOME=~/tools/ghidra ./scripts/ghidra_headless.sh ./bin/service scans/serv
 | `references/artex.md` | Autonomous multi-agent pentest platform |
 | `references/artex-flask.md` | Flask recon app extract |
 | `references/rce-mastery.md` | RCE classes, proof ladder, report shape |
+| `references/rce-defense-reading.md` | RCE, prevention and detection reading list |
+| `references/vulnerability-taxonomy.md` | Discovery class map with close and card |
+| `references/osint-toolkit.md` | Public record, code, archive and image method |
+| `references/firewall-and-filter-defense.md` | Why filters fail and how to layer them |
+| `references/communities-and-feeds.md` | Research blogs, CERTs and communities |
 | `references/rce-curriculum.md` | Six week RCE track |
 | `references/specialist-program.md` | Twelve four week specialist tracks |
 | `references/senior-bar.md` | Ten axis senior rubric |
 | `docs/specialist.md` | Track selection and review |
+| `docs/osint.md` | OSINT quick path and limits |
 | `references/curriculum.md` | 25-week training plan and grading |
 | `references/exercises.md` | 82 drills by domain |
 | `references/self-training.md` | Turn labs into durable method notes |

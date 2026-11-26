@@ -106,6 +106,7 @@ conditions. `docs/attacking.md` and `docs/bug-hunt.md` cover the offensive line.
 | "Is my MCP config safe" | `mcp`, then review permissions |
 | "Is this plugin malicious" | `jar`, then decompile hits |
 | "Map my subdomains" | `recon --target <domain>`, then read high-value hosts |
+| "OSINT" | `references/osint-toolkit.md`, two source classes per fact |
 | "Find RCE / açık bul" | `scan` passive, then one class from `references/rce-mastery.md` |
 | "Firmware" | unblob, rootfs map, update path |
 | "Write the report" | evidence first, then the right profile |

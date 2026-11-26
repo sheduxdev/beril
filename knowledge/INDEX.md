@@ -1,6 +1,6 @@
 # Knowledge index
 
-902 durable cards. Read this before a web search; open a card only when it matches.
+932 durable cards. Read this before a web search; open a card only when it matches.
 
 | id | title | tags | confidence | updated |
 |---|---|---|---|---|
@@ -97,6 +97,7 @@
 | `a-kid-header-can-become-a-path-or-a-query` | A kid header can become a path or a query | auth, jwt, kid | medium | 2026-11-26 |
 | `a-wildcard-redirect-uri-is-a-claimable-subdomain` | A wildcard redirect URI is a claimable subdomain | auth, oauth, redirect | high | 2026-11-26 |
 | `cookie-prefixes-only-work-when-the-browser-enforces-them` | Cookie prefixes only work when the browser enforces them | auth, cookie, session | medium | 2026-11-26 |
+| `auth-credential-stuffing` | Credential stuffing is a reuse bug, not a guessing bug | auth, credential-stuffing, account-takeover | high | 2026-11-26 |
 | `jwt-algorithm-confusion-uses-the-public-key-as-an-hmac-secre` | JWT algorithm confusion uses the public key as an HMAC secret | auth, jwt, crypto | high | 2026-11-26 |
 | `just-in-time-sso-provisioning-trusts-the-wrong-claim` | Just in time SSO provisioning trusts the wrong claim | auth, sso, provisioning | medium | 2026-11-26 |
 | `logout-must-revoke-refresh-and-device-tokens` | Logout must revoke refresh and device tokens | auth, session, logout | high | 2026-11-26 |
@@ -105,6 +106,9 @@
 | `otp-verification-needs-a-race-and-a-reuse-check` | OTP verification needs a race and a reuse check | auth, otp, race | medium | 2026-11-26 |
 | `pkce-can-be-stripped-when-the-server-does-not-require-it` | PKCE can be stripped when the server does not require it | auth, oauth, pkce | high | 2026-11-26 |
 | `password-reset-tokens-need-entropy-binding-and-single-use` | Password reset tokens need entropy, binding and single use | auth, reset, token | high | 2026-11-26 |
+| `auth-password-spray` | Password spraying inverts the loop to dodge lockout | auth, password-spray, detection | high | 2026-11-26 |
+| `auth-phishing-resistant` | Phishing-resistant MFA binds the credential to the origin | auth, fido2, webauthn, phishing | high | 2026-11-26 |
+| `auth-mfa-fatigue` | Push MFA without number matching is a fatigue target | auth, mfa, push-bombing | high | 2026-11-26 |
 | `saml-signature-wrapping-moves-the-assertion-not-the-signatur` | SAML signature wrapping moves the assertion, not the signature | auth, saml, xsw | medium | 2026-11-26 |
 | `session-id-must-rotate-at-login` | Session id must rotate at login | auth, session, fixation | high | 2026-11-26 |
 | `webauthn-trusts-the-rp-id-and-origin-pair` | WebAuthn trusts the RP ID and origin pair | auth, passkey, webauthn | medium | 2026-11-26 |
@@ -267,6 +271,10 @@
 | `db-recovery-redo` | Redo applies committed pages before undo | database, recovery, redo | high | 2026-11-25 |
 | `db-vacuum` | Vacuum reclaims versions and freezes old transaction ids | database, vacuum, bloat | medium | 2026-11-25 |
 | `db-vectorized-exec` | Vectorized execution amortizes per-row cost | database, vectorized, execution | medium | 2026-11-25 |
+| `defense-waf-anomaly-score` | A CRS WAF blocks a score, not an attack | defense, waf, modsecurity, crs | high | 2026-11-26 |
+| `defense-ips-inline-tuning` | An inline IPS needs an alert-only baseline first | defense, ips, suricata, snort | high | 2026-11-26 |
+| `defense-kev-patch-order` | Patch order follows exploitation evidence, not CVSS alone | defense, patch, kev, epss | high | 2026-11-26 |
+| `defense-rce-blast-radius` | RCE impact is the rights of the process that runs it | defense, rce, hardening, least-privilege | high | 2026-11-26 |
 | `a-crypto-decision-needs-the-threat-and-the-key-owner` | A crypto decision needs the threat and the key owner | design, crypto, key | high | 2026-11-26 |
 | `a-log-line-is-a-data-decision` | A log line is a data decision | design, logging, privacy | high | 2026-11-26 |
 | `a-rate-limit-needs-a-scope-and-a-cost` | A rate limit needs a scope and a cost | design, rate-limit, abuse | high | 2026-11-26 |
@@ -329,6 +337,7 @@
 | `econ-debt-interest` | Technical debt is principal plus interest | economics, debt, interest | high | 2026-11-25 |
 | `econ-total-cost` | Total cost includes the invisible line items | economics, tco, cost | high | 2026-11-25 |
 | `electron-context-isolation` | Electron is Node with a browser attached | electron, desktop, context-isolation | medium | 2026-11-24 |
+| `email-dmarc-alignment` | DMARC enforces alignment that SPF and DKIM alone do not | email, dmarc, spf, dkim, bec | high | 2026-11-26 |
 | `eng-gc` | A GC trades throughput for pause and space | engineering, gc, allocation | medium | 2026-11-25 |
 | `eng-regression` | A bug fix needs a test that failed before it | engineering, testing, regression | high | 2026-11-25 |
 | `eng-repro-build` | A build should be reproducible from a clean checkout | engineering, build, reproducible | high | 2026-11-25 |
@@ -627,6 +636,8 @@
 | `keychain-accessibility-decides-off-device-exposure` | Keychain accessibility decides off device exposure | mobile, ios, keychain | medium | 2026-11-26 |
 | `mobile-swift` | Swift hooks need mangled names or a bridge | mobile, ios, swift | medium | 2026-11-24 |
 | `mobile-swiftui-state` | SwiftUI state is not a security boundary | mobile, ios, swiftui | low | 2026-11-24 |
+| `net-ddos-layers` | DDoS defense matches the layer the attack targets | net, ddos, availability | high | 2026-11-26 |
+| `net-egress-filtering` | Egress filtering is allowlist outbound, deny and log the rest | net, egress, c2, exfiltration | high | 2026-11-26 |
 | `net-cdn` | A CDN is a cache with a key and a purge | network, cdn, cache | medium | 2026-11-25 |
 | `a-cdn-origin-check-needs-the-host-and-the-certificate` | A CDN origin check needs the Host and the certificate | network, cdn, origin | medium | 2026-11-26 |
 | `a-more-specific-bgp-prefix-wins-the-route` | A more specific BGP prefix wins the route | network, bgp, hijack | high | 2026-11-26 |
@@ -668,6 +679,18 @@
 | `os-signal` | A signal handler runs on an arbitrary stack point | os, signal, async | medium | 2026-11-25 |
 | `os-syscall` | A syscall is an ABI with an error convention | os, syscall, errno | medium | 2026-11-25 |
 | `os-virtual-memory` | Virtual memory is a translation and permission layer | os, virtual-memory, paging | medium | 2026-11-25 |
+| `a-github-dork-is-a-query-with-a-field` | A GitHub dork is a query with a field | osint, github, dork | high | 2026-11-26 |
+| `a-breach-hit-needs-a-read-only-check` | A breach hit needs a read only check | osint, breach, credential | medium | 2026-11-26 |
+| `a-certificate-name-is-not-a-live-host` | A certificate name is not a live host | osint, certificate, dns | high | 2026-11-26 |
+| `a-corporate-registry-is-the-ownership-record` | A corporate registry is the ownership record | osint, corporate, registry | high | 2026-11-26 |
+| `a-dead-source-stays-in-the-note` | A dead source stays in the note | osint, dead-link, evidence | high | 2026-11-26 |
+| `a-favicon-hash-finds-the-same-app` | A favicon hash finds the same app | osint, favicon, shodan | medium | 2026-11-26 |
+| `a-login-wall-changes-the-osint-terms` | A login wall changes the OSINT terms | osint, terms, legal | high | 2026-11-26 |
+| `an-osint-lead-needs-two-source-classes` | An OSINT lead needs two source classes | osint, verification, source | high | 2026-11-26 |
+| `an-analytics-or-ad-id-is-a-site-cluster` | An analytics or ad ID is a site cluster | osint, analytics, pivot | medium | 2026-11-26 |
+| `an-email-format-needs-a-real-sample` | An email format needs a real sample | osint, email, pattern | high | 2026-11-26 |
+| `an-image-location-needs-two-cues` | An image location needs two cues | osint, image, geolocation | medium | 2026-11-26 |
+| `archive-the-page-before-the-quote` | Archive the page before the quote | osint, archive, evidence | high | 2026-11-26 |
 | `a-plc-program-is-the-final-authority` | A PLC program is the final authority | ot, plc, logic | high | 2026-11-26 |
 | `a-historian-is-a-copy-of-the-process` | A historian is a copy of the process | ot, historian, data | medium | 2026-11-26 |
 | `an-air-gap-has-a-removable-bridge` | An air gap has a removable bridge | ot, airgap, bridge | high | 2026-11-26 |
@@ -753,6 +776,7 @@
 | `a-technology-fingerprint-needs-two-independent-sources` | A technology fingerprint needs two independent sources | recon, fingerprint, tech | high | 2026-11-25 |
 | `origin-ip-scoring-needs-a-direct-response-check` | Origin IP scoring needs a direct-response check | recon, cdn, origin | medium | 2026-11-25 |
 | `wildcard-dns-invalidates-brute-force-hits` | Wildcard DNS invalidates brute-force hits | recon, dns, wildcard | high | 2026-11-25 |
+| `recon-attack-surface` | Your attack surface is what enumeration finds, not what you deployed | recon, asm, subdomain, osint | high | 2026-11-26 |
 | `a-c2-profile-is-a-traffic-shape` | A C2 profile is a traffic shape | red, c2, traffic | medium | 2026-11-26 |
 | `a-lolbin-is-a-signed-loader` | A LOLBin is a signed loader | red, lolbin, execution | high | 2026-11-26 |
 | `a-payload-needs-a-loader-and-a-fallback` | A payload needs a loader and a fallback | red, payload, loader | high | 2026-11-26 |
@@ -832,11 +856,13 @@
 | `dark-web-data-needs-a-collection-date` | Dark web data needs a collection date | ti, darkweb, collection | medium | 2026-11-26 |
 | `feed-dedup-needs-the-canonical-indicator` | Feed dedup needs the canonical indicator | ti, feed, dedup | high | 2026-11-26 |
 | `the-diamond-model-ties-the-four-corners` | The diamond model ties the four corners | ti, diamond, analysis | medium | 2026-11-26 |
+| `web-jndi-lookup` | A JNDI lookup in a log line is remote class loading | web, rce, java, log4j | high | 2026-11-26 |
 | `a-cache-that-ignores-the-user-cookie-leaks-across-accounts` | A cache that ignores the user cookie leaks across accounts | web, cache, session | high | 2026-11-26 |
 | `a-price-calculated-in-the-client-is-a-suggestion` | A price calculated in the client is a suggestion | web, logic, price | high | 2026-11-26 |
 | `web-race-single-packet` | A race is a check and a write without one lock | web, race, logic | high | 2026-11-24 |
 | `a-state-machine-can-be-jumped-not-only-raced` | A state machine can be jumped, not only raced | web, logic, state-machine | high | 2026-11-26 |
 | `race-idempotency` | A unique constraint is the cheapest race fix | web, race, database | medium | 2026-11-24 |
+| `web-imagemagick-delegate` | An image converter is a parser zoo with shell delegates | web, rce, upload, imagemagick | medium | 2026-11-26 |
 | `web-cors-null-origin` | CORS reflection is only a bug with credentials | web, cors, browser | high | 2026-11-24 |
 | `web-csp-bypass` | CSP is bypassed by a trusted script source, not by a weak directive alone | web, csp, xss | high | 2026-11-24 |
 | `web-csrf-samesite` | CSRF survives when state changes on a safe method | web, csrf, session | high | 2026-11-24 |
@@ -846,11 +872,13 @@
 | `web-cache-key-unkeyed-input` | Cache poisoning is an unkeyed input that changes the response | web, cache, cdn | high | 2026-11-24 |
 | `web-clickjacking` | Clickjacking is a missing frame policy with a valuable action | web, clickjacking, ui | high | 2026-11-25 |
 | `web-client-path-traversal` | Client-side path traversal is a router normalization bug | web, spa, router | medium | 2026-11-24 |
+| `web-command-injection` | Command injection is a string reaching a shell | web, rce, command-injection | high | 2026-11-26 |
 | `coupons-need-stacking-reuse-and-scope-rules` | Coupons need stacking, reuse and scope rules | web, logic, coupon | high | 2026-11-26 |
 | `dns-rebinding-beats-an-ssrf-allowlist` | DNS rebinding beats an SSRF allowlist | web, ssrf, dns | medium | 2026-11-26 |
 | `web-dom-clobbering` | DOM clobbering turns an id into a variable | web, dom, clobbering | medium | 2026-11-24 |
 | `web-dangling-markup` | Dangling markup leaks what follows the injection | web, html, csrf | medium | 2026-11-25 |
 | `web-desync-parser-disagreement` | Desync needs two HTTP parsers and an ambiguous length | web, http, smuggling | high | 2026-11-24 |
+| `web-expression-injection` | Expression language injection is eval under a framework name | web, rce, java, el | high | 2026-11-26 |
 | `field-level-authorization-is-the-graphql-test` | Field level authorization is the GraphQL test | web, graphql, authorization | high | 2026-11-26 |
 | `web-graphql-field-auth` | GraphQL authorization is per field, not per endpoint | web, graphql, api | high | 2026-11-24 |
 | `web-http2-downgrade` | HTTP/2 adds a second parser for the same request | web, http2, smuggling | medium | 2026-11-24 |
@@ -869,6 +897,7 @@
 | `web-saml-signature-wrapping` | SAML trusts the assertion, not the signature | web, saml, identity | high | 2026-11-24 |
 | `web-sqli-parameterized` | SQL injection is a string-built query at a boundary | web, sqli, database | high | 2026-11-24 |
 | `web-ssrf-parser-differential` | SSRF hides in URL parser disagreement | web, ssrf, parser | high | 2026-11-24 |
+| `web-ssti-sandbox` | SSTI is input parsed as a template, not rendered into one | web, rce, ssti | high | 2026-11-26 |
 | `web-traversal-canonical-path` | Traversal is a join before canonicalization | web, file, traversal | high | 2026-11-24 |
 | `web-upload-validation` | Upload validation is four separate checks | web, upload, file | high | 2026-11-24 |
 | `uploaded-svg-is-active-content-when-served-inline` | Uploaded SVG is active content when served inline | web, upload, xss | high | 2026-11-26 |
@@ -877,6 +906,7 @@
 | `web-xxe-parser` | XXE depends on entity expansion and the parser feature set | web, xxe, xml | medium | 2026-11-24 |
 | `web-postmessage` | postMessage is a bug when the receiver trusts any origin or sends to any origin | web, postmessage, client-side | high | 2026-11-24 |
 | `web3-contract` | Smart contracts fail on external calls and access control | web3, solidity, contract | high | 2026-11-25 |
+| `wifi-evil-twin` | An evil twin wins when the client does not verify the network | wifi, evil-twin, eap-tls, wpa3 | medium | 2026-11-26 |
 | `a-defender-exclusion-is-a-blind-spot` | A Defender exclusion is a blind spot | win, defender, exclusion | high | 2026-11-26 |
 | `a-named-pipe-is-a-local-trust-channel` | A named pipe is a local trust channel | win, named-pipe, relay | medium | 2026-11-26 |
 | `an-unquoted-service-path-is-a-file-placement-race` | An unquoted service path is a file placement race | win, service, path | high | 2026-11-26 |

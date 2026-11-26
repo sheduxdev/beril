@@ -30,6 +30,7 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 - [docs/legal.md](docs/legal.md): Turkey, TCK, KVKK, responsible use
 - [docs/recon.md](docs/recon.md): passive subdomain and origin recon
 - [docs/specialist.md](docs/specialist.md): specialist track order and review
+- [docs/osint.md](docs/osint.md): OSINT quick path
 
 ## Assessment
 
@@ -51,6 +52,11 @@ Agents should start with `AGENTS.md`, then `SKILL.md`, then the router.
 - [references/artex.md](references/artex.md): autonomous runner
 - [references/artex-flask.md](references/artex-flask.md): Flask recon extract
 - [references/rce-mastery.md](references/rce-mastery.md): RCE proof ladder and classes
+- [references/rce-defense-reading.md](references/rce-defense-reading.md): RCE and defense reading
+- [references/vulnerability-taxonomy.md](references/vulnerability-taxonomy.md): class coverage map
+- [references/osint-toolkit.md](references/osint-toolkit.md): OSINT method and tool shelf
+- [references/firewall-and-filter-defense.md](references/firewall-and-filter-defense.md): filter evasion and layering
+- [references/communities-and-feeds.md](references/communities-and-feeds.md): research and CERT feeds
 - [references/rce-curriculum.md](references/rce-curriculum.md): six week RCE track
 - [references/specialist-program.md](references/specialist-program.md): twelve specialist tracks
 - [references/senior-bar.md](references/senior-bar.md): senior review rubric
